@@ -1,0 +1,149 @@
+/*
+    작성자: 이현민(id3ntity99)
+    내용: header 스타일
+    TODO: NotoSansKR-Regular
+*/
+
+header {
+  width: 100%;
+  height: auto;
+}
+
+#account-area {
+  width: 1260px;
+  height: auto;
+  margin: 0 auto;
+}
+
+#account-area > ul {
+  display: block;
+  width: 100%;
+  height: 35px;
+}
+
+#account-area li {
+  float: right;
+  margin-left: 20px;
+  font-size: 11px;
+  line-height: 35px;
+  color: #757575;
+}
+
+#header-area {
+  width: 1260px;
+  height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 auto;
+}
+
+#logo-area > img {
+  width: 185px;
+  height: 38px;
+}
+
+#search-area {
+  position: relative;
+}
+
+#search-area > input {
+  width: 450px;
+  height: 48px;
+  padding: 10px;
+  border: 2px solid #ef2a23;
+  border-radius: 30px;
+  box-sizing: border-box;
+  outline: none;
+  z-index: 0;
+}
+
+#search-area > button {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  z-index: 13;
+  border: none;
+  background-color: inherit;
+}
+
+#search-area > button > svg {
+  color: #ef2a23;
+  width: 28px;
+  height: 28px;
+}
+
+#button-area > a {
+  display: inline-block;
+  text-align: center;
+  margin-left: 20px;
+}
+
+#button-area > a:nth-child(2) {
+  margin-left: 25px;
+}
+
+#button-area > a > span {
+  text-align: center;
+  font-size: 13px;
+}
+
+#button-area svg {
+  display: block;
+  width: 25px;
+  height: 25px;
+  margin: 0 auto;
+  margin-bottom: 5px;
+}
+
+#quick-menu {
+  width: 100%;
+  height: auto;
+  border-top: 1px solid #eee;
+  border-bottom: 2px solid #ef2a23;
+  box-sizing: border-box;
+}
+
+#quick-menu > ul {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  width: 1260px;
+  height: 50px;
+  margin: 0 auto;
+}
+
+#quick-menu .category-drop {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ef2a23;
+  border-top: 1px solid #eee;
+  width: 60px;
+  height: 50px;
+  cursor: pointer;
+}
+
+#quick-menu .category-drop > svg {
+  width: 25px;
+  height: 25px;
+  color: white;
+}
+
+#menu {
+  width: 150px;
+  position: relative;
+  left: 300px;
+  border: 1px solid #ef2a23;
+  border-top: none;
+  box-sizing: border-box;
+}
+
+.ui-menu-item .ui-menu-item-wrapper.ui-state-active {
+  background-color: #fff;
+  color: #ef2a23 !important;
+  border-top: none;
+  border-bottom: none;
+  outline: none;
+}
