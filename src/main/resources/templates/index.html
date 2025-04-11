@@ -1,10 +1,145 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <title>롯데ON</title>
+    <link rel="stylesheet" href="/static/style/init.css" />
+    <link rel="stylesheet" href="/static/style/index.css" />
+    <link rel="stylesheet" href="/static/style/common/header.css" />
+    <link
+      rel="icon"
+      href="https://static.lotteon.com/p/common/assets/favicon/1/favicon-32.png"
+    />
+    <link
+      rel="stylesheet"
+      href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css"
+    />
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
+    <script src="/static/js/common/header.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/all.min.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <header>
+      <div id="header-wrapper">
+        <div id="account-area">
+          <ul>
+            <li>고객센터</li>
+            <li>주문배송</li>
+            <li>로그인/회원가입</li>
+          </ul>
+        </div>
+        <div id="header-area">
+          <div id="logo-area">
+            <img
+              src="https://static.lotteon.com/p/common/foCommon/assets/img/logo_lotte-on@2x.png"
+              alt="logo"
+            />
+          </div>
 
-</body>
+          <div id="search-area">
+            <input type="text" placeholder="검색어를 입력하세요" />
+            <button>
+              <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+          </div>
+
+          <div id="button-area">
+            <a href="#">
+              <i class="fa-regular fa-comment-dots"></i>
+              <span> 챗봇 </span>
+            </a>
+            <a href="#">
+              <i class="fa-regular fa-heart"></i>
+              <span> 나의 찜 </span>
+            </a>
+            <a href="#">
+              <i class="fa-regular fa-user"></i>
+              <span> 마이롯데 </span>
+            </a>
+            <a href="#">
+              <i class="fa-solid fa-basket-shopping"></i>
+              <span> 장바구니 </span>
+            </a>
+          </div>
+        </div>
+      </div>
+      <nav id="quick-menu">
+        <ul>
+          <li id="drop-btn" class="category-drop">
+            <i class="fa-solid fa-bars"></i>
+          </li>
+          <li>
+            <a href="#">홈</a>
+          </li>
+          <li>
+            <a href="#">특가</a>
+          </li>
+          <li>
+            <a href="#">패션</a>
+          </li>
+          <li>
+            <a href="#">뷰티</a>
+          </li>
+          <li>
+            <a href="#">라이프</a>
+          </li>
+          <li>
+            <a href="#">베스트</a>
+          </li>
+          <li>
+            <a href="#">여행</a>
+          </li>
+          <li>
+            <a href="#">백화점</a>
+          </li>
+          <li>
+            <a href="#">내일ON다</a>
+          </li>
+          <li>
+            <a href="#">이벤트</a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+    <ul id="menu" style="display: none">
+      <li class="ui-state-disabled"><div>Toys (n/a)</div></li>
+      <li><div>Books</div></li>
+      <li><div>Clothing</div></li>
+      <li>
+        <div>Electronics</div>
+        <ul>
+          <li class="ui-state-disabled"><div>Home Entertainment</div></li>
+          <li><div>Car Hifi</div></li>
+          <li><div>Utilities</div></li>
+        </ul>
+      </li>
+      <li><div>Movies</div></li>
+      <li>
+        <div>Music</div>
+        <ul>
+          <li>
+            <div>Rock</div>
+            <ul>
+              <li><div>Alternative</div></li>
+              <li><div>Classic</div></li>
+            </ul>
+          </li>
+          <li>
+            <div>Jazz</div>
+            <ul>
+              <li><div>Freejazz</div></li>
+              <li><div>Big Band</div></li>
+              <li><div>Modern</div></li>
+            </ul>
+          </li>
+          <li><div>Pop</div></li>
+        </ul>
+      </li>
+      <li class="ui-state-disabled"><div>Specials (n/a)</div></li>
+    </ul>
+  </body>
 </html>
