@@ -2,12 +2,7 @@
  * jQuery UI 'menu' 위젯
  */
 $(function () {
-  $("#menu").menu({
-    focus: (event, ui) => {
-      console.log(event);
-      console.log(ui);
-    },
-  });
+  $("#menu").menu();
 });
 
 /**
@@ -29,11 +24,22 @@ $(function () {
     }
 
     // Run the effect
-    $("#menu").toggle(selectedEffect, options, 500);
+    $("#menu").toggle("blind", options, 200);
   }
 
-  // Set effect from select menu value
   $("#drop-btn").on("click", function () {
     runEffect();
+  });
+});
+
+$(function () {
+  $(".shortcut").on("mouseover", function (event) {
+    $(event.target).css("color", "#ef2a23");
+  });
+});
+
+$(function () {
+  $(".shortcut").on("mouseout", function (event) {
+    $(event.target).css("color", "inherit");
   });
 });
