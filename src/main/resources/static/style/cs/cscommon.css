@@ -1,0 +1,125 @@
+/*
+  작성자: 손준오(sjo112777)
+  내용: 고객센터> 각 카테고리 공통부분.
+*/
+main{
+    width: 100%;
+    height: auto;
+    box-sizing: border-box;
+}
+
+.csmain {
+    width: 1260px;
+    height: auto;
+    margin: 0 auto;
+    overflow: hidden;
+  }
+
+  .csmain > .sidebar{
+    width: 210px;
+    height: auto;
+    margin-left: 30px;
+    float: left;
+    border-right: 1.5px solid #d9d9d9 ;
+}
+
+.side_content{
+    margin-top: 30px;
+}
+
+.side_title p{
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 34px; 
+}
+
+.side_title{
+    height: 54px;
+    margin-bottom: 26px;
+}
+
+.side_content > a > div{
+    width: 100%;
+    height: 45px;
+    box-sizing: border-box;
+    font-size: 19px;
+    line-height: 21px;
+}
+
+.choice{
+    font-weight: 600;
+    text-decoration: underline;
+}
+
+.main_content{
+  width: 990px;
+  height: auto;
+  box-sizing: border-box;
+  padding-top: 32px;
+  padding-left: 30px;
+  float: right;
+}
+
+.main_title{
+  border-bottom: 1.5px solid black; 
+  height: 90px;
+}
+
+.main_title p{
+  font-weight: 700;
+  font-size: 26px;
+  line-height: 44px;
+  letter-spacing: 0%;
+  vertical-align: middle;
+}
+
+.main_content_detail{
+  width: 100%;
+  height: auto;
+}
+
+
+
+
+
+
+/* 페이징 부분 팀장님 코드 가져옴*/
+.pagination {
+    width: 100%;
+    height: auto;
+    border-top: 1px solid #ddd;
+    box-sizing: border-box;
+    margin: 0px auto;
+    margin-top: 48px;
+    margin-bottom: 30px;
+    text-align: center;
+    padding: 42px;
+  }
+  
+  .pagination > a {
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    margin-left: 20px;
+    line-height: 32px;
+    border-radius: 50%;
+    color: #757575;
+  }
+  
+  .pagination > a.move {
+    border: 1px solid #ddd;
+  }
+  
+  /*
+  현재 선택된 페이지에만 아래 스타일을 적용
+  */
+  .pagination > a:nth-child(3) {
+    background-color: #343b4d;
+    color: #fff;
+  }
+  
+
+
+
+  
+  

@@ -1,0 +1,201 @@
+/*
+  작성자: 손준오(sjo112777)
+  내용: 고객센터> 메인 css.
+*/
+.csmain {
+  width: 1260px;
+  height: auto;
+  margin: 0 auto;
+}
+
+.csmain > h3 {
+  font-size: 30px;
+  text-align: center;
+  margin: 50px;
+}
+
+.csmain > h3 > span {
+  color: #00B050;
+}
+
+/* 공지사항 영역 */
+.csmain > .notice {
+  border-top: 1px solid #111;
+}
+
+.notice {
+  margin-top: 40px;
+  padding: 10px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.csmain > div > span {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.csmain > div > a {
+  float: right;
+  font-size: 14px;
+  color: #888;
+  text-decoration: none;
+}
+
+.csmain > div > a:hover {
+  color: #00B050;
+}
+
+.csmain table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  font-size: 16px;
+}
+
+.csmain td {
+  padding: 12px 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.csmain td:first-child {
+  color: #00B050;
+  font-weight: bold;
+  width: 100px;
+}
+
+.csmain td a {
+  color: #333;
+  text-decoration: none;
+}
+
+.csmain td a span:hover {
+  text-decoration: underline;
+}
+
+/* 자주하는 질문 */
+.csmain > .qna {
+  border-top: 1px solid #111;
+}
+
+.qna {
+  margin-top: 40px;
+  padding: 10px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.qnatable {
+  margin: 70px;
+}
+
+.qna-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.qna-item {
+  text-align: center;
+}
+
+.qna-item a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #333;
+  text-decoration: none;
+  transition: transform 0.2s;
+}
+
+.qna-item a:hover {
+  color: #00B050;
+  transform: translateY(-5px);
+}
+
+.qna-item i {
+  font-size: 64px;
+  color: #00B050;
+  margin-bottom: 10px;
+  transition: transform 0.2s ease;
+  background-color: #e9f9f0;
+  border-radius: 50%;
+  padding: 20px;
+}
+
+.qna-item span {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+/* 문의하기 영역 */
+.csmain > .contact {
+  border-top: 1px solid #111;
+}
+
+.contact {
+  margin-top: 40px;
+  padding: 10px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.qnawrite > a {
+  display: block;
+  margin: 20px;
+  font-size: 16px;
+  color: #0070C0;
+}
+
+.qnawrite > a:hover {
+  text-decoration: underline;
+}
+
+/* 1:1 상담 안내 */
+.csmain > .consult {
+  border-top: 1px solid #111;
+}
+
+.consult {
+  margin-top: 40px;
+  padding: 10px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.infoboxes {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  margin: 40px auto;
+  max-width: 1260px;
+}
+
+.information,
+.saleinformation {
+  flex: 1;
+  background-color: #f8f8f8;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  padding: 20px 25px;
+  font-size: 16px;
+  line-height: 1.7;
+  color: #333;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.information p,
+.saleinformation p {
+  margin: 0;
+  white-space: pre-line;
+}
+
+.infoboxes > div > p > span {
+  font-size: 25px;
+  font-weight: bold;
+}
