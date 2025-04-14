@@ -92,6 +92,7 @@ footer {
 }
 
 .footer-selectors.seller-service {
+  width: 125px;
   left: 20px;
   top: 30px;
   border: 1px solid #ddd;
