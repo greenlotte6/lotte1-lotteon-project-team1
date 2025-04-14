@@ -53,8 +53,12 @@
   height: 35px;
   float: right;
   margin-top: 10px;
-  background-color: #8eb4e3;
+  background-color: #2675d6;
   border: none;
   color: white;
   cursor: pointer;
+}
+
+.edit-btn:hover {
+  background-color: #8eb4e3;
 }

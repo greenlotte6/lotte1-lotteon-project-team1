@@ -14,7 +14,19 @@
     <link rel="stylesheet" href="/static/style/common/admin/aside.css" />
     <link rel="stylesheet" href="/static/style/common/admin/content.css" />
     <link rel="stylesheet" href="/static/style/common/admin/footer.css" />
-    <link rel="stylesheet" href="/static/style/admin/settings/default.css" />
+    <link rel="stylesheet" href="/static/style/admin/config/basic.css" />
+    <link
+      rel="icon"
+      href="https://static.lotteon.com/p/common/assets/favicon/1/favicon-32.png"
+    />
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
+    <script src="/static/js/admin/settings/aside-drop.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/all.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="/static/js/admin/config/aside-drop.js"></script>
   </head>
   <body>
     <div id="wrapper">
@@ -47,30 +59,102 @@
       <main>
         <aside class="side-menu">
           <ul>
-            <li>
+            <li id="settings-menu">
               <i class="fa-solid fa-gear"></i>
-              <a href="/admin/settings?mode=default"> 환경설정 </a>
+              <a href="/admin/config/basic"> 환경설정 </a>
             </li>
-            <li>
+            <ul class="submenu settings" style="display: none">
+              <li>
+                <a href="#"> 기본설정 </a>
+              </li>
+              <li>
+                <a href="#"> 배너관리 </a>
+              </li>
+              <li>
+                <a href="#"> 약관관리 </a>
+              </li>
+              <li>
+                <a href="#"> 카테고리 </a>
+              </li>
+              <li>
+                <a href="#"> 버전이력 </a>
+              </li>
+            </ul>
+            <li id="store-menu">
               <i class="fa-solid fa-store"></i>
-              <a href="/admin/settings?mode=store"> 상점관리 </a>
+              <a href="/admin/shop/list"> 상점관리 </a>
             </li>
-            <li>
+            <ul class="submenu store" style="display: none">
+              <li>
+                <a href="/admin/shop/list"> 상점목록 </a>
+              </li>
+              <li>
+                <a href="/admin/shop/sales"> 매출현황 </a>
+              </li>
+            </ul>
+            <li id="member-menu">
               <i class="fa-solid fa-users"></i>
-              <a href="/admin/settings?mode=user"> 회원관리 </a>
+              <a href="/admin/member/list"> 회원관리 </a>
             </li>
-            <li>
+            <ul class="submenu member" style="display: none">
+              <li>
+                <a href="/admin/member/list"> 회원목록 </a>
+              </li>
+              <li>
+                <a href="/admin/member/point"> 포인트 관리 </a>
+              </li>
+            </ul>
+            <li id="product-menu">
               <i class="fa-solid fa-box-open"></i>
-              <a href="/admin/settings?mode=product"> 상품관리 </a>
+              <a href="/admin/product/list"> 상품관리 </a>
             </li>
-            <li>
+            <ul class="submenu product" style="display: none">
+              <li>
+                <a href="/admin/product/list"> 상품목록 </a>
+              </li>
+              <li>
+                <a href="/admin/product/register"> 상품등록 </a>
+              </li>
+            </ul>
+            <li id="order-menu">
               <i class="fa-solid fa-credit-card"></i>
-              <a href="/admin/settings?mode=order"> 주문관리 </a>
+              <a href="/admin/settings/order/list"> 주문관리 </a>
             </li>
-            <li>
+            <ul class="submenu order" style="display: none">
+              <li>
+                <a href="/admin/order/list"> 주문현황 </a>
+              </li>
+              <li>
+                <a href="/admin/order/delivery"> 배송현황 </a>
+              </li>
+            </ul>
+            <li id="coupon-menu">
+              <i class="fa-solid fa-ticket"></i>
+              <a href="/admin/settings/coupon/list"> 쿠폰관리 </a>
+            </li>
+            <ul class="submenu coupon" style="display: none">
+              <li>
+                <a href="/admin/coupon/list"> 쿠폰목록 </a>
+              </li>
+              <li>
+                <a href="/admin/coupon/issued"> 쿠폰발급현황 </a>
+              </li>
+            </ul>
+            <li id="cs-menu">
               <i class="fa-solid fa-headphones"></i>
-              <a href="#"> 고객센터 </a>
+              <a href="/admin/cs/notice/list"> 고객센터 </a>
             </li>
+            <ul class="submenu customer-service" style="display: none">
+              <li>
+                <a href="/admin/cs/notice/list"> 공지사항 </a>
+              </li>
+              <li>
+                <a href="/admin/cs/faq/list"> 자주묻는질문 </a>
+              </li>
+              <li>
+                <a href="/admin/cs/qna/list"> 문의하기 </a>
+              </li>
+            </ul>
           </ul>
         </aside>
         <section id="content-area">
