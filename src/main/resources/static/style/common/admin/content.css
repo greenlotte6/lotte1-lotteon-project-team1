@@ -15,7 +15,7 @@ main {
 #content-area > .content-area-title {
   width: 100%;
   height: 60px;
-  padding: 20px;
+  padding: 20px 0;
   border-bottom: 2px solid #808080;
   box-sizing: border-box;
   display: flex;
