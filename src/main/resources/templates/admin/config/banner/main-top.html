@@ -17,17 +17,22 @@
       href="/static/style/admin/config/banner/main-top.css"
     />
     <link
+      rel="stylesheet"
+      href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css"
+    />
+    <link
       rel="icon"
       href="https://static.lotteon.com/p/common/assets/favicon/1/favicon-32.png"
     />
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
     <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
-    <script src="/static/js/admin/settings/aside-drop.js"></script>
+    <script src="/static/js/admin/config/aside-drop.js"></script>
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/all.min.js"
       crossorigin="anonymous"
     ></script>
     <script src="/static/js/admin/config/aside-drop.js"></script>
+    <script src="/static/js/admin/config/banner/banner-info.js"></script>
   </head>
   <body>
     <div id="wrapper">
@@ -66,19 +71,19 @@
             </li>
             <ul class="submenu settings" style="display: none">
               <li>
-                <a href="#"> 기본설정 </a>
+                <a href="/admin/config/basic"> 기본설정 </a>
               </li>
               <li>
-                <a href="#"> 배너관리 </a>
+                <a href="/admin/config/banner"> 배너관리 </a>
               </li>
               <li>
-                <a href="#"> 약관관리 </a>
+                <a href="/admin/config/policy"> 약관관리 </a>
               </li>
               <li>
-                <a href="#"> 카테고리 </a>
+                <a href="/admin/config/category"> 카테고리 </a>
               </li>
               <li>
-                <a href="#"> 버전이력 </a>
+                <a href="/admin/config/version"> 버전이력 </a>
               </li>
             </ul>
             <li id="store-menu">
@@ -187,41 +192,68 @@
           </nav>
 
           <div class="content">
-            <div class="content-title with-underline">
+            <div class="content-title">
               <h3>메인상단 배너</h3>
             </div>
             <table>
               <tbody>
                 <tr>
-                  <td></td>
-                  <td>번호</td>
-                  <td>이미지</td>
-                  <td>배너정보</td>
-                  <td>배너위치</td>
-                  <td>시작일</td>
-                  <td>종료일</td>
-                  <td>시작시간</td>
-                  <td>종료시간</td>
-                  <td>관리</td>
+                  <th>
+                    <input
+                      type="checkbox"
+                      name="selected-banner"
+                      id="banner-checkbox"
+                      onclick="return false;"
+                    />
+                  </th>
+                  <th>번호</th>
+                  <th>이미지</th>
+                  <th>배너정보</th>
+                  <th>배너위치</th>
+                  <th>시작일</th>
+                  <th>종료일</th>
+                  <th>시작시간</th>
+                  <th>종료시간</th>
+                  <th>관리</th>
                 </tr>
                 <tr>
-                  <td></td>
+                  <td>
+                    <input
+                      type="checkbox"
+                      name="selected-banner"
+                      id="banner-checkbox"
+                    />
+                  </td>
                   <td>1</td>
                   <td>
-                    <img src="" alt="" />
+                    <img src="/static/images/img-symbol.jpg" alt="" />
                   </td>
                   <td>
-                    <span class="banner-info"> 배너명 </span>
-                    <span class="banner-info"> 크기: </span>
-                    <span class="banner-info"> 배너명 </span>
-                    <span class="banner-info"> 배너명 </span>
+                    <button class="banner-info-btn banner-btn">
+                      배너정보 보기
+                    </button>
+                    <div
+                      class="banner-info"
+                      title="배너 정보 상세"
+                      style="display: none"
+                    >
+                      <ul>
+                        <li>배너명</li>
+                        <li>크기: 1200*800</li>
+                        <li>배경색: #ff1100</li>
+                        <li>배너링크</li>
+                      </ul>
+                    </div>
                   </td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
+                  <td>MAIN1</td>
+                  <td>2023/01/01</td>
+                  <td>2023/01/31</td>
+                  <td>00:00</td>
+                  <td>23:59</td>
+                  <td>
+                    <button class="banner-btn activate-btn">활성화</button>
+                    <button class="banner-btn inactivate-btn">비활성화</button>
+                  </td>
                 </tr>
               </tbody>
             </table>

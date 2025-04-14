@@ -1,0 +1,90 @@
+.tab {
+  width: 100%;
+  height: 45px;
+  background-color: #f2f2f2;
+  padding: 10px;
+  padding-bottom: 0;
+  margin-bottom: 20px;
+}
+
+.tab-option {
+  display: inline-block;
+  width: 140px;
+  height: 45px;
+  line-height: 40px;
+  text-align: center;
+  border: 1px solid #808080;
+  box-sizing: border-box;
+  background-color: #bfbfbf;
+}
+
+.tab-option.active {
+  background-color: #fff;
+  border-bottom: 0px;
+}
+
+.content > table {
+  width: 100%;
+  height: auto;
+  border-collapse: collapse;
+  border-top: 2px solid #a6a6a6;
+  box-sizing: border-box;
+}
+
+.content > table tr {
+  height: 100px;
+  padding: 10px;
+  border-bottom: 1px solid #a6a6a6;
+  box-sizing: border-box;
+}
+
+.content > table tr th {
+  height: 60px;
+  line-height: 60px;
+}
+
+.content > table tr:first-child {
+  height: 40px;
+  line-height: 40px;
+}
+
+.content > table td {
+  text-align: center;
+}
+
+.content > table td img {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto;
+  vertical-align: middle;
+}
+
+.banner-info {
+  display: block;
+  text-align: left;
+  font-size: 14px;
+  line-height: 24px;
+}
+
+.banner-info-btn {
+  background-color: #a6a6a6;
+}
+
+.banner-btn {
+  vertical-align: middle;
+  width: 67px;
+  height: 25px;
+  margin-bottom: 10px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  color: #fff;
+}
+
+.activate-btn {
+  background-color: #2675d6;
+}
+
+.inactivate-btn {
+  background-color: #c0080f;
+}

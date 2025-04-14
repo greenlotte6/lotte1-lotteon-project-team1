@@ -1,8 +1,8 @@
 $(function () {
   const ANIMATION_TYPE = "blind";
-  const TRANSITION_TIME = 300;
+  const TRANSITION_TIME = 400;
   function doToggle(target) {
-    let options = {};
+    var options = {};
     doToggleWithOptions(options, target);
   }
 
@@ -10,31 +10,45 @@ $(function () {
     $(target).toggle(ANIMATION_TYPE, options, TRANSITION_TIME);
   }
 
-  $("#settings-menu").on("click", function () {
-    doToggle(".submenu.settings");
-  });
+  $("#settings-menu")
+    .unbind()
+    .on("click", function () {
+      doToggle(".settings");
+    });
 
-  $("#store-menu").on("click", function () {
-    doToggle(".submenu.store");
-  });
+  $("#store-menu")
+    .unbind()
+    .on("click", function () {
+      doToggle(".submenu.store");
+    });
 
-  $("#member-menu").on("click", function () {
-    doToggle(".submenu.member");
-  });
+  $("#member-menu")
+    .unbind()
+    .on("click", function () {
+      doToggle(".submenu.member");
+    });
 
-  $("#product-menu").on("click", function () {
-    doToggle(".submenu.product");
-  });
+  $("#product-menu")
+    .unbind()
+    .on("click", function () {
+      doToggle(".submenu.product");
+    });
 
-  $("#order-menu").on("click", function () {
-    doToggle(".submenu.order");
-  });
+  $("#order-menu")
+    .unbind()
+    .on("click", function () {
+      doToggle(".submenu.order");
+    });
 
-  $("#coupon-menu").on("click", function () {
-    doToggle(".submenu.coupon");
-  });
+  $("#coupon-menu")
+    .unbind()
+    .on("click", function () {
+      doToggle(".submenu.coupon");
+    });
 
-  $("#cs-menu").on("click", function () {
-    doToggle(".submenu.customer-service");
-  });
+  $("#cs-menu")
+    .unbind()
+    .on("click", function () {
+      doToggle(".submenu.customer-service");
+    });
 });
