@@ -54,3 +54,11 @@ main {
   font-weight: 600;
   margin-bottom: 10px;
 }
+
+input[type="file"]::file-selector-button {
+  border: none;
+  background-color: #a6a6a6;
+  color: white;
+  cursor: pointer;
+  height: 30px;
+}

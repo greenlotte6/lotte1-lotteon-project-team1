@@ -32,7 +32,8 @@
       crossorigin="anonymous"
     ></script>
     <script src="/static/js/admin/config/aside-drop.js"></script>
-    <script src="/static/js/admin/config/banner/banner-info.js"></script>
+    <script src="/static/js/admin/config/banner/info.js"></script>
+    <script src="/static/js/admin/config/banner/registry.js"></script>
   </head>
   <body>
     <div id="wrapper">
@@ -251,12 +252,93 @@
                   <td>00:00</td>
                   <td>23:59</td>
                   <td>
-                    <button class="banner-btn activate-btn">활성화</button>
-                    <button class="banner-btn inactivate-btn">비활성화</button>
+                    <button class="activation-btn activate-btn">활성화</button>
+                    <button class="activation-btn inactivate-btn">
+                      비활성화
+                    </button>
                   </td>
                 </tr>
               </tbody>
             </table>
+            <div class="crud-btn-area">
+              <button class="enroll-btn delete-btn">선택삭제</button>
+              <button class="enroll-btn register-btn">배너등록</button>
+            </div>
+            <div class="registry-modal" title="배너등록">
+              <table class="banner-registry">
+                <tr>
+                  <th>배너이름</th>
+                  <td>
+                    <input type="text" name="name" placeholder="배너명 입력" />
+                  </td>
+                </tr>
+                <tr>
+                  <th>배너크기</th>
+                  <td>
+                    <input
+                      type="text"
+                      name="size"
+                      placeholder="배너사이즈 입력"
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <th>배경색</th>
+                  <td>
+                    <input
+                      type="text"
+                      name="backgroudColor"
+                      placeholder="배경색 입력"
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <th>배너링크</th>
+                  <td>
+                    <input
+                      type="text"
+                      name="link"
+                      placeholder="배너링크 입력"
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <th>배너위치</th>
+                  <td>
+                    <select name="location" id="location">
+                      <option value="">선택</option>
+                      <option value="main1">MAIN1</option>
+                      <option value="main2">MAIN2</option>
+                      <option value="product1">PRODUCT1</option>
+                      <option value="member1">MEMBER1</option>
+                      <option value="my1">MY1</option>
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <th>노출날짜</th>
+                  <td>
+                    <input type="date" name="dateFrom" id="date-from" />
+                    &nbsp; ~ &nbsp;
+                    <input type="date" name="dateTo" id="date-to" />
+                  </td>
+                </tr>
+                <tr>
+                  <th>노출시간</th>
+                  <td>
+                    <input type="time" name="timeFrom" id="time-from" />
+                    &nbsp; ~ &nbsp;
+                    <input type="time" name="timeTo" id="time-to" />
+                  </td>
+                </tr>
+                <tr>
+                  <th>배너파일</th>
+                  <td>
+                    <input type="file" name="file" id="file" />
+                  </td>
+                </tr>
+              </table>
+            </div>
           </div>
         </section>
       </main>
