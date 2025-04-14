@@ -1,0 +1,35 @@
+/*
+  작성자: 손준오(sjo112777)
+  내용: 고객센터> 공지사항 목록 내용부분 css.
+*/
+
+
+.main_content_detail > p {font-size: 25px;}
+
+.main_content_detail table {
+    border: 2px solid #ccc;
+    width: 100%;
+    border-radius: 10px; /* 모서리를 둥글게 만듦 */
+  border-collapse: separate; /* 테이블 셀 사이의 간격을 허용 */
+  border-spacing: 0; /* 셀 간의 간격을 없앰 */
+
+  }
+
+.main_content_detail > table tr > td {
+    width: auto;
+    padding: 18px;
+    
+    border-bottom: 1px solid #d8d8d8;
+}
+
+.button {
+    border: none;
+    background: none;
+    padding: 0;
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+}
+
+
+
