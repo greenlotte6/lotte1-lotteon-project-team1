@@ -1,0 +1,34 @@
+/* 사이드 */
+.aside1 {
+    width: 300px;
+}
+
+.aside-img {
+    width: 100%;
+    height: 100px;
+}
+
+.aside-img2 {
+    width: 100%;
+    height: 100%;
+}
+
+.bestPro {
+    margin-top: 20px;
+    margin-left: 10px;
+    margin-bottom: 20px;
+}
+
+.bestPro > p {
+    margin-bottom: 15px;
+}
+
+.bestPro > div{
+    margin-left: 10px;
+}
+
+.items {
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+}
