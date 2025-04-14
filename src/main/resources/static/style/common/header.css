@@ -1,12 +1,9 @@
 /*
     작성자: 이현민(id3ntity99)
-    내용: header 스타일
-    TODO: NotoSansKR-Regular
 */
 
 body {
   position: relative;
-  border: 1px solid black;
 }
 
 header {
@@ -138,7 +135,8 @@ header {
 
 #menu {
   position: absolute;
-  left: 300px;
+  z-index: 5;
+  left: 5%;
   min-width: 300px;
   padding: 10px;
   border: 2px solid #ef2a23;
