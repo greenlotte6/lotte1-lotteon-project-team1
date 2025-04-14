@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>회사소개 - 롯데ON</title>
+ 
+  <link rel="stylesheet" href="/static/style/common/company/index.css">
+
+</head>
+
+<body>
+
+  <header>
+    <div class="logo">
+        <img src="https://story.lotteon.com/wp-content/uploads/2021/12/%EB%A1%AF%EB%8D%B0ON_CI_BI.png">
+    </div>
+    <nav class="nav">
+      <a href="/templates/common/company/index.html">HOME</a>
+        <a href="/templates/common/company/culture.html">기업문화</a>
+        <a href="/templates/common/company/blog.html">소식과 이야기</a>
+        <a href="/templates/common/company/recruit.html">채용</a>
+        <a href="/templates/common/company/media.html">미디어</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="main-image">
+      <img src="/static/images/culture_main.jpg" alt="메인 이미지">
+    </div>
+    <div class="hero-title">
+      <span>취향을,</span> <span>브랜드를,</span> <span>혜택을</span> 발견하는 즐거움<br>
+      <strong>지금 롯데온에서 만나요</strong>
+    </div>
+    <div class="scroll-down" onclick="scrollToNextSection()">
+      <div class="mouse">
+        <div class="wheel"></div>
+      </div>
+      <span class="scroll-text">Scroll Down</span>
+    </div>
+  </section>
+
+  <section id="description" class="description">
+    <p>쇼핑 좀 해본 사람들 이 만든 플랫폼,</p>
+    <p>롯데 ON 은 풍부한 오프라인 쇼핑 인프라 + 온라인 쇼핑 노하우 ,</p>
+    <p>IT 기술을 집대성하여 탄생한 옴니 쇼핑 종합 플랫폼입니다.</p>
+    <p>꼭 이용하고 싶은 온라인 쇼핑 플랫폼으로 발전하고 있어요</p>
+    <h3>쇼핑을 새롭게, 세상이 롯게 만들어 갑니다</h3>
+  </section>
+  
+
+  <footer>
+    <p>Copyright © 주솔지 All rights reserved.</p>
+  </footer>
+  <script>
+    function scrollToNextSection() {
+      const nextSection = document.getElementById('description');
+      if (nextSection) {
+        nextSection.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    // 페이지 스크롤에 따라 마우스 버튼 위치 조정
+    window.addEventListener('scroll', function() {
+      const scrollButton = document.getElementById('scrollButton');
+      const scrollPosition = window.scrollY;
+
+      // 페이지가 100px 이상 스크롤되면 마우스 버튼 위치 변경
+      if (scrollPosition > 100) {
+        scrollButton.style.bottom = '10px'; // 버튼이 조금 더 위로 올라옴
+      } else {
+        scrollButton.style.bottom = '20px'; // 원래 위치로 돌아옴
+      }
+    });
+  </script>
+
+</body>
+</html>

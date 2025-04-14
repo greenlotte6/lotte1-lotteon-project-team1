@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>회사소개 - 롯데ON</title>
+ 
+  <link rel="stylesheet" href="/static/style/common/company/index.css">
+  <link rel="stylesheet" href="/static/style/common/company/blog.css">
+
+</head>
+
+<body>
+
+  <header>
+    <div class="logo">
+        <img src="https://story.lotteon.com/wp-content/uploads/2021/12/%EB%A1%AF%EB%8D%B0ON_CI_BI.png">
+    </div>
+    <nav class="nav">
+      <a href="/templates/common/company/index.html">HOME</a>
+      <a href="/templates/common/company/culture.html">기업문화</a>
+      <a href="/templates/common/company/blog.html">소식과 이야기</a>
+      <a href="/templates/common/company/recruit.html">채용</a>
+      <a href="/templates/common/company/media.html">미디어</a>
+    </nav>
+  </header>
+  <section class="intro">
+    <h1>롯데ON을 더 알고 싶다면!</h1>
+    <p>우리의 다양한 이야기를 소개합니다</p>
+  </section>
+  <nav>
+    <a href="#">전체보기</a>
+    <a href="#">기업문화</a>
+    <a href="#">인터뷰</a>
+    <a href="#">채용</a>
+    <a href="#">롯데ON</a>
+    <a href="#">보도자료</a>
+    <a href="#">ESG</a>
+  </nav>
+  <div class="container">
+    <div class="card">
+      <img src="/static/images/interview.jpg" alt="팀워크">
+      <div class="content">
+        <div class="tag">인터뷰</div>
+        <h3>함께 성장하는 팀, UX 디자이너 김지영</h3>
+        <p>사용자 중심의 디자인과 협업으로 만들어낸 변화의 이야기</p>
+      </div>
+    </div>
+  
+    <div class="card">
+      <img src="/static/images/recruit.jpg" alt="채용설명회">
+      <div class="content">
+        <div class="tag">채용</div>
+        <h3>2025 상반기 채용 설명회 스케치</h3>
+        <p>미래의 롯데ON인을 위한 오프라인 채용 행사 현장 공개!</p>
+      </div>
+    </div>
+  
+    <div class="card">
+      <img src="/static/images/esg.jpg" alt="ESG활동">
+      <div class="content">
+        <div class="tag">ESG</div>
+        <h3>친환경 포장재 도입으로 한 걸음 더</h3>
+        <p>롯데ON의 지속가능한 물류 혁신 스토리</p>
+      </div>
+    </div>
+  
+    <div class="card">
+      <img src="/static/images/company_culture.jpg" alt="팀프로젝트">
+      <div class="content">
+        <div class="tag">기업문화</div>
+        <h3>일 잘하는 조직 문화, 어떻게 만들까?</h3>
+        <p>애자일 기반 협업 문화와 자율적인 분위기를 경험해보세요</p>
+      </div>
+    </div>
+  
+    <div class="card">
+      <img src="/static/images/delivery.jpg" alt="신제품 론칭">
+      <div class="content">
+        <div class="tag">롯데ON</div>
+        <h3>롯데ON, 신선식품 새벽배송 서비스 런칭</h3>
+        <p>더 빠르고 신선하게! 고객 만족도 95% 기록 중</p>
+      </div>
+    </div>
+  
+    <div class="card">
+      <img src="/static/images/tech.jpg" alt="기술이야기">
+      <div class="content">
+        <div class="tag">기술</div>
+        <h3>AI 추천 시스템, 어떻게 작동하나요?</h3>
+        <p>데이터 기반 추천 기술과 사용자 맞춤화 전략 소개</p>
+      </div>
+    </div>
+  </div>
+  
+  
+
+  <footer>
+    <p>Copyright © 주솔지 All rights reserved.</p>
+  </footer>
+  <script>
+    function scrollToNextSection() {
+      const nextSection = document.getElementById('description');
+      if (nextSection) {
+        nextSection.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    // 페이지 스크롤에 따라 마우스 버튼 위치 조정
+    window.addEventListener('scroll', function() {
+      const scrollButton = document.getElementById('scrollButton');
+      const scrollPosition = window.scrollY;
+
+      // 페이지가 100px 이상 스크롤되면 마우스 버튼 위치 변경
+      if (scrollPosition > 100) {
+        scrollButton.style.bottom = '10px'; // 버튼이 조금 더 위로 올라옴
+      } else {
+        scrollButton.style.bottom = '20px'; // 원래 위치로 돌아옴
+      }
+    });
+  </script>
+
+</body>
+</html>

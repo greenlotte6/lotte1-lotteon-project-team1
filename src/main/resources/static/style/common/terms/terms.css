@@ -1,0 +1,113 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #fff;
+    color: #333;
+    padding: 20px;
+  }
+  
+  .terms-wrapper {
+    max-width: 800px;
+    margin: auto;
+  }
+  
+  h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .terms-tabs {
+    display: flex;
+    gap: 16px;
+    list-style: none;
+    padding-left: 0;
+  }
+  
+  .terms-tabs li {
+    padding: 10px 15px;
+    background: #f7f7f7;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  
+  .terms-tabs li.active {
+    background: #d4000f;
+    color: white;
+  }
+  
+  .terms-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 15px;
+  }
+  
+  .terms-content p {
+    font-size: 12px;
+    color: #888;
+    margin-bottom: 10px;
+    line-height: 1.6;
+  }
+  
+
+  
+  /* 약관 탭 아이콘 스타일 */
+.terms-tabs li i {
+    margin-right: 8px;
+  }
+  
+  /* header와 main 간의 간격 */
+  .terms-wrapper {
+    margin-top: 50px;
+  }
+
+.terms-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin: 30px 0;
+  list-style: none;
+  padding: 0;
+}
+  .terms-title{
+    margin-top: 50px;
+  }
+
+  main{
+    margin-bottom: 50px;
+  }
+
+  .print-button-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+  }
+  
+  .print-button {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* 아이콘과 텍스트 간격 */
+    padding: 10px 24px;
+    font-size: 16px;
+    background-color: #d4000f;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .print-button i {
+    font-size: 18px;
+  }
+  
+  .print-button:hover {
+    background-color: #b0000c;
+  }
+
+  .terms-tabs li.active a {
+  background-color: #d4000f;
+  color: #fff;
+  border-color: #d4000f;
+}
+  

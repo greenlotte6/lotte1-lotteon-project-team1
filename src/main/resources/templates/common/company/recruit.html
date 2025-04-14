@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>회사소개 - 롯데ON</title>
+ 
+  <link rel="stylesheet" href="/static/style/common/company/index.css">
+  <link rel="stylesheet" href="/static/style/common/company/recruit.css">
+</head>
+
+<body>
+
+  <header>
+    <div class="logo">
+        <img src="https://story.lotteon.com/wp-content/uploads/2021/12/%EB%A1%AF%EB%8D%B0ON_CI_BI.png">
+    </div>
+    <nav class="nav">
+        <a href="/templates/common/company/index.html">HOME</a>
+        <a href="/templates/common/company/culture.html">기업문화</a>
+        <a href="/templates/common/company/blog.html">소식과 이야기</a>
+        <a href="/templates/common/company/recruit.html">채용</a>
+        <a href="/templates/common/company/media.html">미디어</a>
+    </nav>
+  </header>
+  <h2>쇼핑을 새롭게, 세상을 이롭게 이끌<br>쇼핑 좀 해본 인재를 모십니다</h2>
+  <p class="description">
+    롯데 ON은 안정성과 혁신성의 가치를 융합해 나가고 있으며,<br>
+    구성원들은 유쾌하고 자율적인 문화 속에서 선을 넘어선 혁신적인 서비스 설계를 주도하고 있습니다.<br>
+    롯데 ON과 함께 큰 울림을 찍어가며 성장하실 분들을 기다립니다.
+  </p>
+  <table>
+    <thead>
+      <tr>
+        <th>번호</th>
+        <th>채용부서</th>
+        <th>채용직무</th>
+        <th>채용형태</th>
+        <th>근무지</th>
+        <th>모집기간</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>4</td>
+        <td>로지스틱스</td>
+        <td>운영관리</td>
+        <td>정규직 (신입)</td>
+        <td>서울</td>
+        <td>2025-04-01 ~ 2025-04-30</td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td>IT</td>
+        <td>프론트엔드 개발</td>
+        <td>정규직 (경력)</td>
+        <td>서울/원격</td>
+        <td>2025-04-01 ~ 2025-04-30</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>플랫폼</td>
+        <td>데이터 엔지니어</td>
+        <td>정규직 (경력)</td>
+        <td>서울</td>
+        <td>2025-04-01 ~ 2025-04-30</td>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>마케팅</td>
+        <td>콘텐츠 기획</td>
+        <td>계약직 (1년)</td>
+        <td>서울</td>
+        <td>2025-04-01 ~ 2025-04-30</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="pagination">
+    <a href="#">이전</a>
+    <a href="#" class="active">1</a>
+    <a href="#">2</a>
+    <a href="#">3</a>
+    <a href="#">4</a>
+    <a href="#">5</a>
+    <a href="#">다음</a>
+  </div>
+  <div class="breadcrumb">
+    HOME > 기업문화소식과 이야기
+  </div>
+
+  
+
+  <footer>
+    <p>Copyright © 주솔지 All rights reserved.</p>
+  </footer>
+  <script>
+    function scrollToNextSection() {
+      const nextSection = document.getElementById('description');
+      if (nextSection) {
+        nextSection.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    // 페이지 스크롤에 따라 마우스 버튼 위치 조정
+    window.addEventListener('scroll', function() {
+      const scrollButton = document.getElementById('scrollButton');
+      const scrollPosition = window.scrollY;
+
+      // 페이지가 100px 이상 스크롤되면 마우스 버튼 위치 변경
+      if (scrollPosition > 100) {
+        scrollButton.style.bottom = '10px'; // 버튼이 조금 더 위로 올라옴
+      } else {
+        scrollButton.style.bottom = '20px'; // 원래 위치로 돌아옴
+      }
+    });
+  </script>
+
+</body>
+</html>
