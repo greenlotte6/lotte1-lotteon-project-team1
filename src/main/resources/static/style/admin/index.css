@@ -72,11 +72,6 @@
   border-right: none;
 }
 
-.content-title.with-underline {
-  border-bottom: 2px solid #a6a6a6;
-  box-sizing: border-box;
-}
-
 .content.mini-content {
   width: 45%;
   min-height: 300px;
