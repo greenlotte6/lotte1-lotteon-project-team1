@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>회사소개 - 롯데ON</title>
+ 
+  <link rel="stylesheet" href="/static/style/common/company/index.css">
+  <link rel="stylesheet" href="/static/style/common/company/media.css">
+</head>
+
+<body>
+
+  <header>
+    <div class="logo">
+        <img src="https://story.lotteon.com/wp-content/uploads/2021/12/%EB%A1%AF%EB%8D%B0ON_CI_BI.png">
+    </div>
+    <nav class="nav">
+        <a href="/templates/common/company/index.html">HOME</a>
+        <a href="/templates/common/company/culture.html">기업문화</a>
+        <a href="/templates/common/company/blog.html">소식과 이야기</a>
+        <a href="/templates/common/company/recruit.html">채용</a>
+        <a href="/templates/common/company/media.html">미디어</a>
+    </nav>
+    
+  </header>
+  <main>
+        <h2>미디어 세상 속 롯데ON을 소개합니다!</h2>
+        <p class="description">더 다양해진 LotteON 영상들을 소개합니다.</p>
+        <div class="video-list">
+            <div class="video-item">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/7/75/YouTube_social_white_squircle_%282017%29.svg" alt="영상 썸네일">
+            <div class="video-info">
+                <div class="video-title">#영상제목 1</div>
+                <div class="video-desc">#부제목 EP.201 | LotteON 롯데온토크쇼 방송</div>
+            </div>
+            </div>
+            <div class="video-item">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/7/75/YouTube_social_white_squircle_%282017%29.svg" alt="영상 썸네일">
+            <div class="video-info">
+                <div class="video-title">#영상제목 2</div>
+                <div class="video-desc">#부제목 EP.202 | LotteON 롯데온 미디어 영상</div>
+            </div>
+            </div>
+        </div>
+        <div class="breadcrumb">
+            HOME > 기업문화 소식과 이야기
+        </div>
+    </main>
+  
+
+  <footer>
+    <p>Copyright © 주솔지 All rights reserved.</p>
+  </footer>
+  <script>
+    function scrollToNextSection() {
+      const nextSection = document.getElementById('description');
+      if (nextSection) {
+        nextSection.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    // 페이지 스크롤에 따라 마우스 버튼 위치 조정
+    window.addEventListener('scroll', function() {
+      const scrollButton = document.getElementById('scrollButton');
+      const scrollPosition = window.scrollY;
+
+      // 페이지가 100px 이상 스크롤되면 마우스 버튼 위치 변경
+      if (scrollPosition > 100) {
+        scrollButton.style.bottom = '10px'; // 버튼이 조금 더 위로 올라옴
+      } else {
+        scrollButton.style.bottom = '20px'; // 원래 위치로 돌아옴
+      }
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,52 @@
+h2 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  p.description {
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 30px;
+  }
+  table {
+    width: 60%; /* 또는 800px 같은 고정값도 가능 */
+    margin: 0 auto; /* 가운데 정렬 */
+    border-collapse: collapse;
+  }
+  th, td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: center;
+    font-size: 14px;
+  }
+  th {
+    background-color: #f8f8f8;
+    font-weight: bold;
+  }
+  .pagination {
+    text-align: center;
+    margin-top: 20px;
+  }
+  .pagination a {
+    text-decoration: none;
+    color: #444;
+    margin: 0 5px;
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  .pagination a.active {
+    background-color: #d12c2c;
+    color: white;
+    border: 1px solid #d12c2c;
+  }
+
+  .breadcrumb {
+    font-size: 13px;
+    margin-bottom: 20px;
+    color: #666;
+  }
+
+  h2 {
+    text-align: center;
+  }

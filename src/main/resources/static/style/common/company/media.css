@@ -1,0 +1,49 @@
+h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  p.description {
+    font-size: 15px;
+    margin-bottom: 30px;
+  }
+  .video-list {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    width: 40%; 
+    margin: 0 auto; /* 가운데 정렬 */
+
+  }
+  .video-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 20px;
+  }
+  .video-item img {
+    width: 80px;
+    height: auto;
+  }
+  .video-info {
+    max-width: 600px;
+  }
+  .video-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  .video-desc {
+    font-size: 14px;
+    color: #555;
+  }
+  .breadcrumb {
+    margin-top: 40px;
+    font-size: 13px;
+    color: #666;
+  }
+
+  
+  h2 {
+    text-align: center;
+  }
