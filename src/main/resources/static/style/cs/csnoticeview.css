@@ -8,22 +8,19 @@
 
 .main_content_detail > table tr {}
 .main_content_detail > table > caption {
-    text-align: left;
-    margin-bottom: 6px;
+
 }
 
-.main_content_detail > table tr > td:nth-of-type(1) {width: 40px;}
-.main_content_detail > table tr > td:nth-of-type(2) {width: 490px;}
-.main_content_detail > table tr > td:nth-of-type(3) {width: 170px;}
+
 
 
 .main_content_detail > table tr > td {
     width: auto;
     padding: 18px;
-    
     border-bottom: 1px solid #d8d8d8;
-    text-align: center;
+    line-height: 1.6;
+
 }
 
+.main_content_detail > table tr > td > span {color: #808080; font-size: 14px; }
 
-.main_content_detail > table tr > td:nth-child(2) {text-align: left}
