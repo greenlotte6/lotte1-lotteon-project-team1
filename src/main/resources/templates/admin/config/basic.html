@@ -1,0 +1,345 @@
+<!--
+    작성자: 이현민(id3ntity99)
+    TODO: 
+    1. aside의 메뉴 클릭 시 자바스크립트 생성
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>환경설정 > 기본설정</title>
+    <link rel="stylesheet" href="/static/style/init.css" />
+    <link rel="stylesheet" href="/static/style/common/admin/header.css" />
+    <link rel="stylesheet" href="/static/style/common/admin/aside.css" />
+    <link rel="stylesheet" href="/static/style/common/admin/content.css" />
+    <link rel="stylesheet" href="/static/style/common/admin/footer.css" />
+    <link rel="stylesheet" href="/static/style/admin/config/basic.css" />
+    <link
+      rel="icon"
+      href="https://static.lotteon.com/p/common/assets/favicon/1/favicon-32.png"
+    />
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
+    <script src="/static/js/admin/settings/aside-drop.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/all.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="/static/js/admin/config/aside-drop.js"></script>
+  </head>
+  <body>
+    <div id="wrapper">
+      <header>
+        <div class="header-wrapper">
+          <img
+            src="https://static.lotteon.com/p/common/foCommon/assets/img/logo_lotte-on@2x.png"
+            alt="logo"
+          />
+          <h1>ADMINISTRATOR</h1>
+          <ul>
+            <li>
+              <span class="greeting">
+                안녕하세요, [홍길동]님, 반갑습니다.
+              </span>
+            </li>
+            <li>
+              <a href="#"> 홈 </a>
+            </li>
+            <li>
+              <a href="#"> 로그아웃 </a>
+            </li>
+            <li>
+              <a href="#"> 고객센터 </a>
+            </li>
+          </ul>
+        </div>
+        <nav class="header-padding"></nav>
+      </header>
+      <main>
+        <aside class="side-menu">
+          <ul>
+            <li id="settings-menu">
+              <i class="fa-solid fa-gear"></i>
+              <a href="/admin/config/basic"> 환경설정 </a>
+            </li>
+            <ul class="submenu settings" style="display: none">
+              <li>
+                <a href="#"> 기본설정 </a>
+              </li>
+              <li>
+                <a href="#"> 배너관리 </a>
+              </li>
+              <li>
+                <a href="#"> 약관관리 </a>
+              </li>
+              <li>
+                <a href="#"> 카테고리 </a>
+              </li>
+              <li>
+                <a href="#"> 버전이력 </a>
+              </li>
+            </ul>
+            <li id="store-menu">
+              <i class="fa-solid fa-store"></i>
+              <a href="/admin/shop/list"> 상점관리 </a>
+            </li>
+            <ul class="submenu store" style="display: none">
+              <li>
+                <a href="/admin/shop/list"> 상점목록 </a>
+              </li>
+              <li>
+                <a href="/admin/shop/sales"> 매출현황 </a>
+              </li>
+            </ul>
+            <li id="member-menu">
+              <i class="fa-solid fa-users"></i>
+              <a href="/admin/member/list"> 회원관리 </a>
+            </li>
+            <ul class="submenu member" style="display: none">
+              <li>
+                <a href="/admin/member/list"> 회원목록 </a>
+              </li>
+              <li>
+                <a href="/admin/member/point"> 포인트 관리 </a>
+              </li>
+            </ul>
+            <li id="product-menu">
+              <i class="fa-solid fa-box-open"></i>
+              <a href="/admin/product/list"> 상품관리 </a>
+            </li>
+            <ul class="submenu product" style="display: none">
+              <li>
+                <a href="/admin/product/list"> 상품목록 </a>
+              </li>
+              <li>
+                <a href="/admin/product/register"> 상품등록 </a>
+              </li>
+            </ul>
+            <li id="order-menu">
+              <i class="fa-solid fa-credit-card"></i>
+              <a href="/admin/settings/order/list"> 주문관리 </a>
+            </li>
+            <ul class="submenu order" style="display: none">
+              <li>
+                <a href="/admin/order/list"> 주문현황 </a>
+              </li>
+              <li>
+                <a href="/admin/order/delivery"> 배송현황 </a>
+              </li>
+            </ul>
+            <li id="coupon-menu">
+              <i class="fa-solid fa-ticket"></i>
+              <a href="/admin/settings/coupon/list"> 쿠폰관리 </a>
+            </li>
+            <ul class="submenu coupon" style="display: none">
+              <li>
+                <a href="/admin/coupon/list"> 쿠폰목록 </a>
+              </li>
+              <li>
+                <a href="/admin/coupon/issued"> 쿠폰발급현황 </a>
+              </li>
+            </ul>
+            <li id="cs-menu">
+              <i class="fa-solid fa-headphones"></i>
+              <a href="/admin/cs/notice/list"> 고객센터 </a>
+            </li>
+            <ul class="submenu customer-service" style="display: none">
+              <li>
+                <a href="/admin/cs/notice/list"> 공지사항 </a>
+              </li>
+              <li>
+                <a href="/admin/cs/faq/list"> 자주묻는질문 </a>
+              </li>
+              <li>
+                <a href="/admin/cs/qna/list"> 문의하기 </a>
+              </li>
+            </ul>
+          </ul>
+        </aside>
+        <section id="content-area">
+          <div class="content-area-title">
+            <h3>기본설정</h3>
+            <span>
+              <a href="#">HOME > </a>
+              <a href="#">설정 > </a>
+              <a href="#">기본설정</a>
+            </span>
+          </div>
+
+          <div class="content">
+            <div class="content-title">
+              <h3>버전 정보</h3>
+            </div>
+            <p class="desc">현재 사이트 버전을 나타냅니다</p>
+            <table class="settings-input version">
+              <tr>
+                <th>사이트 버전</th>
+                <td>1.0.1-RELEASE</td>
+              </tr>
+            </table>
+          </div>
+          <div class="content">
+            <div class="content-title">
+              <h3>사이트</h3>
+            </div>
+            <p class="desc">
+              브라우저 탭, header 및 footer에 노출될 정보를 입력합니다
+            </p>
+            <table class="settings-input site">
+              <tr>
+                <th>제목</th>
+                <td>
+                  <input type="text" name="siteTitle" />
+                </td>
+              </tr>
+              <tr>
+                <th>부제</th>
+                <td>
+                  <input type="text" name="siteSubTitle" />
+                </td>
+              </tr>
+            </table>
+            <button class="edit-btn">수정하기</button>
+          </div>
+
+          <div class="content">
+            <div class="content-title">
+              <h3>로고</h3>
+            </div>
+            <p class="desc">
+              브라우저 탭, header 및 footer에 노출될 로고 이미지를 선택합니다
+            </p>
+            <table class="settings-input logo">
+              <tr>
+                <th>헤더 로고</th>
+                <td>
+                  <input type="file" name="headerLogo" id="file-selector" />
+                </td>
+              </tr>
+              <tr>
+                <th>푸터 로고</th>
+                <td>
+                  <input type="file" name="footerLogo" id="file-selector" />
+                </td>
+              </tr>
+              <tr>
+                <th>favicon</th>
+                <td>
+                  <input type="file" name="footerLogo" id="file-selector" />
+                </td>
+              </tr>
+            </table>
+            <button class="edit-btn">수정하기</button>
+          </div>
+
+          <div class="content">
+            <div class="content-title">
+              <h3>기업 정보</h3>
+            </div>
+            <p class="desc">footer에 노출될 기업의 정보를 입력합니다</p>
+            <table class="settings-input company">
+              <tr>
+                <th>상호명</th>
+                <td>
+                  <input type="text" name="name" />
+                </td>
+              </tr>
+              <tr>
+                <th>대표이사</th>
+                <td>
+                  <input type="text" name="ceo" />
+                </td>
+              </tr>
+              <tr>
+                <th>사업자등록번호</th>
+                <td>
+                  <input type="text" name="businessId" />
+                </td>
+              </tr>
+              <tr>
+                <th>통신판매업신고</th>
+                <td>
+                  <input type="text" name="reportId" />
+                </td>
+              </tr>
+              <tr>
+                <th>기본주소</th>
+                <td>
+                  <input type="text" name="address" />
+                </td>
+              </tr>
+              <tr>
+                <th>상세주소</th>
+                <td>
+                  <input type="text" name="addressDetail" />
+                </td>
+              </tr>
+            </table>
+            <button class="edit-btn">수정하기</button>
+          </div>
+
+          <div class="content">
+            <div class="content-title">
+              <h3>고객센터 정보</h3>
+            </div>
+            <p class="desc">footer에 노출될 고객센터 정보를 입력합니다</p>
+            <table class="settings-input customer-service">
+              <tr>
+                <th>전화번호</th>
+                <td>
+                  <input type="text" name="contact" />
+                </td>
+              </tr>
+              <tr>
+                <th>업무시간</th>
+                <td>
+                  <input type="text" name="officeHours" />
+                </td>
+              </tr>
+              <tr>
+                <th>이메일</th>
+                <td>
+                  <input type="text" name="email" />
+                </td>
+              </tr>
+              <tr>
+                <th>전자금융거래 분쟁담당</th>
+                <td>
+                  <input type="text" name="disputeOfficerContact" />
+                </td>
+              </tr>
+            </table>
+            <button class="edit-btn">수정하기</button>
+          </div>
+
+          <div class="content">
+            <div class="content-title">
+              <h3>카피라이트</h3>
+            </div>
+            <p class="desc">
+              footer에 노출될 카피라이트(Copyright) 정보를 입력합니다.
+            </p>
+            <table class="settings-input">
+              <tr>
+                <th>카피라이트</th>
+                <td>
+                  <input type="text" name="copyright" />
+                </td>
+              </tr>
+            </table>
+            <button class="edit-btn">수정하기</button>
+          </div>
+        </section>
+      </main>
+      <footer>
+        <div id="footer-wrapper">
+          <span>
+            Copyright ©LotteON.co.kr All rights reserved. LotteON ADMINISTRATOR
+            Version 0.0.1
+          </span>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>
