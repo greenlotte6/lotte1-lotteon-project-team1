@@ -26,6 +26,9 @@ header {
 #account-area li {
   float: right;
   margin-left: 20px;
+}
+
+#account-area li a {
   font-size: 11px;
   line-height: 35px;
   color: #757575;
