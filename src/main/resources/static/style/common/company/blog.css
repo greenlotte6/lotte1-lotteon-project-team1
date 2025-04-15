@@ -80,3 +80,23 @@ nav {
     margin-top: 0;
     color: #333;
   }
+
+  #loadMore {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  #loadMore:hover {
+    background-color: #0056b3;
+  }
+
+
+  /*카드 필터링*/
