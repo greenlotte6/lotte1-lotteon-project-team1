@@ -35,3 +35,20 @@
 
 
 .main_content_detail > table tr > td:nth-child(2) {text-align: left}
+
+.btn {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: inline-block;
+    padding: 15px;
+    text-align: center;
+    cursor: pointer;
+    
+}
+
+.btnWrite {
+    float: right;
+    
+    background: #8EB4E3;
+    color: #fffddd;
+}
