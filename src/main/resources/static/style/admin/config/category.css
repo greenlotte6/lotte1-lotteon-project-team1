@@ -1,0 +1,71 @@
+.category {
+  width: 480px;
+  height: auto;
+  border: 2px solid #a6a6a6;
+  border-bottom: none;
+  box-sizing: border-box;
+  padding: 10px;
+}
+
+.category:last-of-type {
+  border-bottom: 2px solid #a6a6a6;
+}
+
+.category > h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.category > h3 > svg {
+  margin-right: 20px;
+}
+
+.sub-category {
+  width: 100%;
+  height: auto;
+}
+
+.sub-category > li {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.sub-category li:hover {
+  background-color: #f2f2f2;
+}
+
+.sub-category > li > span {
+  display: inline-block;
+  margin-right: 40px;
+}
+
+.sub-category .delete-btn {
+  border: 2px solid red;
+  color: red;
+  background-color: inherit;
+  cursor: pointer;
+}
+
+.add-sub-cate-btn {
+  width: 140px;
+  height: 35px;
+  border: 0;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 5px;
+  cursor: pointer;
+}
+
+.add-sub-cate-btn > svg {
+  color: #808080;
+  border: 2px solid #808080;
+  box-sizing: border-box;
+}
+
+.add-sub-cate-btn > span {
+  color: #808080;
+}
