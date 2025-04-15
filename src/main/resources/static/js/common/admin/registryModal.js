@@ -8,7 +8,7 @@ $(() => {
     draggable: false,
     resizable: false,
     width: 860,
-    height: 600,
+    height: "auto",
   });
 
   $(".registry-modal-btn").click((e) => {
