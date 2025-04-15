@@ -1,0 +1,140 @@
+.pagination {
+  width: 100%;
+}
+
+.versions {
+  width: 100%;
+  height: auto;
+  border-collapse: collapse;
+  border-top: 2px solid #a6a6a6;
+  box-sizing: border-box;
+}
+
+.versions tr {
+  padding: 10px;
+  border-bottom: 1px solid #a6a6a6;
+  box-sizing: border-box;
+}
+
+.versions th {
+  vertical-align: middle;
+  height: 40px;
+}
+
+.versions td {
+  font-size: 14px;
+  text-align: center;
+  padding: 15px;
+}
+
+.version-detail-btn {
+  background-color: #a6a6a6;
+  color: #fff;
+  border: 0;
+}
+
+.version-detail {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.version-detail table {
+  width: 100%;
+  height: auto;
+  border-collapse: collpase;
+  border-bottom: 1px solid #a6a6a6;
+  box-sizing: border-box;
+  margin: 0 auto;
+  margin-top: 20px;
+}
+
+.version-detail table tr {
+  border-top: 1px solid #a6a6a6;
+  box-sizing: border-box;
+}
+
+.version-detail table th {
+  height: 40px;
+  line-height: 40px;
+  vertical-align: middle;
+  background-color: #f2f2f2;
+}
+
+.version-detail table td {
+  text-align: left;
+  padding: 10px;
+  vertical-align: middle;
+}
+
+.version-detail table td ul {
+  padding: 80px 0;
+}
+
+.version-detail table td li {
+  margin-bottom: 20px;
+}
+
+.green-btn {
+  background-color: #00b050;
+  color: white;
+  margin-top: 40px;
+  width: 130px;
+  height: 40px;
+  border: 0;
+  outline: none;
+  cursor: pointer;
+}
+
+.version-registry {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.version-registry table {
+  width: 100%;
+  height: auto;
+  border-collapse: collpase;
+  border-bottom: 1px solid #a6a6a6;
+  box-sizing: border-box;
+  margin: 0 auto;
+  margin-top: 20px;
+}
+
+.version-registry th {
+  height: 40px;
+  line-height: 40px;
+  vertical-align: middle;
+  background-color: #f2f2f2;
+}
+
+.version-registry table tr {
+  border-top: 1px solid #a6a6a6;
+  box-sizing: border-box;
+}
+
+.version-registry table td {
+  padding: 20px;
+}
+
+.version-registry table td input {
+  width: 300px;
+  height: 30px;
+  outline: none;
+  border: 1px solid #a6a6a6;
+  box-sizing: border-box;
+}
+
+.version-registry table textarea {
+  width: 100%;
+  height: 275px;
+  resize: none;
+  padding: 10px;
+  border: 1px solid #a6a6a6;
+  -webkit-box-sizing: border-box; /* <=iOS4, <= Android  2.3 */
+  -moz-box-sizing: border-box; /* FF1+ */
+  box-sizing: border-box; /* Chrome, IE8, Opera, Safari 5.1*/
+}

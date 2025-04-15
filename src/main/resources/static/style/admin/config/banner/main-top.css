@@ -75,6 +75,7 @@
   background-color: #a6a6a6;
   color: #fff;
   border: 0;
+  cursor: pointer;
 }
 
 .activation-btn {
@@ -96,31 +97,9 @@
   background-color: #c0080f;
 }
 
-.crud-btn-area {
-  display: flex;
-  justify-content: space-between;
-}
-
-.enroll-btn {
-  width: 95px;
-  height: 35px;
-  margin-top: 30px;
-  border: 0;
-  color: #fff;
-  cursor: pointer;
-}
-
-.delete-btn {
-  background-color: #bfbfbf;
-}
-
-.register-btn {
-  background-color: #8eb4e3;
-}
-
 .banner-registry {
   width: 660px;
-  height: 460px;
+  height: 200px;
   padding: 10px;
   border-collapse: collapse;
   border-top: 1px solid #a6a6a6;
@@ -128,7 +107,7 @@
 }
 
 .banner-registry th {
-  width: 33%;
+  width: 25%;
   background-color: #f2f2f2;
 }
 
@@ -145,4 +124,15 @@
 
 .banner-registry input[type="file"] {
   width: 250px;
+}
+
+.submit-btn {
+  display: block;
+  background-color: #00b050;
+  color: white;
+  width: 135px;
+  height: 45px;
+  margin: 0 auto;
+  margin-top: 20px;
+  border: 0;
 }

@@ -1,39 +1,26 @@
-<!--
-    작성자: 이현민(id3ntity99)
--->
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>환경설정 > 기본설정</title>
+    <title>환경설정 > 약관관리</title>
     <link rel="stylesheet" href="/static/style/init.css" />
     <link rel="stylesheet" href="/static/style/common/admin/header.css" />
     <link rel="stylesheet" href="/static/style/common/admin/aside.css" />
     <link rel="stylesheet" href="/static/style/common/admin/content.css" />
     <link rel="stylesheet" href="/static/style/common/admin/footer.css" />
-    <link
-      rel="stylesheet"
-      href="/static/style/admin/config/banner/main-top.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css"
-    />
+    <link rel="stylesheet" href="/static/style/admin/config/policy.css" />
     <link
       rel="icon"
       href="https://static.lotteon.com/p/common/assets/favicon/1/favicon-32.png"
     />
-    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-    <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
-    <script src="/static/js/admin/config/aside-drop.js"></script>
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/all.min.js"
       crossorigin="anonymous"
     ></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
     <script src="/static/js/admin/config/aside-drop.js"></script>
-    <script src="/static/js/admin/config/banner/info.js"></script>
-    <script src="/static/js/admin/config/banner/registry.js"></script>
   </head>
   <body>
     <div id="wrapper">
@@ -166,183 +153,107 @@
         </aside>
         <section id="content-area">
           <div class="content-area-title">
-            <h3>배너관리</h3>
+            <h3>약관관리</h3>
             <span>
-              <a href="#">HOME > </a>
-              <a href="#">설정 > </a>
-              <a href="#">배너관리</a>
+              <a href="#">HOME&nbsp;>&nbsp; </a>
+              <a href="#">환경설정&nbsp;>&nbsp;</a>
+              <a href="#">약관관리</a>
             </span>
           </div>
-
-          <nav class="tab">
-            <a class="tab-option active" href="/admin/config/banner/main/top"
-              >메인상단 배너</a
-            >
-            <a class="tab-option" href="/admin/config/banner/main/slider"
-              >메인슬라이더 배너</a
-            >
-            <a class="tab-option" href="/admin/config/banner/product/detail"
-              >상품 상세보기배너</a
-            >
-            <a class="tab-option" href="/admin/config/banner/user/login"
-              >회원로그인 배너</a
-            >
-            <a class="tab-option" href="/admin/config/banner/mypage"
-              >마이페이지 배너</a
-            >
-          </nav>
-
-          <div class="content">
+          <div class="content graph-area">
             <div class="content-title">
-              <h3>메인상단 배너</h3>
+              <h3>구매회원약관</h3>
             </div>
-            <table>
+            <p class="desc">회원가입 및 정책 페이지에 노출되는 약관입니다</p>
+            <table class="policy">
               <tbody>
                 <tr>
-                  <th>
-                    <input
-                      type="checkbox"
-                      name="selected-banner"
-                      id="banner-checkbox"
-                      onclick="return false;"
-                    />
-                  </th>
-                  <th>번호</th>
-                  <th>이미지</th>
-                  <th>배너정보</th>
-                  <th>배너위치</th>
-                  <th>시작일</th>
-                  <th>종료일</th>
-                  <th>시작시간</th>
-                  <th>종료시간</th>
-                  <th>관리</th>
-                </tr>
-                <tr>
+                  <th>약관내용</th>
                   <td>
-                    <input
-                      type="checkbox"
-                      name="selected-banner"
-                      id="banner-checkbox"
-                    />
-                  </td>
-                  <td>1</td>
-                  <td>
-                    <img src="/static/images/img-symbol.jpg" alt="" />
-                  </td>
-                  <td>
-                    <button class="banner-info-btn banner-btn">
-                      배너정보 보기
-                    </button>
-                    <div
-                      class="banner-info"
-                      title="배너 정보 상세"
-                      style="display: none"
+                    <textarea name="policy-content" id="policy-content">
+약관데이터 출력하기</textarea
                     >
-                      <ul>
-                        <li>배너명</li>
-                        <li>크기: 1200*800</li>
-                        <li>배경색: #ff1100</li>
-                        <li>배너링크</li>
-                      </ul>
-                    </div>
-                  </td>
-                  <td>MAIN1</td>
-                  <td>2023/01/01</td>
-                  <td>2023/01/31</td>
-                  <td>00:00</td>
-                  <td>23:59</td>
-                  <td>
-                    <button class="activation-btn activate-btn">활성화</button>
-                    <button class="activation-btn inactivate-btn">
-                      비활성화
-                    </button>
                   </td>
                 </tr>
               </tbody>
             </table>
-            <div class="crud-btn-area">
-              <button class="enroll-btn delete-btn">선택삭제</button>
-              <button class="enroll-btn register-btn">배너등록</button>
+            <button class="modify-btn">수정하기</button>
+          </div>
+          <div class="content graph-area">
+            <div class="content-title">
+              <h3>판매회원약관</h3>
             </div>
-
-            <div class="registry-modal" title="배너 등록">
-              <table class="banner-registry">
+            <p class="desc">회원가입 및 정책 페이지에 노출되는 약관입니다</p>
+            <table class="policy">
+              <tbody>
                 <tr>
-                  <th>배너이름</th>
+                  <th>약관내용</th>
                   <td>
-                    <input type="text" name="name" placeholder="배너명 입력" />
+                    <textarea name="policy-content" id="policy-content">
+약관데이터 출력하기</textarea
+                    >
                   </td>
                 </tr>
-                <tr>
-                  <th>배너크기</th>
-                  <td>
-                    <input
-                      type="text"
-                      name="size"
-                      placeholder="배너사이즈 입력"
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <th>배경색</th>
-                  <td>
-                    <input
-                      type="text"
-                      name="backgroudColor"
-                      placeholder="배경색 입력"
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <th>배너링크</th>
-                  <td>
-                    <input
-                      type="text"
-                      name="link"
-                      placeholder="배너링크 입력"
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <th>배너위치</th>
-                  <td>
-                    <select name="location" id="location">
-                      <option value="">선택</option>
-                      <option value="main1">MAIN1</option>
-                      <option value="main2">MAIN2</option>
-                      <option value="product1">PRODUCT1</option>
-                      <option value="member1">MEMBER1</option>
-                      <option value="my1">MY1</option>
-                    </select>
-                  </td>
-                </tr>
-                <tr>
-                  <th>노출날짜</th>
-                  <td>
-                    <input type="date" name="dateFrom" id="date-from" />
-                    &nbsp; ~ &nbsp;
-                    <input type="date" name="dateTo" id="date-to" />
-                  </td>
-                </tr>
-                <tr>
-                  <th>노출시간</th>
-                  <td>
-                    <input type="time" name="timeFrom" id="time-from" />
-                    &nbsp; ~ &nbsp;
-                    <input type="time" name="timeTo" id="time-to" />
-                  </td>
-                </tr>
-                <tr>
-                  <th>배너파일</th>
-                  <td>
-                    <input type="file" name="file" id="file" />
-                  </td>
-                </tr>
-              </table>
-              <div>
-                <button class="submit-btn">등록하기</button>
-              </div>
+              </tbody>
+            </table>
+            <button class="modify-btn">수정하기</button>
+          </div>
+          <div class="content graph-area">
+            <div class="content-title">
+              <h3>전자금융거래 약관</h3>
             </div>
+            <p class="desc">회원가입 및 정책 페이지에 노출되는 약관입니다</p>
+            <table class="policy">
+              <tbody>
+                <tr>
+                  <th>약관내용</th>
+                  <td>
+                    <textarea name="policy-content" id="policy-content">
+약관데이터 출력하기</textarea
+                    >
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <button class="modify-btn">수정하기</button>
+          </div>
+          <div class="content graph-area">
+            <div class="content-title">
+              <h3>위치정보이용약관</h3>
+            </div>
+            <p class="desc">회원가입 및 정책 페이지에 노출되는 약관입니다</p>
+            <table class="policy">
+              <tbody>
+                <tr>
+                  <th>약관내용</th>
+                  <td>
+                    <textarea name="policy-content" id="policy-content">
+약관데이터 출력하기</textarea
+                    >
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <button class="modify-btn">수정하기</button>
+          </div>
+          <div class="content graph-area">
+            <div class="content-title">
+              <h3>개인정보처리방침</h3>
+            </div>
+            <p class="desc">회원가입 및 정책 페이지에 노출되는 약관입니다</p>
+            <table class="policy">
+              <tbody>
+                <tr>
+                  <th>약관내용</th>
+                  <td>
+                    <textarea name="policy-content" id="policy-content">
+약관데이터 출력하기</textarea
+                    >
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <button class="modify-btn">수정하기</button>
           </div>
         </section>
       </main>

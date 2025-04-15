@@ -1,21 +1,23 @@
-<!--
-    작성자: 이현민(id3ntity99)
--->
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>환경설정 > 기본설정</title>
+    <title>환경설정 > 버전관리</title>
     <link rel="stylesheet" href="/static/style/init.css" />
     <link rel="stylesheet" href="/static/style/common/admin/header.css" />
     <link rel="stylesheet" href="/static/style/common/admin/aside.css" />
     <link rel="stylesheet" href="/static/style/common/admin/content.css" />
     <link rel="stylesheet" href="/static/style/common/admin/footer.css" />
-    <link rel="stylesheet" href="/static/style/admin/config/basic.css" />
+    <link rel="stylesheet" href="/static//style/common/pagination.css" />
+    <link rel="stylesheet" href="/static/style/admin/config/version.css" />
     <link
       rel="icon"
       href="https://static.lotteon.com/p/common/assets/favicon/1/favicon-32.png"
+    />
+    <link
+      rel="stylesheet"
+      href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css"
     />
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/all.min.js"
@@ -24,6 +26,7 @@
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
     <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
     <script src="/static/js/admin/config/aside-drop.js"></script>
+    <script src="/static/js/admin/config/version.js"></script>
   </head>
   <body>
     <div id="wrapper">
@@ -62,19 +65,19 @@
             </li>
             <ul class="submenu settings" style="display: none">
               <li>
-                <a href="#"> 기본설정 </a>
+                <a href="/admin/config/basic"> 기본설정 </a>
               </li>
               <li>
-                <a href="#"> 배너관리 </a>
+                <a href="/admin/config/banner"> 배너관리 </a>
               </li>
               <li>
-                <a href="#"> 약관관리 </a>
+                <a href="/admin/config/policy"> 약관관리 </a>
               </li>
               <li>
-                <a href="#"> 카테고리 </a>
+                <a href="/admin/config/category"> 카테고리 </a>
               </li>
               <li>
-                <a href="#"> 버전이력 </a>
+                <a href="/admin/config/version"> 버전이력 </a>
               </li>
             </ul>
             <li id="store-menu">
@@ -156,176 +159,114 @@
         </aside>
         <section id="content-area">
           <div class="content-area-title">
-            <h3>기본설정</h3>
+            <h3>버전관리</h3>
             <span>
-              <a href="#">HOME > </a>
-              <a href="#">설정 > </a>
-              <a href="#">기본설정</a>
+              <a href="#">HOME&nbsp;>&nbsp; </a>
+              <a href="#">환경설정&nbsp;>&nbsp;</a>
+              <a href="#">버전관리</a>
             </span>
           </div>
-
           <div class="content">
             <div class="content-title">
-              <h3>버전 정보</h3>
+              <h3>버전목록</h3>
             </div>
-            <p class="desc">현재 사이트 버전을 나타냅니다</p>
-            <table class="settings-input version">
+            <p class="desc">사이트 버전 목록입니다</p>
+            <table class="versions">
               <tr>
-                <th>사이트 버전</th>
-                <td>1.0.1-RELEASE</td>
+                <th>
+                  <input type="checkbox" onclick="return false;" />
+                </th>
+                <th>번호</th>
+                <th>버전</th>
+                <th>작성자</th>
+                <th>등록일시</th>
+                <th>변경내역</th>
+              </tr>
+              <tr>
+                <td>
+                  <input type="checkbox" />
+                </td>
+                <td>1</td>
+                <td>0.0.1-SNAPSHOT</td>
+                <td>chhak0503</td>
+                <td>2025.04.15 10:28:31</td>
+                <td>
+                  <button class="version-detail-btn">상세</button>
+                </td>
               </tr>
             </table>
+            <div class="crud-btn-area">
+              <button class="enroll-btn delete-btn">선택삭제</button>
+              <button class="enroll-btn register-btn">배너등록</button>
+            </div>
+            <div class="version-detail" title="버전확인" style="display: none">
+              <table>
+                <tbody>
+                  <tr>
+                    <th>버전</th>
+                    <td>0.0.1-SNAPSHOT</td>
+                  </tr>
+                  <tr>
+                    <th>변경내역</th>
+                    <td>
+                      <ul>
+                        <li>- 프로젝트 생성 및 전체 구조 설계</li>
+                        <li>- 회원가입 아이디 중복체크 완료</li>
+                        <li>- 관리자 상품 등록 완료</li>
+                        <li>- 쇼핑몰 메인 및 개별 페이지 링크 작업</li>
+                        <li>- 개발을 위한 제반 사항 처리</li>
+                      </ul>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <button class="green-btn close-btn">닫기</button>
+            </div>
+            <div
+              class="version-registry"
+              title="버전확인"
+              style="display: none"
+            >
+              <table>
+                <tbody>
+                  <tr>
+                    <th>버전</th>
+                    <td>
+                      <input type="text" placeholder="버전을 입력하세요" />
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>변경내역</th>
+                    <td>
+                      <textarea
+                        name="change-detail"
+                        id="version-change-detail"
+                        placeholder="변경내역을 입력하세요"
+                      ></textarea>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <button class="green-btn submit-btn">등록하기</button>
+            </div>
           </div>
-          <div class="content">
-            <div class="content-title">
-              <h3>사이트</h3>
-            </div>
-            <p class="desc">
-              브라우저 탭, header 및 footer에 노출될 정보를 입력합니다
-            </p>
-            <table class="settings-input site">
-              <tr>
-                <th>제목</th>
-                <td>
-                  <input type="text" name="siteTitle" />
-                </td>
-              </tr>
-              <tr>
-                <th>부제</th>
-                <td>
-                  <input type="text" name="siteSubTitle" />
-                </td>
-              </tr>
-            </table>
-            <button class="edit-btn">수정하기</button>
-          </div>
-
-          <div class="content">
-            <div class="content-title">
-              <h3>로고</h3>
-            </div>
-            <p class="desc">
-              브라우저 탭, header 및 footer에 노출될 로고 이미지를 선택합니다
-            </p>
-            <table class="settings-input logo">
-              <tr>
-                <th>헤더 로고</th>
-                <td>
-                  <input type="file" name="headerLogo" id="file-selector" />
-                </td>
-              </tr>
-              <tr>
-                <th>푸터 로고</th>
-                <td>
-                  <input type="file" name="footerLogo" id="file-selector" />
-                </td>
-              </tr>
-              <tr>
-                <th>favicon</th>
-                <td>
-                  <input type="file" name="footerLogo" id="file-selector" />
-                </td>
-              </tr>
-            </table>
-            <button class="edit-btn">수정하기</button>
-          </div>
-
-          <div class="content">
-            <div class="content-title">
-              <h3>기업 정보</h3>
-            </div>
-            <p class="desc">footer에 노출될 기업의 정보를 입력합니다</p>
-            <table class="settings-input company">
-              <tr>
-                <th>상호명</th>
-                <td>
-                  <input type="text" name="name" />
-                </td>
-              </tr>
-              <tr>
-                <th>대표이사</th>
-                <td>
-                  <input type="text" name="ceo" />
-                </td>
-              </tr>
-              <tr>
-                <th>사업자등록번호</th>
-                <td>
-                  <input type="text" name="businessId" />
-                </td>
-              </tr>
-              <tr>
-                <th>통신판매업신고</th>
-                <td>
-                  <input type="text" name="reportId" />
-                </td>
-              </tr>
-              <tr>
-                <th>기본주소</th>
-                <td>
-                  <input type="text" name="address" />
-                </td>
-              </tr>
-              <tr>
-                <th>상세주소</th>
-                <td>
-                  <input type="text" name="addressDetail" />
-                </td>
-              </tr>
-            </table>
-            <button class="edit-btn">수정하기</button>
-          </div>
-
-          <div class="content">
-            <div class="content-title">
-              <h3>고객센터 정보</h3>
-            </div>
-            <p class="desc">footer에 노출될 고객센터 정보를 입력합니다</p>
-            <table class="settings-input customer-service">
-              <tr>
-                <th>전화번호</th>
-                <td>
-                  <input type="text" name="contact" />
-                </td>
-              </tr>
-              <tr>
-                <th>업무시간</th>
-                <td>
-                  <input type="text" name="officeHours" />
-                </td>
-              </tr>
-              <tr>
-                <th>이메일</th>
-                <td>
-                  <input type="text" name="email" />
-                </td>
-              </tr>
-              <tr>
-                <th>전자금융거래 분쟁담당</th>
-                <td>
-                  <input type="text" name="disputeOfficerContact" />
-                </td>
-              </tr>
-            </table>
-            <button class="edit-btn">수정하기</button>
-          </div>
-
-          <div class="content">
-            <div class="content-title">
-              <h3>카피라이트</h3>
-            </div>
-            <p class="desc">
-              footer에 노출될 카피라이트(Copyright) 정보를 입력합니다.
-            </p>
-            <table class="settings-input">
-              <tr>
-                <th>카피라이트</th>
-                <td>
-                  <input type="text" name="copyright" />
-                </td>
-              </tr>
-            </table>
-            <button class="edit-btn">수정하기</button>
+          <div class="pagination">
+            <a class="page move" href="#">
+              <i class="fa-solid fa-angles-left"></i>
+            </a>
+            <a class="page move" href="#">
+              <i class="fa-solid fa-chevron-left"></i>
+            </a>
+            <a class="page" href="">1</a>
+            <a class="page" href="">2</a>
+            <a class="page" href="">3</a>
+            <a class="page" href="">4</a>
+            <a class="page move" href="#">
+              <i class="fa-solid fa-chevron-right"></i>
+            </a>
+            <a class="page move" href="#">
+              <i class="fa-solid fa-angles-right"></i>
+            </a>
           </div>
         </section>
       </main>
