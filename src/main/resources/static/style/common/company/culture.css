@@ -1,0 +1,359 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    color: #333;
+  }
+  
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .logo {
+    font-weight: bold;
+    font-size: 20px;
+  }
+
+  .logo > img {
+    width: 166px;
+    height: 49.09px;
+  }
+  
+  .nav a {
+    margin-left: 20px;
+    text-decoration: none;
+    color: #555;
+    font-weight: 500;
+  }
+  
+  .nav a:hover {
+    color: #000;
+  }
+  
+  .hero {
+    position: relative;
+    width: 100%;
+    height: 800px; 
+    background-color: #f8f8f8;
+    overflow: hidden;
+  }
+  .main-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center; 
+    display: block;
+  }
+
+  
+  
+  .hero-title {
+    position: absolute;
+    bottom: 100px;   /* 아래에서 띄우기 */
+    left: 100px;     /* 왼쪽에서 띄우기 */
+    font-size: 40px;
+    font-weight: bold;
+    color: white;
+    text-align: left;
+    line-height: 1.4;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5);
+    z-index: 2;
+  }
+  
+  .hero-title span {
+    display: inline-block;
+    margin-right: 10px;
+  }
+  
+ /* 스크롤 다운 화살표도 이미지 위에 위치시키기 */
+ .scroll-down {
+    position: absolute;
+    top: 50%;
+    right: 40px;
+    transform: translateY(-50%);
+    z-index: 2;
+    text-align: center;
+    cursor: pointer;
+    transition: bottom 0.3s ease; /* 스크롤에 따라 부드럽게 이동 */
+  }
+  .mouse {
+    width: 30px;
+    height: 50px;
+    border: 2px solid white;
+    border-radius: 25px;
+    margin: 0 auto;
+    position: relative;
+  }
+  
+  .wheel {
+    width: 6px;
+    height: 10px;
+    background: white;
+    border-radius: 3px;
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: wheelMove 1.2s infinite;
+  }
+  
+  .scroll-text {
+    margin-top: 10px;
+    color: white;
+    font-size: 14px;
+  }
+  
+  @keyframes wheelMove {
+    0% {
+      opacity: 1;
+      top: 10px;
+    }
+    100% {
+      opacity: 0;
+      top: 25px;
+    }
+  }
+  
+  .description {
+    padding: 60px 40px;
+    background-color: #fff;
+    text-align: center;
+  }
+  
+  .description p {
+    margin: 10px 0;
+    font-size: 16px;
+  }
+  
+  .description h3 {
+    margin-top: 30px;
+    font-size: 20px;
+    font-weight: bold;
+  }
+  
+  footer {
+    padding: 20px;
+    text-align: center;
+    font-size: 14px;
+    color: #999;
+    background-color: #f0f0f0;
+    border-top: 1px solid #ddd;
+  }
+  
+  /* 애니메이션 */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes bounce {
+    0%, 100% {
+      transform: translateY(0); 
+    }
+    50% {
+      transform: translateY(10px);
+    }
+  }
+
+     /* 페이지 내용 */
+     .section {
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 40px 20px;
+      }
+      .main-title {
+        font-size: 24px;
+        margin-bottom: 40px;
+        font-weight: bold;
+      }
+      /* 슬라이드 */
+      .carousel-wrapper {
+        position: relative;
+        width: 80%;
+        max-width: 1000px;
+        overflow: hidden;
+      }
+      .carousel {
+        display: flex;
+        transition: transform 0.5s ease-in-out;
+      }
+      .slide {
+        min-width: 100%;
+        box-sizing: border-box;
+        padding: 20px;
+      }
+      .slide img {
+        width: 150px;
+        height: 100px;
+        background: #ccc;
+        display: block;
+        margin: 0 auto 10px;
+      }
+      .desc-title {
+        font-size: 16px;
+        font-weight: bold;
+        margin-top: 10px;
+      }
+      .desc-text {
+        font-size: 14px;
+        color: #444;
+        margin-top: 10px;
+        line-height: 1.6;
+      }
+      /* 버튼 */
+      .arrow-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 24px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 10px;
+        z-index: 10;
+      }
+      .arrow-left {
+        left: 10px;
+      }
+      .arrow-right {
+        right: 10px;
+      }
+
+
+
+
+/*기업문화 부분*/
+.lotteon-work-style {
+    max-width: 1200px;
+    margin: 100px auto;
+    padding: 0 20px;
+    font-family: "Dotum", "돋움", sans-serif;
+  }
+  
+  .lotteon-work-style h2 {
+    font-size: 28px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 60px;
+  }
+  
+  .work-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+    padding: 30px;
+    margin-bottom: 40px;
+    gap: 40px;
+    flex-wrap: wrap;
+    transition: transform 0.3s ease;
+  }
+  
+  .work-item:hover {
+    transform: translateY(-4px);
+  }
+  
+  .work-item.reverse {
+    flex-direction: row-reverse;
+  }
+  
+  .work-image {
+    flex: 1 1 45%;
+  }
+  
+  .work-image img {
+    width: 100%;
+    border-radius: 12px;
+    object-fit: cover;
+  }
+  
+  .work-text {
+    flex: 1 1 45%;
+  }
+  
+  .work-text h3 {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 16px;
+    color: #222;
+  }
+  
+  .work-text p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #555;
+  }
+
+
+  /*기업문화 섹션*/
+  .culture-section {
+    max-width: 1000px;
+    margin: 80px auto;
+    padding: 0 20px;
+    text-align: center;
+  }
+  
+  .culture-title {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 50px;
+    line-height: 1.4;
+  }
+  
+  .culture-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
+  }
+  
+  .culture-card {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    text-align: left;
+    transition: transform 0.3s ease;
+  }
+  
+  .culture-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .culture-icon {
+    font-size: 36px;
+    margin-bottom: 15px;
+  }
+  
+  .culture-card h3 {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+  
+  .culture-card p {
+    font-size: 15px;
+    color: #333;
+    line-height: 1.6;
+  }
+  

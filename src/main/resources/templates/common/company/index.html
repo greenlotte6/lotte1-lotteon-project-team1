@@ -45,10 +45,65 @@
     <p>롯데 ON 은 풍부한 오프라인 쇼핑 인프라 + 온라인 쇼핑 노하우 ,</p>
     <p>IT 기술을 집대성하여 탄생한 옴니 쇼핑 종합 플랫폼입니다.</p>
     <p>꼭 이용하고 싶은 온라인 쇼핑 플랫폼으로 발전하고 있어요</p>
-    <h3>쇼핑을 새롭게, 세상이 롯게 만들어 갑니다</h3>
+
   </section>
   
+<section class="card-carousel">
+  <h2>쇼핑을 새롭게, 세상을 이롭게 만들어 나가요.</h2>
+  <div class="carousel-container">
+    <button class="arrow prev" onclick="scrollCards(-1)">&#10094;</button>
 
+    <div class="cards-wrapper" id="cardWrapper">
+      <div class="card-item">
+        <img src="/static/images/company1.jpg" alt="성장">
+        <h3>함께하는 성장, 세상을 더 이롭게 만들어요</h3>
+        <p>ESG를 실천하고 있는 다양한 사회공헌 활동을 진행하고 있어요.</p>
+      </div>
+      <div class="card-item">
+        <img src="/static/images/company2.jpg" alt="고객중심 서비스">
+        <h3>고객이 원하고 만족하는 서비스를 만들어요</h3>
+        <p>고객 경험을 중심으로 한 다양한 영역에서 새로운 서비스를 만들고 있어요.</p>
+      </div>
+      <div class="card-item">
+        <img src="/static/images/company3.jpg" alt="디지털전환">
+        <h3>데이터 기반의 디지털 전환</h3>
+        <p>AI와 데이터 분석으로 더욱 스마트한 쇼핑 경험을 제공합니다.</p>
+      </div>
+      <div class="card-item">
+        <img src="/static/images/company4.jpg" alt="혁신기술">
+        <h3>최신 기술로 더 나은 일상을 만들어요</h3>
+        <p>AR/VR, IoT 등 혁신 기술로 유통의 새로운 기준을 제시하고 있어요.</p>
+      </div>
+      <div class="card-item">
+        <img src="/static/images/company5.jpg" alt="글로벌 진출">
+        <h3>글로벌 무대에서 도전하고 성장해요</h3>
+        <p>해외 시장에서도 통할 수 있는 서비스로 글로벌 확장을 준비하고 있어요.</p>
+      </div>
+      <div class="card-item">
+        <img src="/static/images/company6.jpg" alt="지속가능경영">
+        <h3>지속 가능한 미래를 위한 노력</h3>
+        <p>친환경 포장, 에너지 절감 등 지속가능경영을 실천 중이에요.</p>
+      </div>
+    </div>
+
+    <button class="arrow next" onclick="scrollCards(1)">&#10095;</button>
+  </div>
+</section>
+
+  
+      <button class="arrow next" onclick="scrollCards(1)">&#10095;</button>
+    </div>
+  </section>
+  <h2 class="center-text">
+    국내 최초의 온라인 종합쇼핑몰로 출발해<br>
+    쇼핑 경험의 변화를 이끌어내고 있어요.
+  </h2>
+  
+  <section class="center-image">
+    <img src="/static/images/blog_history.png" alt="히스토리 이미지">
+  </section>
+  
+  
   <footer>
     <p>Copyright © 주솔지 All rights reserved.</p>
   </footer>
@@ -72,6 +127,32 @@
         scrollButton.style.bottom = '20px'; // 원래 위치로 돌아옴
       }
     });
+
+
+    // 화살표 옆으로 넘기면 카드가 넘어갈 수 있게
+
+    let scrollIndex = 0;
+
+function scrollCards(direction) {
+  const wrapper = document.getElementById('cardWrapper');
+  const card = wrapper.querySelector('.card-item');
+  const visibleCount = 3;
+  const totalCards = wrapper.querySelectorAll('.card-item').length;
+
+  scrollIndex += direction;
+
+  // 경계 체크
+  if (scrollIndex < 0) scrollIndex = 0;
+  if (scrollIndex > totalCards - visibleCount) {
+    scrollIndex = totalCards - visibleCount;
+  }
+
+  const scrollAmount = scrollIndex * (card.offsetWidth + 20); // 카드 width + gap
+  wrapper.scrollTo({
+    left: scrollAmount,
+    behavior: 'smooth'
+  });
+}
   </script>
 
 </body>

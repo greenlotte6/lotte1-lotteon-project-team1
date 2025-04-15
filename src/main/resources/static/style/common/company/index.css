@@ -237,3 +237,80 @@
       .arrow-right {
         right: 10px;
       }
+
+      /*카드 넘어가는 기능 추가*/
+
+      .card-carousel {
+        padding: 60px 20px;
+        background: #f9f9f9;
+        text-align: center;
+      }
+      
+      .carousel-container {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      
+      .cards-wrapper {
+        display: flex;
+        overflow: hidden;
+        width: 960px; /* 3개 * 320px */
+        scroll-behavior: smooth;
+        gap: 20px;
+      }
+      
+      .card-item {
+        flex: 0 0 auto;
+        width: 300px;
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+        padding: 16px;
+        text-align: left;
+      }
+      
+      .card-item img {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+        border-radius: 10px;
+        margin-bottom: 12px;
+      }
+      
+      .arrow {
+        background: none;
+        border: none;
+        font-size: 32px;
+        cursor: pointer;
+        color: #888;
+        padding: 10px;
+        transition: color 0.2s ease;
+      }
+      .arrow:hover {
+        color: #000;
+      }
+
+      
+
+
+      
+
+      .center-image {
+        text-align: center;
+        margin: 40px 0;
+      }
+      
+      .center-image img {
+        max-width: 100%;
+        height: auto;
+      }
+
+      .center-text {
+        text-align: center;
+        margin-top: 60px;
+        font-size: 24px;
+        line-height: 1.5;
+      }
+      
