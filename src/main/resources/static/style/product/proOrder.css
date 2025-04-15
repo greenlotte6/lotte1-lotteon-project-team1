@@ -1,0 +1,121 @@
+.line {
+    margin-left: 50px;
+    width: 50%;
+}
+
+input {
+    border: 1px solid #bfbfbf;
+}
+
+p {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+button {
+    border: 1px solid #d9d9d9;
+}
+
+.info {
+    margin-top: 10px;
+}
+
+.delivery-info {
+    margin-left: 40px;
+}
+
+.delivery-info > div {
+    margin-top: 10px;
+}
+
+.a {
+    margin-right: 30px;
+}
+
+.a-1 {
+    margin-right: 15px;
+}
+
+.etc {
+    margin-right: 44px;
+}
+
+.Addrsearch-btn {
+    width: 70px;
+    height: 30px;
+}
+
+.addr-info {
+    margin-right: 15px;
+}
+
+.delivery-info > div > input {
+    width: 250px;
+}
+
+.info > div {
+    margin-bottom: 10px;
+}
+
+.delivery-title {
+    border-bottom: 1px solid #d9d9d9;
+}
+
+.sale-title {
+    margin-top: 40px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #d9d9d9;
+}
+
+.sale-info {
+    margin-left: 40px;
+}
+
+.cupon {
+    margin-top: 30px;
+}
+
+.point-info {
+    margin-top: 10px;
+}
+
+.point-info >span {
+    color: #808080;
+}
+
+.option-menu > option {
+    border: 1px solid #808080;
+}
+
+.point-input {
+    width: 70px;
+}
+
+.payment {
+    margin-top: 50px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #d9d9d9;
+}
+
+.payment-option {
+    margin-left: 20px;
+}
+
+.payment-option > div {
+    margin-bottom: 10px;
+}
+
+.payment-option > div > label {
+    margin-right: 30px;
+}
+
+.kakao {
+    width: 70px;
+    height: 30px;
+    margin-left: 20px;
+}
+
+
+
+
+

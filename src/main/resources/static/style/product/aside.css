@@ -32,3 +32,13 @@
     align-items: center;
     margin-left: 10px;
 }
+
+img {
+    width: 100%;
+    height: 200px;
+}
+
+.main-proimg {
+   width: 700px;
+   height: 500px;
+}
