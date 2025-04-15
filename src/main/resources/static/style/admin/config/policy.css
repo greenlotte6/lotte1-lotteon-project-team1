@@ -1,0 +1,31 @@
+.policy {
+  width: 100%;
+  height: 180px;
+  border-collapse: collapse;
+  border-top: 1px solid #a6a6a6;
+  border-bottom: 1px solid #a6a6a6;
+  box-sizing: border-box;
+}
+
+.policy th {
+  width: 90px;
+  height: 100%;
+  vertical-align: middle;
+  background-color: #dce6f2;
+}
+
+.policy td {
+  padding: 10px;
+  height: 100%;
+}
+
+#policy-content {
+  width: 100%;
+  height: 100%;
+  resize: none;
+  padding: 10px;
+  border: 2px solid #a6a6a6;
+  -webkit-box-sizing: border-box; /* <=iOS4, <= Android  2.3 */
+  -moz-box-sizing: border-box; /* FF1+ */
+  box-sizing: border-box; /* Chrome, IE8, Opera, Safari 5.1*/
+}
