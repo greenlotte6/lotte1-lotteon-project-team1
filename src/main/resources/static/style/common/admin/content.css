@@ -72,3 +72,25 @@ input[type="file"]::file-selector-button {
   background-color: #f2f2f2;
   margin-bottom: 10px;
 }
+
+.crud-btn-area {
+  display: flex;
+  justify-content: space-between;
+}
+
+.enroll-btn {
+  width: 95px;
+  height: 35px;
+  margin-top: 30px;
+  border: 0;
+  color: #fff;
+  cursor: pointer;
+}
+
+.delete-btn {
+  background-color: #bfbfbf;
+}
+
+.register-btn {
+  background-color: #8eb4e3;
+}
