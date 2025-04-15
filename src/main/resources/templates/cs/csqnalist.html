@@ -32,36 +32,48 @@
     ></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-          const maxQuestions = 3; // 최대 표시할 질문 수
-          const allRows = document.querySelectorAll('#questionTable tr');
-          const moreBtn = document.getElementById('moreBtn'); // ✅ 이 시점엔 요소가 존재함
-          let isExpanded = false;
-      
-          // 3개 이상일 경우 나머지 질문 숨기기
-          function setUpQuestions() {
-            for (let i = maxQuestions; i < allRows.length - 1; i++) {
-              allRows[i].style.display = 'none';
-            }
+    const maxQuestions = 3; // 기본 보여줄 질문 수
+    const maxVisibleQuestions = 11; // 최대 확장 시 보여줄 질문 수
+
+    document.querySelectorAll('table').forEach(table => {
+      const rows = table.querySelectorAll('tr');
+      const btn = table.querySelector('.moreBtn');
+      if (!btn) return;
+
+      let isExpanded = false;
+
+      function setUpQuestions() {
+        rows.forEach((row, index) => {
+          if (index < maxQuestions || index === rows.length - 1) {
+            row.style.display = '';
+          } else {
+            row.style.display = 'none';
           }
-      
-          // 더보기/간단히 보기 토글
-          function toggleQuestions() {
-            const hiddenRows = document.querySelectorAll('#questionTable tr:nth-child(n+' + (maxQuestions + 1) + '):not(:last-child)');
-      
-            if (isExpanded) {
-              hiddenRows.forEach(row => row.style.display = 'none');
-              moreBtn.textContent = '더보기';
-            } else {
-              hiddenRows.forEach(row => row.style.display = '');
-              moreBtn.textContent = '간단히 보기';
-            }
-      
-            isExpanded = !isExpanded;
-          }
-      
-          setUpQuestions(); // 초기 설정
-          moreBtn.addEventListener('click', toggleQuestions); // 버튼 이벤트 바인딩
         });
+      }
+
+      function toggleQuestions() {
+        rows.forEach((row, index) => {
+          if (index === rows.length - 1) return; // 버튼 row는 항상 보임
+
+          if (isExpanded) {
+            // 축소 상태로
+            row.style.display = index < maxQuestions ? '' : 'none';
+            btn.textContent = '더보기';
+          } else {
+            // 확장 상태로, 최대 10개까지만 보이게
+            row.style.display = index < maxVisibleQuestions ? '' : 'none';
+            btn.textContent = '간단히 보기';
+          }
+        });
+
+        isExpanded = !isExpanded;
+      }
+
+      setUpQuestions();
+      btn.addEventListener('click', toggleQuestions);
+    });
+  });
       </script>
   </head>
   <body>
@@ -70,9 +82,15 @@
         <div id="header-wrapper">
           <div id="account-area">
             <ul>
-              <li>고객센터</li>
-              <li>주문배송</li>
-              <li>로그인/회원가입</li>
+              <li>
+                <a href="#"> 고객센터 </a>
+              </li>
+              <li>
+                <a href="#"> 주문배송 </a>
+              </li>
+              <li>
+                <a href="#"> 로그인/회원가입 </a>
+              </li>
             </ul>
           </div>
           <div id="header-area">
@@ -134,19 +152,40 @@
               </div>
               <div class="main_content_detail">
                 <p>가입</p>
-                <table id="questionTable">
-                    <tr><td>Q. 개인회원과 법인회원에 차이가 있나요?</td></tr>
+                <table id="joinTable">
+                    <tr><td><a href="#"><span style="color: #0070c0; font-weight: 700;">Q.</span> 개인회원과 법인회원에 차이가 있나요?</a></td></tr>
                     <tr><td>Q. 두 번째 질문입니다.</td></tr>
                     <tr><td>Q. 세 번째 질문입니다.</td></tr>
                     <tr><td>Q. 네 번째 질문입니다.</td></tr>
                     <tr><td>Q. 다섯 번째 질문입니다.</td></tr>
                     <tr><td>Q. 여섯 번째 질문입니다.</td></tr>
+                    <tr><td>Q. 여섯 번째 질문입니다.</td></tr>
+                    <tr><td>Q. 일곱 번째 질문입니다.</td></tr>
+                    <tr><td>Q. 여덟 번째 질문입니다.</td></tr>
+                    <tr><td>Q. 아홉 번째 질문입니다.</td></tr>
+                    <tr><td>Q. 열 번째 질문입니다.</td></tr>
+                    <tr><td>Q. 열 한번째 질문입니다.</td></tr>
                     <tr>
-                        <td id="moreBtnCell" colspan="1" style="text-align:center;">
-                            <button id="moreBtn" class="button">더보기</button>
-                        </td>
+                      <td colspan="1" style="text-align:center;">
+                        <button class="moreBtn">더보기</button>
+                      </td>
                     </tr>
                   </table>
+
+                  <p>탈퇴</p>
+                  <table id="leaveTable">
+                      <tr><td><a href="#"><span style="color: #0070c0; font-weight: 700;">Q.</span> 회원 탈퇴 후 재가입이 가능한가요?</a></td></tr>
+                      <tr><td>Q. 두 번째 질문입니다.</td></tr>
+                      <tr><td>Q. 세 번째 질문입니다.</td></tr>
+                      <tr><td>Q. 네 번째 질문입니다.</td></tr>
+                      <tr><td>Q. 다섯 번째 질문입니다.</td></tr>
+                      <tr><td>Q. 여섯 번째 질문입니다.</td></tr>
+                      <tr>
+                        <td colspan="1" style="text-align:center;">
+                          <button class="moreBtn">더보기</button>
+                        </td>
+                      </tr>
+                    </table>
                   
               </div>
 

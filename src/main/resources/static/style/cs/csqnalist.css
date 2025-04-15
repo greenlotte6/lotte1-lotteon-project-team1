@@ -4,7 +4,7 @@
 */
 
 
-.main_content_detail > p {font-size: 25px;}
+.main_content_detail > p {font-size: 25px; margin-top: 25px; margin-bottom: 3px; }
 
 .main_content_detail table {
     border: 2px solid #ccc;
@@ -22,7 +22,7 @@
     border-bottom: 1px solid #d8d8d8;
 }
 
-.button {
+button {
     border: none;
     background: none;
     padding: 0;
