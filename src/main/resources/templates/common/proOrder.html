@@ -8,9 +8,10 @@
     <link rel="stylesheet" href="/static/style/common/header.css" />
     <link rel="stylesheet" href="/static/style/common/footer.css" />
     <link rel="stylesheet" href="/static/style/common/pagination.css">
-    <link rel="stylesheet" href="/static//style/product/proDetail.css" />
+    <link rel="stylesheet" href="/static//style/product/table.css" />
     <link rel="stylesheet" href="/static/style/product/aside.css">
     <link rel="stylesheet" href="/static/style/product/mainheader.css">
+    <link rel="stylesheet" href="/static/style/product/proOrder.css">
     <link
       rel="icon"
       href="https://static.lotteon.com/p/common/assets/favicon/1/favicon-32.png"
@@ -27,9 +28,6 @@
       src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/all.min.js"
       crossorigin="anonymous"
     ></script>
-
-    <script src="/static/js/common/proCount.js"></script>
-    <script src="/static/js/common/proDetail.js"></script>
   </head>
   <body>
     <div id="wrapper">
@@ -37,9 +35,15 @@
         <div id="header-wrapper">
           <div id="account-area">
             <ul>
-              <li>고객센터</li>
-              <li>주문배송</li>
-              <li>로그인/회원가입</li>
+              <li>
+                <a href="#"> 고객센터 </a>
+              </li>
+              <li>
+                <a href="#"> 주문배송 </a>
+              </li>
+              <li>
+                <a href="#"> 로그인/회원가입 </a>
+              </li>
             </ul>
           </div>
           <div id="header-area">
@@ -82,34 +86,34 @@
             <li id="drop-btn" class="category-drop">
               <i class="fa-solid fa-bars"></i>
             </li>
-            <li class="shortcut">
+            <li>
               <a href="#">홈</a>
             </li>
-            <li class="shortcut">
+            <li>
               <a href="#">특가</a>
             </li>
-            <li class="shortcut">
+            <li>
               <a href="#">패션</a>
             </li>
-            <li class="shortcut">
+            <li>
               <a href="#">뷰티</a>
             </li>
-            <li class="shortcut">
+            <li>
               <a href="#">라이프</a>
             </li>
-            <li class="shortcut">
+            <li>
               <a href="#">베스트</a>
             </li>
-            <li class="shortcut">
+            <li>
               <a href="#">여행</a>
             </li>
-            <li class="shortcut">
+            <li>
               <a href="#">백화점</a>
             </li>
-            <li class="shortcut">
+            <li>
               <a href="#">내일ON다</a>
             </li>
-            <li class="shortcut">
+            <li>
               <a href="#">이벤트</a>
             </li>
           </ul>
@@ -167,9 +171,7 @@
             <li>
               <h3>패션의류/잡화</h3>
             </li>
-            <li>
-              <a href="#">의류</a>
-            </li>
+            <a href="#">의류</a>
             <li>
               <a href="#">가방/지갑</a>
             </li>
@@ -283,9 +285,8 @@
         </li>
       </ul>
 
-
       <main>
-         <div class="main">
+        <div class="main">
             <aside class="aside1">
                 <div>
                     <div class="bestPro">
@@ -329,269 +330,217 @@
                 </div>
             </aside>
 
-            
             <article class="article-body">
-              <div class="article-header">
-                <div class="main-heder">
-                    <p>상품 목록</p>
-                    <ul>
-                        <li>HOME > </li>
-                        <li>패션 · 의류 · 뷰티 > </li>
-                        <li>남성의류</li>
-                    </ul>
-                </div>
+                <div class="article-header">
+                  <div class="main-heder">
+                      <p>장바구니</p>
+                      <ul>
+                          <li>HOME > </li>
+                          <li>패션 · 의류 · 뷰티 > </li>
+                          <li>장바구니</li>
+                      </ul>
+                  </div>
+                <table class="list">
+                    <tr class="table_hd">
+                        <th><input type="checkbox"></th>
+                        <th></th>
+                        <th>상품명</th>
+                        <th>수량</th>
+                        <th>판매가</th>
+                        <th>할인</th>
+                        <th>포인트</th>
+                        <th>배송비</th>
+                        <th>총합</th>
+                    </tr>
+                    <tr class="table_bd">
+                        <td><input type="checkbox"></td>
+                        <td>
+                            <img src="/templates/common/img5.png" alt="#">
+                        </td>
+                        <td>상품소개입니다.</td>
+                        <td>1</td>
+                        <td>27,000원</td>
+                        <td>5%</td>
+                        <td>270</td>
+                        <td>무료배송</td>
+                        <td class="sumprice">25,650</td>
+                    </tr>
+                </table>
 
-                <div class="main-heder2">
-                    <ul>
-                        <li>판매많은순 | </li>
-                        <li>낮은가격순 | </li>
-                        <li>높은가격순 | </li>
-                        <li>평점높은순 | </li>
-                        <li>후기많은순 | </li>
-                        <li>최근등록순</li>
-                    </ul>
-                </div>
-             </div>
+                <div class="shopping">
+                    <div class="line">
+                        <div class="delivery-info">
+                            <div class="info">
+                                <div class="delivery-title">
+                                    <p>배송정보</p>
+                                </div>
+                                
+                                <div class="delivery-info">
+                                    <div>
+                                        <span class="a">수령자</span>
+                                        <input type="text"/>
+                                    </div>
             
-             <form class="detail">
-                <div>
-                    <img src="/static/proDetail-img/main.png" alt="이미지" class="main-proimg">
-                </div>
-                
-                <div>
-                    <div class="pro-top">
-                        <span>상품번호 : 10010118412</span>
-                        <span>(주)상호명</span>
-                    </div>
-                    <div class="pro-name">
-                        <span>상품명</span>
-                        <div>
-                            <span>★★★★☆</span>
-                            <a href="">상품평보기</a>
-                        </div>    
-                    </div>
-                    <div class="pro-price">
-                        <del>30,000원</del>
-                        <span class="sale">10%↓</span>
-                        <button>쿠폰받기</button>
-                        <span><i class="fa-regular fa-square-minus"></i>무이자할부</span>
-                        <span><i class="fa-regular fa-credit-card"></i>카드추가혜택</span>
-                        <p>27,000원</p>
-                    </div>
-                    <div class="delivery">
-                        <p>
-                            <span>무료배송</span> 
-                            모레 (금) 7/8 도착예정
-                        </p>
-                        <p>본상품은 국내배송만 가능합니다.</p>
-                    </div>
-
-                    <div class="from">
-                        <p>원산지 - 상세설명 참고</p>
-                    </div>
-
-                    <div class="size-option">
-                        <select>
-                            <option value="default" selected>선택하기</option>
-                            <option value="S">S</option>
-                            <option value="M">M</option>
-                            <option value="L">L</option>
-                            <option value="XL">XL</option>
-                        </select>
-                    </div>
-
-                    <div class="count-option">
-                        <p>선택한 상품명</p>
-                        <div class="count-main">
-                            <div class="count">
-                                <button class="minus">-</button>
-                                <input type="number" value="1" min="1" class="count-input">
-                                <button class="plus">+</button>
+                                    <div>
+                                        <span class="a">휴대폰</span>
+                                        <input type="text"/>
+                                    </div>
+            
+                                    <div>
+                                        <span class="a-1">우편번호</span>
+                                        <input type="text"/>
+                                        <button class="Addrsearch-btn">검색</button>
+                                    </div>
+            
+                                    <div>
+                                        <span class="addr-info">기본주소</span>
+                                        <input type="text"/>
+                                    </div>
+            
+                                    <div>
+                                        <span class="addr-info">상세주소</span>
+                                        <input type="text"/>
+                                    </div>
+            
+                                    <div>
+                                        <span class="etc">기타</span>
+                                        <input type="text"/>
+                                    </div>
+                                </div>
                             </div>
+                            
+                            <div class="info">
+                                    <div class="sale-title">
+                                        <p>할인정보</p>
+                                    </div>
+                                    
+                                    <div class="sale-info">
+                                        <div>
+                                            <span>현재포인트:</span>
+                                            <span>7200점</span>
+                                            <input type="text" class="point-input" />
+                                            <button>사용하기</button>
+                                        </div>
+
+                                        <div class="point-info">
+                                            <span>포인트 5,000점 이상이면 현금처럼 사용가능</span>
+                                        </div>
+
+                                        <div class="cupon">
+                                            <span>쿠폰적용</span>
+                                            <select class="option-menu">
+                                                <option value="default" selected>쿠폰선택</option>
+                                                <option value="쿠폰1">쿠폰1</option>
+                                                <option value="쿠폰1">쿠폰2</option>
+                                                <option value="쿠폰1">쿠폰3</option>
+                                            </select>
+                                            <button>사용하기</button>
+                                        </div>
+                                    </div>
+                            </div>
+
                             <div>
-                                <span>54,000원</span>
+                                <div class="payment">
+                                    <p>결제방법</p>
+                                </div>
+
+                                <div class="payment-option">
+                                    <div>
+                                        <label><input type="radio">신용카드</label>
+                                        <label><input type="radio">체크카드</label>
+                                    </div>
+
+                                    <div>
+                                        <label><input type="radio">계좌이체</label>
+                                        <label><input type="radio">무통장입금</label>
+                                    </div>
+
+                                    <div>
+                                        <label><input type="radio">휴대폰결제</label>
+                                        <label class="kakao-img">
+                                            <input type="radio">카카오페이
+                                            <img src="/static/proDetail-img/kakao.png" alt="카카오 이미지" class="kakao">
+                                        </label>
+                                    </div>
+                                                                                                    
+                                </div>
                             </div>
                         </div>
-                        <div class="sum-price">
-                            <p>총 상품금액</p>
-                            <p>54,000원</p>  
+                    </div>
+
+
+                    <form action="#" class="shopping-Box">
+                        <div class="sum">
+                            <p>전체합계</p>
                         </div>
-                    </div>
-                    <div class="cart-and-purchase">
-                        <input type="submit" value="장바구니" />
-                        <input type="submit" value="구매하기" />
-                    </div>
+                        <div class="form-box">
+                            <div class="form-body">
+                                <span>상품수</span>
+                                <span>1</span>
+                            </div>
+    
+                            <div class="form-body">
+                                <span>상품금액</span>
+                                <span>27,000</span>
+                            </div>
+    
+                            <div class="form-body">
+                                <span>할인금액</span>
+                                <span>-1,350</span>
+                            </div>
+    
+                            <div class="form-body">
+                                <span>배송비</span>
+                                <span>0</span>
+                            </div>
+    
+                            <div class="form-body">
+                                <span>전체주문 금액</span>
+                                <span class="sumprice">25,650</span>
+                            </div>
+    
+                            <div class="form-body">
+                                <span>적립 포인트</span>
+                                <span>270</span>
+                            </div>
+                        </div>
 
-                    <a href="#" class="advertisement">
-                      <img src="/static/proDetail-img/advertisement.jpg" alt="광고">
-                    </a>
+                        <div class="form-btn">
+                            <input type="submit" value="결제하기">
+                        </div>
+                    </form>
                 </div>
-            </form>
-            
-            <div class="details-body" id="details-body">
-              <div class="title">
-                <img src="/static/proDetail-img/title.PNG" alt="title1">
-              </div>
+               </div>
 
-              <div class="title2-header">
-                <p>판매자 공지사항</p>
-              </div>
-
-              <div class="title2">
-                <img src="/static/proDetail-img/title2.PNG" alt="title2">
-              </div>
-
-              <div class="body">
-                <img src="/static/proDetail-img/mainTitle.PNG" class="mainTitle">
-              </div>
-
-              <div class="body">
-                <img src="/static/proDetail-img/color.PNG" alt="color-img">
-              </div>
-
-              <div class="body">
-                <img src="/static/proDetail-img/fabric.PNG" alt="fabric">
-              </div>
-
-              <div class="body">
-                <img src="/static/proDetail-img/black.PNG" alt="black">
-              </div>
-
-              <div class="body">
-                <img src="/static/proDetail-img/black2.PNG" alt="black2">
-              </div>
-
-              <div class="body">
-                <img src="/static/proDetail-img/khaki.PNG" alt="khaki">
-              </div>
-
-              <div class="body">
-                <img src="/static/proDetail-img/khaki2.PNG" alt="khaki2">
-              </div>
-
-              <div class="body">
-                <img src="/static/proDetail-img/detail1.PNG" alt="detail1">
-              </div>
-
-              <div class="body">
-                <img src="/static/proDetail-img/detail2.PNG" alt="detail2">
-              </div>
-
-              <div class="body">
-                <img src="/static/proDetail-img/detail3.PNG" alt="detail3">
-              </div>
-
-              <div class="body">
-                <img src="/static/proDetail-img/detail4.PNG" alt="detail4">
-              </div>
-
-              <div class="body">
-                <img src="/static/proDetail-img/size.PNG" alt="size">
-              </div>
-
-              <div class="body">
-                <img src="/static/proDetail-img/info.PNG" alt="info">
-              </div>
-
-              <div class="body">
-                <img src="/static/proDetail-img/infodetail.PNG" alt="">
-              </div>
-
-              <div class="reviews-box">  
-                <p>리뷰</p>
-                  <div class="items">
-                    <div>
-                      <div class="pro-review">
-                        <span>★★★★☆</span>
-                        <span>asd23 님</span>
-                      </div>
-                      <p>상품평</p>
-                        <img src="/templates/common/img5.png" alt="이미지" class="items-img">
-                    </div>
-                    <div class="productDescription">
-                      <span>좋아좋아좋아좋아좋아좋아ㅇㅁㄴㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ</span>
-                    </div>
-                  </div>
-                  
-                  <div class="items">
-                    <div>
-                      <div class="pro-review">
-                        <span>★★★★☆</span>
-                        <span>asd23 님</span>
-                      </div>
-                      <p>상품평</p>
-                        <img src="/templates/common/img5.png" alt="이미지" class="items-img">
-                    </div>
-                    <div class="productDescription">
-                      <span>좋아좋아좋아좋아좋아좋아ㅇㅁㄴㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ</span>
-                    </div>
-                  </div>
-
-                  <div class="items">
-                    <div>
-                      <div class="pro-review">
-                        <span>★★★★☆</span>
-                        <span>asd23 님</span>
-                      </div>
-                      <p>상품평</p>
-                        <img src="/templates/common/img5.png" alt="이미지" class="items-img">
-                    </div>
-                    <div class="productDescription">
-                      <span>좋아좋아좋아좋아좋아좋아ㅇㅁㄴㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ</span>
-                    </div>
-                  </div>
-
-                  <div class="items">
-                    <div>
-                      <div class="pro-review">
-                        <span>★★★★☆</span>
-                        <span>asd23 님</span>
-                      </div>
-                      <p>상품평</p>
-                        <img src="/templates/common/img5.png" alt="이미지" class="items-img">
-                    </div>
-                    <div class="productDescription">
-                      <span>좋아좋아좋아좋아좋아좋아ㅇㅁㄴㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ</span>
-                    </div>
-                  </div>
-              </div>
-
-            </div>
-
-            <div class="detail-btnBox">
-              <button id="detail-btn">상세정보  더보기</button>
-            </div>
-             
             </article>
-
 
         </div>
 
-            <section class="pagination">
-                <a class="page move" href="#">
-                  <i class="fa-solid fa-angles-left"></i>
-                </a>
-                <a class="page move" href="#">
-                  <i class="fa-solid fa-chevron-left"></i>
-                </a>
-                <a class="page" href="">1</a>
-                <a class="page" href="">2</a>
-                <a class="page" href="">3</a>
-                <a class="page" href="">4</a>
-                <a class="page move" href="#">
-                  <i class="fa-solid fa-chevron-right"></i>
-                </a>
-                <a class="page move" href="#">
-                  <i class="fa-solid fa-angles-right"></i>
-                </a>
-              </section>
-
-
-         </main>
-
+        <section class="pagination">
+          <a class="page move" href="#">
+            <i class="fa-solid fa-angles-left"></i>
+          </a>
+          <a class="page move" href="#">
+            <i class="fa-solid fa-chevron-left"></i>
+          </a>
+          <a class="page" href="">1</a>
+          <a class="page" href="">2</a>
+          <a class="page" href="">3</a>
+          <a class="page" href="">4</a>
+          <a class="page move" href="#">
+            <i class="fa-solid fa-chevron-right"></i>
+          </a>
+          <a class="page move" href="#">
+            <i class="fa-solid fa-angles-right"></i>
+          </a>
+        </section>
+      </main>
 
 
 
+
+
+      
       <footer>
         <div id="footer-shortcut-wrapper">
           <div id="footer-shortcut">

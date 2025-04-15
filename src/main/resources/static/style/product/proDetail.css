@@ -5,8 +5,8 @@ img {
 }
 
 .main-proimg {
-   width: 500px;
-   height: 300px;
+   width: 700px;
+   height: 500px;
 }
 
 #heart {
@@ -15,8 +15,10 @@ img {
 
 .detail {
     display: flex;
+    justify-content: center;
     align-items: center;
     margin-left: 10px;
+    border-bottom: 1px solid black;
 }
 
 .sale {
@@ -26,6 +28,7 @@ img {
 
 /*-------------------------------------*/
 .pro-top {
+    margin-top: 10px;
     border-bottom: 1px solid #dfdfdf;
     box-sizing: border-box;
     padding-bottom: 7px;
@@ -146,6 +149,7 @@ img {
     height: 40px;
     background: none;
     border: none;
+    cursor: pointer;
 }
 
 .cart-and-purchase > input:nth-child(1) {
@@ -158,3 +162,103 @@ img {
     color: #ffffff;
 
 }
+
+.detail-btnBox {
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+}
+
+.detail-btnBox > button {
+    border: 1px solid red;
+    box-sizing: border-box;
+    border-radius: 20px;
+    background: none;
+    color: red;
+    width: 200px;
+    height: 30px;
+    cursor: pointer;
+}
+
+.details-body {
+    display: none;
+    margin-top: 50px;
+}
+
+.body {
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+}
+
+.body > img {
+    width: 35%;
+    height: auto;
+}
+
+.title {
+    display: flex;
+    justify-content: center;
+}
+
+.title > img {
+    width: 35%;
+    height: 150px;
+}
+
+.title2-header {
+    display: flex;
+    justify-content: center;
+    margin-top: 70px;
+    margin-bottom: 35px;
+}
+
+.title2-header > p {
+    color: gray;
+}
+
+.title2 {
+   display: flex;
+   justify-content: center;
+}
+
+.title2 > p {
+    display: block;
+}
+
+.title2 > img {
+    width: 35%;
+    height: auto;
+}
+
+.reviews-box > p{
+    margin-top: 50px;
+    margin-bottom: 50px;
+    padding-bottom: 30px;
+    border-bottom: 1px solid gray;
+}
+
+.items {
+    margin-bottom: 50px;
+}
+
+.items-img {
+    width: 200px;
+    height: 200px;
+}
+
+.pro-review {
+    margin-bottom: 20px;
+}
+
+.pro-review > span:nth-child(1) {
+   margin-right: 40px;
+}
+
+.advertisement > img{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    height: 50px;
+}
+
+

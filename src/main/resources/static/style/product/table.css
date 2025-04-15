@@ -1,0 +1,101 @@
+.list {
+    width: 100%;
+    height: auto;
+    border-top: 1px solid gray;
+    border-bottom: 1px solid gray;
+    border-collapse: collapse; 
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.table_hd {
+    width: 100%;
+    height: 50px;
+    border-bottom: 1px solid gray;
+}
+
+.table_hd > th {
+    vertical-align: middle; 
+}
+
+.table_bd {
+    height: 100px;
+}
+
+.table_bd > td:nth-child(2) > img {
+    width: 100px;
+    height: 100px;
+}
+
+.table_bd > td {
+    vertical-align: middle; 
+}
+
+.sumprice {
+    color: red;
+}
+
+/* --------------------------------------------- */
+
+
+.delete {
+    margin-top: 20px;
+}
+
+.delete > button {
+    width: 110px;
+    height: 35px;
+    border: 2px solid #d9d9d9;
+    background: #f2f2f2;
+}
+
+.shopping {
+    display: flex;
+    margin-top: 10px;
+    justify-content: space-between;
+}
+
+.shopping-Box {
+    width: 300px;
+    height: 300px;
+    border: 1px solid #d9d9d9;
+}
+
+.shopping-Box > div {
+    margin-top: 10px;
+}
+
+.sum {    
+    padding-left: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #d9d9d9;
+}
+
+.sum > p {
+    font-weight: bold;
+}
+
+.form-box {
+    margin-bottom: 30px;
+}
+
+.form-body {
+    display: flex;
+    justify-content: space-between;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-bottom: 15px;
+}
+
+.form-btn {
+    display: flex;
+    justify-content: center;
+}
+
+.form-btn > input {
+    width: 150px;
+    height: 35px;
+    border: none;
+    background-color: #cc3434;
+    color: #ffffff;
+}
