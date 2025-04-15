@@ -17,16 +17,4 @@ $(function () {
       $(".banner-info").dialog("close");
     }
   });
-
-  let isRegistryOpened;
-  $(".banner-registry").dialog({
-    width: 735,
-    height: 590,
-    autoOpen: false,
-    draggable: false,
-  });
-
-  $(".register-btn").on("click", () => {
-    $(".banner-registry").dialog("open");
-  });
 });
