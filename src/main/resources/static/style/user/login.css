@@ -1,0 +1,159 @@
+/*
+  작성자: 손준오(sjo112777)
+  내용: 회원> 로그인.
+*/
+main{
+    width: 100%;
+    height: auto;
+    box-sizing: border-box;
+}
+
+.csmain {
+    width: 1260px;
+    height: auto;
+    margin: 0 auto;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+
+
+.main_content{
+  width: 900px;
+  height: auto;
+  box-sizing: border-box;
+  padding-top: 32px;
+  
+}
+
+.main_title{
+  border-bottom: 1.5px solid black; 
+  height: 70px;
+}
+
+.main_title p{
+  font-weight: 700;
+  font-size: 26px;
+  line-height: 100px;
+  letter-spacing: 0%;
+  vertical-align: middle;
+}
+
+.main_content_detail{
+  width: 100%;
+  height: auto;
+  margin-top: 60px;
+  
+}
+
+
+
+
+.login-wrapper {
+    display: flex;
+    max-width: 900px;
+    width: 100%;
+    gap: 60px;
+  }
+  .login-box {
+    flex: 1;
+    max-width: 420px;
+  }
+  
+  .login-box input {
+    width: 100%;
+    padding: 14px;
+    margin-bottom: 10px;
+    font-size: 15px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+  }
+  .login-box button.login-btn {
+    width: 100%;
+    padding: 14px;
+    background-color: #d72137;
+    color: #fff;
+    font-size: 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    box-sizing: border-box;
+  }
+  .login-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 8px;
+    font-size: 14px;
+    color: #666;
+  }
+
+  .login-options label {
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+  }
+
+  .login-options input[type="checkbox"] {
+    margin: 0 6px 0 0;
+  }
+  .login-links {
+    display: flex;
+    justify-content: flex-end;
+    gap: 16px;
+    font-size: 14px;
+    margin-top: 4px;
+  }
+  .login-links a {
+    text-decoration: none;
+    color: #666;
+  }
+
+
+  .social-login {
+    margin-top: 40px;
+    text-align: center;
+  }
+  .social-login-title {
+    font-size: 15px;
+    margin-bottom: 16px;
+  }
+  .social-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+  }
+  .social-buttons button {
+    border: none;
+    background: none;
+    cursor: pointer;
+  }
+  .social-buttons img {
+    width: 48px;
+    height: 48px;
+  }
+
+  .award  {
+    margin-top: 20px; 
+    border-top: 1px solid gray;
+    text-align: center;}
+  
+
+
+
+
+  .banner {
+    width: 420px;
+    height: 260px;
+  }
+  .banner img {
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+  }
+
+  
+  

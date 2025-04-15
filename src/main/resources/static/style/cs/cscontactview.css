@@ -22,6 +22,8 @@
 
 }
 
+.main_content_detail > table tr > td > p {font-size: 20px; font-weight: bold; margin-bottom: 10px;}
+
 .main_content_detail > table tr > td > span {color: #808080; font-size: 14px; }
 
 .btn {
