@@ -29,3 +29,15 @@
   -moz-box-sizing: border-box; /* FF1+ */
   box-sizing: border-box; /* Chrome, IE8, Opera, Safari 5.1*/
 }
+
+.modify-btn {
+  float: right;
+  margin-top: 10px;
+  background-color: #8eb4e3;
+  color: #fff;
+  border: 0;
+  outline: none;
+  width: 85px;
+  height: 35px;
+  cursor: pointer;
+}
