@@ -94,3 +94,60 @@ input[type="file"]::file-selector-button {
 .register-btn {
   background-color: #8eb4e3;
 }
+
+#search-area {
+  display: block;
+  width: 1050px;
+  height: 100%;
+  margin-bottom: 20px;
+}
+
+.search-filter {
+  width: 100px;
+  height: 35px;
+  border: 2px solid #a6a6a6;
+  box-sizing: border-box;
+  outline: none;
+}
+
+.search-input {
+  width: 150px;
+  height: 35px;
+  border: 2px solid #a6a6a6;
+  box-sizing: border-box;
+}
+
+.search-submit-btn {
+  width: 70px;
+  height: 35px;
+  border: none;
+  outline: none;
+  background-color: #a6a6a6;
+  color: white;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.background-green {
+  background-color: #00b050;
+}
+
+.background-blue {
+  background-color: #0e99fc;
+}
+
+.background-red {
+  background-color: #c0080f;
+}
+
+.text-green {
+  color: #00b050;
+}
+
+.text-blue {
+  color: #0e99fc;
+}
+
+.text-red {
+  color: #c0080f;
+}

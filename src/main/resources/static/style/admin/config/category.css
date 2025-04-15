@@ -2,7 +2,7 @@
   width: 480px;
   height: auto;
   border: 2px solid #a6a6a6;
-  border-bottom: none;
+  margin-bottom: -2px;
   box-sizing: border-box;
   padding: 10px;
 }
@@ -11,38 +11,68 @@
   border-bottom: 2px solid #a6a6a6;
 }
 
-.category > h3 {
+.sub-category input {
+  width: 110px;
+  border: 2px solid #a6a6a6;
+  font-size: 16px;
+  background-color: inherit;
+}
+
+.category-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: auto;
+}
+
+.category-title > input {
+  display: inline;
   font-size: 16px;
   font-weight: 600;
   margin-bottom: 10px;
   cursor: pointer;
-}
-
-.category > h3 > svg {
-  margin-right: 20px;
+  border: 2px solid #a6a6a6;
+  width: 80px;
+  text-align: center;
+  cursor: auto;
 }
 
 .sub-category {
   width: 100%;
   height: auto;
+  overflow: hidden;
 }
 
 .sub-category > li {
   width: 100%;
   margin-bottom: 10px;
   padding-left: 30px;
+  padding: 5px 30px;
 }
 
 .sub-category li:hover {
   background-color: #f2f2f2;
 }
 
-.sub-category > li > span {
-  display: inline-block;
-  margin-right: 40px;
+.sub-category > li {
+  border-bottom: 1px solid #a6a6a6;
 }
 
-.sub-category .delete-btn {
+.sub-category > li:last-child {
+  border-bottom: none;
+}
+
+.modify-btn {
+  display: inline-block;
+  border: 2px solid #0e99fc;
+  color: #0e99fc;
+  background-color: inherit;
+  cursor: pointer;
+}
+
+.delete-btn {
+  display: inline-block;
   border: 2px solid red;
   color: red;
   background-color: inherit;
@@ -53,7 +83,7 @@
   width: 140px;
   height: 35px;
   border: 0;
-  background-color: #fff;
+  background-color: inherit;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -69,4 +99,19 @@
 
 .add-sub-cate-btn > span {
   color: #808080;
+}
+
+.add-cate-btn {
+  width: 100%;
+  height: auto;
+}
+
+.modify-all-btn {
+  float: right;
+  width: 95px;
+  height: 35px;
+  background-color: #0e99fc;
+  color: white;
+  border: none;
+  cursor: pointer;
 }
