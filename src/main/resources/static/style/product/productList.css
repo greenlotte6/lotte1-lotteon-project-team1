@@ -6,6 +6,11 @@
     gap: 10px;
 }
 
+.grid-img > img {
+    width: 100%;
+    height: 200px;
+}
+
 .product {
     width: 200px;
     margin: 0 auto;

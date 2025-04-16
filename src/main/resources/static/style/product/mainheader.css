@@ -1,6 +1,11 @@
+main {
+    width: 1260px;
+    margin: 0 auto;
+}
+
 .main {
     display: flex;
-    margin-top: 10px;
+    padding-top: 10px;
     height: auto;
     border: 1px solid #BFBFBF;
 }

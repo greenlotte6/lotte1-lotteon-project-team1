@@ -3,15 +3,6 @@
     width: 300px;
 }
 
-.aside-img {
-    width: 100%;
-    height: 100px;
-}
-
-.aside-img2 {
-    width: 100%;
-    height: 100%;
-}
 
 .bestPro {
     margin-top: 20px;
@@ -34,8 +25,8 @@
 }
 
 img {
-    width: 100%;
-    height: 200px;
+    width: 70%;
+    height: 100px;
 }
 
 .main-proimg {

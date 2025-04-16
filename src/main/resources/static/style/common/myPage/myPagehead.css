@@ -1,0 +1,53 @@
+.body-wrap {
+    display: flex;
+    margin-top: 40px;
+}
+
+.myShopping-info {
+    height: 100px;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    background: #f7f7f7;
+    border: 1px solid #eee;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.2); 
+    box-sizing: border-box;
+    border-radius: 8px;
+}
+
+.header-title {
+    display: flex;
+    justify-content: center; 
+    align-items: center;      
+    margin-left: 60px;   
+}
+
+.header-title > p {
+    font-weight: bold;
+    font-size: 25px;
+}
+
+.item-list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-right: 50px;
+}
+
+.item-list > li {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.item-list > li > p {
+    font-size: 15px;
+}
+
+.item-list > li > p:nth-child(2) {
+    margin-top: 20px;
+}
+
+.item-list li:nth-child(-n+3) {
+    border-right: 1px solid #ccc; 
+}
