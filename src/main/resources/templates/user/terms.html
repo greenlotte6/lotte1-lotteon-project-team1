@@ -1,18 +1,18 @@
 <!--
   작성자: 손준오(sjo112777)
-  내용: 회원 > 구분
+  내용: 회원 > 약관
 -->
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>회원 > 구분</title>
+    <title>회원 > 약관</title>
     <link rel="stylesheet" href="/static/style/init.css" />
     <link rel="stylesheet" href="/static/style/index.css" />
     <link rel="stylesheet" href="/static/style/common/header.css" />
     <link rel="stylesheet" href="/static/style/common/footer.css" />
     <!--<link rel="stylesheet" href="/static/style/common/pagination.css" />-->
-    <link rel="stylesheet" href="/static/style/user/sort.css" />
+    <link rel="stylesheet" href="/static/style/user/terms.css" />
     <link rel="icon" href="https://static.lotteon.com/p/common/assets/favicon/1/favicon-32.png" />
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css" />
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
@@ -47,43 +47,51 @@
       <main>
         <div class="csmain">
           <article class="main_content">
-
             <div class="main_title">
-              <p>
-                <span>대한민국 1등 온라인 인터넷 쇼핑</span><br><br>
-                롯데 ON에 오신것을 환영합니다.
-              </p>
+              <p>약관동의</p>
             </div>
 
             <div class="main_content_detail">
 
-              <div class="loginboxes">
-                <div class="commonbox">
-                  <div class="header">일반회원가입</div>
-                  <div class="content">
-                    <p>개인구매회원 (외국인포함)</p>
-                    <p class="gray-text">만 14 세이상가능</p>
-                    <div class="button-wrapper">
-                      <button class="join-button">회원가입</button>
-                    </div>
+              <div class="terms-section">
+                <div class="term-box">
+                  <label class="term-label"><span class="highlight">필수</span> ) 이용약관</label>
+                  <textarea class="term-textarea" readonly>약관</textarea>
+                  <div class="term-check">
+                    <label><input type="checkbox"> 동의하기</label>
                   </div>
                 </div>
-
-                <div class="sellerbox">
-                  <div class="header" style="background-color: #31859c;">판매회원가입</div>
-                  <div class="content">
-                    <p>사업자 판매회원</p>
-                    <p class="gray-text">사업자등록증을 보유한 회원</p>
-                    <div class="button-wrapper">
-                      <button class="join-button">회원가입</button>
-                    </div>
+            
+                <div class="term-box">
+                  <label class="term-label"><span class="highlight">필수</span> ) 전자금융 이용약관</label>
+                  <textarea class="term-textarea" readonly></textarea>
+                  <div class="term-check">
+                    <label><input type="checkbox"> 동의하기</label>
                   </div>
                 </div>
-
+            
+                <div class="term-box">
+                  <label class="term-label"><span class="highlight">필수</span> ) 개인정보 수집동의</label>
+                  <textarea class="term-textarea" readonly></textarea>
+                  <div class="term-check">
+                    <label><input type="checkbox"> 동의하기</label>
+                  </div>
+                </div>
+            
+                <div class="term-box">
+                  <label class="term-label"><span class="highlight" style="color:blue;">선택</span> ) 위치정보 이용약관</label>
+                  <textarea class="term-textarea" readonly></textarea>
+                  <div class="term-check">
+                    <label><input type="checkbox"> 동의하기</label>
+                  </div>
+                </div>
+            
+                <button class="agree-button">동의하기</button>
               </div>
 
-            </div>
+              
 
+            </div>
           </article>
         </div>
       </main>

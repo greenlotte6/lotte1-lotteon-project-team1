@@ -51,6 +51,8 @@ main{
 
 
 
+
+
 .login-wrapper {
     display: flex;
     max-width: 900px;
@@ -113,6 +115,10 @@ main{
   }
 
 
+
+
+
+
   .social-login {
     margin-top: 40px;
     text-align: center;
@@ -136,11 +142,7 @@ main{
     height: 48px;
   }
 
-  .award  {
-    margin-top: 20px; 
-    border-top: 1px solid gray;
-    text-align: center;}
-  
+
 
 
 
@@ -155,5 +157,12 @@ main{
     border-radius: 8px;
   }
 
+  
+
+  
+  .award  {
+    margin-top: 70px; 
+    border-top: 1px solid gray;
+    text-align: center;}
   
   
