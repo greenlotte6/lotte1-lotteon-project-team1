@@ -28,7 +28,7 @@
     <h1>롯데ON을 더 알고 싶다면!</h1>
     <p>우리의 다양한 이야기를 소개합니다</p>
   </section>
-  <nav>
+  <nav class="cardCategory">
     <a href="#">전체보기</a>
     <a href="#">기업문화</a>
     <a href="#">인터뷰</a>
@@ -41,16 +41,16 @@
 
 
   <div class="container">
-    <div class="card">
+    <a href="articles/article1.html" class="card" data-category="인터뷰">
       <img src="/static/images/interview.jpg" alt="팀워크">
       <div class="content">
         <div class="tag">인터뷰</div>
         <h3>함께 성장하는 팀, UX 디자이너 김지영</h3>
         <p>사용자 중심의 디자인과 협업으로 만들어낸 변화의 이야기</p>
       </div>
-    </div>
+    </a>
   
-    <div class="card">
+    <div class="card" data-category="채용">
       <img src="/static/images/recruit.jpg" alt="채용설명회">
       <div class="content">
         <div class="tag">채용</div>
@@ -59,7 +59,7 @@
       </div>
     </div>
   
-    <div class="card">
+    <div class="card" data-category="ESG">
       <img src="/static/images/esg.jpg" alt="ESG활동">
       <div class="content">
         <div class="tag">ESG</div>
@@ -68,7 +68,7 @@
       </div>
     </div>
   
-    <div class="card">
+    <div class="card" data-category="기업문화">
       <img src="/static/images/company_culture.jpg" alt="팀프로젝트">
       <div class="content">
         <div class="tag">기업문화</div>
@@ -77,7 +77,7 @@
       </div>
     </div>
   
-    <div class="card">
+    <div class="card" data-category="롯데ON">
       <img src="/static/images/delivery.jpg" alt="신제품 론칭">
       <div class="content">
         <div class="tag">롯데ON</div>
@@ -86,7 +86,7 @@
       </div>
     </div>
   
-    <div class="card">
+    <div class="card" data-category="기술">
       <img src="/static/images/tech.jpg" alt="기술이야기">
       <div class="content">
         <div class="tag">기술</div>
@@ -97,7 +97,7 @@
 
   
     
-    <div class="card">
+    <div class="card" data-category="기술">
       <img src="/static/images/tech_team.jpg" alt="개발팀">
       <div class="content">
         <div class="tag">기술</div>
@@ -106,7 +106,7 @@
       </div>
     </div>
     
-    <div class="card">
+    <div class="card" data-category="기업문화">
       <img src="/static/images/culture1.jpg" alt="기업문화">
       <div class="content">
         <div class="tag">기업문화</div>
@@ -115,7 +115,7 @@
       </div>
     </div>
     
-    <div class="card">
+    <div class="card" data-category="인터뷰">
       <img src="/static/images/interview1.jpg" alt="인터뷰">
       <div class="content">
         <div class="tag">인터뷰</div>
@@ -124,7 +124,7 @@
       </div>
     </div>
     
-    <div class="card">
+    <div class="card" data-category="채용">
       <img src="/static/images/recruit2.jpg" alt="채용">
       <div class="content">
         <div class="tag">채용</div>
@@ -133,7 +133,7 @@
       </div>
     </div>
     
-    <div class="card">
+    <div class="card" data-category="롯데ON">
       <img src="/static/images/lotteon1.jpg" alt="롯데ON">
       <div class="content">
         <div class="tag">롯데ON</div>
@@ -142,7 +142,7 @@
       </div>
     </div>
     
-    <div class="card">
+    <div class="card" data-category="보도자료">
       <img src="/static/images/press1.jpg" alt="보도자료">
       <div class="content">
         <div class="tag">보도자료</div>
@@ -151,7 +151,7 @@
       </div>
     </div>
     
-    <div class="card">
+    <div class="card" data-category="ESG">
       <img src="/static/images/esg2.jpg" alt="ESG">
       <div class="content">
         <div class="tag">ESG</div>
@@ -161,7 +161,7 @@
     </div>
     
     <!-- 14개 추가 카드도 이어서 -->
-    <div class="card">
+    <div class="card" data-category="기업문화">
       <img src="/static/images/culture2.jpg" alt="기업문화">
       <div class="content">
         <div class="tag">기업문화</div>
@@ -170,7 +170,7 @@
       </div>
     </div>
     
-    <div class="card">
+    <div class="card" data-category="인터뷰">
       <img src="/static/images/interview2.jpg" alt="인터뷰">
       <div class="content">
         <div class="tag">인터뷰</div>
@@ -179,7 +179,7 @@
       </div>
     </div>
     
-    <div class="card">
+    <div class="card" data-category="채용">
       <img src="/static/images/recruit3.jpg" alt="채용">
       <div class="content">
         <div class="tag">채용</div>
@@ -188,7 +188,7 @@
       </div>
     </div>
     
-    <div class="card">
+    <div class="card" data-category="롯데ON">
       <img src="/static/images/lotteon2.jpg" alt="롯데ON">
       <div class="content">
         <div class="tag">롯데ON</div>
@@ -197,7 +197,7 @@
       </div>
     </div>
     
-    <div class="card">
+    <div class="card" data-category="보도자료">
       <img src="/static/images/press2.jpg" alt="보도자료">
       <div class="content">
         <div class="tag">보도자료</div>
@@ -206,7 +206,7 @@
       </div>
     </div>
     
-    <div class="card">
+    <div class="card" data-category="ESG">
       <img src="/static/images/esg3.jpg" alt="ESG">
       <div class="content">
         <div class="tag">ESG</div>
@@ -215,7 +215,7 @@
       </div>
     </div>
     
-    <div class="card">
+    <div class="card" data-category="기업문화">
       <img src="/static/images/culture3.jpg" alt="기업문화">
       <div class="content">
         <div class="tag">기업문화</div>
@@ -224,7 +224,7 @@
       </div>
     </div>
     
-    <div class="card">
+    <div class="card" data-category="인터뷰">
       <img src="/static/images/interview3.jpg" alt="인터뷰">
       <div class="content">
         <div class="tag">인터뷰</div>
@@ -233,7 +233,7 @@
       </div>
     </div>
     
-    <div class="card">
+    <div class="card" data-category="채용">
       <img src="/static/images/recruit4.jpg" alt="채용">
       <div class="content">
         <div class="tag">채용</div>
@@ -242,7 +242,7 @@
       </div>
     </div>
     
-    <div class="card">
+    <div class="card" data-category="롯데ON">
       <img src="/static/images/lotteon3.jpg" alt="롯데ON">
       <div class="content">
         <div class="tag">롯데ON</div>
@@ -251,7 +251,7 @@
       </div>
     </div>
     
-    <div class="card">
+    <div class="card" data-category="보도자료">
       <img src="/static/images/press3.jpg" alt="보도자료">
       <div class="content">
         <div class="tag">보도자료</div>
@@ -260,7 +260,7 @@
       </div>
     </div>
     
-    <div class="card">
+    <div class="card" data-category="ESG">
       <img src="/static/images/esg4.jpg" alt="ESG">
       <div class="content">
         <div class="tag">ESG</div>
@@ -325,23 +325,41 @@
         loadMoreBtn.style.display = 'none'; // 모두 보여주면 버튼 숨기기
       }
     });
+      // 카드 클릭 시 해당 기사 페이지로 이동
+  cards.forEach((card, index) => {
+    card.addEventListener('click', () => {
+      window.location.href = `/templates/common/company/articles/article${index + 1}.html`;
+    });
+  });
   });
 
 
   /*카테고리 필터 함수*/
-  function filterCards(category) {
-    const cards = document.querySelectorAll('.card');
+  // 모든 링크 요소 가져오기
+  const navLinks = document.querySelectorAll(".cardCategory a");
+  const cards = document.querySelectorAll(".card");
 
-    cards.forEach(card => {
-      const cardCategory = card.getAttribute('data-category');
-      
-      if (category === 'all' || cardCategory === category) {
-        card.style.display = 'block';
-      } else {
-        card.style.display = 'none';
-      }
+  navLinks.forEach(link => {
+    link.addEventListener("click", (e) => {
+      e.preventDefault(); // a 태그 기본 동작 막기
+
+      const category = link.textContent.trim(); // 클릭한 카테고리 이름 가져오기
+
+      cards.forEach(card => {
+        const cardCategory = card.dataset.category;
+
+        // "전체보기"를 누르면 다 보여줌
+        if (category === "전체보기" || category === "") {
+          card.style.display = "block";
+        } else {
+          card.style.display = (cardCategory === category) ? "block" : "none";
+        }
+      });
     });
-  }
+  });
+
+
+
 
   </script>
 
