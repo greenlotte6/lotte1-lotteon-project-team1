@@ -60,13 +60,14 @@ input[type="file"]::file-selector-button {
   background-color: #a6a6a6;
   color: white;
   cursor: pointer;
-  height: 30px;
+  height: 35px;
 }
 
 .desc {
   display: block;
   width: 100%;
-  height: 35px;
+  min-height: 35px;
+  height: auto;
   line-height: 35px;
   padding: 5px 10px;
   background-color: #f2f2f2;
@@ -130,14 +131,17 @@ input[type="file"]::file-selector-button {
 
 .background-green {
   background-color: #00b050;
+  color: white;
 }
 
 .background-blue {
   background-color: #0e99fc;
+  color: white;
 }
 
 .background-red {
   background-color: #c0080f;
+  color: white;
 }
 
 .text-green {
@@ -150,4 +154,80 @@ input[type="file"]::file-selector-button {
 
 .text-red {
   color: #c0080f;
+}
+
+.content table {
+  width: 100%;
+  height: auto;
+  border-collapse: collapse;
+  border-top: 2px solid #a6a6a6;
+  box-sizing: border-box;
+}
+
+.content table th {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.content table tr {
+  height: 60px;
+  line-height: 60px;
+  padding: 20px;
+  border-bottom: 1px solid #a6a6a6;
+  box-sizing: border-box;
+}
+
+.content table td {
+  text-align: center;
+  vertical-align: middle;
+  font-size: 14px;
+}
+
+.content table td input {
+  height: 35px;
+  border: 2px solid #a6a6a6;
+}
+
+.controll-btn {
+  border: none;
+  background-color: inherit;
+  outline: none;
+  color: #fff;
+  cursor: pointer;
+}
+
+.controll-btn.default {
+  background-color: #0e99fc;
+}
+
+.controll-btn.delete {
+  background-color: #c0080f;
+}
+
+.post-form-table th {
+  width: 20%;
+  background-color: #dce6f2;
+  vertical-align: middle;
+}
+
+.post-form-table td {
+  display: inline-block;
+  padding-left: 20px;
+}
+
+.post-submit-btn {
+  width: 95px;
+  height: 35px;
+  background-color: #0e99fc;
+  border: none;
+  color: white;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+/*.content table selector.category-selector*/
+.category-selector {
+  width: 180px;
+  height: 35px;
+  border: 2px solid #a6a6a6;
 }
