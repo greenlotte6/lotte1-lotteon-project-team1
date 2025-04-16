@@ -1,0 +1,56 @@
+main {
+    width: 1260px;
+    margin: 0 auto;
+}
+
+.content-box {
+    width: 90%;
+}
+
+.point-list {
+    margin-top: 30px;
+    margin-left: 55px;
+}
+
+.list-head {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    margin-top: 30px;
+}
+
+.list-head > p {
+   font-weight: bold;
+}
+
+.list-head > a {
+   margin-right: 20px;
+}
+
+table {
+    width: 100%;
+    height: 150px;
+    text-align: center;
+    border-top: 2px solid gray;
+    border-bottom: 1px solid #eee;
+}
+
+
+.table-hd {
+    height: 45px;
+    background: #eee;
+}
+
+.table-hd > th {
+    vertical-align: middle; 
+}
+
+td {
+    height: 50px;
+    vertical-align: middle; 
+    border-bottom: 1px solid #eee;
+}
+
+.product-revies > tr:nth-child(n+2) {
+    margin-top: 20px;
+}
