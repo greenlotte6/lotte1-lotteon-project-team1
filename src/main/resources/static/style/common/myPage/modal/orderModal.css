@@ -1,0 +1,40 @@
+.main {
+  display: none;
+}
+
+.modal-hd {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: gray;
+    border: 1px solid black;
+    height: 40px;
+}
+
+
+.price > div:nth-child(-n+2){
+    margin-top: 10px;
+}
+
+.price > div:last-child {
+    margin-top: 40px;
+}
+
+
+.table-title {
+    margin-top: 40px;
+}
+
+table {
+    margin-top: 20px;
+    height: 250px;
+}
+
+.left-td {
+    width: 200px;
+    background: gray;
+}
+
+.box {
+    margin-left: 30px;
+}

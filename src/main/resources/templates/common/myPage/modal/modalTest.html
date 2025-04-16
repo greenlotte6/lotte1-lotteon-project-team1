@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/static/style/init.css" />
+    <link rel="stylesheet" href="/static/style/index.css" />
+    <link rel="stylesheet" href="/static/style/common/header.css" />
+    <link rel="stylesheet" href="/static/style/common/footer.css" />
+    <link rel="stylesheet" href="/static//style/common/pagination.css" />
+    <link rel="stylesheet" href="/static/style/common/myPage/myPageMain.css">
+    <link rel="stylesheet" href="/static/style/common/myPage/myPagehead.css">
+    <link rel="stylesheet" href="/static/style/common/myPage/myPageSide.css">
+    <link rel="stylesheet" href="/static/style/common/myPage/tableHead.css">
+    <link rel="stylesheet" href="/static/style/common/myPage/pointPage.css">
+    <link rel="stylesheet" href="/static/style/common/myPage/inquiry.css">
+    <link rel="stylesheet" href="/static/style/common/myPage/modal/orderModal.css">
+    <link rel="stylesheet" href="/static/style/common/myPage/list-table.css">
+    <link
+      rel="icon"
+      href="https://static.lotteon.com/p/common/assets/favicon/1/favicon-32.png"
+    />
+    <link
+      rel="stylesheet"
+      href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css"
+    />
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
+    <script src="/static/js/common/header.js"></script>
+    <script src="/static/js/common/footer.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/all.min.js"
+      crossorigin="anonymous"
+    ></script>
+</head>
+<body>
+    
+    <div class="main">
+        <div class="modal-hd">
+            <div>
+                <span>주문상세</span>
+                <span>2023-12-13</span>
+            </div>
+            <p>X</p>
+        </div>
+        
+        <div class="box">
+            <div class="table-title">
+                <p>주문정보</p>
+            </div>
+
+            <table>
+                <tr class="table-hd">
+                    <th>날짜</th>
+                    <th>상품정보</th>
+                    <th>결제금액</th>
+                    <th>상태</th>
+                </tr>
+
+                <tr class="table-bd">
+                    <td>2022-12-13</td>
+                    <td>
+                        <div class="pro-info">
+                            <div class="table-proimg">
+                                <img src="/templates/common/img5.png" alt="이미지">
+                            </div>
+                            <div class="order-info">
+                                <p>주문번호 :<span>1012211341</span></p>
+                                <p>(주) 상호명</p>
+                                <p>수량 : <span>1개</span></p>
+                                <p class="price">34,000원</p>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="price">
+                            <div>
+                                <span>판매가</span>
+                                <span>34,000원</span>
+                            </div>
+                            
+                            <div>
+                                <span>할인</span>
+                                <span>-3,000원</span>
+                            </div>
+
+                            <div>
+                                <span>결제금액</span>
+                                <span>34,000원</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td>배송완료</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="box">
+            <div class="table-title">
+                <p>배송정보</p>
+            </div>
+
+            <table>
+                <tr>
+                    <td class="left-td">이름</td>
+                    <td>홍길동</td>
+                </tr>
+                <tr>
+                    <td class="left-td">연락처</td>
+                    <td>010-1234-1001</td>
+                </tr>
+                <tr>
+                    <td class="left-td">주소</td>
+                    <td>[210**] 부산광역시 부산진구 대연동 121 10층 1004호</td>
+                </tr>
+                <tr>
+                    <td class="left-td">배송요청사항</td>
+                    <td>없음</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+</body>
+</html>
