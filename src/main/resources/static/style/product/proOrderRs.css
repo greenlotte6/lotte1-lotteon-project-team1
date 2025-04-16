@@ -13,8 +13,12 @@
     font-size: 25px;
 }
 
+.rs-price-box {
+    display: flex;
+    justify-content: right;
+}
+
 .rs-price {
-    float: right;
     width: 400px;
     height: auto;
     margin-top: 10px;
@@ -33,21 +37,50 @@
     margin-right: 20px;
 }
 
-.order-title {
-    margin-top: 200px;
-    border-bottom: 1px solid gray;
-}
-
-.order-title > p {
-    font-weight: bold;
+.order-info-box > p {
     margin-bottom: 20px;
+    font-weight: bold;
 }
 
-.order-body {
-    margin-top: 5px;
+.order-info {
+    display: flex;
+    align-items: flex-start;
+    border-top: 2px solid #eee;
 }
 
+.order-info > div:nth-child(1) {
+    width: 150px;
+    height: 100px;
+    background: #eee;
+    padding-left: 10px;
+}
 
+.order-info > div:nth-child(1) > p {
+    margin-top: 10px;
+}
+
+.order-info > div:nth-child(2) {
+    margin-left: 20px;
+}
+
+.order-info > div:nth-child(2) > p {
+    margin-top: 10px;
+}
+
+.order-info > div:nth-child(2) > div {
+    margin-top: 10px;
+}
+
+.order-info > div:nth-child(3) {
+    margin-right: 30px;
+    margin-left: auto;
+    text-align: right; 
+    align-self: flex-end;
+}
+
+.order-info > div:nth-child(3) > span:nth-child(2) {
+    color: red;
+}
 
 
 
