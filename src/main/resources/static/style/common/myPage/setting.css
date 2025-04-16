@@ -1,52 +1,47 @@
-/*
-  작성자: 손준오(sjo112777)
-  내용: 회원> 일반가입.
-*/
-main{
+main {
+    width: 1260px;
+    margin: 0 auto;
+}
+
+.body-wrap {
+    display: flex;
+    margin-top: 40px;
+}
+
+.content-box {
+    width: 100%;
+}
+
+.event-img {
+    text-align: center;
     width: 100%;
     height: auto;
-    box-sizing: border-box;
 }
 
-.csmain {
-    width: 1260px;
-    height: auto;
-    margin: 0 auto;
-    overflow: hidden;
+.event-img > img {
+    width: 90%;
+    height: 120px;
+    border-radius: 10px;
+}
+
+.all-orderList {
+    margin-top: 30px;
+    margin-left: 55px;
+}
+
+.list-head {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-
-
-.main_content{
-  width: 900px;
-  height: auto;
-  box-sizing: border-box;
+    justify-content: space-between;
+    margin-bottom: 20px;
 }
 
-.main_title{
-  border-bottom: 1.5px solid black; 
-  height: 70px;
+.list-head > p {
+   font-weight: bold;
 }
 
-.main_title p{
-  font-weight: 700;
-  font-size: 26px;
-  line-height: 100px;
-  letter-spacing: 0%;
-  vertical-align: middle;
+.list-head > span {
+    margin-right: 20px;
 }
-
-.main_content_detail{
-  width: 100%;
-  height: auto;
-  margin-top: 20px;
-  margin-bottom: 80px;
-}
-
-
 
 table th, td{
     border-bottom: 1px solid #DEDEDE; /* 밑에 보더를 추가 */
@@ -94,7 +89,7 @@ input[type="email"] {
 .agree-button {
     display: block;
     width: 400px;
-    background-color: #c83737;
+    background-color: #b9cde5;
     color: white;
     border: none;
     padding: 12px 0;
@@ -103,4 +98,14 @@ input[type="email"] {
     border-radius: 2px;
     margin: auto;
     margin-top: 15px;
+    margin-bottom: 30px;
   }
+
+  .withdraw {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 9px;
+    cursor: pointer;
+  }
+    

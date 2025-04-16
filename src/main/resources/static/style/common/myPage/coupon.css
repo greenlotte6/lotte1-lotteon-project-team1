@@ -1,0 +1,84 @@
+main {
+    width: 1260px;
+    margin: 0 auto;
+}
+
+.body-wrap {
+    display: flex;
+    margin-top: 40px;
+}
+
+.content-box {
+    width: 100%;
+}
+
+.event-img {
+    text-align: center;
+    width: 100%;
+    height: auto;
+}
+
+.event-img > img {
+    width: 90%;
+    height: 120px;
+    border-radius: 10px;
+}
+
+.all-orderList {
+    margin-top: 30px;
+    margin-left: 55px;
+}
+
+.list-head {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.list-head > p {
+   font-weight: bold;
+}
+
+.list-head > span {
+    margin-right: 20px;
+}
+
+table {
+    width: 100%;
+    text-align: center;
+    border-top: 2px solid gray;
+    border-bottom: 1px solid #eee;
+}
+
+.table-hd {
+    height: 40px;
+    background: #eee;
+}
+
+.table-hd > th {
+    vertical-align: middle; 
+}
+
+td {
+    vertical-align: middle; 
+}
+
+.pro-info {
+    display: flex;
+}
+
+.table-proimg {
+    width: 120px;
+    height: 120px;
+}
+
+.table-proimg > img {
+    width: 70%;
+}
+
+
+
+
+
+
+
