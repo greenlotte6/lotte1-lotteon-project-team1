@@ -1,0 +1,43 @@
+# 배포용 설정
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+  application:
+    name: lotteon
+    version: 0.0.1
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://lotteon-mysql:3306/lotteon
+    username: root
+    password: 1234
+
+    hikari:
+      connection-timeout: 10000
+      maximum-pool-size: 20
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+
+  thymeleaf:
+    prefix: classpath:/templates
+
+logging:
+  file:
+    name: lotteon.log
+    path: /data
+  level:
+    root: info
+    sql: debug
+
+server:
+  port: 8080
+  servlet:
+    context-path: /lotteon
+
+---
+# 개발용 설정
