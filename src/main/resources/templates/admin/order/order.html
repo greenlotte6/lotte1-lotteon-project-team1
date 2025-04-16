@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>주문관리 > 주문현황</title>
+    <link rel="stylesheet" href="/static/style/init.css" />
+    <link rel="stylesheet" href="/static/style/common/admin/header.css" />
+    <link rel="stylesheet" href="/static/style/common/admin/aside.css" />
+    <link rel="stylesheet" href="/static/style/common/admin/content.css" />
+    <link rel="stylesheet" href="/static/style/common/admin/footer.css" />
+    <link rel="stylesheet" href="/static/style/common/pagination.css" />
+    <link rel="stylesheet" href="/static/style/admin/order/order.css" />
+    <link
+      rel="icon"
+      href="https://static.lotteon.com/p/common/assets/favicon/1/favicon-32.png"
+    />
+    <link
+      rel="stylesheet"
+      href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css"
+    />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/all.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
+    <script src="/static/js/admin/config/aside-drop.js"></script>
+    <script type="module" src="/static/js/common/admin/modal.mjs"></script>
+    <script type="module" src="/static/js/admin/order/orderDetail.js"></script>
+    <script type="module" src="/static/js/admin/order/shipment.js"></script>
+  </head>
+  <body>
+    <div id="wrapper">
+      <header>
+        <div class="header-wrapper">
+          <img
+            src="https://static.lotteon.com/p/common/foCommon/assets/img/logo_lotte-on@2x.png"
+            alt="logo"
+          />
+          <h1>ADMINISTRATOR</h1>
+          <ul>
+            <li>
+              <span class="greeting">
+                안녕하세요, [홍길동]님, 반갑습니다.
+              </span>
+            </li>
+            <li>
+              <a href="#"> 홈 </a>
+            </li>
+            <li>
+              <a href="#"> 로그아웃 </a>
+            </li>
+            <li>
+              <a href="#"> 고객센터 </a>
+            </li>
+          </ul>
+        </div>
+        <nav class="header-padding"></nav>
+      </header>
+      <main>
+        <aside class="side-menu">
+          <ul>
+            <li id="settings-menu">
+              <i class="fa-solid fa-gear"></i>
+              <a href="/admin/config/basic"> 환경설정 </a>
+            </li>
+            <ul class="submenu settings" style="display: none">
+              <li>
+                <a href="/admin/config/basic"> 기본설정 </a>
+              </li>
+              <li>
+                <a href="/admin/config/banner"> 배너관리 </a>
+              </li>
+              <li>
+                <a href="/admin/config/policy"> 약관관리 </a>
+              </li>
+              <li>
+                <a href="/admin/config/category"> 카테고리 </a>
+              </li>
+              <li>
+                <a href="/admin/config/version"> 버전이력 </a>
+              </li>
+            </ul>
+            <li id="store-menu">
+              <i class="fa-solid fa-store"></i>
+              <a href="/admin/shop/list"> 상점관리 </a>
+            </li>
+            <ul class="submenu store" style="display: none">
+              <li>
+                <a href="/admin/shop/list"> 상점목록 </a>
+              </li>
+              <li>
+                <a href="/admin/shop/sales"> 매출현황 </a>
+              </li>
+            </ul>
+            <li id="member-menu">
+              <i class="fa-solid fa-users"></i>
+              <a href="/admin/member/list"> 회원관리 </a>
+            </li>
+            <ul class="submenu member" style="display: none">
+              <li>
+                <a href="/admin/member/list"> 회원목록 </a>
+              </li>
+              <li>
+                <a href="/admin/member/point"> 포인트 관리 </a>
+              </li>
+            </ul>
+            <li id="product-menu">
+              <i class="fa-solid fa-box-open"></i>
+              <a href="/admin/product/list"> 상품관리 </a>
+            </li>
+            <ul class="submenu product" style="display: none">
+              <li>
+                <a href="/admin/product/list"> 상품목록 </a>
+              </li>
+              <li>
+                <a href="/admin/product/register"> 상품등록 </a>
+              </li>
+            </ul>
+            <li id="order-menu">
+              <i class="fa-solid fa-credit-card"></i>
+              <a href="/admin/settings/order/list"> 주문관리 </a>
+            </li>
+            <ul class="submenu order" style="display: none">
+              <li>
+                <a href="/admin/order/list"> 주문현황 </a>
+              </li>
+              <li>
+                <a href="/admin/order/delivery"> 배송현황 </a>
+              </li>
+            </ul>
+            <li id="coupon-menu">
+              <i class="fa-solid fa-ticket"></i>
+              <a href="/admin/settings/coupon/list"> 쿠폰관리 </a>
+            </li>
+            <ul class="submenu coupon" style="display: none">
+              <li>
+                <a href="/admin/coupon/list"> 쿠폰목록 </a>
+              </li>
+              <li>
+                <a href="/admin/coupon/issued"> 쿠폰발급현황 </a>
+              </li>
+            </ul>
+            <li id="cs-menu">
+              <i class="fa-solid fa-headphones"></i>
+              <a href="/admin/cs/notice/list"> 고객센터 </a>
+            </li>
+            <ul class="submenu customer-service" style="display: none">
+              <li>
+                <a href="/admin/cs/notice/list"> 공지사항 </a>
+              </li>
+              <li>
+                <a href="/admin/cs/faq/list"> 자주묻는질문 </a>
+              </li>
+              <li>
+                <a href="/admin/cs/qna/list"> 문의하기 </a>
+              </li>
+            </ul>
+          </ul>
+        </aside>
+        <section id="content-area">
+          <div class="content-area-title">
+            <h3>주문현황</h3>
+            <span>
+              <a href="#">HOME&nbsp;>&nbsp; </a>
+              <a href="#">주문관리&nbsp;>&nbsp; </a>
+              <a href="#">주문현황</a>
+            </span>
+          </div>
+          <div class="content">
+            <table>
+              <tbody>
+                <tr>
+                  <th>주문번호</th>
+                  <th>주문자</th>
+                  <th>주문자명</th>
+                  <th>상품명</th>
+                  <th>주문건수</th>
+                  <th>주문합계</th>
+                  <th>결제수단</th>
+                  <th>주문상태</th>
+                  <th>주문일</th>
+                  <th>배송</th>
+                </tr>
+                <tr>
+                  <td>
+                    <a href="#1" class="order-detail"> 10121211341</a>
+                  </td>
+                  <td>abc123</td>
+                  <td>김유신</td>
+                  <td>상품명 #1</td>
+                  <td>2</td>
+                  <td>102,900</td>
+                  <td>신용카드</td>
+                  <td class="text-green">결제완료</td>
+                  <td>0000-00-00 00:00:00</td>
+                  <td>
+                    <button class="controll-btn default ship-btn">
+                      배송하기
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <a href="#2" class="order-detail"> 10121211342</a>
+                  </td>
+                  <td>abc123</td>
+                  <td>김유신</td>
+                  <td>상품명 #1</td>
+                  <td>2</td>
+                  <td>102,900</td>
+                  <td>신용카드</td>
+                  <td class="text-green">결제완료</td>
+                  <td>0000-00-00 00:00:00</td>
+                  <td class="text-green">배송완료</td>
+                </tr>
+                <tr>
+                  <td>
+                    <a href="#3" class="order-detail"> 10121211343</a>
+                  </td>
+                  <td>abc123</td>
+                  <td>김유신</td>
+                  <td>상품명 #1</td>
+                  <td>2</td>
+                  <td>102,900</td>
+                  <td>신용카드</td>
+                  <td class="text-blue">결제대기</td>
+                  <td>0000-00-00 00:00:00</td>
+                  <td>
+                    <button class="controll-btn default ship-btn">
+                      배송하기
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <a href="#4" class="order-detail"> 10121211344</a>
+                  </td>
+                  <td>abc123</td>
+                  <td>김유신</td>
+                  <td>상품명 #1</td>
+                  <td>2</td>
+                  <td>102,900</td>
+                  <td>신용카드</td>
+                  <td class="text-red">주문취소</td>
+                  <td>0000-00-00 00:00:00</td>
+                  <td class="text-red">주문취소</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+        <div class="shipment-modal" title="배송입력">
+          <div class="content">
+            <form action="#" class="post-form">
+              <table class="post-form-table">
+                <tbody>
+                  <tr>
+                    <th>주문번호</th>
+                    <td>
+                      <input type="text" placeholder="10121211341" />
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>수령인</th>
+                    <td>
+                      <input type="text" placeholder="홍길동" />
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>우편번호</th>
+                    <td>
+                      <input type="text" placeholder="12345" />
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>기본주소</th>
+                    <td>
+                      <input
+                        type="text"
+                        placeholder="부산광역시 부산진구 123-12"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>상세주소</th>
+                    <td>
+                      <input type="text" placeholder="행복아파트 103동 404호" />
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>택배사</th>
+                    <td>
+                      <select
+                        name="company"
+                        class="category-selector"
+                        id="shipment-company"
+                      >
+                        <option value="cj">CJ 대한통운</option>
+                        <option value="lotte">롯데택배</option>
+                        <option value="postOffice">우체국택배</option>
+                        <option value="hanjin">한진택배</option>
+                      </select>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>운송장번호</th>
+                    <td>
+                      <input type="text" placeholder="송장번호 입력" />
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>기타</th>
+                    <td>
+                      <textarea
+                        name="description"
+                        id="shipment-desc"
+                      ></textarea>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <input type="submit" class="post-submit-btn" value="등록하기" />
+            </form>
+          </div>
+        </div>
+        <div class="order-detail-modal modal" title="주문상세">
+          <div class="content">
+            <div class="content-title">
+              <h3>상품정보</h3>
+            </div>
+            <table>
+              <tbody>
+                <tr>
+                  <th>상품 이미지</th>
+                  <th>상품번호</th>
+                  <th>상품명</th>
+                  <th>판매자</th>
+                  <th>가격</th>
+                  <th>할인</th>
+                  <th>수량</th>
+                  <th>배송비</th>
+                  <th>결제금액</th>
+                </tr>
+                <tr>
+                  <td>
+                    <img src="/static/images/img-symbol.jpg" alt="" />
+                  </td>
+                  <td>12010021</td>
+                  <td>상품명 #1</td>
+                  <td>(주) 상호명</td>
+                  <td>24,000</td>
+                  <td>-1,200</td>
+                  <td>3</td>
+                  <td>0</td>
+                  <td>68,400</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="total-price">
+              <ul>
+                <li>
+                  <span>총 상품금액</span>
+                  <span>107,000원</span>
+                </li>
+                <li>
+                  <span>총 할인금액</span>
+                  <span>-7,100원</span>
+                </li>
+                <li>
+                  <span>배송비</span>
+                  <span>3,000원</span>
+                </li>
+                <li>
+                  <span class="total">총 결제금액</span>
+                  <span>102,900원</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="content">
+            <div class="content-title">
+              <h3>결제정보</h3>
+            </div>
+            <table>
+              <tbody>
+                <tr>
+                  <th>주문번호</th>
+                  <td>10121211341</td>
+                </tr>
+                <tr>
+                  <th>결제방법</th>
+                  <td>신용카드 / 1234 **** **** 4432</td>
+                </tr>
+                <tr>
+                  <th>주문자/연락처</th>
+                  <td>김유신 / 010-1234-1234</td>
+                </tr>
+                <tr>
+                  <th>결제상태</th>
+                  <td class="text-green">결제완료</td>
+                </tr>
+                <tr>
+                  <th>총 결제금액</th>
+                  <td>
+                    <span class="text-red"> 102,900 </span>
+                    <span>원</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="content">
+            <div class="content-title">
+              <h3>배송정보</h3>
+            </div>
+            <table>
+              <table>
+                <tbody>
+                  <tr>
+                    <th>수취인</th>
+                    <td>김유신</td>
+                  </tr>
+                  <tr>
+                    <th>연락처</th>
+                    <td>010-1234-1234</td>
+                  </tr>
+                  <tr>
+                    <th>배송지 주소</th>
+                    <td>부산광역시 부산진구 123-11 행복아파트 103동 404호</td>
+                  </tr>
+                </tbody>
+              </table>
+            </table>
+          </div>
+        </div>
+      </main>
+      <section class="pagination">
+        <a class="page move" href="#">
+          <i class="fa-solid fa-angles-left"></i>
+        </a>
+        <a class="page move" href="#">
+          <i class="fa-solid fa-chevron-left"></i>
+        </a>
+        <a class="page" href="">1</a>
+        <a class="page" href="">2</a>
+        <a class="page" href="">3</a>
+        <a class="page" href="">4</a>
+        <a class="page move" href="#">
+          <i class="fa-solid fa-chevron-right"></i>
+        </a>
+        <a class="page move" href="#">
+          <i class="fa-solid fa-angles-right"></i>
+        </a>
+      </section>
+      <footer>
+        <div id="footer-wrapper">
+          <span>
+            Copyright ©LotteON.co.kr All rights reserved. LotteON ADMINISTRATOR
+            Version 0.0.1
+          </span>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>
