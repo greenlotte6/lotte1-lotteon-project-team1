@@ -26,21 +26,23 @@ $(function () {
     }
   });
 
+  $("#dialog")
+    .dialog({
+      autoOpen: false,
+      draggable: false,
+      width: 600,
+      height: 330,
+      position: {
+        of: ".modal",
+        at: "right+100 top-350",
+        my: "right top",
+      },
+    })
+    .prev(".ui-dialog-titlebar")
+    .css("background", "#fff")
+    .css("margin-top", "10px")
+    .css("border", "none");
   $(".modal").on("click", () => {
-    $("#dialog")
-      .dialog({
-        draggable: false,
-        width: 600,
-        height: 330,
-        position: {
-          of: ".modal",
-          at: "right+100 top-350",
-          my: "right top",
-        },
-      })
-      .prev(".ui-dialog-titlebar")
-      .css("background", "#fff")
-      .css("margin-top", "10px")
-      .css("border", "none");
+    $("#dialog").dialog("open");
   });
 });
