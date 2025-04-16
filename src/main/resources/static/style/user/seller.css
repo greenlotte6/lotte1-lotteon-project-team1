@@ -1,0 +1,105 @@
+/*
+  작성자: 손준오(sjo112777)
+  내용: 회원> 판매자가입.
+*/
+main{
+    width: 100%;
+    height: auto;
+    box-sizing: border-box;
+}
+
+.csmain {
+    width: 1260px;
+    height: auto;
+    margin: 0 auto;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+
+
+.main_content{
+  width: 900px;
+  height: auto;
+  box-sizing: border-box;
+}
+
+.main_title{
+  border-bottom: 1.5px solid black; 
+  height: 70px;
+}
+
+.main_title p{
+  font-weight: 700;
+  font-size: 26px;
+  line-height: 100px;
+  letter-spacing: 0%;
+  vertical-align: middle;
+}
+
+.main_content_detail{
+  width: 100%;
+  height: auto;
+  margin-top: 20px;
+  margin-bottom: 80px;
+}
+
+
+
+table th, td{
+    border-bottom: 1px solid #DEDEDE; /* 밑에 보더를 추가 */
+    padding: 10px; 
+    
+}
+
+table th{
+    border-right: 1px solid #DEDEDE;
+    background-color: #f2f2f2;
+    width: 198px;
+    box-sizing: border-box;
+}
+
+table{
+    width: auto;
+    height: auto;
+    border-top: 2px solid #071F4B;
+    justify-content: center;
+    
+
+}
+
+table td {
+    width: 792px;
+    box-sizing: border-box;
+}
+
+input {
+  width: 308px;
+  height: 39px;
+  box-sizing: border-box;
+  border: 1px solid #cccccc;
+  padding: 8px;
+}
+
+.inputs{
+    width: 463px;
+    margin-top: 5px;
+}
+
+
+.agree-button {
+    display: block;
+    width: 400px;
+    background-color: #c83737;
+    color: white;
+    border: none;
+    padding: 12px 0;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 2px;
+    box-shadow: 0 0 6px red;
+    margin: auto;
+    margin-top: 15px;
+  }

@@ -1,18 +1,18 @@
 <!--
   작성자: 손준오(sjo112777)
-  내용: 회원 > 구분
+  내용: 회원 > 판매자 가입
 -->
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>회원 > 구분</title>
+    <title>회원 > 판매자 가입</title>
     <link rel="stylesheet" href="/static/style/init.css" />
     <link rel="stylesheet" href="/static/style/index.css" />
     <link rel="stylesheet" href="/static/style/common/header.css" />
     <link rel="stylesheet" href="/static/style/common/footer.css" />
     <!--<link rel="stylesheet" href="/static/style/common/pagination.css" />-->
-    <link rel="stylesheet" href="/static/style/user/sort.css" />
+    <link rel="stylesheet" href="/static/style/user/seller.css" />
     <link rel="icon" href="https://static.lotteon.com/p/common/assets/favicon/1/favicon-32.png" />
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css" />
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
@@ -47,43 +47,95 @@
       <main>
         <div class="csmain">
           <article class="main_content">
-
             <div class="main_title">
-              <p>
-                <span>대한민국 1등 온라인 인터넷 쇼핑</span><br><br>
-                롯데 ON에 오신것을 환영합니다.
-              </p>
+              <p>판매자 회원가입</p>
             </div>
 
             <div class="main_content_detail">
 
-              <div class="loginboxes">
-                <div class="commonbox">
-                  <div class="header">일반회원가입</div>
-                  <div class="content">
-                    <p>개인구매회원 (외국인포함)</p>
-                    <p class="gray-text">만 14 세이상가능</p>
-                    <div class="button-wrapper">
-                      <button class="join-button">회원가입</button>
-                    </div>
-                  </div>
-                </div>
+                <form name="formRegister" action="" method="post">
+                    <table style="border-collapse: collapse;">
+                        <tr>
+                            <th>아이디<span style="color: red;">*</span></th>
+                            <td>
+                                <input type="text" name="uid" placeholder="아이디 입력" maxlength="10">
+                                <button id="btnCheckUid" type="button">중복체크</button>
+                                <span class="uidResult" style="margin-left: 10px; color: #333333;">영문·숫자 조합 4~10자 이내</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>비밀번호<span style="color: red;">*</span></th>
+                            <td><input type="password" name="pass" placeholder="비밀번호 입력" maxlength="16">
+                            <span class="passResult" style="margin-left: 10px; color: #333333;">비밀번호는 8-16자리 이내, 영문ㆍ숫자ㆍ특수문자 조합</span>
+                            </td>
+                            
+                        </tr>
+                        <tr>
+                            <th>비밀번호 확인<span style="color: red;">*</span></th>
+                            <td><input type="password" name="pass2" placeholder="비밀번호 확인입력" maxlength="16"></td>
+                        </tr>
+                        <tr>
+                            <th>회사명<span style="color: red;">*</span></th>
+                            <td>
+                                <input type="text" name="company" placeholder="회사명입력 예) (주)상호명">
+                                <span class="companyResult"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>대표<span style="color: red;">*</span></th>
+                            <td>
+                                <input type="text" name="name" placeholder="이름입력">
+                                <span class="nameResult"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>사업자등록번호<span style="color: red;">*</span></th>
+                            <td>
+                                <input type="text" name="business" placeholder="사업자등록번호 입력" maxlength="12">
+                                <span class="businessResult" style="margin-left: 10px; color: #333333;"> - 포함 12 자리 입력</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>통신판매업번호<span style="color: red;">*</span></th>
+                            <td>
+                                <input type="text" name="telemarketing" placeholder="통신판매업번호 입력" maxlength="12">
+                                <span class="telemarketingResult"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>전화번호<span style="color: red;">*</span></th>
+                            <td>
+                                <input type="text" name="phone" placeholder="전화번호 입력" maxlength="13">
+                                <span class="phoneResult"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>팩스<span style="color: red;">*</span></th>
+                            <td>
+                                <input type="text" name="fax" placeholder="팩스번호 입력" maxlength="13">
+                                <span class="faxResult"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>주소</th>
+                            <td>
+                                <input type="text" id="zip" name="zip" placeholder="우편번호"/>
+                                <button type="button" onclick="postcode()">우편번호 찾기</button><br>
+                                <input type="text" id="addr1" name="addr1" placeholder="주소 검색"/><br>
+                                <input type="text" id="addr2" name="addr2" placeholder="상세주소 입력"/>
+                            </td>
+                        </tr>
+                        
+                    </table>
+                    <p style="margin-top: 10px; color: #666666;"><span style="color: red;">*</span>필수입력</p>
 
-                <div class="sellerbox">
-                  <div class="header" style="background-color: #31859c;">판매회원가입</div>
-                  <div class="content">
-                    <p>사업자 판매회원</p>
-                    <p class="gray-text">사업자등록증을 보유한 회원</p>
-                    <div class="button-wrapper">
-                      <button class="join-button">회원가입</button>
-                    </div>
-                  </div>
-                </div>
+                    <button class="agree-button">회원가입</button>
+                </form>
+              
 
-              </div>
+              
 
             </div>
-
           </article>
         </div>
       </main>
