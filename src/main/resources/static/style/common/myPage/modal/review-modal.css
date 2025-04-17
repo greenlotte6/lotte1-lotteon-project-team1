@@ -1,0 +1,70 @@
+
+
+table {
+    width: 90%;
+    margin: 0 auto;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+}
+
+td {
+    vertical-align: middle;
+    height: 50px;
+    border-bottom: 1px solid #ccc;
+}
+
+.td-l {
+    width: 100px;
+    text-align: center;
+    background: #eee;
+}
+.td-r {
+    padding-left: 20px;
+}
+
+
+
+
+.inquiry {
+    display: flex;
+    justify-content: center;
+    width: 90%;
+    margin: 0 auto;
+    margin-top: 40px;
+    gap: 20px;
+}
+
+.inquiry > button{
+    width: 170px;
+    height: 50px;
+    background: #7BAAEC;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
+
+
+.td-r > textarea {
+    width: 95%;
+    height: 200px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    resize: none;
+}
+
+
+
+.rating {
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.rating span {
+    color: #ccc; /* 회색으로 덮어쓰기 */
+    transition: color 0.2s;
+}
+
+.rating span.active {
+    color: gold; /* 노란색으로 바뀌는 별 */
+}

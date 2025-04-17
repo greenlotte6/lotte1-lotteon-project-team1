@@ -1,0 +1,28 @@
+
+
+.etc {
+    width: 90%;
+    margin: 0 auto;
+    margin-top: 55px;
+    text-align: center;
+}
+
+
+
+.inquiry {
+    display: flex;
+    justify-content: center;
+    width: 90%;
+    margin: 0 auto;
+    margin-top: 40px;
+    gap: 20px;
+}
+
+.inquiry > button{
+    width: 170px;
+    height: 50px;
+    background: #7BAAEC;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
