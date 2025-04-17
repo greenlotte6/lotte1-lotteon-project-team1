@@ -1,0 +1,181 @@
+.modal-hd {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 40px;
+    background: #7BAAEC;;
+}
+
+.modal-hd > button {
+    background: none;
+    border: none;
+    font-size: 20px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.modal-hd > p {
+    font-weight: bold;
+}
+
+.all-orderList {
+    width: 90%;
+    margin: 0 auto;
+    margin-top: 20px;
+}
+
+.list-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.list-head > p {
+   font-weight: bold;
+}
+
+.order-table {
+    text-align: center;
+}
+
+table {
+    width: 100%;
+    height: 250px;
+    margin-top: 15px;
+    border-top: 2px solid gray;
+    border-bottom: 1px solid #eee;
+}
+
+.table-hd {
+    height: 60px;
+    background: #eee;
+}
+
+.table-hd > th {
+    vertical-align: middle; 
+}
+
+.end {
+    padding-right: 30px
+}
+
+.price-t {
+    padding-right: 30px;
+}
+
+td {
+    vertical-align: middle; 
+}
+
+.pro-info {
+    display: flex;
+    margin-left: 40px;
+}
+
+.table-proimg {
+    width: 150px;
+    height: 100px
+}
+
+.table-proimg > img {
+    width: 100px;
+    height: 120px;
+}
+
+.table-bd > td:last-child {
+    margin-right: 30px;
+}
+
+.order-info > p {
+    display: flex;
+    margin-top: 15px;
+}
+
+.order-info > p :nth-child(1) {
+    margin-left: 30px;
+}
+
+.order-info > p > span {
+    margin-left: 10px;
+}
+
+/* --------------------------  */
+.pro-info2 {
+    display: flex;
+    margin-left: 40px;
+    margin-right: 20px;
+}
+
+.order-info2 > p {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.order-info2 > p :nth-child(1) {
+    margin-left: 20px;
+}
+
+.order-info2 > p:nth-child(3) {
+    margin-top: 70px;
+}
+
+.order-info2 > p > span {
+    margin-left: 10px;
+}
+
+
+/* --------------------------  */
+.price {
+    font-weight: bold;
+}
+
+.btn-option {
+    display: flex;
+    flex-direction: column;
+    margin-top: 5px;
+    margin-right: 10px;
+}
+
+.btn-option > button {
+    height: 35px;
+    margin-bottom: 5px;
+    cursor: pointer;
+}
+
+.btn-option > button:nth-child(-n+2) {
+    border: none;
+    background: #7BAAEC;
+    color: white;
+}
+
+.btn-option > button:nth-child(n+3) {
+    border: 2px solid gray;
+}
+
+.sa {
+    width: 300px;
+}
+
+/*table2*/
+.all-deliveryList {
+    width: 90%;
+    margin: 0 auto;
+    margin-top: 20px;
+}
+
+.delivery-table td {
+    border-bottom: 1px solid #ccc;
+}
+
+.td-l {
+   text-align: center;
+   background: #eee;
+   width: 150px;
+}
+
+.td-r {
+    padding-left: 20px;
+}
+
+
