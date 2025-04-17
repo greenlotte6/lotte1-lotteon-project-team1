@@ -12,7 +12,7 @@ jobs:
   ci-cd:
     runs-on: ubuntu-latest
     env:
-      AWS_INSTANCE_SG_ID: AWS_INSTANCE_SG_ID
+      AWS_INSTANCE_SG_ID: ${{secrets.AWS_INSTANCE_SG_ID}}
     permissions:
       contents: read
     #defaults:
