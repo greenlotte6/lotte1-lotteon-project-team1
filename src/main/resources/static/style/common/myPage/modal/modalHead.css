@@ -1,0 +1,33 @@
+.modal-hd {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 40px;
+    background: #7BAAEC;
+}
+
+.modal-hd > p {
+    margin-left: 10px;
+    color: white;
+}
+
+.modal-hd > button {
+    background: none;
+    border: none;
+    font-size: 20px;
+    margin-right: 10px;
+    cursor: pointer;
+    color: white;
+}
+
+.all-orderList {
+    width: 90%;
+    margin: 0 auto;
+    margin-top: 20px;
+}
+
+.list-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
