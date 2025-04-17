@@ -4,4 +4,4 @@ COPY ["./build/libs/lotteon-*.jar", "/home/root/app.jar"]
 
 VOLUME ["/data"]
 
-ENTRYPOINT ["java", "-jar", "/home/root/app.jar"]
+ENTRYPOINT ["java", "-jar", "-Dspring.profiles.active=prod", "/home/root/app.jar"]
