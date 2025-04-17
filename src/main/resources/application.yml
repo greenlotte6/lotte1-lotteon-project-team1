@@ -12,7 +12,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://lotteon-mysql:3306/lotteon
     username: lotteon
-    password: isFFnDB&4lN#wIU[b1cWs+VTZIU:%@0%
+    password: HJkEQmgAqefGcWPyQ65pRyuo6uFak0S2
 
     hikari:
       connection-timeout: 10000
