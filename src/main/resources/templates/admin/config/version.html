@@ -1,283 +1,136 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>환경설정 > 버전관리</title>
-    <link rel="stylesheet" href="/static/style/init.css" />
-    <link rel="stylesheet" href="/static/style/common/admin/header.css" />
-    <link rel="stylesheet" href="/static/style/common/admin/aside.css" />
-    <link rel="stylesheet" href="/static/style/common/admin/content.css" />
-    <link rel="stylesheet" href="/static/style/common/admin/footer.css" />
-    <link rel="stylesheet" href="/static//style/common/pagination.css" />
-    <link rel="stylesheet" href="/static/style/admin/config/version.css" />
-    <link
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>환경설정 > 버전관리</title>
+  <link rel="stylesheet" th:href="@{/style/init.css}"/>
+  <link rel="stylesheet" th:href="@{/style/admin/index.css}"/>
+  <link rel="stylesheet" th:href="@{/style/common/admin/header.css}"/>
+  <link rel="stylesheet" th:href="@{/style/common/admin/footer.css}"/>
+  <link rel="stylesheet" th:href="@{/style/common/admin/aside.css}"/>
+  <link rel="stylesheet" th:href="@{/style/common/admin/content.css}"/>
+  <link rel="stylesheet" th:href="@{/style/common/pagination.css}"/>
+  <link rel="stylesheet" th:href="@{/style/admin/config/version.css}"/>
+  <link
       rel="icon"
       href="https://static.lotteon.com/p/common/assets/favicon/1/favicon-32.png"
-    />
-    <link
+  />
+  <link
       rel="stylesheet"
       href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css"
-    />
-    <script
+  />
+  <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+  <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
+  <script
       src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/all.min.js"
       crossorigin="anonymous"
-    ></script>
-    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-    <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
-    <script src="/static/js/admin/config/aside-drop.js"></script>
-    <script src="/static/js/admin/config/version.js"></script>
-  </head>
-  <body>
-    <div id="wrapper">
-      <header>
-        <div class="header-wrapper">
-          <img
-            src="https://static.lotteon.com/p/common/foCommon/assets/img/logo_lotte-on@2x.png"
-            alt="logo"
-          />
-          <h1>ADMINISTRATOR</h1>
-          <ul>
-            <li>
-              <span class="greeting">
-                안녕하세요, [홍길동]님, 반갑습니다.
-              </span>
-            </li>
-            <li>
-              <a href="#"> 홈 </a>
-            </li>
-            <li>
-              <a href="#"> 로그아웃 </a>
-            </li>
-            <li>
-              <a href="#"> 고객센터 </a>
-            </li>
-          </ul>
-        </div>
-        <nav class="header-padding"></nav>
-      </header>
-      <main>
-        <aside class="side-menu">
-          <ul>
-            <li id="settings-menu">
-              <i class="fa-solid fa-gear"></i>
-              <a href="/admin/config/basic"> 환경설정 </a>
-            </li>
-            <ul class="submenu settings" style="display: none">
-              <li>
-                <a href="/admin/config/basic"> 기본설정 </a>
-              </li>
-              <li>
-                <a href="/admin/config/banner"> 배너관리 </a>
-              </li>
-              <li>
-                <a href="/admin/config/policy"> 약관관리 </a>
-              </li>
-              <li>
-                <a href="/admin/config/category"> 카테고리 </a>
-              </li>
-              <li>
-                <a href="/admin/config/version"> 버전이력 </a>
-              </li>
-            </ul>
-            <li id="store-menu">
-              <i class="fa-solid fa-store"></i>
-              <a href="/admin/shop/list"> 상점관리 </a>
-            </li>
-            <ul class="submenu store" style="display: none">
-              <li>
-                <a href="/admin/shop/list"> 상점목록 </a>
-              </li>
-              <li>
-                <a href="/admin/shop/sales"> 매출현황 </a>
-              </li>
-            </ul>
-            <li id="member-menu">
-              <i class="fa-solid fa-users"></i>
-              <a href="/admin/member/list"> 회원관리 </a>
-            </li>
-            <ul class="submenu member" style="display: none">
-              <li>
-                <a href="/admin/member/list"> 회원목록 </a>
-              </li>
-              <li>
-                <a href="/admin/member/point"> 포인트 관리 </a>
-              </li>
-            </ul>
-            <li id="product-menu">
-              <i class="fa-solid fa-box-open"></i>
-              <a href="/admin/product/list"> 상품관리 </a>
-            </li>
-            <ul class="submenu product" style="display: none">
-              <li>
-                <a href="/admin/product/list"> 상품목록 </a>
-              </li>
-              <li>
-                <a href="/admin/product/register"> 상품등록 </a>
-              </li>
-            </ul>
-            <li id="order-menu">
-              <i class="fa-solid fa-credit-card"></i>
-              <a href="/admin/settings/order/list"> 주문관리 </a>
-            </li>
-            <ul class="submenu order" style="display: none">
-              <li>
-                <a href="/admin/order/list"> 주문현황 </a>
-              </li>
-              <li>
-                <a href="/admin/order/delivery"> 배송현황 </a>
-              </li>
-            </ul>
-            <li id="coupon-menu">
-              <i class="fa-solid fa-ticket"></i>
-              <a href="/admin/settings/coupon/list"> 쿠폰관리 </a>
-            </li>
-            <ul class="submenu coupon" style="display: none">
-              <li>
-                <a href="/admin/coupon/list"> 쿠폰목록 </a>
-              </li>
-              <li>
-                <a href="/admin/coupon/issued"> 쿠폰발급현황 </a>
-              </li>
-            </ul>
-            <li id="cs-menu">
-              <i class="fa-solid fa-headphones"></i>
-              <a href="/admin/cs/notice/list"> 고객센터 </a>
-            </li>
-            <ul class="submenu customer-service" style="display: none">
-              <li>
-                <a href="/admin/cs/notice/list"> 공지사항 </a>
-              </li>
-              <li>
-                <a href="/admin/cs/faq/list"> 자주묻는질문 </a>
-              </li>
-              <li>
-                <a href="/admin/cs/qna/list"> 문의하기 </a>
-              </li>
-            </ul>
-          </ul>
-        </aside>
-        <section id="content-area">
-          <div class="content-area-title">
-            <h3>버전관리</h3>
-            <span>
+  ></script>
+  <script th:src="@{/js/admin/config/aside-drop.js}"></script>
+  <script th:src="@{/js/admin/config/version.js}"></script>
+</head>
+<body>
+<div id="wrapper">
+  <th:block th:insert="~{/common/admin/header}"></th:block>
+  <main>
+    <th:block th:insert="~{/common/admin/aside}"></th:block>
+    <section id="content-area">
+      <div class="content-area-title">
+        <h3>버전관리</h3>
+        <span>
               <a href="#">HOME&nbsp;>&nbsp; </a>
               <a href="#">환경설정&nbsp;>&nbsp;</a>
               <a href="#">버전관리</a>
             </span>
-          </div>
-          <div class="content">
-            <div class="content-title">
-              <h3>버전목록</h3>
-            </div>
-            <p class="desc">사이트 버전 목록입니다</p>
-            <table class="versions">
-              <tr>
-                <th>
-                  <input type="checkbox" onclick="return false;" />
-                </th>
-                <th>번호</th>
-                <th>버전</th>
-                <th>작성자</th>
-                <th>등록일시</th>
-                <th>변경내역</th>
-              </tr>
-              <tr>
-                <td>
-                  <input type="checkbox" />
-                </td>
-                <td>1</td>
-                <td>0.0.1-SNAPSHOT</td>
-                <td>chhak0503</td>
-                <td>2025.04.15 10:28:31</td>
-                <td>
-                  <button class="version-detail-btn">상세</button>
-                </td>
-              </tr>
-            </table>
-            <div class="crud-btn-area">
-              <button class="enroll-btn delete-btn">선택삭제</button>
-              <button class="enroll-btn register-btn">배너등록</button>
-            </div>
-            <div class="version-detail" title="버전확인" style="display: none">
-              <table>
-                <tbody>
-                  <tr>
-                    <th>버전</th>
-                    <td>0.0.1-SNAPSHOT</td>
-                  </tr>
-                  <tr>
-                    <th>변경내역</th>
-                    <td>
-                      <ul>
-                        <li>- 프로젝트 생성 및 전체 구조 설계</li>
-                        <li>- 회원가입 아이디 중복체크 완료</li>
-                        <li>- 관리자 상품 등록 완료</li>
-                        <li>- 쇼핑몰 메인 및 개별 페이지 링크 작업</li>
-                        <li>- 개발을 위한 제반 사항 처리</li>
-                      </ul>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-              <button class="green-btn close-btn">닫기</button>
-            </div>
-            <div
-              class="version-registry"
-              title="버전확인"
-              style="display: none"
-            >
-              <table>
-                <tbody>
-                  <tr>
-                    <th>버전</th>
-                    <td>
-                      <input type="text" placeholder="버전을 입력하세요" />
-                    </td>
-                  </tr>
-                  <tr>
-                    <th>변경내역</th>
-                    <td>
-                      <textarea
-                        name="change-detail"
-                        id="version-change-detail"
-                        placeholder="변경내역을 입력하세요"
-                      ></textarea>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-              <button class="green-btn submit-btn">등록하기</button>
-            </div>
-          </div>
-          <div class="pagination">
-            <a class="page move" href="#">
-              <i class="fa-solid fa-angles-left"></i>
-            </a>
-            <a class="page move" href="#">
-              <i class="fa-solid fa-chevron-left"></i>
-            </a>
-            <a class="page" href="">1</a>
-            <a class="page" href="">2</a>
-            <a class="page" href="">3</a>
-            <a class="page" href="">4</a>
-            <a class="page move" href="#">
-              <i class="fa-solid fa-chevron-right"></i>
-            </a>
-            <a class="page move" href="#">
-              <i class="fa-solid fa-angles-right"></i>
-            </a>
-          </div>
-        </section>
-      </main>
-      <footer>
-        <div id="footer-wrapper">
-          <span>
-            Copyright ©LotteON.co.kr All rights reserved. LotteON ADMINISTRATOR
-            Version 0.0.1
-          </span>
+      </div>
+      <div class="content">
+        <div class="content-title">
+          <h3>버전목록</h3>
         </div>
-      </footer>
-    </div>
-  </body>
+        <p class="desc">사이트 버전 목록입니다</p>
+        <table class="versions">
+          <tr>
+            <th>
+              <input type="checkbox" onclick="return false;"/>
+            </th>
+            <th>번호</th>
+            <th>버전</th>
+            <th>작성자</th>
+            <th>등록일시</th>
+            <th>변경내역</th>
+          </tr>
+          <tr>
+            <td>
+              <input type="checkbox"/>
+            </td>
+            <td>1</td>
+            <td>0.0.1-SNAPSHOT</td>
+            <td>chhak0503</td>
+            <td>2025.04.15 10:28:31</td>
+            <td>
+              <button class="version-detail-btn">상세</button>
+            </td>
+          </tr>
+        </table>
+        <div class="crud-btn-area">
+          <button class="enroll-btn delete-btn">선택삭제</button>
+          <button class="enroll-btn register-btn">배너등록</button>
+        </div>
+        <div class="version-detail" title="버전확인" style="display: none">
+          <table>
+            <tbody>
+            <tr>
+              <th>버전</th>
+              <td>0.0.1-SNAPSHOT</td>
+            </tr>
+            <tr>
+              <th>변경내역</th>
+              <td>
+                <ul>
+                  <li>- 프로젝트 생성 및 전체 구조 설계</li>
+                  <li>- 회원가입 아이디 중복체크 완료</li>
+                  <li>- 관리자 상품 등록 완료</li>
+                  <li>- 쇼핑몰 메인 및 개별 페이지 링크 작업</li>
+                  <li>- 개발을 위한 제반 사항 처리</li>
+                </ul>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+          <button class="green-btn close-btn">닫기</button>
+        </div>
+        <div
+            class="version-registry"
+            title="버전확인"
+            style="display: none"
+        >
+          <table>
+            <tbody>
+            <tr>
+              <th>버전</th>
+              <td>
+                <input type="text" placeholder="버전을 입력하세요"/>
+              </td>
+            </tr>
+            <tr>
+              <th>변경내역</th>
+              <td>
+                      <textarea
+                          name="change-detail"
+                          id="version-change-detail"
+                          placeholder="변경내역을 입력하세요"
+                      ></textarea>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+          <button class="green-btn submit-btn">등록하기</button>
+        </div>
+      </div>
+    </section>
+  </main>
+  <th:block th:insert="~{/common/pagination}"></th:block>
+  <th:block th:insert="~{/common/admin/footer}"></th:block>
+</div>
+</body>
 </html>
