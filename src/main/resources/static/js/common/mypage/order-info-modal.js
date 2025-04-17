@@ -1,7 +1,9 @@
 document.addEventListener("DOMContentLoaded", function() {
     const openBtn = document.getElementById('orderModal');
-    const closeBtn = document.getElementById('close-modal');
+    const closeBtn = document.getElementById('order-close');
     const modal = document.getElementById('order-info-modal');
+
+    modal.style.display = 'none';
 
     openBtn.addEventListener('click', function(e) {
       e.preventDefault(); 

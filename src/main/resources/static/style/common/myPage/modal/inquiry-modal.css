@@ -1,0 +1,105 @@
+.modal-back3 {
+    display: flex;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    justify-content: center;
+    align-items: center;
+}
+
+#modal-wrapper3 {
+    width: 1000px;
+    height: 800px;
+    margin: 0 auto;
+    background: white;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+#modal3-wrapper {
+    width: 800px;
+    height: 700px;
+    margin: 0 auto;
+    background: white;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.inquiry-table {
+    width: 90%;
+    margin: 0 auto;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    margin-top: 70px;
+}
+
+.inquiry-table tr {
+    border-bottom: 1px solid #ccc;
+}
+
+
+
+.close-btn {
+    padding-left: 100px;
+}
+
+.td-lf {
+    padding-top: 10px;
+    height: 30px;
+    text-align: center;
+    background: #eee;
+}
+
+.td-rg {
+    height: auto;
+    padding-left: 10px;
+}
+
+.form-input {
+    width: 250px;
+    border: 2px solid #ccc;
+    border-radius: 3px;
+    height: 25px;
+}
+
+.form-input2 {
+    height: auto;
+    padding: 6px 6px 6px 0;
+}
+
+.form-input2 > input {
+    width: 100%;
+    border: 2px solid #ccc;
+    border-radius: 3px;
+    height: 250px;
+}
+
+.btn-box {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+.btn-box > input, button {
+    width: 130px;
+    height: 35px;
+    margin-left: 10px;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
+
+.btn-box > input {
+    background: #7BAAEC;
+}
+
+.btn-box > button {
+    background: #ccc;
+}
+
+
+
+
+
+
