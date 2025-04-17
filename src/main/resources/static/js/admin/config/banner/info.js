@@ -10,7 +10,8 @@ $(function () {
       isBannerInfoOpened = true;
     },
   });
-  $(".banner-info-btn").on("click", function () {
+  $(".banner-info-btn").on("click", function (event) {
+    event.preventDefault();
     if (!isBannerInfoOpened) {
       $(".banner-info").dialog("open");
     } else {
