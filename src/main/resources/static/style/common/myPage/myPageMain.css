@@ -79,8 +79,18 @@ td {
     height: 120px;
 }
 
+.order-info > a {
+    display: block; 
+    text-decoration: underline;
+    margin-top: 15px;
+}
+
 .order-info > p {
     margin-top: 15px;
+}
+
+.price {
+    font-weight: bold;
 }
 
 .btn-option {
