@@ -1,0 +1,23 @@
+.content table {
+  margin-top: 30px;
+}
+
+#notice-content {
+  width: 700px;
+  height: 400px;
+  margin-top: 25px;
+  resize: none;
+  padding: 10px;
+  outline: none;
+}
+
+.crud-btn-area {
+  justify-content: right;
+}
+
+.crud-btn-area > a {
+  display: inline-block;
+  text-align: center;
+  line-height: 35px;
+  margin-left: 10px;
+}

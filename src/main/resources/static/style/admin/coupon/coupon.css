@@ -1,0 +1,41 @@
+.crud-btn-area {
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+}
+
+.coupon-detail-modal table td li {
+  list-style-position: inside;
+}
+
+.coupon-registry-modal table td {
+  text-align: left;
+}
+
+.post-form {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.post-form-table th {
+  background-color: #f2f2f2;
+}
+
+.post-submit-btn {
+  background-color: #00b050;
+}
+
+#coupon-desc {
+  width: 600px;
+  height: 200px;
+  border: 2px solid #a6a6a6;
+  outline: none;
+  resize: none;
+  margin-top: 25px;
+}

@@ -1,0 +1,81 @@
+# 작성자: 이현민(id3ntity99)
+# 내용  : github actions & docker를 이용한 CI/CD
+name: LotteON Server CI/CD with Gradle & docker
+
+on:
+  #push:
+  #  branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  ci-cd:
+    runs-on: ubuntu-latest
+    env:
+      AWS_INSTANCE_SG_ID: AWS_INSTANCE_SG_ID
+    permissions:
+      contents: read
+    #defaults:
+    #  run:
+    #    working-directory: ./GreenUniv
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: "17"
+          distribution: "temurin"
+
+      - name: Change Permission for gradlew
+        run: chmod +x ./gradlew
+
+      - name: Gradle Build
+        run: ./gradlew clean build
+
+      - name: Docker build & push to Docker Hub
+        run: |
+          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+          docker build -f Dockerfile -t ${{ secrets.DOCKER_USERNAME }}/lotteon-server .
+          docker push ${{ secrets.DOCKER_USERNAME }}/lotteon-server
+
+      - name: configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.AWS_PRIVATE_KEY }}
+          aws-region: ap-northeast-2
+      - name: get runner ip address
+        id: ip
+        uses: haythem/public-ip@v1.2
+      - name: whitelist runner ip address
+        run: |
+          aws ec2 authorize-security-group-ingress \
+            --group-id $AWS_INSTANCE_SG_ID \
+            --protocol tcp \
+            --port 22 \
+            --cidr ${{ steps.ip.outputs.ipv4 }}/32
+
+      - name: SSH into EC2 and deploy Docker container
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.AWS_EC2_HOST }}
+          username: ec2-user
+          key: ${{ secrets.AWS_EC2_PRIVATE_KEY }}
+          port: 22
+          script: |
+            sudo docker ps
+            sudo docker network ls | grep lotteon || sudo docker network create lotteon 
+            sudo docker volume ls | grep lotteon || sudo docker volume create lotteon 
+            sudo docker stop lotteon-server || true && sudo docker rm lotteon-server || true
+            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/lotteon-server
+            sudo docker run -d --name lotteon-server --network lotteon -v lotteon:/data -p 8080:8080 ${{ secrets.DOCKER_USERNAME }}/lotteon-server
+            sudo docker image prune -f
+
+      - name: revoke runner ip address
+        run: |
+          aws ec2 revoke-security-group-ingress \
+            --group-id $AWS_INSTANCE_SG_ID \
+            --protocol tcp \
+            --port 22 \
+            --cidr ${{ steps.ip.outputs.ipv4 }}/32

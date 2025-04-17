@@ -1,0 +1,99 @@
+# 배포용 설정
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+  application:
+    name: lotteon
+    version: 0.0.1
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://lotteon-mysql:3306/lotteon
+    username: lotteon
+    password: isFFnDB&4lN#wIU[b1cWs+VTZIU:%@0%
+
+    hikari:
+      connection-timeout: 10000
+      maximum-pool-size: 20
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+
+  data:
+    mongodb:
+      uri: mongodb://lotteon-mongo:27017
+      username: lotteon
+      password: QqKa4j67Ljw4E05u8Fpl0c2O55xKvFdu
+      authentication-database: lotteon
+      database: lotteon
+
+  thymeleaf:
+    prefix: classpath:/templates
+
+logging:
+  file:
+    name: lotteon.log
+    path: /data
+  level:
+    root: info
+    sql: debug
+
+server:
+  port: 8080
+  servlet:
+    context-path: /
+
+---
+# 개발용 설정
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+  application:
+    name: lotteon
+    version: 0.0.1
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://52.79.234.26:3307/lotteon
+    username: lotteon-dev
+    password: 1234
+
+    hikari:
+      connection-timeout: 10000
+      maximum-pool-size: 20
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+
+  data:
+    mongodb:
+      uri: mongodb://52.79.234.26:27018
+      username: lotteon-dev
+      password: 1234
+      authentication-database: lotteon
+      database: lotteon
+
+  thymeleaf:
+    prefix: classpath:/templates
+
+logging:
+  level:
+    root: info
+    sql: debug
+    org:
+      springframework: info
+
+server:
+  port: 8080
+  servlet:
+    context-path: /
+
+---

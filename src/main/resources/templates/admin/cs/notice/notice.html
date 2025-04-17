@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>상품관리 > 상품목록</title>
+  <title>고객센터 > 공지사항</title>
   <link rel="stylesheet" href="/static/style/init.css"/>
   <link rel="stylesheet" href="/static/style/common/admin/header.css"/>
   <link rel="stylesheet" href="/static/style/common/admin/aside.css"/>
   <link rel="stylesheet" href="/static/style/common/admin/content.css"/>
   <link rel="stylesheet" href="/static/style/common/admin/footer.css"/>
   <link rel="stylesheet" href="/static/style/common/pagination.css"/>
-  <link rel="stylesheet" href="/static/style/admin/product/product.css"/>
+  <link rel="stylesheet" href="/static/style/admin/cs/notice/notice.css"/>
   <link
       rel="icon"
       href="https://static.lotteon.com/p/common/assets/favicon/1/favicon-32.png"
@@ -26,6 +26,11 @@
   <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
   <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
   <script src="/static/js/admin/config/aside-drop.js"></script>
+  <script type="module" src="/static/js/common/admin/modal.mjs"></script>
+  <script
+      type="module"
+      src="/static/js/common/admin/registryModal.js"
+  ></script>
 </head>
 <body>
 <div id="wrapper">
@@ -55,7 +60,6 @@
     </div>
     <nav class="header-padding"></nav>
   </header>
-
   <main>
     <aside class="side-menu">
       <ul>
@@ -159,27 +163,27 @@
     </aside>
     <section id="content-area">
       <div class="content-area-title">
-        <h3>상품목록</h3>
+        <h3>공지사항 목록</h3>
         <span>
-              <a href="#">HOME&nbsp;>&nbsp; </a>
-              <a href="#">상품관리&nbsp;>&nbsp; </a>
-              <a href="#">상품목록</a>
+              <a href="#">HOME&nbsp;>&nbsp;</a>
+              <a href="#">고객센터&nbsp;>&nbsp;</a>
+              <a href="#">공지사항</a>
             </span>
       </div>
       <div class="content">
         <form action="#" method="GET" id="search-area">
           <select name="filter" class="search-filter">
-            <option value="productName">상품명</option>
-            <option value="productId">상품번호</option>
-            <option value="seller">판매자</option>
-            <option value="company">제조사</option>
+            <option value="customerService">고객서비스</option>
+            <option value="customerService">이벤트</option>
+            <option value="customerService">안전거래</option>
+            <option value="customerService">위해상품</option>
           </select>
           <input
-              type="text"
-              class="search-input"
-              placeholder="검색어 입력"
+              type="submit"
+              class="search-submit-btn"
+              value="검색"
+              style="display: none"
           />
-          <input type="submit" class="search-submit-btn" value="검색"/>
         </form>
         <table>
           <tbody>
@@ -187,32 +191,22 @@
             <th>
               <input type="checkbox" onclick="return false;"/>
             </th>
-            <th>사진</th>
-            <th>상품코드</th>
-            <th>상품명</th>
-            <th>판매가격</th>
-            <th>할인율</th>
-            <th>포인트</th>
-            <th>재고</th>
-            <th>판매자</th>
+            <th>번호</th>
+            <th>유형</th>
+            <th>제목</th>
             <th>조회</th>
+            <th>날짜</th>
             <th>관리</th>
           </tr>
           <tr>
             <td>
               <input type="checkbox"/>
             </td>
-            <td class="table-img-area">
-              <img src="/static/images/img-symbol.jpg" alt=""/>
-            </td>
-            <td>201603292</td>
-            <td>상품명 #1</td>
-            <td>32,000</td>
-            <td>10%</td>
-            <td>320</td>
-            <td>1,000</td>
-            <td>(주)다파라</td>
+            <td>100</td>
+            <td>고객서비스</td>
+            <td>[안내] 해외결제 사칭 문자 주의</td>
             <td>120</td>
+            <td>00.00.00</td>
             <td>
               <button class="control-btn default">수정</button>
               <button class="control-btn delete">삭제</button>
@@ -221,8 +215,8 @@
           </tbody>
         </table>
         <div class="crud-btn-area">
-          <button class="enroll-btn delete-btn">선택수정</button>
-          <button class="enroll-btn register-btn">상품등록</button>
+          <button class="enroll-btn delete-btn">선택삭제</button>
+          <a class="enroll-btn register-btn" href="#"> 작성하기 </a>
         </div>
       </div>
     </section>
@@ -245,6 +239,7 @@
       <i class="fa-solid fa-angles-right"></i>
     </a>
   </section>
+
   <footer>
     <div id="footer-wrapper">
           <span>

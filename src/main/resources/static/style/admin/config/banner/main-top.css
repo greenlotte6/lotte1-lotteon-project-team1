@@ -27,43 +27,6 @@
   border-bottom: 0px;
 }
 
-.content > table {
-  width: 100%;
-  height: auto;
-  border-collapse: collapse;
-  border-top: 2px solid #a6a6a6;
-  box-sizing: border-box;
-}
-
-.content > table tr {
-  height: 100px;
-  line-height: 100px;
-  padding: 10px;
-  border-bottom: 1px solid #a6a6a6;
-  box-sizing: border-box;
-}
-
-.content > table tr th {
-  height: 60px;
-  line-height: 60px;
-}
-
-.content > table tr:first-child {
-  height: 40px;
-  line-height: 40px;
-}
-
-.content > table td {
-  text-align: center;
-}
-
-.content > table td img {
-  width: 80px;
-  height: 80px;
-  margin: 0 auto;
-  vertical-align: middle;
-}
-
 .banner-info {
   display: block;
   text-align: left;
@@ -72,10 +35,8 @@
 }
 
 .banner-info-btn {
-  background-color: #a6a6a6;
-  color: #fff;
-  border: 0;
-  cursor: pointer;
+  width: auto;
+  height: auto;
 }
 
 .activation-btn {
@@ -135,4 +96,34 @@
   margin: 0 auto;
   margin-top: 20px;
   border: 0;
+}
+
+.content table {
+  margin-bottom: 30px;
+}
+
+.content table tr td input[type="submit"] {
+  width: auto;
+  height: auto;
+  padding: 0;
+  border: none;
+}
+
+.content table tr td input[type="checkbox"] {
+  height: auto;
+}
+
+.post-submit-btn.activate {
+  background-color: #0e99fc;
+  border: none;
+  padding: 0;
+}
+
+.post-submit-btn.deactivate {
+  background-color: #c0080f;
+  border: none;
+  padding: 0;
+}
+
+.post-form {
 }

@@ -11,7 +11,7 @@ $(() => {
     resizable: false,
   });
 
-  $(".enroll-btn.register-btn").on("click", () => {
+  $(".control-btn.banner-registry-btn").on("click", () => {
     $(".registry-modal").dialog("open");
   });
 });

@@ -1,6 +1,7 @@
 $(function () {
   const ANIMATION_TYPE = "blind";
   const TRANSITION_TIME = 400;
+
   function doToggle(target) {
     var options = {};
     doToggleWithOptions(options, target);
@@ -11,44 +12,44 @@ $(function () {
   }
 
   $("#settings-menu")
-    .unbind()
-    .on("click", function () {
-      doToggle(".settings");
-    });
+  .unbind()
+  .on("click", function () {
+    doToggle(".settings");
+  });
 
   $("#store-menu")
-    .unbind()
-    .on("click", function () {
-      doToggle(".submenu.store");
-    });
+  .unbind()
+  .on("click", function () {
+    doToggle(".submenu.store");
+  });
 
   $("#member-menu")
-    .unbind()
-    .on("click", function () {
-      doToggle(".submenu.member");
-    });
+  .unbind()
+  .on("click", function () {
+    doToggle(".submenu.member");
+  });
 
   $("#product-menu")
-    .unbind()
-    .on("click", function () {
-      doToggle(".submenu.product");
-    });
+  .unbind()
+  .on("click", function () {
+    doToggle(".submenu.product");
+  });
 
   $("#order-menu")
-    .unbind()
-    .on("click", function () {
-      doToggle(".submenu.order");
-    });
+  .unbind()
+  .on("click", function () {
+    doToggle(".submenu.order");
+  });
 
   $("#coupon-menu")
-    .unbind()
-    .on("click", function () {
-      doToggle(".submenu.coupon");
-    });
+  .unbind()
+  .on("click", function () {
+    doToggle(".submenu.coupon");
+  });
 
   $("#cs-menu")
-    .unbind()
-    .on("click", function () {
-      doToggle(".submenu.customer-service");
-    });
+  .unbind()
+  .on("click", function () {
+    doToggle(".submenu.customer-service");
+  });
 });

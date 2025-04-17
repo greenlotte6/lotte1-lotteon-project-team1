@@ -2,12 +2,6 @@
   text-decoration: underline;
 }
 
-.content table tr td img {
-  width: 40px;
-  height: 40px;
-  vertical-align: middle;
-}
-
 .total-price {
   height: 100%;
   margin-top: 10px;
