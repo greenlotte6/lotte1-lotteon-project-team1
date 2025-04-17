@@ -1,0 +1,31 @@
+.post-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.post-submit-btn {
+  margin-left: 10px;
+}
+
+.post-form-table {
+  margin-top: 30px;
+}
+
+#notice-content {
+  width: 700px;
+  height: 400px;
+  margin-top: 25px;
+  resize: none;
+  padding: 10px;
+  outline: none;
+  border: 2px solid #a6a6a6;
+  box-sizing: border-box;
+}
+
+.crud-btn-area {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

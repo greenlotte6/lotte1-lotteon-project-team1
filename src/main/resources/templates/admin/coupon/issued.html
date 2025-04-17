@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>상품관리 > 상품목록</title>
+  <title>쿠폰관리 > 쿠폰목록</title>
   <link rel="stylesheet" href="/static/style/init.css"/>
   <link rel="stylesheet" href="/static/style/common/admin/header.css"/>
   <link rel="stylesheet" href="/static/style/common/admin/aside.css"/>
   <link rel="stylesheet" href="/static/style/common/admin/content.css"/>
   <link rel="stylesheet" href="/static/style/common/admin/footer.css"/>
   <link rel="stylesheet" href="/static/style/common/pagination.css"/>
-  <link rel="stylesheet" href="/static/style/admin/product/product.css"/>
+  <link rel="stylesheet" href="/static/style/admin/coupon/coupon.css"/>
   <link
       rel="icon"
       href="https://static.lotteon.com/p/common/assets/favicon/1/favicon-32.png"
@@ -26,6 +26,12 @@
   <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
   <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
   <script src="/static/js/admin/config/aside-drop.js"></script>
+  <script type="module" src="/static/js/common/admin/modal.mjs"></script>
+  <script
+      type="module"
+      src="/static/js/common/admin/registryModal.js"
+  ></script>
+  <script type="module" src="/static/js/admin/coupon/coupon.js"></script>
 </head>
 <body>
 <div id="wrapper">
@@ -55,7 +61,6 @@
     </div>
     <nav class="header-padding"></nav>
   </header>
-
   <main>
     <aside class="side-menu">
       <ul>
@@ -159,20 +164,23 @@
     </aside>
     <section id="content-area">
       <div class="content-area-title">
-        <h3>상품목록</h3>
+        <h3>쿠폰발급현황</h3>
         <span>
               <a href="#">HOME&nbsp;>&nbsp; </a>
-              <a href="#">상품관리&nbsp;>&nbsp; </a>
-              <a href="#">상품목록</a>
+              <a href="#">쿠폰관리&nbsp;>&nbsp; </a>
+              <a href="#">쿠폰발급현황</a>
             </span>
       </div>
       <div class="content">
+        <div class="content-title">
+          <h3>쿠폰발급현황</h3>
+        </div>
         <form action="#" method="GET" id="search-area">
           <select name="filter" class="search-filter">
-            <option value="productName">상품명</option>
-            <option value="productId">상품번호</option>
-            <option value="seller">판매자</option>
-            <option value="company">제조사</option>
+            <option value="issueId">발급번호</option>
+            <option value="couponId">쿠폰번호</option>
+            <option value="couponName">쿠폰명</option>
+            <option value="userId">사용자</option>
           </select>
           <input
               type="text"
@@ -184,48 +192,88 @@
         <table>
           <tbody>
           <tr>
-            <th>
-              <input type="checkbox" onclick="return false;"/>
-            </th>
-            <th>사진</th>
-            <th>상품코드</th>
-            <th>상품명</th>
-            <th>판매가격</th>
-            <th>할인율</th>
-            <th>포인트</th>
-            <th>재고</th>
-            <th>판매자</th>
-            <th>조회</th>
+            <th>발급번호</th>
+            <th>쿠폰번호</th>
+            <th>쿠폰종류</th>
+            <th>쿠폰명</th>
+            <th>사용자</th>
+            <th>상태</th>
+            <th>사용일</th>
             <th>관리</th>
           </tr>
           <tr>
             <td>
-              <input type="checkbox"/>
+              <a href="#" class="coupon-detail anchor-with-underline">
+                10120012134
+              </a>
             </td>
-            <td class="table-img-area">
-              <img src="/static/images/img-symbol.jpg" alt=""/>
-            </td>
-            <td>201603292</td>
-            <td>상품명 #1</td>
-            <td>32,000</td>
-            <td>10%</td>
-            <td>320</td>
-            <td>1,000</td>
-            <td>(주)다파라</td>
-            <td>120</td>
+            <td>10121211341</td>
+            <td>개별상품 할인</td>
+            <td>10월 한달 감사 쿠폰</td>
+            <td>abc1234</td>
+            <td class="text-red">미사용</td>
+            <td>0000-00-00 00:00:00</td>
             <td>
-              <button class="control-btn default">수정</button>
-              <button class="control-btn delete">삭제</button>
+              <button class="control-btn default">중단</button>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <a href="#" class="coupon-detail anchor-with-underline">
+                10120012134
+              </a>
+            </td>
+            <td>10121211341</td>
+            <td>개별상품 할인</td>
+            <td>10월 한달 감사 쿠폰</td>
+            <td>abc1234</td>
+            <td class="text-green">사용</td>
+            <td>0000-00-00 00:00:00</td>
+            <td>
+              <button class="control-btn expired">중단</button>
             </td>
           </tr>
           </tbody>
         </table>
-        <div class="crud-btn-area">
-          <button class="enroll-btn delete-btn">선택수정</button>
-          <button class="enroll-btn register-btn">상품등록</button>
-        </div>
       </div>
     </section>
+    <div class="modal coupon-detail-modal">
+      <div class="content">
+        <table>
+          <tbody>
+          <tr>
+            <th>쿠폰번호</th>
+            <td>1012121341</td>
+            <th>발급처</th>
+            <td>(주)다있어</td>
+          </tr>
+          <tr>
+            <th>쿠폰종류</th>
+            <td>개별상품 할인</td>
+          </tr>
+          <tr>
+            <th>혜택</th>
+            <td>2,000원 할인</td>
+          </tr>
+          <tr>
+            <th>사용기간</th>
+            <td>0000-00-00 ~ 0000-00-00</td>
+          </tr>
+          <tr>
+            <th>유의사항</th>
+            <td>
+              <ul class="with-list-style">
+                <li>상품 중복 할인 쿠폰</li>
+                <li>상품 1개에 대해 사용가능</li>
+                <li>판매자 즉시할인/상품할인 쿠폰과 중복 사용 가능</li>
+                <li>사용처: (주)다있어</li>
+              </ul>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </main>
   <section class="pagination">
     <a class="page move" href="#">

@@ -49,6 +49,10 @@ main {
   box-sizing: border-box;
 }
 
+.with-list-style {
+  list-style: disc;
+}
+
 .content > .content-title > h3 {
   font-size: 20px;
   font-weight: 600;
@@ -79,25 +83,19 @@ input[type="file"]::file-selector-button {
   justify-content: space-between;
 }
 
-.enroll-btn {
-  width: 95px;
-  height: 35px;
-  margin-top: 30px;
-  border: 0;
-  color: #fff;
-  cursor: pointer;
-}
 
 .delete-btn {
   background-color: #bfbfbf;
 }
 
 .register-btn {
-  background-color: #8eb4e3;
+  background-color: #0e99fc;
 }
 
 #search-area {
-  display: block;
+  display: flex;
+  justify-content: left;
+  align-items: center;
   width: 1050px;
   height: 100%;
   margin-bottom: 20px;
@@ -109,6 +107,7 @@ input[type="file"]::file-selector-button {
   border: 2px solid #a6a6a6;
   box-sizing: border-box;
   outline: none;
+  margin-right: 5px;
 }
 
 .search-input {
@@ -116,6 +115,7 @@ input[type="file"]::file-selector-button {
   height: 35px;
   border: 2px solid #a6a6a6;
   box-sizing: border-box;
+  margin-right: 5px;
 }
 
 .search-submit-btn {
@@ -125,7 +125,7 @@ input[type="file"]::file-selector-button {
   outline: none;
   background-color: #a6a6a6;
   color: white;
-  font-size: 16px;
+  /*font-size: 16px;*/
   font-weight: 400;
 }
 
@@ -142,6 +142,19 @@ input[type="file"]::file-selector-button {
 .background-red {
   background-color: #c0080f;
   color: white;
+}
+
+.background-dark-gray {
+  background-color: #808080;
+  color: white;
+}
+
+.text-gray {
+  color: #a6a6a6;
+}
+
+.text-dark-gray {
+  color: #808080;
 }
 
 .text-green {
@@ -178,6 +191,7 @@ input[type="file"]::file-selector-button {
 }
 
 .content table td {
+  height: auto;
   text-align: center;
   vertical-align: middle;
   font-size: 14px;
@@ -188,7 +202,30 @@ input[type="file"]::file-selector-button {
   border: 2px solid #a6a6a6;
 }
 
-.controll-btn {
+.content table td input[type="submit"] {
+  border: none;
+  height: auto;
+  padding-inline: 6px;
+}
+
+.content table td input[type="radio"] {
+  margin-top: -1px;
+  vertical-align: middle;
+}
+
+.content table td input label {
+  vertical-align: middle;
+}
+
+.content table tr td img {
+  width: 40px;
+  height: 40px;
+  vertical-align: middle;
+}
+
+.control-btn {
+  width: 95px;
+  height: 35px;
   border: none;
   background-color: inherit;
   outline: none;
@@ -196,12 +233,16 @@ input[type="file"]::file-selector-button {
   cursor: pointer;
 }
 
-.controll-btn.default {
+.control-btn.default {
   background-color: #0e99fc;
 }
 
-.controll-btn.delete {
+.control-btn.delete {
   background-color: #c0080f;
+}
+
+.control-btn.expired {
+  background-color: #808080;
 }
 
 .post-form-table th {
@@ -222,7 +263,23 @@ input[type="file"]::file-selector-button {
   border: none;
   color: white;
   cursor: pointer;
-  margin-top: 20px;
+}
+
+.post-submit-btn.gray {
+  background-color: #808080;
+}
+
+.post-submit-btn.red {
+  background-color: #c0080f;
+}
+
+.enroll-btn {
+  width: 95px;
+  height: 35px;
+  margin-top: 30px;
+  border: 0;
+  color: #fff;
+  cursor: pointer;
 }
 
 /*.content table selector.category-selector*/
@@ -230,4 +287,8 @@ input[type="file"]::file-selector-button {
   width: 180px;
   height: 35px;
   border: 2px solid #a6a6a6;
+}
+
+.anchor-with-underline {
+  text-decoration: underline;
 }

@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>주문관리 > 주문현황</title>
+  <title>쿠폰관리 > 쿠폰목록</title>
   <link rel="stylesheet" href="/static/style/init.css"/>
   <link rel="stylesheet" href="/static/style/common/admin/header.css"/>
   <link rel="stylesheet" href="/static/style/common/admin/aside.css"/>
   <link rel="stylesheet" href="/static/style/common/admin/content.css"/>
   <link rel="stylesheet" href="/static/style/common/admin/footer.css"/>
   <link rel="stylesheet" href="/static/style/common/pagination.css"/>
-  <link rel="stylesheet" href="/static/style/admin/order/order.css"/>
+  <link rel="stylesheet" href="/static/style/admin/coupon/coupon.css"/>
   <link
       rel="icon"
       href="https://static.lotteon.com/p/common/assets/favicon/1/favicon-32.png"
@@ -27,8 +27,11 @@
   <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
   <script src="/static/js/admin/config/aside-drop.js"></script>
   <script type="module" src="/static/js/common/admin/modal.mjs"></script>
-  <script type="module" src="/static/js/admin/order/orderDetail.js"></script>
-  <script type="module" src="/static/js/admin/order/shipment.js"></script>
+  <script
+      type="module"
+      src="/static/js/common/admin/registryModal.js"
+  ></script>
+  <script type="module" src="/static/js/admin/coupon/coupon.js"></script>
 </head>
 <body>
 <div id="wrapper">
@@ -161,19 +164,22 @@
     </aside>
     <section id="content-area">
       <div class="content-area-title">
-        <h3>주문현황</h3>
+        <h3>쿠폰목록</h3>
         <span>
               <a href="#">HOME&nbsp;>&nbsp; </a>
-              <a href="#">주문관리&nbsp;>&nbsp; </a>
-              <a href="#">주문현황</a>
+              <a href="#">쿠폰관리&nbsp;>&nbsp; </a>
+              <a href="#">쿠폰목록</a>
             </span>
       </div>
       <div class="content">
+        <div class="content-title">
+          <h3>쿠폰목록</h3>
+        </div>
         <form action="#" method="GET" id="search-area">
           <select name="filter" class="search-filter">
-            <option value="orderId">주문번호</option>
-            <option value="userName">주문자</option>
-            <option value="orderCount">주문건수</option>
+            <option value="couponId">쿠폰번호</option>
+            <option value="couponName">쿠폰이름</option>
+            <option value="issuer">발행자</option>
             <option value="orderTotal">주문합계</option>
             <option value="payment">결제수단</option>
             <option value="orderDate">주문일</option>
@@ -188,267 +194,190 @@
         <table>
           <tbody>
           <tr>
-            <th>주문번호</th>
-            <th>주문자</th>
-            <th>주문자명</th>
-            <th>상품명</th>
-            <th>주문건수</th>
-            <th>주문합계</th>
-            <th>결제수단</th>
-            <th>주문상태</th>
-            <th>주문일</th>
-            <th>배송</th>
+            <th>쿠폰번호</th>
+            <th>쿠폰종류</th>
+            <th>쿠폰명</th>
+            <th>혜택</th>
+            <th>사용기간</th>
+            <th>발급자</th>
+            <th>발급 수</th>
+            <th>사용 수</th>
+            <th>상태</th>
+            <th>발급일</th>
+            <th>관리</th>
           </tr>
           <tr>
             <td>
-              <a href="#1" class="order-detail"> 10121211341</a>
+              <a href="#" class="coupon-detail anchor-with-underline">
+                10121211341
+              </a>
             </td>
-            <td>abc123</td>
-            <td>김유신</td>
-            <td>상품명 #1</td>
-            <td>2</td>
-            <td>102,900</td>
-            <td>신용카드</td>
-            <td class="text-green">결제완료</td>
+            <td>개별상품 할인</td>
+            <td>10월 한달 감사 쿠폰</td>
+            <td>2,000원 할인</td>
+            <td>0000-00-00 ~ 0000-00-00</td>
+            <td>(주)다있어</td>
+            <td>102</td>
+            <td>43</td>
+            <td class="text-green">발급중</td>
             <td>0000-00-00 00:00:00</td>
             <td>
-              <button class="control-btn default ship-btn">
-                배송하기
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <a href="#2" class="order-detail"> 10121211342</a>
-            </td>
-            <td>abc123</td>
-            <td>김유신</td>
-            <td>상품명 #1</td>
-            <td>2</td>
-            <td>102,900</td>
-            <td>신용카드</td>
-            <td class="text-green">결제완료</td>
-            <td>0000-00-00 00:00:00</td>
-            <td class="text-green">배송완료</td>
-          </tr>
-          <tr>
-            <td>
-              <a href="#3" class="order-detail"> 10121211343</a>
-            </td>
-            <td>abc123</td>
-            <td>김유신</td>
-            <td>상품명 #1</td>
-            <td>2</td>
-            <td>102,900</td>
-            <td>신용카드</td>
-            <td class="text-blue">결제대기</td>
-            <td>0000-00-00 00:00:00</td>
-            <td>
-              <button class="control-btn default ship-btn">
-                배송하기
-              </button>
+              <button class="control-btn default">종료</button>
             </td>
           </tr>
           <tr>
             <td>
-              <a href="#4" class="order-detail"> 10121211344</a>
+              <a href="#" class="coupon-detail anchor-with-underline">
+                10121211341
+              </a>
             </td>
-            <td>abc123</td>
-            <td>김유신</td>
-            <td>상품명 #1</td>
-            <td>2</td>
-            <td>102,900</td>
-            <td>신용카드</td>
-            <td class="text-red">주문취소</td>
+            <td>개별상품 할인</td>
+            <td>10월 한달 감사 쿠폰</td>
+            <td>2,000원 할인</td>
+            <td>0000-00-00 ~ 0000-00-00</td>
+            <td>(주)다있어</td>
+            <td>102</td>
+            <td>43</td>
+            <td class="text-dark-gray">종료</td>
             <td>0000-00-00 00:00:00</td>
-            <td class="text-red">주문취소</td>
+            <td>
+              <button class="control-btn expired">종료</button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+        <div class="crud-btn-area">
+          <button class="enroll-btn register-btn registry-modal-btn">
+            쿠폰등록
+          </button>
+        </div>
+      </div>
+    </section>
+    <div class="modal coupon-detail-modal">
+      <div class="content">
+        <table>
+          <tbody>
+          <tr>
+            <th>쿠폰번호</th>
+            <td>1012121341</td>
+            <th>발급처</th>
+            <td>(주)다있어</td>
+          </tr>
+          <tr>
+            <th>쿠폰종류</th>
+            <td>개별상품 할인</td>
+          </tr>
+          <tr>
+            <th>혜택</th>
+            <td>2,000원 할인</td>
+          </tr>
+          <tr>
+            <th>사용기간</th>
+            <td>0000-00-00 ~ 0000-00-00</td>
+          </tr>
+          <tr>
+            <th>유의사항</th>
+            <td>
+              <ul class="with-list-style">
+                <li>상품 중복 할인 쿠폰</li>
+                <li>상품 1개에 대해 사용가능</li>
+                <li>판매자 즉시할인/상품할인 쿠폰과 중복 사용 가능</li>
+                <li>사용처: (주)다있어</li>
+              </ul>
+            </td>
           </tr>
           </tbody>
         </table>
       </div>
-    </section>
-    <div class="shipment-modal" title="배송입력">
+    </div>
+    <div class="registry-modal coupon-registry-modal">
       <div class="content">
-        <form action="#" class="post-form">
+        <form action="#" method="POST" class="post-form">
           <table class="post-form-table">
             <tbody>
             <tr>
-              <th>주문번호</th>
+              <th>발급처</th>
               <td>
-                <input type="text" placeholder="10121211341"/>
+                <input type="text" placeholder="(주)다있어"/>
               </td>
             </tr>
             <tr>
-              <th>수령인</th>
-              <td>
-                <input type="text" placeholder="홍길동"/>
-              </td>
-            </tr>
-            <tr>
-              <th>우편번호</th>
-              <td>
-                <input type="text" placeholder="12345"/>
-              </td>
-            </tr>
-            <tr>
-              <th>기본주소</th>
-              <td>
-                <input
-                    type="text"
-                    placeholder="부산광역시 부산진구 123-12"
-                />
-              </td>
-            </tr>
-            <tr>
-              <th>상세주소</th>
-              <td>
-                <input type="text" placeholder="행복아파트 103동 404호"/>
-              </td>
-            </tr>
-            <tr>
-              <th>택배사</th>
+              <th>쿠폰종류</th>
               <td>
                 <select
-                    name="company"
-                    class="category-selector"
-                    id="shipment-company"
+                    name="couponCategory"
+                    id="coupon-category"
+                    class="search-filter"
                 >
-                  <option value="cj">CJ 대한통운</option>
-                  <option value="lotte">롯데택배</option>
-                  <option value="postOffice">우체국택배</option>
-                  <option value="hanjin">한진택배</option>
+                  <option value="individual">개별상품할인</option>
+                  <option value="order">주문상품할인</option>
+                  <option value="delivery">배송비 무료</option>
                 </select>
               </td>
             </tr>
             <tr>
-              <th>운송장번호</th>
+              <th>쿠폰명</th>
               <td>
-                <input type="text" placeholder="송장번호 입력"/>
+                <input type="text"/>
               </td>
             </tr>
             <tr>
-              <th>기타</th>
+              <th>혜택</th>
               <td>
-                      <textarea
-                          name="description"
-                          id="shipment-desc"
-                      ></textarea>
+                <input type="radio" type="1k"/>
+                <label for="1k">1,000원 할인</label>
+
+                <input type="radio" type="2k"/>
+                <label for="2k">2,000원 할인</label>
+
+                <input type="radio" type="3k"/>
+                <label for="3k">3,000원 할인</label>
+
+                <input type="radio" type="4k"/>
+                <label for="4k">4,000원 할인</label>
+
+                <input type="radio" type="5k"/>
+                <label for="5k">5,000원 할인</label>
+                <br/>
+                <input type="radio" type="10p"/>
+                <label for="10p">10% 할인</label>
+
+                <input type="radio" type="20p"/>
+                <label for="20p">20% 할인</label>
+
+                <input type="radio" type="30p"/>
+                <label for="30p">30% 할인</label>
+
+                <input type="radio" type="40p"/>
+                <label for="40p">40% 할인</label>
+
+                <input type="radio" type="50p"/>
+                <label for="10p">50% 할인</label>
+                <br/>
+                <input type="radio" type="free"/>
+                <label for="free">배송비 무료</label>
+              </td>
+            </tr>
+            <tr>
+              <th>사용기간</th>
+              <td>
+                <input type="date" name="coupon-from" id="coupon-from"/>
+                <input type="date" name="coupon-to" id="coupon-to"/>
+                <span>또는 발급일로부터</span>
+                <input type="number" style="width: 30px"/>
+                <span>일 이내</span>
+              </td>
+            </tr>
+            <tr>
+              <th>유의사항</th>
+              <td>
+                <textarea name="coupon-desc" id="coupon-desc"></textarea>
               </td>
             </tr>
             </tbody>
           </table>
           <input type="submit" class="post-submit-btn" value="등록하기"/>
         </form>
-      </div>
-    </div>
-    <div class="order-detail-modal modal" title="주문상세">
-      <div class="content">
-        <div class="content-title">
-          <h3>상품정보</h3>
-        </div>
-        <table>
-          <tbody>
-          <tr>
-            <th>상품 이미지</th>
-            <th>상품번호</th>
-            <th>상품명</th>
-            <th>판매자</th>
-            <th>가격</th>
-            <th>할인</th>
-            <th>수량</th>
-            <th>배송비</th>
-            <th>결제금액</th>
-          </tr>
-          <tr>
-            <td>
-              <img src="/static/images/img-symbol.jpg" alt=""/>
-            </td>
-            <td>12010021</td>
-            <td>상품명 #1</td>
-            <td>(주) 상호명</td>
-            <td>24,000</td>
-            <td>-1,200</td>
-            <td>3</td>
-            <td>0</td>
-            <td>68,400</td>
-          </tr>
-          </tbody>
-        </table>
-        <div class="total-price">
-          <ul>
-            <li>
-              <span>총 상품금액</span>
-              <span>107,000원</span>
-            </li>
-            <li>
-              <span>총 할인금액</span>
-              <span>-7,100원</span>
-            </li>
-            <li>
-              <span>배송비</span>
-              <span>3,000원</span>
-            </li>
-            <li>
-              <span class="total">총 결제금액</span>
-              <span>102,900원</span>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div class="content">
-        <div class="content-title">
-          <h3>결제정보</h3>
-        </div>
-        <table>
-          <tbody>
-          <tr>
-            <th>주문번호</th>
-            <td>10121211341</td>
-          </tr>
-          <tr>
-            <th>결제방법</th>
-            <td>신용카드 / 1234 **** **** 4432</td>
-          </tr>
-          <tr>
-            <th>주문자/연락처</th>
-            <td>김유신 / 010-1234-1234</td>
-          </tr>
-          <tr>
-            <th>결제상태</th>
-            <td class="text-green">결제완료</td>
-          </tr>
-          <tr>
-            <th>총 결제금액</th>
-            <td>
-              <span class="text-red"> 102,900 </span>
-              <span>원</span>
-            </td>
-          </tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="content">
-        <div class="content-title">
-          <h3>배송정보</h3>
-        </div>
-        <table>
-          <table>
-            <tbody>
-            <tr>
-              <th>수취인</th>
-              <td>김유신</td>
-            </tr>
-            <tr>
-              <th>연락처</th>
-              <td>010-1234-1234</td>
-            </tr>
-            <tr>
-              <th>배송지 주소</th>
-              <td>부산광역시 부산진구 123-11 행복아파트 103동 404호</td>
-            </tr>
-            </tbody>
-          </table>
-        </table>
       </div>
     </div>
   </main>

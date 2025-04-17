@@ -19,9 +19,11 @@
   height: 100%;
 }
 
-#policy-content {
-  width: 100%;
-  height: 100%;
+.policy-content {
+  width: 600px;
+  min-height: 100px;
+  height: auto;
+  margin-top: 25px;
   resize: none;
   padding: 10px;
   border: 2px solid #a6a6a6;
@@ -30,14 +32,6 @@
   box-sizing: border-box; /* Chrome, IE8, Opera, Safari 5.1*/
 }
 
-.modify-btn {
-  float: right;
-  margin-top: 10px;
-  background-color: #8eb4e3;
-  color: #fff;
-  border: 0;
-  outline: none;
-  width: 85px;
-  height: 35px;
-  cursor: pointer;
+.post-form-table {
+  margin-bottom: 10px;
 }
