@@ -4,9 +4,9 @@ name: LotteON Server CI/CD with Gradle & docker
 
 on:
   #push:
-  #  branches: ["main"]
+  #  branches: ["master"]
   pull_request:
-    branches: ["main"]
+    branches: ["master"]
 
 jobs:
   ci-cd:
