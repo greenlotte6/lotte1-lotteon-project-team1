@@ -5,7 +5,7 @@ img {
 }
 
 .main-proimg {
-   width: 700px;
+   width: 600px;
    height: 500px;
 }
 
@@ -27,6 +27,11 @@ img {
 
 
 /*-------------------------------------*/
+.info-list {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
 .pro-top {
     margin-top: 10px;
     border-bottom: 1px solid #dfdfdf;
@@ -52,14 +57,19 @@ img {
 }
 
 .pro-name > div > a {
-    color: blue;
+    color: #ef2a23;
     text-decoration: underline;
+    padding-right: 10px;
 }
 
 .pro-price {
     margin-top: 10px;
     padding-bottom: 10px;
     border-bottom: 1px solid #dfdfdf;
+}
+
+.pro-price > span:nth-child(5) {
+    padding-right: 2px;
 }
 
 .pro-price > del {
@@ -69,8 +79,11 @@ img {
 .pro-price > button {
     margin-right: 15px;
     background: none;
-    border: 1px solid red;
-    color: red;
+    border: none;
+    border-radius: 3px;
+    background: #ef2a23;
+    color: white;
+    cursor: pointer;
 }
 
 .pro-price > span:nth-child(2) {
@@ -111,12 +124,37 @@ img {
 
 .size-option > select {
     width: 200px;
-    height: 30px;
+    height: 35px;
     border: 2px solid #dfdfdf;
+    border-radius: 6px;
+}
+
+.count > button {
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    background: none;
+    width: 30px;
+    height: 27px;
+    color: gray;
+    cursor: pointer;
 }
 
 .count-option {
     margin-top: 10px;
+}
+
+.count-input {
+    border-color: #eee;
+    border-radius: 3px;
+
+    text-align: center;
+    color: gray;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 .sum-price {
@@ -146,19 +184,23 @@ img {
 
 .cart-and-purchase > input {
     width: 200px;
-    height: 40px;
+    height: 50px;
     background: none;
     border: none;
     cursor: pointer;
+    font-size: 20px;
+    border-radius: 6px;
 }
 
 .cart-and-purchase > input:nth-child(1) {
-    background: #dfdfdf;
-    color: #ffffff;
+    background: none;
+    border: 1px solid #ef2a23;
+    color: #ef2a23;
+    margin-right: 10px;
 }
 
 .cart-and-purchase > input:nth-child(2) {
-    background: #558ED5;
+    background: #ef2a23;
     color: #ffffff;
 
 }
@@ -238,13 +280,32 @@ img {
     border-bottom: 1px solid gray;
 }
 
+.review-info {
+    display: flex;
+    align-items: center; 
+    margin-bottom: 10px;
+}
+
+.review-info > img {
+    width: 50px;
+    height: 50px;
+    margin-right: 20px;
+}
+
+.review-info > span {
+    font-size: 13px;
+}
+
+
 .items {
     margin-bottom: 50px;
+    padding-bottom: 30px;
+    border-bottom: 2px solid #ccc;
 }
 
 .items-img {
-    width: 200px;
-    height: 200px;
+    width: 100px;
+    height: 100px;
 }
 
 .pro-review {
@@ -253,6 +314,21 @@ img {
 
 .pro-review > span:nth-child(1) {
    margin-right: 40px;
+}
+
+.review-title > p {
+    margin-bottom: 10px;
+}
+
+.review-title > div {
+    text-align: center;
+}
+
+.productDescription {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 50%;
 }
 
 .advertisement > img{

@@ -3,6 +3,9 @@
     width: 300px;
 }
 
+.aside1 > div {
+    width: 180px;
+}
 
 .bestPro {
     margin-top: 20px;
@@ -29,7 +32,6 @@ img {
     height: 100px;
 }
 
-.main-proimg {
-   width: 700px;
-   height: 500px;
+.sale {
+    color: red;
 }
