@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/style/init.css" />
+    <link rel="stylesheet" href="/style/common/myPage/modal/confirm-modal.css">
+    <link rel="stylesheet" href="/style/common/myPage/modal/modalBack.css">
+    <link rel="stylesheet" href="/style/common/myPage/modal/modalHead.css">
+    <link
+    rel="icon"
+    href="https://static.lotteon.com/p/common/assets/favicon/1/favicon-32.png"
+    />
+    <link
+        rel="stylesheet"
+        href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css"
+    />
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
+    <script src="/js/common/header.js"></script>
+    <script src="/js/common/footer.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/all.min.js"
+        crossorigin="anonymous"
+    ></script>
+    <script src="/js/mypage/confirm-info-modal.js"></script>
+</head>
+<body>
+    <div class="modal-back" id="confirm-info-modal">
+        <div id="modal-wrapper" style="width: 500px; height: 300px;">
+    
+                <div class="modal-hd">
+                    <p>구매확정</p>
+                    <button class="close-confirm">x</button>
+                </div>
+
+                <div class="all-orderList">
+
+                    
+
+                    <div class="etc">
+                        <p>상품을 받으셨나요 ?<br><br>
+                        상품을 받으신분만 구매확정을 해주세요.
+                        </p>
+                    </div>
+
+                    <div class="inquiry">
+                        <button onclick="alert('구매확정이 완료되었습니다.')">확인</button>
+                        <button class="close-confirm" style="background-color: #bfbfbf;">취소</button>
+                    </div>
+                </div>
+
+
+        </div>
+    </div>
+       
+</body>
+</html>

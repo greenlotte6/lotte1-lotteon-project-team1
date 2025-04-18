@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/style/init.css" />
+    <link rel="stylesheet" href="/style/common/myPage/modal/return-modal.css">
+    <link rel="stylesheet" href="/style/common/myPage/modal/modalBack.css">
+    <link rel="stylesheet" href="/style/common/myPage/modal/modalHead.css">
+    <link
+    rel="icon"
+    href="https://static.lotteon.com/p/common/assets/favicon/1/favicon-32.png"
+    />
+    <link
+        rel="stylesheet"
+        href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css"
+    />
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
+    <script src="/js/common/header.js"></script>
+    <script src="/js/common/footer.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/all.min.js"
+        crossorigin="anonymous"
+    ></script>
+    <script src="/static/js/common/return-info-modal.js"></script>
+</head>
+<body>
+    <div class="modal-back" id="return-info-modal">
+        <div id="modal-wrapper">
+    
+                <div class="modal-hd">
+                    <p>반품신청</p>
+                    <button class="close-return">x</button>
+                </div>
+
+                <div class="all-orderList">
+
+                    <div class="list-head">
+                        <p>상품정보</p>
+                    </div>
+    
+                    <table class="order-table">
+                        <tr class="table-hd">
+                            <th>날짜</th>
+                            <th>상품정보</th>
+                            <th class="price-t">결제금액</th>
+                            <th class="end">상태</th>
+                        </tr>
+    
+                        <tr class="table-bd">
+                            <td>2022-12-13</td>
+                            <td>
+                                <div class="pro-info">
+                                    <div class="table-proimg">
+                                        <img src="/proDetail-img/img5.png" alt="이미지">
+                                    </div>
+                                    <div class="order-info">
+                                        <p>주문번호 :<span>1012211341</span></p>
+                                        <p>(주) 상호명</p>
+                                        <p>상품명</p>
+                                        <p>수량 : <span>1개</span></p>
+                                        <p class="price">34,000원</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="price-t">
+                                <div class="pro-info2">
+                                    <div class="order-info2">
+                                        <p>판매가 :<span>34,000원</span></p>
+                                        <p>할인<span>-3,000원</span></p>
+                                        <p>결제금액 :<span class="price">34,000원</span></p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="end">배송완료</td>
+                        </tr>
+                    </table>
+                    
+                    
+                </div>
+
+                <div class="all-deliveryList">
+                    <div class="list-head">
+                        <p>반품정보 입력</p>
+                    </div>
+                    
+                    <form name="formRegister" action="" method="post">
+                        <table class="delivery-table">
+                            <tr>
+                                <td class="td-l">반품유형</td>
+                                <td class="td-r">
+                                    <label><input type="radio" name="exchange" value="simple"> 단순 교환</label>
+                                    <label style="margin-left: 20px;"><input type="radio" name="exchange" value="damage"> 파손 및 불량</label>
+                                    <label style="margin-left: 20px;"><input type="radio" name="exchange" value="mistake"> 주문 실수</label>
+                                    <label style="margin-left: 20px;"><input type="radio" name="exchange" value="etc"> 기타</label>
+                                </td>
+                            </tr>
+        
+                            <tr>
+                                <td class="td-l">사유입력</td>
+                                <td class="td-r"><textarea name="content" id=""></textarea></td>
+                            </tr>
+        
+                            <tr>
+                                <td class="td-l">사진첨부(선택)</td>
+                                <td class="td-r">
+                                    <input type="file" name="file1">
+                                </td>
+                            </tr>
+        
+                        </table>
+
+                        <div class="inquiry">
+                            <button>반품신청</button>
+                            <button class="close-return" type="button" style="background-color: #bfbfbf;">취소하기</button>
+                        </div>
+
+                    </form>
+                </div>
+    
+
+
+        </div>
+    </div>
+       
+</body>
+</html>

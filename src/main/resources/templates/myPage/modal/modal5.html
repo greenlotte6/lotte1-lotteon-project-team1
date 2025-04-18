@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/style/init.css" />
+    <link rel="stylesheet" href="/style/common/myPage/modal/review-modal.css">
+    <link rel="stylesheet" href="/style/common/myPage/modal/modalBack.css">
+    <link rel="stylesheet" href="/style/common/myPage/modal/modalHead.css">
+    <link
+    rel="icon"
+    href="https://static.lotteon.com/p/common/assets/favicon/1/favicon-32.png"
+    />
+    <link
+        rel="stylesheet"
+        href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css"
+    />
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
+    <script src="/js/common/header.js"></script>
+    <script src="/js/common/footer.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/all.min.js"
+        crossorigin="anonymous"
+    ></script>
+    <script src="/js/mypage/review-info-modal.js"></script>
+    <script src="/js/common/rating.js"></script>
+</head>
+<body>
+    <div class="modal-back" id="review-info-modal">
+        <div id="modal-wrapper">
+    
+                <div class="modal-hd">
+                    <p>상품평 작성하기</p>
+                    <button class="close-review">x</button>
+                </div>
+
+                <div class="all-orderList">
+
+                    <form name="" action="" method="post">
+                        <table>
+                            <tr>
+                                <td class="td-l">상품명</td>
+                                <td class="td-r"><input type="text" name="uid" value="상품명 출력" readonly style="border: none;"></td>
+                            </tr>
+
+                            <tr>
+                                <td class="td-l">만족도</td>
+                                <td class="td-r">
+                                    <div class="rating">
+                                        <span data-value="1">★</span>
+                                        <span data-value="2">★</span>
+                                        <span data-value="3">★</span>
+                                        <span data-value="4">★</span>
+                                        <span data-value="5">★</span>
+                                        <input type="hidden" name="rating" value="0">
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td class="td-l">내용</td>
+                                <td class="td-r"><textarea name="content" id=""></textarea></td>
+                            </tr>
+
+                            <tr>
+                                <td class="td-l">사진</td>
+                                <td class="td-r" style="height: 100px; line-height: 2;">
+                                    <input type="file" name="file1"><br>
+                                    <input type="file" name="file2"><br>
+                                    <input type="file" name="file3">
+                                </td>
+                            </tr>
+
+                            
+                        </table>
+
+                   
+
+                        <div class="inquiry">
+                            <button>반품신청</button>
+                            <button class="close-review" type="button" style="background-color: #bfbfbf;">취소하기</button>
+                        </div>
+
+                    </form>
+                </div>
+
+                
+    
+
+
+        </div>
+    </div>
+       
+</body>
+</html>

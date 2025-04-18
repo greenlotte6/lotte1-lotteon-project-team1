@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/style/init.css" />
+    <link rel="stylesheet" href="/static/style/common/myPage/modal/test.css">
+    <link rel="stylesheet" href="/style/common/myPage/modal/modalBack.css">
+    <link rel="stylesheet" href="/style/common/myPage/modal/order-modal.css">
+    <link
+    rel="icon"
+    href="https://static.lotteon.com/p/common/assets/favicon/1/favicon-32.png"
+    />
+    <link
+        rel="stylesheet"
+        href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css"
+    />
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
+    <script src="/js/common/header.js"></script>
+    <script src="/js/common/footer.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/all.min.js"
+        crossorigin="anonymous"
+    ></script>
+</head>
+<body>
+    <div class="modal-back" id="order-info-modal">
+        <div id="modal-wrapper">
+            <div class="modal-hd">
+                <p>주문상세</p>
+                <button id="order-close">x</button>
+            </div>
+
+            <div class="orderList">
+                <div class="list-head">
+                    <p>주문정보</p>
+                </div>
+
+                <table class="order-table">
+                    <tr class="table-head">
+                        <th>날짜</th>
+                        <th>상품정보</th>
+                        <th class="price-t">결제금액</th>
+                        <th class="end">상태</th>
+                    </tr>
+
+                    <tr class="table-body">
+                        <td>2022-12-13</td>
+                        <td>
+                            <div class="p-info">
+                                <div class="proimg">
+                                    <img src="/proDetail-img/img5.png" alt="이미지">
+                                </div>
+                                <div class="o-info">
+                                    <p>주문번호 :<span>1012211341</span></p>
+                                    <p>(주) 상호명</p>
+                                    <p>상품명</p>
+                                    <p>수량 : <span>1개</span></p>
+                                    <p class="price">34,000원</p>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="price-t">
+                            <div class="p-info2">
+                                <div class="o-info2">
+                                    <p>판매가 :<span>34,000원</span></p>
+                                    <p>할인<span>-3,000원</span></p>
+                                    <p>결제금액 :<span class="price">34,000원</span></p>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="end">배송완료</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="all-deliveryList">
+                <div class="list-head">
+                    <p>배송정보</p>
+                </div>
+
+                <table class="delivery-table">
+                    <tr>
+                        <td class="td-l">이름</td>
+                        <td class="td-r">홍길동</td>
+                    </tr>
+
+                    <tr>
+                        <td class="td-l">연락처</td>
+                        <td class="td-r">010-1234-1001</td>
+                    </tr>
+
+                    <tr>
+                        <td class="td-l">주소</td>
+                        <td class="td-r">[21000] 부산광역시 부산진구 대연동 121 10층 1004호</td>
+                    </tr>
+
+                    <tr>
+                        <td class="td-l">배송요청사항</td>
+                        <td class="td-r">없음</td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>
