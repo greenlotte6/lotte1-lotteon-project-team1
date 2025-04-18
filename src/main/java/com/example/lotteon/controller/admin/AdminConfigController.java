@@ -23,6 +23,11 @@ public class AdminConfigController {
     return "/admin/config/policy";
   }
 
+  @GetMapping("/category")
+  public String category() {
+    return "/admin/config/category";
+  }
+
   @GetMapping("/version")
   public String version() {
     return "/admin/config/version";
