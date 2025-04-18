@@ -67,6 +67,10 @@ input[type="file"]::file-selector-button {
   height: 35px;
 }
 
+input[type="checkbox"] {
+  vertical-align: middle;
+}
+
 .desc {
   display: block;
   width: 100%;
@@ -82,7 +86,6 @@ input[type="file"]::file-selector-button {
   display: flex;
   justify-content: space-between;
 }
-
 
 .delete-btn {
   background-color: #bfbfbf;

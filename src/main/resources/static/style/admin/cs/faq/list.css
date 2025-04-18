@@ -1,0 +1,17 @@
+.post-submit-btn {
+  width: auto;
+}
+
+.content table .control-btn {
+  width: auto;
+  padding-inline: 6px;
+  text-align: center;
+}
+
+.crud-btn-area > a,
+.crud-btn-area > input {
+  width: 95px;
+  text-align: center;
+  margin-top: 30px;
+  line-height: 35px;
+}
