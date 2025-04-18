@@ -90,6 +90,7 @@ main{
 
 .agree-button {
   display: block;
+  text-align: center;
   width: 400px;
   background-color: #c83737;
   color: white;
