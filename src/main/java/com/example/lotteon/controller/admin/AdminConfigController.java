@@ -22,4 +22,9 @@ public class AdminConfigController {
   public String policy() {
     return "/admin/config/policy";
   }
+
+  @GetMapping("/version")
+  public String version() {
+    return "/admin/config/version";
+  }
 }
