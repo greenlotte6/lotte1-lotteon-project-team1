@@ -1,7 +1,7 @@
 h2 {
-    font-size: 24px;
+    font-size: 35px;
     margin-bottom: 10px;
-    margin-top: 30px;
+    margin-top: 60px;
   }
   p.description {
     font-size: 15px;
@@ -48,6 +48,47 @@ h2 {
   h2 {
     text-align: center;
   }
+
+/*******************썸네일 ****************/
+
+  .video-list {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    width: 30%; /* 너비 확장 */
+    margin: 0 auto;
+
+  }
+  
+  .video-item {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 30px;
+  }
+  
+  .video-item img {
+    width: 250px; /* 썸네일 크게 */
+    height: auto;
+    border-radius: 8px; /* 둥글게 하면 더 보기 좋아요 (선택) */
+  }
+  
+  .video-info {
+    max-width: 600px;
+  }
+  
+  .video-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .video-desc {
+    font-size: 15px;
+    color: #555;
+  }
+  
 
         /*푸터*/
         .footer {
