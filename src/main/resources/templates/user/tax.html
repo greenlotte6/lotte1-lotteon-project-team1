@@ -1,0 +1,87 @@
+<!--
+  작성자: 손준오(sjo112777)
+  내용: 회원 > 약관
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>회원 > 약관</title>
+  <link rel="stylesheet" href="/style/init.css" />
+  <link rel="stylesheet" href="/style/index.css" />
+  <link rel="stylesheet" href="/style/common/header.css" />
+  <link rel="stylesheet" href="/style/common/footer.css" />
+  <!--<link rel="stylesheet" href="/style/common/pagination.css" />-->
+  <link rel="stylesheet" href="/style/user/terms.css" />
+  <link rel="icon" href="https://static.lotteon.com/p/common/assets/favicon/1/favicon-32.png" />
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css" />
+  <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+  <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
+  <script src="/js/common/header.js"></script>
+  <script src="/js/common/footer.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/all.min.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+<div id="wrapper">
+  <!-- HEADER -->
+  <th:block th:insert="~{/common/user/userheader}"></th:block>
+
+  <!-- MAIN -->
+  <main>
+    <div class="csmain">
+      <article class="main_content">
+        <div class="main_title">
+          <p>약관동의</p>
+        </div>
+
+        <div class="main_content_detail">
+
+          <div class="terms-section">
+            <div class="term-box">
+              <label class="term-label"><span class="highlight">필수</span> ) 이용약관</label>
+              <textarea class="term-textarea" readonly>약관</textarea>
+              <div class="term-check">
+                <label><input type="checkbox"> 동의하기</label>
+              </div>
+            </div>
+
+            <div class="term-box">
+              <label class="term-label"><span class="highlight">필수</span> ) 전자금융 이용약관</label>
+              <textarea class="term-textarea" readonly></textarea>
+              <div class="term-check">
+                <label><input type="checkbox"> 동의하기</label>
+              </div>
+            </div>
+
+            <div class="term-box">
+              <label class="term-label"><span class="highlight">필수</span> ) 개인정보 수집동의</label>
+              <textarea class="term-textarea" readonly></textarea>
+              <div class="term-check">
+                <label><input type="checkbox"> 동의하기</label>
+              </div>
+            </div>
+
+            <div class="term-box">
+              <label class="term-label"><span class="highlight" style="color:blue;">선택</span> ) 위치정보 이용약관</label>
+              <textarea class="term-textarea" readonly></textarea>
+              <div class="term-check">
+                <label><input type="checkbox"> 동의하기</label>
+              </div>
+            </div>
+
+            <button class="agree-button" onclick="location.href='/user/seller'">동의하기</button>
+          </div>
+
+
+
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <th:block th:insert="~{/common/footer}"></th:block>
+</div>
+</body>
+</html>
