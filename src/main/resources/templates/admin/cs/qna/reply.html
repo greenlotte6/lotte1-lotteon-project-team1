@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>문의하기 답변</title>
+    <link rel="stylesheet" href="/static/style/init.css" />
+    <link rel="stylesheet" href="/static/style/common/admin/header.css" />
+    <link rel="stylesheet" href="/static/style/common/admin/aside.css" />
+    <link rel="stylesheet" href="/static/style/common/admin/content.css" />
+    <link rel="stylesheet" href="/static/style/common/admin/footer.css" />
+    <link rel="stylesheet" href="/static/style/admin/cs/notice/write.css" />
+    <link rel="stylesheet" href="/static/style/admin/cs/qna/reply.css" />
+    <link
+      rel="icon"
+      href="https://static.lotteon.com/p/common/assets/favicon/1/favicon-32.png"
+    />
+    <link
+      rel="stylesheet"
+      href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css"
+    />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/all.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
+    <script src="/static/js/admin/config/aside-drop.js"></script>
+  </head>
+  <body>
+    <div id="wrapper">
+      <header>
+        <div class="header-wrapper">
+          <img
+            src="https://static.lotteon.com/p/common/foCommon/assets/img/logo_lotte-on@2x.png"
+            alt="logo"
+          />
+          <h1>ADMINISTRATOR</h1>
+          <ul>
+            <li>
+              <span class="greeting">
+                안녕하세요, [홍길동]님, 반갑습니다.
+              </span>
+            </li>
+            <li>
+              <a href="#"> 홈 </a>
+            </li>
+            <li>
+              <a href="#"> 로그아웃 </a>
+            </li>
+            <li>
+              <a href="#"> 고객센터 </a>
+            </li>
+          </ul>
+        </div>
+        <nav class="header-padding"></nav>
+      </header>
+      <main>
+        <aside class="side-menu">
+          <ul>
+            <li id="settings-menu">
+              <i class="fa-solid fa-gear"></i>
+              <a href="/admin/config/basic"> 환경설정 </a>
+            </li>
+            <ul class="submenu settings" style="display: none">
+              <li>
+                <a href="/admin/config/basic"> 기본설정 </a>
+              </li>
+              <li>
+                <a href="/admin/config/banner"> 배너관리 </a>
+              </li>
+              <li>
+                <a href="/admin/config/policy"> 약관관리 </a>
+              </li>
+              <li>
+                <a href="/admin/config/category"> 카테고리 </a>
+              </li>
+              <li>
+                <a href="/admin/config/version"> 버전이력 </a>
+              </li>
+            </ul>
+            <li id="store-menu">
+              <i class="fa-solid fa-store"></i>
+              <a href="/admin/shop/list"> 상점관리 </a>
+            </li>
+            <ul class="submenu store" style="display: none">
+              <li>
+                <a href="/admin/shop/list"> 상점목록 </a>
+              </li>
+              <li>
+                <a href="/admin/shop/sales"> 매출현황 </a>
+              </li>
+            </ul>
+            <li id="member-menu">
+              <i class="fa-solid fa-users"></i>
+              <a href="/admin/member/list"> 회원관리 </a>
+            </li>
+            <ul class="submenu member" style="display: none">
+              <li>
+                <a href="/admin/member/list"> 회원목록 </a>
+              </li>
+              <li>
+                <a href="/admin/member/point"> 포인트 관리 </a>
+              </li>
+            </ul>
+            <li id="product-menu">
+              <i class="fa-solid fa-box-open"></i>
+              <a href="/admin/product/list"> 상품관리 </a>
+            </li>
+            <ul class="submenu product" style="display: none">
+              <li>
+                <a href="/admin/product/list"> 상품목록 </a>
+              </li>
+              <li>
+                <a href="/admin/product/register"> 상품등록 </a>
+              </li>
+            </ul>
+            <li id="order-menu">
+              <i class="fa-solid fa-credit-card"></i>
+              <a href="/admin/settings/order/list"> 주문관리 </a>
+            </li>
+            <ul class="submenu order" style="display: none">
+              <li>
+                <a href="/admin/order/list"> 주문현황 </a>
+              </li>
+              <li>
+                <a href="/admin/order/delivery"> 배송현황 </a>
+              </li>
+            </ul>
+            <li id="coupon-menu">
+              <i class="fa-solid fa-ticket"></i>
+              <a href="/admin/settings/coupon/list"> 쿠폰관리 </a>
+            </li>
+            <ul class="submenu coupon" style="display: none">
+              <li>
+                <a href="/admin/coupon/list"> 쿠폰목록 </a>
+              </li>
+              <li>
+                <a href="/admin/coupon/issued"> 쿠폰발급현황 </a>
+              </li>
+            </ul>
+            <li id="cs-menu">
+              <i class="fa-solid fa-headphones"></i>
+              <a href="/admin/cs/notice/list"> 고객센터 </a>
+            </li>
+            <ul class="submenu customer-service" style="display: none">
+              <li>
+                <a href="/admin/cs/notice/list"> 공지사항 </a>
+              </li>
+              <li>
+                <a href="/admin/cs/faq/list"> 자주묻는질문 </a>
+              </li>
+              <li>
+                <a href="/admin/cs/qna/list"> 문의하기 </a>
+              </li>
+            </ul>
+          </ul>
+        </aside>
+        <section id="content-area">
+          <div class="content-area-title">
+            <h3>문의하기 답변</h3>
+            <span>
+              <a href="#">HOME&nbsp;>&nbsp;</a>
+              <a href="#">고객센터&nbsp;>&nbsp;</a>
+              <a href="#">문의하기</a>
+            </span>
+          </div>
+          <div class="content">
+            <form action="#" method="POST" class="post-form">
+              <table class="post-form-table">
+                <tbody>
+                  <tr>
+                    <th>유형</th>
+                    <td>회원 - 가입</td>
+                  </tr>
+                  <tr>
+                    <th>제목</th>
+                    <td>개인회원과 법인회원에 차이가 있나요?</td>
+                  </tr>
+                  <tr>
+                    <th>내용</th>
+                    <td>
+                      <textarea
+                        name="content"
+                        class="reply-content"
+                        placeholder="내용을 입력합니다"
+                      >
+Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis repudiandae pariatur incidunt commodi quia nemo nostrum dignissimos dolorum repellendus! Et facilis ullam ducimus dolorem perspiciatis fugiat maiores hic harum molestiae?</textarea
+                      >
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>답변</th>
+                    <td>
+                      <textarea
+                        name="content"
+                        class="reply-content"
+                        placeholder="내용을 입력합니다"
+                      ></textarea>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="crud-btn-area">
+                <a href="#" class="control-btn delete">취소하기</a>
+                <input class="post-submit-btn" type="submit" value="답변등록" />
+                <a href="#" class="control-btn default">목록</a>
+              </div>
+            </form>
+          </div>
+        </section>
+      </main>
+      <footer>
+        <div id="footer-wrapper">
+          <span>
+            Copyright ©LotteON.co.kr All rights reserved. LotteON ADMINISTRATOR
+            Version 0.0.1
+          </span>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>

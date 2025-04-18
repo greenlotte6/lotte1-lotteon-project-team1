@@ -1,0 +1,15 @@
+.crud-btn-area {
+  justify-content: right;
+}
+
+.crud-btn-area > .control-btn {
+  text-align: center;
+  line-height: 35px;
+  font-size: 14px;
+  margin-top: 30px;
+  margin-left: 10px;
+}
+
+.crud-btn-area > .control-btn.delete {
+  background-color: #a6a6a6;
+}

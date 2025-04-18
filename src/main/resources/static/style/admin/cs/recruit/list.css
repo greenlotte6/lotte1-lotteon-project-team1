@@ -1,0 +1,25 @@
+.crud-btn-area > .post-submit-btn,
+.crud-btn-area > .control-btn {
+  margin-top: 30px;
+}
+
+.ui-dialog .post-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: auto;
+}
+
+.ui-dialog .crud-btn-area {
+  justify-content: center;
+}
+
+.ui-dialog .crud-btn-area > .control-btn.delete {
+  background-color: #a6a6a6;
+}
+
+.ui-dialog .crud-btn-area > .post-submit-btn {
+  margin-left: 10px;
+}
