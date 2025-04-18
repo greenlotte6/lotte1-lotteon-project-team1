@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>롯데ON</title>
+    <link rel="stylesheet" href="/style/init.css" />
+    <link rel="stylesheet" href="/style/index.css" />
+    <link rel="stylesheet" href="/style/common/header.css" />
+    <link rel="stylesheet" href="/style/common/footer.css" />
+    <link rel="stylesheet" href="/static//style/common/pagination.css" />
+    <link rel="stylesheet" href="/style/product/proList.css">
+    <link rel="stylesheet" href="/style/product/mainheader.css">
+    <link rel="stylesheet" href="/style/product/aside.css">
+    <link rel="stylesheet" href="/style/product/proSearchRs.css">
+    <link
+      rel="icon"
+      href="https://static.lotteon.com/p/common/assets/favicon/1/favicon-32.png"
+    />
+    <link
+      rel="stylesheet"
+      href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css"
+    />
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
+    <script src="/js/common/header.js"></script>
+    <script src="/js/common/footer.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/all.min.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <div id="wrapper">
+      <header>
+        <div id="header-wrapper">
+          <div id="account-area">
+            <ul>
+              <li>고객센터</li>
+              <li>주문배송</li>
+              <li>로그인/회원가입</li>
+            </ul>
+          </div>
+          <div id="header-area">
+            <div id="logo-area">
+              <img
+                src="https://static.lotteon.com/p/common/foCommon/assets/img/logo_lotte-on@2x.png"
+                alt="logo"
+              />
+            </div>
+
+            <div id="search-area">
+              <input type="text" placeholder="검색어를 입력하세요" />
+              <button>
+                <i class="fa-solid fa-magnifying-glass"></i>
+              </button>
+            </div>
+
+            <div id="button-area">
+              <a href="#">
+                <i class="fa-regular fa-comment-dots"></i>
+                <span> 챗봇 </span>
+              </a>
+              <a href="#">
+                <i class="fa-regular fa-heart"></i>
+                <span> 나의 찜 </span>
+              </a>
+              <a href="#">
+                <i class="fa-regular fa-user"></i>
+                <span> 마이롯데 </span>
+              </a>
+              <a href="#">
+                <i class="fa-solid fa-basket-shopping"></i>
+                <span> 장바구니 </span>
+              </a>
+            </div>
+          </div>
+        </div>
+        <nav id="quick-menu">
+          <ul>
+            <li id="drop-btn" class="category-drop">
+              <i class="fa-solid fa-bars"></i>
+            </li>
+            <li class="shortcut">
+              <a href="#">홈</a>
+            </li>
+            <li class="shortcut">
+              <a href="#">특가</a>
+            </li>
+            <li class="shortcut">
+              <a href="#">패션</a>
+            </li>
+            <li class="shortcut">
+              <a href="#">뷰티</a>
+            </li>
+            <li class="shortcut">
+              <a href="#">라이프</a>
+            </li>
+            <li class="shortcut">
+              <a href="#">베스트</a>
+            </li>
+            <li class="shortcut">
+              <a href="#">여행</a>
+            </li>
+            <li class="shortcut">
+              <a href="#">백화점</a>
+            </li>
+            <li class="shortcut">
+              <a href="#">내일ON다</a>
+            </li>
+            <li class="shortcut">
+              <a href="#">이벤트</a>
+            </li>
+          </ul>
+        </nav>
+      </header>
+      <ul id="menu" style="display: none">
+        <li>
+          <a href="#">뷰티</a>
+          <ul>
+            <li>
+              <a href="#">럭셔리 스킨케어</a>
+            </li>
+            <li>
+              <a href="#">클렌징</a>
+            </li>
+            <li>
+              <a href="#">스킨/토너</a>
+            </li>
+            <li>
+              <a href="#">로션/에멀젼</a>
+            </li>
+            <li>
+              <a href="#">에센스/세럼</a>
+            </li>
+            <li>
+              <a href="#">크림</a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a href="#">남성패션</a>
+          <ul>
+            <h3>브랜드패션</h3>
+            <li>
+              <a href="#">브랜드의류</a>
+            </li>
+            <li>
+              <a href="#">브랜드캐쥬얼</a>
+            </li>
+            <li>
+              <a href="#">브랜드가방/지갑</a>
+            </li>
+            <li>
+              <a href="#">브랜드신발</a>
+            </li>
+            <li>
+              <a href="#">브랜드잡화</a>
+            </li>
+            <li>
+              <a href="#">브랜드언더웨어</a>
+            </li>
+            <li>
+              <a href="#">브랜드시계</a>
+            </li>
+            <li>
+              <h3>패션의류/잡화</h3>
+            </li>
+            <li>
+              <a href="#">의류</a>
+            </li>
+            <li>
+              <a href="#">가방/지갑</a>
+            </li>
+            <li>
+              <a href="#">신발</a>
+            </li>
+            <li>
+              <a href="#">패션잡화</a>
+            </li>
+            <li>
+              <a href="#">언더웨어</a>
+            </li>
+            <li>
+              <a href="#">시계</a>
+            </li>
+            <li>
+              <a href="#">주얼리</a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a href="#">여성패션</a>
+          <ul>
+            <h3>브랜드패션</h3>
+            <li>
+              <a href="#">브랜드의류</a>
+            </li>
+            <li>
+              <a href="#">브랜드캐쥬얼</a>
+            </li>
+            <li>
+              <a href="#">브랜드가방/지갑</a>
+            </li>
+            <li>
+              <a href="#">브랜드신발</a>
+            </li>
+            <li>
+              <a href="#">브랜드잡화</a>
+            </li>
+            <li>
+              <a href="#">브랜드언더웨어</a>
+            </li>
+            <li>
+              <a href="#">브랜드시계</a>
+            </li>
+            <h3>패션의류/잡화</h3>
+            <li>
+              <a href="#">의류</a>
+            </li>
+            <li>
+              <a href="#">가방/지갑</a>
+            </li>
+            <li>
+              <a href="#">신발</a>
+            </li>
+            <li>
+              <a href="#">패션잡화</a>
+            </li>
+            <li>
+              <a href="#">언더웨어</a>
+            </li>
+            <li>
+              <a href="#">시계</a>
+            </li>
+            <li>
+              <a href="#">주얼리</a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a href="#">럭셔리</a>
+        </li>
+        <li>
+          <a href="#">유아동</a>
+        </li>
+        <li>
+          <a href="#">스포츠/레저</a>
+        </li>
+        <li>
+          <a href="#">식품</a>
+        </li>
+        <li>
+          <a href="#">생활/건강</a>
+        </li>
+        <li>
+          <a href="#">컴퓨터/게임/모바일</a>
+        </li>
+        <li>
+          <a href="#">가전</a>
+        </li>
+        <li>
+          <a href="#">가구/인테리어</a>
+        </li>
+        <li>
+          <a href="#">자동차/공구</a>
+        </li>
+        <li>
+          <a href="#">반려동물</a>
+        </li>
+        <li>
+          <a href="#">취미/문구/도서</a>
+        </li>
+        <li>
+          <a href="#">여행/e쿠폰</a>
+        </li>
+        <li>
+          <a href="#">해외직구</a>
+        </li>
+        <li>
+          <a href="#">온누리</a>
+        </li>
+      </ul>
+
+
+      <main>
+         <div class="main">
+            <aside class="aside1">
+                <div>
+                    <div class="bestPro">
+                        <p>베스트 상품</p>
+                        <span class="sale">1</span>
+                        <div>
+                            <img src="/proDetail-img/img5.png" alt="이미지">
+                        </div>
+                        <div>
+                            <p>상품명</p>
+                            <del>30,000원</del>
+                            <span class="sale">10%↓</span>
+                            <p>27,000원</p>
+                        </div>
+                    </div>
+
+                    <div class="items">
+                        <div>
+                            <span class="sale">2</span>
+                            <img src="/proDetail-img/img5.png" alt="이미지">
+                        </div>
+                        <div class="productDescription">
+                            <p>상품명</p>
+                            <p><del>30,000원</del><span class="sale">10%↓</span></p>
+                            <p>27,000원</p>
+                        </div>
+                    </div>
+                    
+                    <div class="items">
+                        <div>
+                            <span class="sale">3</span>
+                            <img src="/proDetail-img/img5.png" alt="이미지">
+                        </div>
+                        
+                        <div class="productDescription">
+                            <p>상품명</p>
+                            <p><del>30,000원</del><span class="sale">10%↓</span></p>
+                            <p>27,000원</p>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            
+            <article class="article-body">
+              <div class="article-header">
+                <div class="main-heder">
+                    <p>상품 목록</p>
+                    <ul>
+                        <li>HOME > </li>
+                        <li>패션 · 의류 · 뷰티 > </li>
+                        <li>남성의류</li>
+                    </ul>
+                </div>
+  
+                <div class="search-option">
+                    <div class="search-header">
+                        <span>셔츠</span> 
+                        <span>검색결과</span>
+                        <span>(총: </span>
+                        <span>20</span>
+                        <span>건)</span>
+                    </div>
+
+                    <form class="search-body">
+                        <div class="search-bar">
+                            <input type="text" />
+                            <input type="submit" value="검색"></input>
+                        </div>
+
+                        <ul class="checkbox-option">
+                            <li><label><input type="checkbox">상품명</label></li>
+                            <li><label><input type="checkbox">설명</label></li>
+                            <li><label><input type="checkbox">가격</label></li>
+                        </ul>
+
+                        <div class="input-option">
+                            <input type="text"> ~
+                            <input type="text">
+                        </div>
+                    </form>
+                </div>
+
+                <div class="main-heder2">
+                    <ul>
+                        <li>판매많은순 | </li>
+                        <li>낮은가격순 | </li>
+                        <li>높은가격순 | </li>
+                        <li>평점높은순 | </li>
+                        <li>후기많은순 | </li>
+                        <li>최근등록순</li>
+                    </ul>
+                </div>
+
+            </div>
+
+
+                <div class="grid">
+                    <a href="/templates/common/proDetail.html" class="product">
+                        <div class="grid-img">
+                            <img src="/proDetail-img/img5.png" alt="이미지">
+                        </div>
+
+                        <div class="icon">
+                            <button><i class="fa-regular fa-heart" id="heart"></i></button>
+                            <button><i class="fa-solid fa-cart-plus"></i></button>
+                        </div>
+                        
+                        <div class="Protitle">
+                            <span>어반드레스</span> 
+                            <span>스티치 데님 자켓 - 2COL</span>
+                        </div>
+
+                        <div class="Proprice">
+                            <del>82,000원</del>
+                        </div>
+                        <div class="sela-price">
+                            <span class="sale">60%</span> 
+                            <span>32,800원</span>
+                        </div>
+                        <div class="rank">
+                            <i class="fa-solid fa-star"></i>
+                            <span>5.0 |</span>
+                            <span>리뷰 1</span>
+                        </div>
+
+                        <div class="free">
+                            <span>무료배송</span>
+                        </div>
+                    </a>
+
+                    <a href="#" class="product">
+                        <div class="grid-img">
+                            <img src="/proDetail-img/img5.png" alt="이미지">
+                        </div>
+
+                        <div class="icon">
+                            <button><i class="fa-regular fa-heart" id="heart"></i></button>
+                            <button><i class="fa-solid fa-cart-plus"></i></button>
+                        </div>
+                        
+                        <div class="Protitle">
+                            <span>어반드레스</span> 
+                            <span>스티치 데님 자켓 - 2COL</span>
+                        </div>
+
+                        <div class="Proprice">
+                            <del>82,000원</del>
+                        </div>
+                        <div class="sela-price">
+                            <span class="sale">60%</span> 
+                            <span>32,800원</span>
+                        </div>
+                        <div class="rank">
+                            <i class="fa-solid fa-star"></i>
+                            <span>5.0 |</span>
+                            <span>리뷰 1</span>
+                        </div>
+
+                        <div class="free">
+                            <span>무료배송</span>
+                        </div>
+                    </a>
+
+                    <a href="#" class="product">
+                        <div class="grid-img">
+                            <img src="/proDetail-img/img5.png" alt="이미지">
+                        </div>
+
+                        <div class="icon">
+                            <button><i class="fa-regular fa-heart" id="heart"></i></button>
+                            <button><i class="fa-solid fa-cart-plus"></i></button>
+                        </div>
+                        
+                        <div class="Protitle">
+                            <span>어반드레스</span> 
+                            <span>스티치 데님 자켓 - 2COL</span>
+                        </div>
+
+                        <div class="Proprice">
+                            <del>82,000원</del>
+                        </div>
+                        <div class="sela-price">
+                            <span class="sale">60%</span> 
+                            <span>32,800원</span>
+                        </div>
+                        <div class="rank">
+                            <i class="fa-solid fa-star"></i>
+                            <span>5.0 |</span>
+                            <span>리뷰 1</span>
+                        </div>
+
+                        <div class="free">
+                            <span>무료배송</span>
+                        </div>
+                    </a>
+
+                      <a href="#" class="product">
+                        <div class="grid-img">
+                            <img src="/proDetail-img/img5.png" alt="이미지">
+                        </div>
+
+                        <div class="icon">
+                            <button><i class="fa-regular fa-heart" id="heart"></i></button>
+                            <button><i class="fa-solid fa-cart-plus"></i></button>
+                        </div>
+                        
+                        <div class="Protitle">
+                            <span>어반드레스</span> 
+                            <span>스티치 데님 자켓 - 2COL</span>
+                        </div>
+
+                        <div class="Proprice">
+                            <del>82,000원</del>
+                        </div>
+                        <div class="sela-price">
+                            <span class="sale">60%</span> 
+                            <span>32,800원</span>
+                        </div>
+                        <div class="rank">
+                            <i class="fa-solid fa-star"></i>
+                            <span>5.0 |</span>
+                            <span>리뷰 1</span>
+                        </div>
+
+                        <div class="free">
+                            <span>무료배송</span>
+                        </div>
+                    </a>
+
+                    <a href="#" class="product">
+                        <div class="grid-img">
+                            <img src="/proDetail-img/img5.png" alt="이미지">
+                        </div>
+
+                        <div class="icon">
+                            <button><i class="fa-regular fa-heart" id="heart"></i></button>
+                            <button><i class="fa-solid fa-cart-plus"></i></button>
+                        </div>
+                        
+                        <div class="Protitle">
+                            <span>어반드레스</span> 
+                            <span>스티치 데님 자켓 - 2COL</span>
+                        </div>
+
+                        <div class="Proprice">
+                            <del>82,000원</del>
+                        </div>
+                        <div class="sela-price">
+                            <span class="sale">60%</span> 
+                            <span>32,800원</span>
+                        </div>
+                        <div class="rank">
+                            <i class="fa-solid fa-star"></i>
+                            <span>5.0 |</span>
+                            <span>리뷰 1</span>
+                        </div>
+
+                        <div class="free">
+                            <span>무료배송</span>
+                        </div>
+                    </a>
+
+                      <a href="#" class="product">
+                        <div class="grid-img">
+                            <img src="/proDetail-img/img5.png" alt="이미지">
+                        </div>
+
+                        <div class="icon">
+                            <button><i class="fa-regular fa-heart" id="heart"></i></button>
+                            <button><i class="fa-solid fa-cart-plus"></i></button>
+                        </div>
+                        
+                        <div class="Protitle">
+                            <span>어반드레스</span> 
+                            <span>스티치 데님 자켓 - 2COL</span>
+                        </div>
+
+                        <div class="Proprice">
+                            <del>82,000원</del>
+                        </div>
+                        <div class="sela-price">
+                            <span class="sale">60%</span> 
+                            <span>32,800원</span>
+                        </div>
+                        <div class="rank">
+                            <i class="fa-solid fa-star"></i>
+                            <span>5.0 |</span>
+                            <span>리뷰 1</span>
+                        </div>
+
+                        <div class="free">
+                            <span>무료배송</span>
+                        </div>
+                    </a>
+
+
+                    <a href="#" class="product">
+                        <div class="grid-img">
+                            <img src="/proDetail-img/img5.png" alt="이미지">
+                        </div>
+
+                        <div class="icon">
+                            <button><i class="fa-regular fa-heart" id="heart"></i></button>
+                            <button><i class="fa-solid fa-cart-plus"></i></button>
+                        </div>
+                        
+                        <div class="Protitle">
+                            <span>어반드레스</span> 
+                            <span>스티치 데님 자켓 - 2COL</span>
+                        </div>
+
+                        <div class="Proprice">
+                            <del>82,000원</del>
+                        </div>
+                        <div class="sela-price">
+                            <span class="sale">60%</span> 
+                            <span>32,800원</span>
+                        </div>
+                        <div class="rank">
+                            <i class="fa-solid fa-star"></i>
+                            <span>5.0 |</span>
+                            <span>리뷰 1</span>
+                        </div>
+
+                        <div class="free">
+                            <span>무료배송</span>
+                        </div>
+                    </a>
+
+                    <a href="#" class="product">
+                        <div class="grid-img">
+                            <img src="/proDetail-img/img5.png" alt="이미지">
+                        </div>
+
+                        <div class="icon">
+                            <button><i class="fa-regular fa-heart" id="heart"></i></button>
+                            <button><i class="fa-solid fa-cart-plus"></i></button>
+                        </div>
+                        
+                        <div class="Protitle">
+                            <span>어반드레스</span> 
+                            <span>스티치 데님 자켓 - 2COL</span>
+                        </div>
+
+                        <div class="Proprice">
+                            <del>82,000원</del>
+                        </div>
+                        <div class="sela-price">
+                            <span class="sale">60%</span> 
+                            <span>32,800원</span>
+                        </div>
+                        <div class="rank">
+                            <i class="fa-solid fa-star"></i>
+                            <span>5.0 |</span>
+                            <span>리뷰 1</span>
+                        </div>
+
+                        <div class="free">
+                            <span>무료배송</span>
+                        </div>
+                    </a>
+
+                    <a href="#" class="product">
+                        <div class="grid-img">
+                            <img src="/proDetail-img/img5.png" alt="이미지">
+                        </div>
+
+                        <div class="icon">
+                            <button><i class="fa-regular fa-heart" id="heart"></i></button>
+                            <button><i class="fa-solid fa-cart-plus"></i></button>
+                        </div>
+                        
+                        <div class="Protitle">
+                            <span>어반드레스</span> 
+                            <span>스티치 데님 자켓 - 2COL</span>
+                        </div>
+
+                        <div class="Proprice">
+                            <del>82,000원</del>
+                        </div>
+                        <div class="sela-price">
+                            <span class="sale">60%</span> 
+                            <span>32,800원</span>
+                        </div>
+                        <div class="rank">
+                            <i class="fa-solid fa-star"></i>
+                            <span>5.0 |</span>
+                            <span>리뷰 1</span>
+                        </div>
+
+                        <div class="free">
+                            <span>무료배송</span>
+                        </div>
+                    </a>
+
+                    <a href="#" class="product">
+                        <div class="grid-img">
+                            <img src="/proDetail-img/img5.png" alt="이미지">
+                        </div>
+
+                        <div class="icon">
+                            <button><i class="fa-regular fa-heart" id="heart"></i></button>
+                            <button><i class="fa-solid fa-cart-plus"></i></button>
+                        </div>
+                        
+                        <div class="Protitle">
+                            <span>어반드레스</span> 
+                            <span>스티치 데님 자켓 - 2COL</span>
+                        </div>
+
+                        <div class="Proprice">
+                            <del>82,000원</del>
+                        </div>
+                        <div class="sela-price">
+                            <span class="sale">60%</span> 
+                            <span>32,800원</span>
+                        </div>
+                        <div class="rank">
+                            <i class="fa-solid fa-star"></i>
+                            <span>5.0 |</span>
+                            <span>리뷰 1</span>
+                        </div>
+
+                        <div class="free">
+                            <span>무료배송</span>
+                        </div>
+                    </a>
+
+                </div>
+
+            </article>
+
+        </div>
+
+            <section class="pagination">
+                <a class="page move" href="#">
+                  <i class="fa-solid fa-angles-left"></i>
+                </a>
+                <a class="page move" href="#">
+                  <i class="fa-solid fa-chevron-left"></i>
+                </a>
+                <a class="page" href="">1</a>
+                <a class="page" href="">2</a>
+                <a class="page" href="">3</a>
+                <a class="page" href="">4</a>
+                <a class="page move" href="#">
+                  <i class="fa-solid fa-chevron-right"></i>
+                </a>
+                <a class="page move" href="#">
+                  <i class="fa-solid fa-angles-right"></i>
+                </a>
+              </section>
+
+
+         </main>
+
+
+
+
+      <footer>
+        <div id="footer-shortcut-wrapper">
+          <div id="footer-shortcut">
+            <nav>
+              <a href="#" class="footer-nav">회사소개</a>
+              <a href="#" class="footer-nav">이용약관</a>
+              <a href="#" class="footer-nav">전자금융거래약관</a>
+              <a href="#" class="footer-nav">개인정보처리방침</a>
+              <a href="#" class="footer-nav">청소년보호방침</a>
+              <a href="#" class="footer-nav">임직원등록</a>
+              <a href="#" class="footer-nav">준법경영</a>
+              <a href="#" class="footer-nav">오류신고</a>
+              <a href="#" class="footer-nav">리서치 패널가입</a>
+            </nav>
+            <div id="selectors">
+              <button class="footer-drop-btn family-site">
+                <span>Family Site</span>
+                <i class="fa-solid fa-caret-down"></i>
+              </button>
+              <ul class="footer-selectors family-site">
+                <li>
+                  <a href="http://www.lotte.co.kr/">롯데지주</a>
+                </li>
+                <li>
+                  <a href="http://www.lottecon.co.kr/">롯데건설</a>
+                </li>
+                <li>
+                  <a href="http://www.lotteglogis.com/">롯데글로벌로지스</a>
+                </li>
+                <li>
+                  <a href="http://www.lottelem.co.kr/">롯데기공</a>
+                </li>
+                <li>
+                  <a href="http://www.lottebp.co.kr/">롯데비피화학</a>
+                </li>
+                <li>
+                  <a href="http://www.lotterentacar.net/">롯데렌탈</a>
+                </li>
+                <li>
+                  <a href="http://www.llc.co.kr/">롯데로지스틱스</a>
+                </li>
+                <li>
+                  <a href="http://www.lotteria.com/">롯데리아</a>
+                </li>
+                <li>
+                  <a href="http://www.lottedfs.com/">롯데면세점</a>
+                </li>
+                <li>
+                  <a href="http://www.lpoint.com/">롯데멤버스</a>
+                </li>
+              </ul>
+              <button class="footer-drop-btn seller-service">
+                <span>판매자서비스</span>
+                <i class="fa-solid fa-caret-down"></i>
+              </button>
+              <ul class="footer-selectors seller-service">
+                <li>
+                  <a href="#"> 입점신청 </a>
+                </li>
+                <li>
+                  <a href="#"> 판매자 센터 </a>
+                </li>
+                <li>
+                  <a href="#"> 판매자교육 센터 </a>
+                </li>
+                <li>
+                  <a href="#"> API 센터 </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <table id="footer-content">
+          <tbody>
+            <tr>
+              <td>
+                <img
+                  src="https://contents.lotteon.com/ec/public/common-bi-lotteon.png"
+                  alt="logo"
+                  class="footer-logo"
+                />
+              </td>
+              <td>
+                <h3>롯데쇼핑 주식회사</h3>
+                <p>
+                  대표이사: 김사무엘상현, 신동빈, 정준호, 강성현 <br />
+                  주소: 서울특별시 강남구 테헤란로 507 (삼성동, WeWork빌딩),
+                  7층<br />
+                  사업자등록번호 : 529-85-00774(롯데쇼핑(주) e커머스사업부)
+                  <br />
+                  통신판매업 신고 : 2024-서울강남-04439 사업자 정보 확인 <br />
+                  호스팅 서비스사업자 : 롯데쇼핑(주) e커머스사업부사업자등록번호
+                </p>
+              </td>
+              <td>
+                <h4>고객센터</h4>
+                <p>
+                  전화번호 : 1899-7000(유료) <br />
+                  E-mail : lotteon@lotte.net
+                </p>
+                <a href="#"> 분쟁해결기준 </a>
+                <div class="service-shortcut">
+                  <a href="#">FAQ보기</a>
+                  <a href="#">1:1 문의하기</a>
+                  <a href="#">고객센터</a>
+                  <a href="#">공지사항</a>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td></td>
+              <td>
+                <h4>롯데쇼핑 e커머스 사업부 에스크로</h4>
+                <p>
+                  고객님의 안전거래를 위해 현금 등으로 결제 시 결제금액 전액에
+                  대해
+                  <br />
+                  소비자 피해 방지 서비스를 이용합니다.
+                </p>
+              </td>
+              <td>
+                <h4>전자금융거래 분쟁 담당</h4>
+                <p>Tel : 1899-7000(유료) <br /></p>
+                <span>
+                  E-mail:
+                  <a href="#">lotteon@lotte.net</a>
+                </span>
+                <a href="https://www.lotteon.com/p/trustsafety/main"
+                  >안전거래센터</a
+                >
+              </td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td class="contents-protection">
+                <h3>콘텐츠산업진흥법에 의한 콘텐츠보호안내</h3>
+                <span class="modal">자세히보기</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div id="certificate-area">
+          <img
+            src="https://contents.lotteon.com/ec/public/footer-img-logo-2-2023.png"
+            alt="online-shopping-association"
+          />
+          <img
+            src="https://contents.lotteon.com/ec/public/footer-img-logo-3-2023.png"
+            alt="tax"
+          />
+          <img
+            src="https://contents.lotteon.com/ec/public/footer-img-logo-4-2023.png"
+            alt="hazardous-product"
+          />
+          <img
+            src="https://contents.lotteon.com/ec/public/footer-img-logo-5-2023.png"
+            alt="손말이음"
+          />
+          <img
+            src="https://contents.lotteon.com/ec/public/footer-img-logo-7-2023.png"
+            alt="personal-info-protection"
+          />
+        </div>
+        <section class="copyright">
+          <div>
+            <p>
+              롯데쇼핑(주)는 통신판매중개자이며 통신판매의 거래당사자가
+              아닙니다. 입점판매자가 등록한 상품정보 및 거래에 대해
+              롯데쇼핑(주)는 일체 책임을 지지 않습니다.
+            </p>
+            <p>Copyright © LOTTESHOPPING Co., LTD. All rights reserved.</p>
+          </div>
+        </section>
+        <div id="dialog" title="콘텐츠산업진흥법에 의한 표시">
+          <img
+            src="https://static.lotteon.com/p/common/foCommon/assets/img/footer_logo-content.png"
+            alt="contents"
+          />
+          <ul>
+            <li>
+              <p>콘텐츠의 명칭: 상품정보 및 이벤트 정보 등</p>
+            </li>
+            <li>
+              <p>
+                콘텐츠 제작 연월일 : 2020년 3월 29일 <br />
+                (또는, 콘텐츠가 업그레이드된 경우 그 갱신일)
+              </p>
+            </li>
+            <li>
+              <p>
+                콘텐츠 제작자 : 롯데쇼핑(주) e커머스사업부 <br />
+                서울특별시 송파구 올림픽로 300 롯데월드타워 26층 <br />
+                Tel : 02-3668-8500 FAX : 02-3668-8501
+              </p>
+            </li>
+            <li>
+              <p>
+                롯데쇼핑(주) e커머스사업부가 운영하는 홈페이지 내의 모든
+                콘텐츠는 <br />
+                콘텐츠산업 진흥법에 따라 제작일 또는 그 갱신일로부터 5년간
+                보호됩니다. <br />
+                (동의없는 무단 복제를 금함)
+              </p>
+            </li>
+          </ul>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/style/init.css" />
+    <link rel="stylesheet" href="/style/common/myPage/modal/seller-modal.css">
+    <link rel="stylesheet" href="/style/common/myPage/modal/modalBack.css">
+    <link rel="stylesheet" href="/style/common/myPage/modal/modalHead.css">
+    <link
+    rel="icon"
+    href="https://static.lotteon.com/p/common/assets/favicon/1/favicon-32.png"
+    />
+    <link
+        rel="stylesheet"
+        href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css"
+    />
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
+    <script src="/js/common/header.js"></script>
+    <script src="/js/common/footer.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/all.min.js"
+        crossorigin="anonymous"
+    ></script>
+    <script src="/static/js/seller-info-modal.js"></script>
+</head>
+<body>
+    <div class="modal-back" id="seller-info-modal">
+        <div id="modal-wrapper">
+            <div class="modal-hd">
+                <p>주문상세</p>
+                <button id="seller-close">x</button>
+            </div>
+    
+            <div class="sellerList">
+                <table class="seller-Table">
+                    <tr>
+                        <td class="td-l">판매자 등급</td>
+                        <td class="td-r">파워 딜러</td>
+                    </tr>
+    
+                    <tr>
+                        <td class="td-l">상호</td>
+                        <td class="td-r">(주) 상호명</td>
+                    </tr>
+    
+                    <tr>
+                        <td class="td-l">대표자</td>
+                        <td class="td-r">홍길동</td>
+                    </tr>
+    
+                    <tr>
+                        <td class="td-l">전화번호</td>
+                        <td class="td-r">051-123-1000</td>
+                    </tr>
+    
+                    <tr>
+                        <td class="td-l">FAX</td>
+                        <td class="td-r">051-123-1001</td>
+                    </tr>
+    
+                    <tr>
+                        <td class="td-l">Email</td>
+                        <td class="td-r">company@abc.com</td>
+                    </tr>
+    
+                    <tr>
+                        <td class="td-l">사업자번호</td>
+                        <td class="td-r">123-12-123457</td>
+                    </tr>
+    
+                    <tr>
+                        <td class="td-l">영업소 재지</td>
+                        <td class="td-r">[21000] 부산광역시 부산진구 대연동 121 10층 1004호</td>
+                    </tr>
+                </table>
+    
+                <div class="etc">
+                    <p><span>*</span> 위 정보는 전자상거래 법 제 20조 제 2항 및 동 법 시행령 제 25조 제 2창에 의거하여 소비자 보호에 의거 공개합니다.</p>
+                </div>
+    
+                <div class="inquiry">
+                    <button id="inquiryModal">문의하기</button>
+                </div>
+            </div>
+        </div>
+    </div>
+       
+</body>
+</html>

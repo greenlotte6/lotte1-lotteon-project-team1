@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/style/init.css" />
+    <link rel="stylesheet" href="/style/common/myPage/modal/modalHead.css">
+    <link rel="stylesheet" href="/style/common/myPage/modal/inquiry-modal.css">
+    <link
+    rel="icon"
+    href="https://static.lotteon.com/p/common/assets/favicon/1/favicon-32.png"
+    />
+    <link
+        rel="stylesheet"
+        href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css"
+    />
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
+    <script src="/js/common/header.js"></script>
+    <script src="/js/common/footer.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/all.min.js"
+        crossorigin="anonymous"
+    ></script>
+    <script src="/js/mypage/inquiry-modal.js"></script>
+</head>
+<body>
+    
+    <div class="modal-back3" id="inquiry-info-modal">
+        <div id="modal3-wrapper">
+
+            <div class="modal-hd">
+                <p>문의하기</p>
+                <button class="close-btn" id="seller-close">x</button>
+            </div>
+
+            <div class="all-orderList">
+                <form>
+                    <table class="inquiry-table">
+                        <tr>
+                            <td class="td-lf">문의종류</td>
+                            <td class="td-rg">
+                                <div>
+                                    <label><input type="radio">상품</label>
+                                    <label><input type="radio">배송</label>
+                                    <label><input type="radio">반품/취소</label>
+                                    <label><input type="radio">교환</label>
+                                    <label><input type="radio">기타</label>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="td-lf">Email</td>
+                            <td class="td-rg">
+                                <div>
+                                    <input type="text" placeholder="이메메일 입력" class="form-input">
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="td-lf">제목</td>
+                            <td class="td-rg">
+                                <div>
+                                    <input type="text" placeholder="제목 입력" class="form-input">
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="td-lf">내용</td>
+                            <td class="td-rg" id="td-l">
+                                <div class="form-input2">
+                                    <input type="text">
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <div class="btn-box">
+                        <input type="submit" value="등록하기"></input>
+                        <button type="button">취소</button>
+                    </div>
+                </form>
+                
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>
