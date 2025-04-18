@@ -241,9 +241,13 @@
       /*카드 넘어가는 기능 추가*/
 
       .card-carousel {
-        padding: 60px 20px;
+        padding: 50px 20px;
         background: #f9f9f9;
         text-align: center;
+      }
+
+      .card-carousel > h2 {
+        margin-bottom: 40px;
       }
       
       .carousel-container {
@@ -252,6 +256,8 @@
         align-items: center;
         justify-content: center;
       }
+
+      
       
       .cards-wrapper {
         display: flex;
@@ -364,7 +370,76 @@
       .scroll-arrow:hover {
         color: #007aff;
       }
-
+/*********************타임라인 ************************/
+      
+      .timeline {
+        width: 80%;
+        margin: 0 auto; /* 가운데 정렬 */
+        left: 100px;
+        margin-top: 60px;
+        padding-left: 300px;
+        position: relative;
+      }
+      .timeline::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 245px; /* 원하는 위치로 조절 */
+        width: 2px;
+        height: 100%;
+        background-color: #ccc;
+      }
+      
+      
+      .year-section {
+        margin-bottom: 60px;
+      }
+      
+      .year {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 20px;
+      }
+      
+      .event {
+        position: relative;
+        margin-bottom: 40px;
+      }
+      
+      .dot {
+        width: 14px;
+        height: 14px;
+        background: black;
+        border-radius: 60%;
+        position: absolute;
+        left: -60px;
+        top: 25px;
+      }
+      
+      .content {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+      
+      .content img {
+        width: 80px;
+        height: auto;
+      }
+      
+      .text .date {
+        font-size: 14px;
+        color: gray;
+      }
+      
+      .text .title {
+        font-weight: bold;
+        font-size: 16px;
+      }
+      
+      .text .desc {
+        font-size: 14px;
+      }
       
 
       .center-image {
