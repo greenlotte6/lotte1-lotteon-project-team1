@@ -1,5 +1,6 @@
 .search-option {
-    border: 1px solid gray;
+    border: 1px solid #ccc;
+    border-radius: 3px;
 }
 
 .search-header {
@@ -53,10 +54,11 @@
 
 .search-bar > input:nth-child(2) {
     border: none;
-    background: #e60000;
+    background: #ef2a23;
+    border-radius: 3px;
     color: white;
     width: 70px;
-    height: 40px;
+    height: 36px;
     cursor: pointer;
 }
 

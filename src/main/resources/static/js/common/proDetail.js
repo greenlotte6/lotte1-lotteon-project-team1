@@ -8,4 +8,6 @@ document.addEventListener("DOMContentLoaded", function() {
     btnBox.style.display = isVisible ? "none" : "block";
     btn.textContent = isVisible ? "상세정보  더보기" : "접기";
     });
+    
+
 });
