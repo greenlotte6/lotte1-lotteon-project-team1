@@ -108,6 +108,7 @@ main{
 
 
   .join-button {
+    display: inline-block; /* 또는 block */
     background-color: #ccc;
     border: none;
     padding: 10px 20px;
