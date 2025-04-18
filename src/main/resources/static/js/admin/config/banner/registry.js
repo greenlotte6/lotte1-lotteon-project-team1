@@ -11,7 +11,8 @@ $(() => {
     resizable: false,
   });
 
-  $(".control-btn.banner-registry-btn").on("click", () => {
+  $(".control-btn.banner-registry-btn").on("click", (event) => {
+    event.preventDefault();
     $(".registry-modal").dialog("open");
   });
 });

@@ -24,7 +24,7 @@
         src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/all.min.js"
         crossorigin="anonymous"
     ></script>
-    <script src="/static/js/confirm-info-modal.js"></script>
+    <script src="/static/js/common/mypage/confirm-info-modal.js"></script>
 </head>
 <body>
     <div class="modal-back" id="confirm-info-modal">
@@ -32,7 +32,7 @@
     
                 <div class="modal-hd">
                     <p>구매확정</p>
-                    <button id="close-confirm">x</button>
+                    <button class="close-confirm">x</button>
                 </div>
 
                 <div class="all-orderList">
@@ -47,7 +47,7 @@
 
                     <div class="inquiry">
                         <button onclick="alert('구매확정이 완료되었습니다.')">확인</button>
-                        <button id="close-confirm" style="background-color: #bfbfbf;">취소</button>
+                        <button class="close-confirm" style="background-color: #bfbfbf;">취소</button>
                     </div>
                 </div>
 

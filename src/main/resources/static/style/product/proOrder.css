@@ -1,5 +1,4 @@
 .line {
-    margin-left: 50px;
     width: 50%;
 }
 
@@ -20,9 +19,7 @@ button {
     margin-top: 10px;
 }
 
-.delivery-info {
-    margin-left: 40px;
-}
+
 
 .delivery-info > div {
     margin-top: 10px;
@@ -67,10 +64,6 @@ button {
     border-bottom: 1px solid #d9d9d9;
 }
 
-.sale-info {
-    margin-left: 40px;
-}
-
 .cupon {
     margin-top: 30px;
 }
@@ -97,9 +90,6 @@ button {
     border-bottom: 1px solid #d9d9d9;
 }
 
-.payment-option {
-    margin-left: 20px;
-}
 
 .payment-option > div {
     margin-bottom: 10px;

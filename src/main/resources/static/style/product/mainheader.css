@@ -7,11 +7,10 @@ main {
     display: flex;
     padding-top: 10px;
     height: auto;
-    border: 1px solid #BFBFBF;
 }
 
 .article-body {
-    width: 100%;
+    width: 90%;
     height: auto;
     margin-top: 10px;
     margin-left: 10px;
