@@ -41,7 +41,7 @@ nav {
     object-fit: cover;
   }
   
-  .card .content {
+  .card .contents {
     padding: 20px;
     flex-grow: 1;
   }
