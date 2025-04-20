@@ -49,34 +49,7 @@
       <main>
         <div class="csmain">
           <!-- 왼쪽 사이드바 -->
-            <aside class="sidebar">
-              <article class="side_content">             
-                <div class="side_title">
-                    <p>문의하기</p>
-                </div>            
-                <a href="#">
-                  <div class="choice">회원</div>
-              </a>
-              <a href="#">
-                  <div>쿠폰 / 이벤트</div>
-              </a>
-              <a href="#">
-                  <div>주문 / 결제</div>
-              </a>
-              <a href="#">
-                  <div>배송</div>
-              </a>
-              <a href="#">
-                  <div>취소 / 반품 / 교환 </div>
-              </a>
-              <a href="#">
-                  <div>여행 / 숙박 / 항공 </div>
-              </a>
-              <a href="#">
-                  <div>안전거래</div>
-              </a>
-              </article>  
-            </aside>
+          <th:block th:insert="~{/common/cs/contactsidebar}"></th:block>
             <!-- 오른쪽 글 -->
             <article class="main_content">
               <div class="main_title">
