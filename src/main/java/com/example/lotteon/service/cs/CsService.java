@@ -1,15 +1,22 @@
 package com.example.lotteon.service.cs;
 
+import com.example.lotteon.dto.PageRequestDTO;
+import com.example.lotteon.dto.PageResponseDTO;
 import com.example.lotteon.dto.cs.NoticeDTO;
 import com.example.lotteon.entity.cs.Article_Type;
 import com.example.lotteon.entity.cs.Notice;
 import com.example.lotteon.repository.cs.NoticeRepository;
+import com.querydsl.core.Tuple;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -65,5 +72,47 @@ public class CsService {
 
         }
         return null;
+    }
+
+    @Transactional
+    public void deletenotice(int id) {
+        noticeRepository.deleteById(id);
+    }
+
+    public PageResponseDTO findAll(PageRequestDTO pageRequestDTO, int type_id) {
+
+        // 페이징 처리를 위한 pageable 객체 생성
+        Pageable pageable = pageRequestDTO.getPageable("id");
+
+        Page<Tuple> pageNotice = noticeRepository.selectAllForList(pageable, type_id);
+
+        List<NoticeDTO> noticeDTOList = pageNotice.getContent().stream().map(tuple -> {
+
+            Notice notice = tuple.get(0, Notice.class);
+            NoticeDTO noticeDTO = NoticeDTO.builder()
+                    .id(notice.getId())
+                    .title(notice.getTitle())
+                    .content(notice.getContent())
+                    .hit(notice.getHit())
+                    .register_date(notice.getRegister_date().toString())
+                    .type_id(notice.getType_id().getId()) // Article_Type의 id
+                    .subtype_name(notice.getType_id().getSubtype_name()) // Article_Type의 subtype_name
+                    .build();
+
+
+
+            return noticeDTO;
+
+        }).toList();
+
+        int total = (int) pageNotice.getTotalElements();
+
+        return PageResponseDTO
+                .builder()
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(noticeDTOList)
+                .total(total)
+                .build();
+
     }
 }
