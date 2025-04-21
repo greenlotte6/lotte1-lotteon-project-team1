@@ -2,7 +2,6 @@
 const reUid   = /^[a-z]+[a-z0-9]{4,19}$/g;
 const rePass  = /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{5,16}$/;
 const reName  = /^[가-힣]{2,10}$/
-const reNick  = /^[a-zA-Zㄱ-힣0-9][a-zA-Zㄱ-힣0-9]*$/;
 const reEmail = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
 const reHp    = /^01(?:0|1|[6-9])-(?:\d{4})-\d{4}$/;
 
@@ -97,39 +96,6 @@ document.addEventListener('DOMContentLoaded', function(){
         }
     });
 
-    // 4.별명 유효성 검사(중복체크 포함)
-    const btnCheckNick = document.getElementById('btnCheckNick');
-    const nickResult = document.getElementsByClassName('nickResult')[0];
-
-    btnCheckNick.onclick = async function(){
-
-        const value = formRegister.nick.value;
-
-        if(!value.match(reNick)){
-            nickResult.innerText = '유효하지 않은 별명 입니다.';
-            nickResult.style.color = 'red';
-            isNickOk = false;
-            return;
-        }
-
-        try {
-            const response = await fetch(`/user/nick/${value}`);
-            const data = await response.json();
-            console.log(data);
-
-            if(data.count > 0){
-                nickResult.innerText = '이미 사용중인 별명 입니다.';
-                nickResult.style.color = 'red';
-                isNickOk = false;
-            }else{
-                nickResult.innerText = '사용 가능한 별명 입니다.';
-                nickResult.style.color = 'green';
-                isNickOk = true;
-            }
-        }catch(err){
-            console.log(err);
-        }
-    };
 
     // 5. 이메일 유효성 검사(중복/인증처리 포함)
     const btnSendEmail = document.getElementById('btnSendEmail');
@@ -181,7 +147,7 @@ document.addEventListener('DOMContentLoaded', function(){
         // 서버 전송
         const response = await fetch('/user/email/auth', {
             method: 'POST',
-            headers: {'Content-Type' : 'application/json'},
+            headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(jsonData)
         });
 
@@ -231,6 +197,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
     // 최종 폼 전송 이벤트
     formRegister.onsubmit = function(e){
+        console.log("form submit!!!")
 
         // 1) 아이디 유효성 검사 결과
         if(!isUidOk){

@@ -40,9 +40,9 @@
 
               <div class="terms-section">
                 <div class="term-box">
-                  <label class="term-label"><span class="highlight">필수</span> ) 이용약관</label>
-                  <textarea class="term-textarea" readonly name="terms1">
-                      [[${termsDTO.terms1}]]
+                  <label class="term-label" th:text="${terms.get(0).getTitle()}"><span class="highlight">필수</span> )</label>
+                  <textarea class="term-textarea" readonly name="terms">
+                    [[${terms.get(0).getContent()}]]
                   </textarea>
                   <div class="term-check">
                     <label><input type="checkbox" class="ckbx1"> 동의하기</label>
@@ -50,9 +50,9 @@
                 </div>
             
                 <div class="term-box">
-                  <label class="term-label"><span class="highlight">필수</span> ) 전자금융 이용약관</label>
-                  <textarea class="term-textarea" readonly name="terms2">
-                      [[${termsDTO.terms2}]]
+                  <label class="term-label"th:text="${terms.get(1).getTitle()}" ><span class="highlight">필수</span> ) 전자금융 이용약관</label>
+                  <textarea class="term-textarea" readonly name="id">
+                        [[${terms.get(1).getContent()}]]
                   </textarea>
                   <div class="term-check">
                     <label><input type="checkbox" class="ckbx2"> 동의하기</label>
@@ -60,9 +60,9 @@
                 </div>
             
                 <div class="term-box">
-                  <label class="term-label"><span class="highlight">필수</span> ) 개인정보 수집동의</label>
-                  <textarea class="term-textarea" readonly name="terms3">
-                      [[${termsDTO.terms3}]]
+                  <label class="term-label" th:text="${terms.get(2).getTitle()}" ><span class="highlight">필수</span> ) 개인정보 수집동의</label>
+                  <textarea class="term-textarea" readonly name="id" >
+                       [[${terms.get(2).getContent()}]]
                   </textarea>
                   <div class="term-check">
                     <label><input type="checkbox" class="ckbx3"> 동의하기</label>
@@ -70,9 +70,9 @@
                 </div>
             
                 <div class="term-box">
-                  <label class="term-label"><span class="highlight" style="color:blue;">선택</span> ) 위치정보 이용약관</label>
-                  <textarea class="term-textarea" readonly name="terms4">
-                       [[${termsDTO.terms4}]]
+                  <label class="term-label" th:text="${terms.get(3).getTitle()}"><span class="highlight" style="color:blue;">선택</span> ) 위치정보 이용약관</label>
+                  <textarea class="term-textarea" readonly name="id">
+                       [[${terms.get(3).getContent()}]]
                   </textarea>
                   <div class="term-check">
                     <label><input type="checkbox"> 동의하기</label>
