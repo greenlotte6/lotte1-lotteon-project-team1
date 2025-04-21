@@ -1,10 +1,7 @@
 package com.example.lotteon.entity.user;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.PrePersist;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
 import java.time.LocalDate;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

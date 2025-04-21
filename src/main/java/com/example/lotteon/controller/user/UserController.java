@@ -27,16 +27,16 @@ public class UserController {
     return "/user/general";
   }
 
-  @PostMapping("/general")
-  public String general(UserDTO userDTO) {
-    log.info("userDTO: {}", userDTO);
-
-    // 서비스 호출
-    userService.userRegister(userDTO);
-
-    // 리다이렉트
-    return "redirect:/user/general";
-  }
+//  @PostMapping("/general")
+//  public String general(UserDTO userDTO) {
+//    log.info("userDTO: {}", userDTO);
+//
+//    // 서비스 호출
+//    userService.userRegister(userDTO);
+//
+//    // 리다이렉트
+//    return "redirect:/user/general";
+//  }
 
   @GetMapping("/login")
   public String login() {
@@ -56,7 +56,7 @@ public class UserController {
   @GetMapping("/terms")
   public String terms(Model model) {
     List<TermsDTO> termsDTO = termsService.terms();
-    model.addAttribute(termsDTO);
+    model.addAttribute("terms",termsDTO);
     return "/user/terms";
   }
 
