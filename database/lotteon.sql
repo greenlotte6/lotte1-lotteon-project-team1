@@ -73,18 +73,6 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `lotteon`.`notice`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `lotteon`.`notice` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `title` VARCHAR(50) NOT NULL,
-  `content` TEXT NOT NULL,
-  `register_date` DATE NULL,
-  PRIMARY KEY (`id`))
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
 -- Table `lotteon`.`article_type`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `lotteon`.`article_type` (
@@ -92,6 +80,25 @@ CREATE TABLE IF NOT EXISTS `lotteon`.`article_type` (
   `name` VARCHAR(45) NOT NULL,
   `subtype_name` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `lotteon`.`notice`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `lotteon`.`notice` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `title` VARCHAR(50) NOT NULL,
+  `content` TEXT NOT NULL,
+  `register_date` DATE NULL,
+  `type_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_notice_article_type1_idx` (`type_id` ASC) VISIBLE,
+  CONSTRAINT `fk_notice_article_type1`
+    FOREIGN KEY (`type_id`)
+    REFERENCES `lotteon`.`article_type` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
@@ -414,7 +421,13 @@ CREATE TABLE IF NOT EXISTS `lotteon`.`faq` (
   `type_id` INT NOT NULL,
   `content` TEXT NOT NULL,
   `register_date` DATE NULL,
-  PRIMARY KEY (`id`))
+  PRIMARY KEY (`id`),
+  INDEX `fk_faq_article_type1_idx` (`type_id` ASC) VISIBLE,
+  CONSTRAINT `fk_faq_article_type1`
+    FOREIGN KEY (`type_id`)
+    REFERENCES `lotteon`.`article_type` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
