@@ -82,31 +82,19 @@
             <th colspan="2">문의 게시물</th>
           </tr>
           <tr class="table-data">
-            <td colspan="2" th:text="${todayValidOrders + yesterdayValidOrders}">131</td>
-            <td colspan="2">3,700,000</td>
-            <td colspan="2">232</td>
+            <td colspan="2" th:text="${todayValidOrders}">131</td>
+            <td colspan="2" th:text="${todayTotalPrice}">3,700,000</td>
+            <td colspan="2" th:text="${todayNewMembers}">232</td>
             <td colspan="2">2,500</td>
             <td colspan="2">25</td>
           </tr>
           <tr class="table-detail">
-            <th>오늘</th>
-            <td>61</td>
-            <th>오늘</th>
-            <td>1,200,000</td>
-            <th>오늘</th>
-            <td>102</td>
-            <th>오늘</th>
-            <td>1,300</td>
-            <th>오늘</th>
-            <td>13</td>
-          </tr>
-          <tr class="table-detail">
             <th>어제</th>
-            <td>70</td>
+            <td th:text="${yesterdayValidOrders}">70</td>
             <th>어제</th>
-            <td>2,500,000</td>
+            <td th:text="${yesterdayTotalPrice}">2,500,000</td>
             <th>어제</th>
-            <td>130</td>
+            <td th:text="${yesterdayNewMembers}">130</td>
             <th>어제</th>
             <td>1,200</td>
             <th>어제</th>

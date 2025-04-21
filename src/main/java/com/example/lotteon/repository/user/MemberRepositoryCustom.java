@@ -1,5 +1,6 @@
 package com.example.lotteon.repository.user;
 
+import java.time.LocalDate;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -10,6 +11,6 @@ public interface MemberRepositoryCustom {
    *
    * @return 금일 새롭게 회원가입한 회원들의 수
    */
-  Long countNewMembers();
+  Long countNewMembersOf(LocalDate date);
 
 }
