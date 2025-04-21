@@ -4,6 +4,7 @@ import com.example.lotteon.dto.TermsDTO;
 import com.example.lotteon.dto.user.UserDTO;
 import com.example.lotteon.service.TermsService;
 import com.example.lotteon.service.user.UserService;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -54,7 +55,7 @@ public class UserController {
 
   @GetMapping("/terms")
   public String terms(Model model) {
-    TermsDTO termsDTO = termsService.terms();
+    List<TermsDTO> termsDTO = termsService.terms();
     model.addAttribute(termsDTO);
     return "/user/terms";
   }

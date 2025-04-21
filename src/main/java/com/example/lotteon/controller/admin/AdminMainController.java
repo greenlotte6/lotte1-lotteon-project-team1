@@ -33,6 +33,7 @@ public class AdminMainController {
     long exchangeRequestedOrders = orderService.countExchangeRequestedOrdersAt(today);
     long refundRequestedOrders = orderService.countRefundRequestedOrdersAt(today);
     model.addAttribute("paymentWaitingOrders", paymentWaitingOrders);
+    model.addAttribute("deliveryReadyOrders", deliveryReadyOrders);
     model.addAttribute("cancelRequestedOrders", cancelRequestedOrders);
     model.addAttribute("exchangeRequestedOrders", exchangeRequestedOrders);
     model.addAttribute("refundRequestedOrders", refundRequestedOrders);
