@@ -22,6 +22,11 @@ public class AdminMainController {
     LocalDate today = LocalDate.now();
     LocalDate yesterday = LocalDate.now().minusDays(1);
 
+    long todayNewMembers = memberService.countNewMembersOf(today);
+    long yesterdayNewMembers = memberService.countNewMembersOf(yesterday);
+    model.addAttribute("todayNewMembers", todayNewMembers);
+    model.addAttribute("yesterdayNewMembers", yesterdayNewMembers);
+
     long todayTotalPrice = orderService.calculatePriceOfValidOrdersAt(today);
     long yesterdayTotalPrice = orderService.calculatePriceOfValidOrdersAt(yesterday);
     model.addAttribute("todayTotalPrice", todayTotalPrice);

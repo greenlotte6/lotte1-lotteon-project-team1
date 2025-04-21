@@ -31,6 +31,10 @@ spring:
       authentication-database: lotteon
       database: lotteon
 
+    redis:
+      host: lotteon-redis
+      port: 6379
+
   thymeleaf:
     prefix: classpath:/templates
 
@@ -72,6 +76,11 @@ spring:
     hibernate:
       ddl-auto: none
     show-sql: true
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+        globally_quoted_identifiers: true
 
   data:
     mongodb:
@@ -80,6 +89,10 @@ spring:
       password: 1234
       authentication-database: lotteon
       database: lotteon
+
+    redis:
+      host: 52.79.234.26
+      port: 6380
 
   thymeleaf:
     prefix: classpath:/templates

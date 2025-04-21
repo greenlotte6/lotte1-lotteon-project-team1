@@ -25,9 +25,10 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
 
   @Override
   public Long countByStatuesWithOrAt(String status1, String status2, LocalDate date) {
-    return query.select(order.count).from(order).where(order.status.name.eq(status1)
-            .or(order.status.name.eq(status2))
-            .and(order.orderDate.eq(date)))
+    return query.select(order.count())
+        .from(order)
+        .where(order.status.name.eq(status1).or(order.status.name.eq(status2)),
+            order.orderDate.eq(date))
         .fetchFirst()
         .longValue();
   }
@@ -36,8 +37,7 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
   public Long countByStatusAt(String status, LocalDate date) {
     return query.select(order.count())
         .from(order)
-        .where(order.status.name.eq(status)
-            .and(order.orderDate.eq(date)))
+        .where(order.status.name.eq(status), order.orderDate.eq(date))
         .fetchFirst();
   }
 
@@ -47,6 +47,7 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
         .from(order)
         .join(delivery)
         .on(order.delivery.deliveryNumber.eq(delivery.deliveryNumber))
+        .where(order.orderDate.eq(date))
         .fetchFirst();
   }
 }

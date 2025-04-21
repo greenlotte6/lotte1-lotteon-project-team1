@@ -8,6 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 import java.time.LocalDate;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,6 +22,7 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "order")
 public class Order {
 
   @Id
@@ -30,7 +32,7 @@ public class Order {
   @ManyToOne
   private Member member;
 
-  @JoinColumn(name = "delivery_name")
+  @JoinColumn(name = "delivery_number")
   @OneToOne
   private Delivery delivery;
 

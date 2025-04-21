@@ -9,7 +9,7 @@ import java.io.Serializable;
 public class UserCompositeKey implements Serializable {
 
   @OneToOne
-  @JoinColumn(name = "id")
+  @JoinColumn(name = "user_id")
   private User user;
 
 }
