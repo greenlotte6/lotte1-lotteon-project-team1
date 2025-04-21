@@ -1,9 +1,9 @@
 package com.example.lotteon.repository.user;
 
-import com.example.lotteon.entity.QUser;
 import com.example.lotteon.entity.user.QMember;
+import com.example.lotteon.entity.user.QUser;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -12,16 +12,16 @@ import org.springframework.stereotype.Repository;
 public class MemberRepositoryImpl implements MemberRepositoryCustom {
 
   private final JPAQueryFactory query;
-  private QMember member = QMember.member;
-  private QUser user = QUser.user;
+  private final QMember member = QMember.member;
+  private final QUser user = QUser.user;
 
   @Override
   public Long countNewMembers() {
-    LocalDateTime now = LocalDateTime.now();
+    LocalDate now = LocalDate.now();
     return query.select(member.count())
         .join(user)
-        .on(member.user.uid.eq(user.uid))
-        .where(member.user.regDate.eq(now))
+        .on(member.user.id.eq(user.id))
+        .where(member.user.registerDate.eq(now))
         .fetchFirst();
   }
 }
