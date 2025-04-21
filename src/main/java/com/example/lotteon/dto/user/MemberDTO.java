@@ -1,6 +1,5 @@
 package com.example.lotteon.dto.user;
 
-import com.example.lotteon.dto.UserDTO;
 import java.time.LocalDate;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
