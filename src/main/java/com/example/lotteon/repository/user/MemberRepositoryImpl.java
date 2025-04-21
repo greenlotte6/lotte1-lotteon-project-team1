@@ -20,8 +20,8 @@ public class MemberRepositoryImpl implements MemberRepositoryCustom {
     LocalDate now = LocalDate.now();
     return query.select(member.count())
         .join(user)
-        .on(member.user.user.id.eq(user.id))
-        .where(member.user.user.registerDate.eq(now))
+        .on(member.userCompositeKey.user.id.eq(user.id))
+        .where(member.userCompositeKey.user.registerDate.eq(now))
         .fetchFirst();
   }
 }
