@@ -13,6 +13,42 @@ public class CsController {
         return "/cs/csmain";
     }
 
+    @GetMapping("/notice/csnoticeall")
+    public String csnoticeall() {
+        return "/cs/notice/csnoticeall";
+    }
+
+    @GetMapping("/notice/csnoticecustomer")
+    public String csnoticecustomer() {
+        return "/cs/notice/csnoticecustomer";
+    }
+
+    @GetMapping("/notice/csnoticeevent")
+    public String csnoticeevent() {
+        return "/cs/notice/csnoticeevent";
+    }
+
+    @GetMapping("/notice/csnoticehazard")
+    public String csnoticehazard() {
+        return "/cs/notice/csnoticehazard";
+    }
+
+    @GetMapping("/notice/csnoticesafe")
+    public String csnoticesafe() {
+        return "/cs/notice/csnoticesafe";
+    }
+
+    @GetMapping("/notice/csnoticeview")
+    public String csnoticeview() {
+        return "/cs/notice/csnoticeview";
+    }
+
+
+
+
+
+
+
     @GetMapping("/cscontactlist")
     public String cscontactlist() {
         return "/cs/cscontactlist";
@@ -28,15 +64,7 @@ public class CsController {
         return "/cs/cscontactwrite";
     }
 
-    @GetMapping("/notice/csnoticelist")
-    public String csnoticelist() {
-        return "/cs/notice/csnoticelist";
-    }
 
-    @GetMapping("/notice/csnoticeview")
-    public String csnoticeview() {
-        return "/cs/notice/csnoticeview";
-    }
 
     @GetMapping("/csqnalist")
     public String csqnalist() {
