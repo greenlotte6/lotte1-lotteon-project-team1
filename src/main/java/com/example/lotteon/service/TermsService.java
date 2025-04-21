@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -15,16 +17,14 @@ public class TermsService {
     private final TermsRepository termsRepository;
     private final ModelMapper modelMapper;
 
-    public TermsDTO terms(){
-        Optional<Terms> optTerms = termsRepository.findById(1);
+    public List<TermsDTO> terms(){
+        List<Terms> terms = termsRepository.findAll();
+        List<TermsDTO> dtos = new ArrayList<>();
 
-        if(optTerms.isPresent()){
-            Terms terms = optTerms.get();
-
+        for (Terms term : terms) {
             // modelmapper를 이용한 변환
-            TermsDTO termsDTO = modelMapper.map(terms, TermsDTO.class);
-            return termsDTO;
+            dtos.add(modelMapper.map(term, TermsDTO.class));
         }
-        return null;
+        return dtos;
     }
 }
