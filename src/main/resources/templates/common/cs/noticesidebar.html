@@ -3,20 +3,45 @@
         <div class="side_title">
             <p>공지사항</p>
         </div>
-        <a href="#">
-            <div class="choice">전체</div>
+        <a th:href="@{/cs/notice/csnoticeall}">
+            <div id="csnoticeall">전체</div>
         </a>
-        <a href="#">
-            <div>고객서비스</div>
+        <a th:href="@{/cs/notice/csnoticecustomer}">
+            <div id="csnoticecustomer">고객서비스</div>
         </a>
-        <a href="#">
-            <div>안전거래</div>
+        <a th:href="@{/cs/notice/csnoticesafe}">
+            <div id="csnoticesafe">안전거래</div>
         </a>
-        <a href="#">
-            <div>위해상품</div>
+        <a th:href="@{/cs/notice/csnoticehazard}">
+            <div id="csnoticehazard">위해상품</div>
         </a>
-        <a href="#">
-            <div>이벤트 당첨</div>
+        <a th:href="@{/cs/notice/csnoticeevent}">
+            <div id="csnoticeevent">이벤트 당첨</div>
         </a>
     </article>
 </aside>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const path = location.pathname;
+
+        if (path.includes("csnoticeall")) {
+            document.getElementById("csnoticeall").classList.add("active");
+        }else if (path.includes("csnoticecustomer")) {
+            document.getElementById("csnoticecustomer").classList.add("active");
+        }else if (path.includes("csnoticesafe")) {
+            document.getElementById("csnoticesafe").classList.add("active");
+        }else if (path.includes("csnoticehazard")) {
+            document.getElementById("csnoticehazard").classList.add("active");
+        }else if (path.includes("csnoticeevent")) {
+            document.getElementById("csnoticeevent").classList.add("active");
+        }
+    });
+</script>
+
+<style>
+    .active {
+        font-weight: 600;
+        text-decoration: underline;
+    }
+</style>
