@@ -2,10 +2,7 @@ package com.example.lotteon.entity.user;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
 import java.time.LocalDate;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,9 +21,7 @@ public class Member {
   private static final String[] GENDERS = {"m", "f"};
 
   @Id
-  @OneToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "user")
-  private User user;
+  private UserID user;
 
   @Column(name = "name")
   private String name;
