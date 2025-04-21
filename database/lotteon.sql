@@ -19,14 +19,14 @@ USE `lotteon` ;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `lotteon`.`user` (
   `id` VARCHAR(16) NOT NULL,
-  `password` CHAR(255) NULL,
-  `email` VARCHAR(255) NULL,
-  `contact` CHAR(13) NULL,
-  `zip` CHAR(5) NULL,
-  `address` VARCHAR(255) NULL,
-  `address_detail` VARCHAR(255) NULL,
-  `role` ENUM("member", "seller", "admin") NULL,
-  `register_date` DATE NULL,
+  `password` CHAR(255) NOT NULL,
+  `email` VARCHAR(255) NOT NULL,
+  `contact` CHAR(13) NOT NULL,
+  `zip` CHAR(5) NOT NULL,
+  `address` VARCHAR(255) NOT NULL,
+  `address_detail` VARCHAR(255) NOT NULL,
+  `role` ENUM("member", "seller", "admin") NOT NULL,
+  `register_date` DATE NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -36,10 +36,10 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `lotteon`.`member` (
   `user_id` VARCHAR(16) NOT NULL,
-  `name` VARCHAR(20) NULL,
-  `gender` ENUM("m", "f") NULL,
-  `recent_login_date` DATE NULL,
-  `description` TEXT NULL,
+  `name` VARCHAR(20) NOT NULL,
+  `gender` ENUM("m", "f") NOT NULL,
+  `recent_login_date` DATE NOT NULL,
+  `description` TEXT NOT NULL,
   PRIMARY KEY (`user_id`),
   INDEX `fk_member_user1_idx` (`user_id` ASC) VISIBLE,
   UNIQUE INDEX `user_id_UNIQUE` (`user_id` ASC) VISIBLE,
@@ -57,9 +57,9 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `lotteon`.`seller` (
   `business_number` CHAR(12) NOT NULL,
   `user_id` VARCHAR(16) NOT NULL,
-  `ceo` VARCHAR(20) NULL,
-  `company_name` VARCHAR(50) NULL,
-  `seller_number` CHAR(12) NULL,
+  `ceo` VARCHAR(20) NOT NULL,
+  `company_name` VARCHAR(50) NOT NULL,
+  `seller_number` CHAR(12) NOT NULL,
   `fax` VARCHAR(48) NULL,
   PRIMARY KEY (`business_number`, `user_id`),
   INDEX `fk_seller_user1_idx` (`user_id` ASC) VISIBLE,
@@ -77,8 +77,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `lotteon`.`notice` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `title` VARCHAR(50) NULL,
-  `content` TEXT NULL,
+  `title` VARCHAR(50) NOT NULL,
+  `content` TEXT NOT NULL,
   `register_date` DATE NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
@@ -90,7 +90,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `lotteon`.`article_type` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
-  `subtype_name` VARCHAR(45) NULL,
+  `subtype_name` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -100,10 +100,10 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `lotteon`.`product_image` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `list_thumbnail_loc` VARCHAR(255) NULL,
-  `main_thumbnail_loc` VARCHAR(255) NULL,
-  `detail_thumbnail_loc` VARCHAR(255) NULL,
-  `detail_image_loc` VARCHAR(255) NULL,
+  `list_thumbnail_loc` VARCHAR(255) NOT NULL,
+  `main_thumbnail_loc` VARCHAR(255) NOT NULL,
+  `detail_thumbnail_loc` VARCHAR(255) NOT NULL,
+  `detail_image_loc` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -113,7 +113,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `lotteon`.`product_category` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(20) NULL,
+  `name` VARCHAR(20) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -123,7 +123,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `lotteon`.`product_subcategory` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(20) NULL,
+  `name` VARCHAR(20) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -133,8 +133,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `lotteon`.`product_options` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(10) NULL,
-  `value` VARCHAR(10) NULL,
+  `name` VARCHAR(10) NOT NULL,
+  `value` VARCHAR(10) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -147,20 +147,20 @@ CREATE TABLE IF NOT EXISTS `lotteon`.`product` (
   `category_id` INT NOT NULL,
   `subcategory_id` INT NOT NULL,
   `options_id` INT NOT NULL,
-  `name` VARCHAR(50) NULL,
-  `description` TEXT NULL,
-  `company` VARCHAR(45) NULL,
-  `price` INT NULL,
-  `point` INT NULL,
-  `discount_rate` TINYINT NULL,
-  `stock` INT NULL,
-  `delivery_fee` INT NULL,
+  `name` VARCHAR(50) NOT NULL,
+  `description` TEXT NOT NULL,
+  `company` VARCHAR(45) NOT NULL,
+  `price` INT NOT NULL,
+  `point` INT NULL DEFAULT 0,
+  `discount_rate` TINYINT NULL DEFAULT 0,
+  `stock` INT NOT NULL,
+  `delivery_fee` INT NULL DEFAULT 0,
   `image_id` INT NOT NULL,
-  `status` VARCHAR(45) NULL COMMENT 'status = 상품상태',
-  `is_vat_free` ENUM("0", "1") NULL COMMENT 'is_vat_free = 부가세 면세 여부',
-  `business_class` VARCHAR(30) NULL COMMENT 'business_class = 사업자구분\n',
-  `receipt_issuable` ENUM("0", "1") NULL COMMENT 'receipt_issuable = 영수증 발행 가능 여부(\"0\" = false, \"1\"=true)',
-  `origin` VARCHAR(20) NULL COMMENT 'origin = 원산지',
+  `status` VARCHAR(45) NOT NULL COMMENT 'status = 상품상태',
+  `is_vat_free` ENUM("0", "1") NOT NULL COMMENT 'is_vat_free = 부가세 면세 여부',
+  `business_class` VARCHAR(30) NOT NULL COMMENT 'business_class = 사업자구분\n',
+  `receipt_issuable` ENUM("0", "1") NOT NULL COMMENT 'receipt_issuable = 영수증 발행 가능 여부(\"0\" = false, \"1\"=true)',
+  `origin` VARCHAR(20) NOT NULL COMMENT 'origin = 원산지',
   PRIMARY KEY (`id`),
   INDEX `fk_product_product_image_idx` (`image_id` ASC) VISIBLE,
   INDEX `fk_product_product_category1_idx` (`category_id` ASC) VISIBLE,
@@ -194,7 +194,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `lotteon`.`order_status` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(45) NULL COMMENT 'possible values = [\"paid\", \"on_delivery\", \"delivered\", \"purchase_confirmed\", \"cancel_requested\", \"canceled\", \"refund_requetsed\", \"refunded\"]',
+  `name` VARCHAR(45) NOT NULL COMMENT 'possible values = [\"paid\", \"on_delivery\", \"delivered\", \"purchase_confirmed\", \"cancel_requested\", \"canceled\", \"refund_requetsed\", \"refunded\"]',
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -207,11 +207,11 @@ CREATE TABLE IF NOT EXISTS `lotteon`.`order` (
   `member_id` VARCHAR(16) NOT NULL,
   `delivery_number` VARCHAR(45) NULL,
   `product_id` INT NOT NULL,
-  `count` INT NULL,
-  `price_total` INT NULL,
-  `payment` VARCHAR(45) NULL,
+  `count` INT NOT NULL,
+  `price_total` INT NOT NULL,
+  `payment` VARCHAR(45) NOT NULL,
   `status_id` INT NOT NULL,
-  `order_date` DATE NULL,
+  `order_date` DATE NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_order_order_status1_idx` (`status_id` ASC) VISIBLE,
   INDEX `fk_order_member1_idx` (`member_id` ASC) VISIBLE,
@@ -239,7 +239,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `lotteon`.`delivery_status` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `status` VARCHAR(20) NULL COMMENT '\"배송준비\": \"ready\", \n\"배송 중\": \"on_delivery\", \n\"배송 완료\": \"delivered\", \n\"취소신청\": \"cancel_requested\", \n\"취소완료\": \"canceled\"',
+  `status` VARCHAR(20) NOT NULL COMMENT '\"배송준비\": \"ready\", \n\"배송 중\": \"on_delivery\", \n\"배송 완료\": \"delivered\", \n\"취소신청\": \"cancel_requested\", \n\"취소완료\": \"canceled\"',
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -249,7 +249,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `lotteon`.`delivery_company` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `company_name` VARCHAR(30) NULL COMMENT '\"한진택배\":\"hanjin\", \"롯데택배\":\"lotte\", \"CJ 대한통운\": \"cj\", \"로젠택배\":\"lozen\", \"우체국택배\":\"post_office\"',
+  `company_name` VARCHAR(30) NOT NULL COMMENT '\"한진택배\":\"hanjin\", \"롯데택배\":\"lotte\", \"CJ 대한통운\": \"cj\", \"로젠택배\":\"lozen\", \"우체국택배\":\"post_office\"',
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -303,11 +303,11 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `lotteon`.`qna` (
   `id` INT NOT NULL,
   `member_id` VARCHAR(16) NOT NULL,
-  `title` VARCHAR(50) NULL,
+  `title` VARCHAR(50) NOT NULL,
   `type_id` INT NOT NULL,
-  `status` ENUM("open", "close") NULL,
-  `content` TEXT NULL,
-  `register_date` DATE NULL,
+  `status` ENUM("open", "close") NULL DEFAULT 'open',
+  `content` TEXT NOT NULL,
+  `register_date` DATE NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_qna_article_type1_idx` (`type_id` ASC) VISIBLE,
   INDEX `fk_qna_member1_idx` (`member_id` ASC) VISIBLE,
@@ -330,7 +330,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `lotteon`.`reply` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `qna_id` INT NOT NULL,
-  `content` TEXT NULL,
+  `content` TEXT NOT NULL,
   PRIMARY KEY (`id`, `qna_id`),
   INDEX `fk_reply_qna1_idx` (`qna_id` ASC) VISIBLE,
   CONSTRAINT `fk_reply_qna1`
@@ -346,7 +346,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `lotteon`.`recruit_department` (
   `id` INT NOT NULL,
-  `name` VARCHAR(10) NULL COMMENT '\"IT\", \"영업\", \"UI/UX\", \"마케팅\", \"재무/회계\", \"법률\"',
+  `name` VARCHAR(10) NOT NULL COMMENT '\"IT\", \"영업\", \"UI/UX\", \"마케팅\", \"재무/회계\", \"법률\"',
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -356,7 +356,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `lotteon`.`recruit_career` (
   `id` INT NOT NULL,
-  `career_year` YEAR NULL COMMENT 'career_year = 연차',
+  `career_year` YEAR NOT NULL COMMENT 'career_year = 연차',
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -366,7 +366,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `lotteon`.`employment_type` (
   `id` INT NOT NULL,
-  `type` VARCHAR(10) NULL COMMENT '고용형태(신입, 경력, 인턴 등)',
+  `type` VARCHAR(10) NOT NULL COMMENT '고용형태(신입, 경력, 인턴 등)',
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -376,13 +376,13 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `lotteon`.`recruit` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `title` VARCHAR(50) NULL,
+  `title` VARCHAR(50) NOT NULL,
   `department_id` INT NOT NULL,
   `career_id` INT NOT NULL,
   `employment_type_id` INT NOT NULL,
-  `date_from` DATE NULL,
-  `date_to` DATE NULL,
-  `description` TEXT NULL,
+  `date_from` DATE NOT NULL,
+  `date_to` DATE NOT NULL,
+  `description` TEXT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_recruit_recruit_department1_idx` (`department_id` ASC) VISIBLE,
   INDEX `fk_recruit_recruit_career1_idx` (`career_id` ASC) VISIBLE,
@@ -410,9 +410,9 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `lotteon`.`faq` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `title` VARCHAR(45) NULL,
-  `type_id` INT NULL,
-  `content` TEXT NULL,
+  `title` VARCHAR(45) NOT NULL,
+  `type_id` INT NOT NULL,
+  `content` TEXT NOT NULL,
   `register_date` DATE NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
@@ -424,9 +424,9 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `lotteon`.`point_history` (
   `id` INT NOT NULL,
   `member_id` VARCHAR(16) NOT NULL,
-  `amount` INT NULL,
-  `description` VARCHAR(255) NULL,
-  `issued_date` DATE NULL,
+  `amount` INT NOT NULL,
+  `description` VARCHAR(255) NOT NULL,
+  `issued_date` DATE NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_point_history_member1_idx` (`member_id` ASC) VISIBLE,
   CONSTRAINT `fk_point_history_member1`
@@ -442,7 +442,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `lotteon`.`coupon_type` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(30) NULL COMMENT '배송비 무료, 개별상품 할인, 생일 할인 등\n',
+  `name` VARCHAR(30) NOT NULL COMMENT '배송비 무료, 개별상품 할인, 생일 할인 등\n',
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -452,7 +452,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `lotteon`.`coupon_benefit` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `benefit` VARCHAR(45) NULL COMMENT 'possible_values =[\"1000\", \"2000\", \"3000\", \"4000\", \"5000\", \"10\", \"20\", \"30\", \"40\", \"50\", \"free_delivery\"]',
+  `benefit` VARCHAR(45) NOT NULL COMMENT 'possible_values =[\"1000\", \"2000\", \"3000\", \"4000\", \"5000\", \"10\", \"20\", \"30\", \"40\", \"50\", \"free_delivery\"]',
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -464,16 +464,16 @@ CREATE TABLE IF NOT EXISTS `lotteon`.`coupon` (
   `id` INT NOT NULL,
   `member_id` VARCHAR(16) NOT NULL,
   `type_id` INT NOT NULL,
-  `name` VARCHAR(30) NULL,
+  `name` VARCHAR(30) NOT NULL,
   `benefit_id` INT NOT NULL,
-  `from` DATE NULL,
-  `to` DATE NULL,
-  `seller_id` INT NULL,
-  `issued_amount` INT NULL,
-  `used_amount` INT NULL,
-  `status` ENUM("issued", "used") NULL,
+  `from` DATE NOT NULL,
+  `to` DATE NOT NULL,
+  `seller_id` INT NOT NULL,
+  `issued_amount` INT NOT NULL DEFAULT 0,
+  `used_amount` INT NOT NULL DEFAULT 0,
+  `status` ENUM("issued", "used") NOT NULL DEFAULT 'issued',
   `description` TEXT NULL,
-  `issued_date` DATE NULL,
+  `issued_date` DATE NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_coupon_coupon_type1_idx` (`type_id` ASC) VISIBLE,
   INDEX `fk_coupon_coupon_benefit1_idx` (`benefit_id` ASC) VISIBLE,
@@ -525,7 +525,7 @@ CREATE TABLE IF NOT EXISTS `lotteon`.`coupon_history` (
   `id` INT NOT NULL,
   `coupon_id` INT NOT NULL,
   `user_id` VARCHAR(16) NOT NULL,
-  `status` ENUM("used", "unused") NULL,
+  `status` ENUM("used", "unused") NULL DEFAULT 'unused',
   `used_date` DATE NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_coupon_history_member1_idx` (`user_id` ASC) VISIBLE,
@@ -571,7 +571,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `lotteon`.`point_state` (
   `member_id` VARCHAR(16) NOT NULL,
-  `total` INT NULL,
+  `total` INT NOT NULL DEFAULT 0,
   PRIMARY KEY (`member_id`),
   INDEX `fk_point_state_member1_idx` (`member_id` ASC) VISIBLE,
   CONSTRAINT `fk_point_state_member1`
@@ -587,10 +587,10 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `lotteon`.`review_image` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `review_id` INT NULL,
-  `image_location` VARCHAR(255) NULL,
-  `image_location2` VARCHAR(255) NULL,
-  `image_location3` VARCHAR(255) NULL,
+  `review_id` INT NOT NULL,
+  `image_location` VARCHAR(255) NOT NULL,
+  `image_location2` VARCHAR(255) NOT NULL,
+  `image_location3` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -602,9 +602,9 @@ CREATE TABLE IF NOT EXISTS `lotteon`.`review` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `order_id` INT NOT NULL,
   `member_id` VARCHAR(16) NOT NULL,
-  `rating` TINYINT NULL,
-  `description` TEXT NULL,
-  `image_id` INT NULL,
+  `rating` TINYINT NOT NULL,
+  `description` TEXT NOT NULL,
+  `image_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_review_review_image1_idx` (`image_id` ASC) VISIBLE,
   INDEX `fk_review_order1_idx` (`order_id` ASC) VISIBLE,
@@ -632,7 +632,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `lotteon`.`return_reason` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `reason` VARCHAR(45) NULL,
+  `reason` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -645,7 +645,7 @@ CREATE TABLE IF NOT EXISTS `lotteon`.`return` (
   `order_id` INT NOT NULL,
   `member_id` VARCHAR(16) NOT NULL,
   `reason_id` INT NOT NULL,
-  `description` TEXT NULL,
+  `description` TEXT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_return_order1_idx` (`order_id` ASC) VISIBLE,
   INDEX `fk_return_return_reason1_idx` (`reason_id` ASC) VISIBLE,
@@ -673,8 +673,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `lotteon`.`return_image` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `image_location` VARCHAR(255) NULL,
   `return_id` INT NOT NULL,
+  `image_location` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`id`, `return_id`),
   INDEX `fk_return_image_return1_idx` (`return_id` ASC) VISIBLE,
   CONSTRAINT `fk_return_image_return1`
@@ -682,6 +682,17 @@ CREATE TABLE IF NOT EXISTS `lotteon`.`return_image` (
     REFERENCES `lotteon`.`return` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `lotteon`.`terms`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `lotteon`.`terms` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `title` VARCHAR(45) NOT NULL,
+  `content` TEXT NOT NULL,
+  PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
 
