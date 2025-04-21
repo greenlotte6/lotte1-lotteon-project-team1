@@ -1,0 +1,141 @@
+main{
+    width: 100%;
+    height: auto;
+    box-sizing: border-box;
+}
+
+.csmain {
+    width: 1260px;
+    height: auto;
+    margin: 0 auto;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+
+.main_content{
+    width: 900px;
+    height: auto;
+    box-sizing: border-box;
+    padding-top: 32px;
+
+}
+
+.main_title{
+    border-bottom: 1.5px solid black;
+    height: 70px;
+}
+
+.main_title p{
+    font-weight: 700;
+    font-size: 26px;
+    line-height: 100px;
+    letter-spacing: 0%;
+    vertical-align: middle;
+}
+
+.main_content_detail{
+    width: 100%;
+    height: auto;
+}
+
+
+/* 기본 레이아웃 및 타이틀 */
+#find-pw {
+    padding: 40px;
+    width: 400px;
+    margin: 0 auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#find-pw h2 {
+    font-size: 22px;
+    margin-bottom: 10px;
+    color: #333;
+    text-align: center;
+}
+
+#find-pw p {
+    color: #555;
+    margin-bottom: 30px;
+}
+
+/* 입력 박스 스타일 */
+.input-box {
+    margin-bottom: 20px;
+}
+
+.input-box input {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    transition: all 0.3s ease-in-out;
+    outline: none;
+}
+
+.input-box input:focus {
+    border-color: #007BFF;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* 버튼 컨테이너 */
+.btn-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+/* 버튼 스타일 */
+.btn {
+    flex: 1;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+/* 취소 버튼 */
+.cancel-btn {
+    background: #6c757d;
+}
+
+.cancel-btn:hover {
+    background: #545b62;
+    transform: scale(1.05);
+}
+
+/* 로그인 버튼 */
+.login-btn {
+    background: linear-gradient(135deg, #007BFF, #0056b3);
+}
+
+.login-btn:hover {
+    background: linear-gradient(135deg, #0056b3, #003f7f);
+    transform: scale(1.05);
+}
+
+/* 결과 메시지 */
+#result-message {
+    margin-top: 20px;
+    font-size: 16px;
+    color: #071F4B;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+/* 애니메이션 효과 */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}

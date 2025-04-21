@@ -28,14 +28,14 @@ public class CsController {
         return "/cs/cscontactwrite";
     }
 
-    @GetMapping("/csnoticelist")
+    @GetMapping("/notice/csnoticelist")
     public String csnoticelist() {
-        return "/cs/csnoticelist";
+        return "/cs/notice/csnoticelist";
     }
 
-    @GetMapping("/csnoticeview")
+    @GetMapping("/notice/csnoticeview")
     public String csnoticeview() {
-        return "/cs/csnoticeview";
+        return "/cs/notice/csnoticeview";
     }
 
     @GetMapping("/csqnalist")
