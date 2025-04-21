@@ -1,6 +1,5 @@
 package com.example.lotteon.entity.user;
 
-import com.example.lotteon.entity.User;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;

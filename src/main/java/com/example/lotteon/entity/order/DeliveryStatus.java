@@ -15,8 +15,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class DeliveryStatus {
 
-  private static final String[] STATUSES = {"ready", "on_delivery", "delivered", "cancel_requested",
-      "cancelled"};
+  public static final String STATUS_READY = "ready";
+  public static final String STATUS_ON_DELIVERY = "on_delivery";
+  public static final String STATUS_DELIVERED = "delivered";
+  public static final String STATUS_CANCEL_REQUESTED = "cancel_requested";
+  public static final String STATUS_CANCELLED = "cancelled";
+  public static final String[] STATUSES = {STATUS_READY, STATUS_ON_DELIVERY, STATUS_DELIVERED,
+      STATUS_CANCEL_REQUESTED, STATUS_CANCELLED};
 
   @Id
   @Column(name = "id")
