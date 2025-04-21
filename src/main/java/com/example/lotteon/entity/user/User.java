@@ -1,7 +1,6 @@
 package com.example.lotteon.entity.user;
 
 import jakarta.persistence.Column;
-import jakarta.persistence.Embeddable;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.PrePersist;
@@ -20,7 +19,6 @@ import org.hibernate.annotations.CreationTimestamp;
 @ToString
 @Builder
 @Entity
-@Embeddable
 @Table(name = "user")
 public class User {
 
