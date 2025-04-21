@@ -64,11 +64,11 @@
             <th>반품요청</th>
           </tr>
           <tr class="table-data">
-            <td>101</td>
-            <td>124</td>
-            <td>14</td>
-            <td>7</td>
-            <td>24</td>
+            <td th:text="${paymentWaitingOrders}">101</td>
+            <td th:text="${deliveryReadyOrders}"></td>
+            <td th:text="${cancelRequestedOrders}">14</td>
+            <td th:text="${refundRequestedOrders}">7</td>
+            <td th:text="${exchangeRequestedOrders}">24</td>
           </tr>
           </tbody>
         </table>
@@ -82,7 +82,7 @@
             <th colspan="2">문의 게시물</th>
           </tr>
           <tr class="table-data">
-            <td colspan="2">131</td>
+            <td colspan="2" th:text="${todayOrderCount}">131</td>
             <td colspan="2">3,700,000</td>
             <td colspan="2">232</td>
             <td colspan="2">2,500</td>
