@@ -21,7 +21,7 @@ public class Member {
   private static final String[] GENDERS = {"m", "f"};
 
   @Id
-  private UserID user;
+  private UserCompositeKey userCompositeKey;
 
   @Column(name = "name")
   private String name;

@@ -6,7 +6,7 @@ import jakarta.persistence.OneToOne;
 import java.io.Serializable;
 
 @Embeddable
-public class UserID implements Serializable {
+public class UserCompositeKey implements Serializable {
 
   @OneToOne
   @JoinColumn(name = "id")
