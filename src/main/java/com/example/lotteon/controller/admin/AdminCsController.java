@@ -1,5 +1,7 @@
 package com.example.lotteon.controller.admin;
 
+import com.example.lotteon.dto.PageRequestDTO;
+import com.example.lotteon.dto.PageResponseDTO;
 import com.example.lotteon.dto.cs.NoticeDTO;
 import com.example.lotteon.service.cs.CsService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,7 +24,12 @@ public class AdminCsController {
     private final CsService csService;
 
     @GetMapping("/notice/notice")
-    public String notice() {
+    public String notice(Model model, PageRequestDTO pageRequestDTO) {
+
+        int type_id = pageRequestDTO.getType_id();
+        PageResponseDTO pageResponseDTO = csService.findAll(pageRequestDTO, type_id);
+
+        model.addAttribute(pageResponseDTO);
         return "/admin/cs/notice/notice";
     }
 
@@ -53,6 +60,14 @@ public class AdminCsController {
     @GetMapping("/notice/modify")
     public String modify() {
         return "/admin/cs/notice/modify";
+    }
+
+    @GetMapping("/notice/delete")
+    public String delete(int id) {
+
+        csService.deletenotice(id);
+
+        return "redirect:/admin/cs/notice/notice";
     }
 
 }

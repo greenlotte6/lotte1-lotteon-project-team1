@@ -62,9 +62,9 @@
               </tbody>
             </table>
             <div class="crud-btn-area">
-              <a class="enroll-btn delete-btn" href="#">삭제</a>
-              <a class="enroll-btn delete-btn" href="#">수정</a>
-              <a class="enroll-btn register-btn" href="#">목록</a>
+              <a class="enroll-btn delete-btn" th:href="@{/admin/cs/notice/delete(id=${noticeDTO.id})}">삭제</a>
+              <a class="enroll-btn delete-btn" th:href="@{/admin/cs/notice/modify(id=${noticeDTO.id})}">수정</a>
+              <a class="enroll-btn register-btn" th:href="@{/admin/cs/notice/notice}">목록</a>
             </div>
           </div>
         </section>
