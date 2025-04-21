@@ -16,16 +16,16 @@ public class UserService {
   private final UserRepository userRepository;
   private final ModelMapper modelMapper;
 
-  public void userRegister(UserDTO userDTO) {
-    log.info("userDTO: {}", userDTO);
+//  public void userRegister(UserDTO userDTO) {
+//    log.info("userDTO: {}", userDTO);
+//
+//    // 엔티티 변환
+//    User user = modelMapper.map(userDTO, User.class);
+//
+//    // 저장
+//    userRepository.save(user);
+//  }
 
-    // 엔티티 변환
-    User user = modelMapper.map(userDTO, User.class);
-
-    // 저장
-    userRepository.save(user);
-
-  }
 
 
 }

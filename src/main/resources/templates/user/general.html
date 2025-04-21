@@ -40,26 +40,26 @@
 
             <div class="main_content_detail">
 
-                <form name="formRegister" action="#" method="post">
+                <form name="formRegister" th:action="@{/user/general}" method="post">
                     <table style="border-collapse: collapse;">
                         <tr>
                             <th>아이디<span style="color: red;">*</span></th>
                             <td>
-                                <input type="text" name="uid" placeholder="아이디 입력" maxlength="10">
+                                <input type="text" name="id" placeholder="아이디 입력" maxlength="10">
                                 <button id="btnCheckUid" type="button">중복체크</button>
                                 <span class="uidResult" style="margin-left: 10px; color: #333333;">영문·숫자 조합 4~10자 이내</span>
                             </td>
                         </tr>
                         <tr>
                             <th>비밀번호<span style="color: red;">*</span></th>
-                            <td><input type="password" name="pass" placeholder="비밀번호 입력" maxlength="16">
+                            <td><input type="password" name="password" placeholder="비밀번호 입력" maxlength="16">
                             <span class="passResult" style="margin-left: 10px; color: #333333;">비밀번호는 8-16자리 이내, 영문ㆍ숫자ㆍ특수문자 조합</span>
                             </td>
                             
                         </tr>
                         <tr>
                             <th>비밀번호 확인<span style="color: red;">*</span></th>
-                            <td><input type="password" name="pass2" placeholder="비밀번호 확인입력" maxlength="16"></td>
+                            <td><input type="password" name="password" placeholder="비밀번호 확인입력" maxlength="16"></td>
                         </tr>
                         <tr>
                             <th>이름<span style="color: red;">*</span></th>
@@ -71,7 +71,7 @@
                         <tr>
                             <th style="padding: 20px;">성별<span style="color: red;">*</span></th>
                             <td>
-                              <label><input type="radio" name="gender" value="M"> 남</label>
+                              <label><input type="radio" name="gender" value="M" checked> 남</label>
                               <label style="margin-left: 20px;"><input type="radio" name="gender" value="F"> 여</label>
                             </td>
                           </tr>
