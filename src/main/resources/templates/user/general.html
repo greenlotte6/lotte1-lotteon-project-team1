@@ -4,123 +4,125 @@
 -->
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>회원 > 일반가입</title>
-    <link rel="stylesheet" href="/style/init.css" />
-    <link rel="stylesheet" href="/style/index.css" />
-    <link rel="stylesheet" href="/style/common/header.css" />
-    <link rel="stylesheet" href="/style/common/footer.css" />
-    <!--<link rel="stylesheet" href="/style/common/pagination.css" />-->
-    <link rel="stylesheet" href="/style/user/general.css" />
-    <link rel="icon" href="https://static.lotteon.com/p/common/assets/favicon/1/favicon-32.png" />
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css" />
-    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-    <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
-    <script src="/js/common/header.js"></script>
-    <script src="/js/common/footer.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/all.min.js" crossorigin="anonymous"></script>
-    <script src="/js/user/postcode.js"></script>
-    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-    <script src="/js/user/validation.js"></script>
-  </head>
+<head>
+  <meta charset="UTF-8"/>
+  <title>회원 > 일반가입</title>
+  <link rel="stylesheet" href="/style/init.css"/>
+  <link rel="stylesheet" href="/style/index.css"/>
+  <link rel="stylesheet" href="/style/common/header.css"/>
+  <link rel="stylesheet" href="/style/common/footer.css"/>
+  <!--<link rel="stylesheet" href="/style/common/pagination.css" />-->
+  <link rel="stylesheet" href="/style/user/general.css"/>
+  <link rel="icon" href="https://static.lotteon.com/p/common/assets/favicon/1/favicon-32.png"/>
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css"/>
+  <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+  <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
+  <script src="/js/common/header.js"></script>
+  <script src="/js/common/footer.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/all.min.js"
+          crossorigin="anonymous"></script>
+  <script src="/js/user/postcode.js"></script>
+  <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+  <script src="/js/user/validation.js"></script>
+</head>
 
-  <body>
-    <div id="wrapper">
-      <!-- HEADER -->
-        <th:block th:insert="~{/common/user/userheader}"></th:block>
+<body>
+<div id="wrapper">
+  <!-- HEADER -->
+  <th:block th:insert="~{/common/user/userheader}"></th:block>
 
-      <!-- MAIN -->
-      <main>
-        <div class="csmain">
-          <article class="main_content">
-            <div class="main_title">
-              <p>일반 회원가입</p>
-            </div>
-
-            <div class="main_content_detail">
-
-                <form name="formRegister" th:action="@{/user/general}" method="post">
-                    <table style="border-collapse: collapse;">
-                        <tr>
-                            <th>아이디<span style="color: red;">*</span></th>
-                            <td>
-                                <input type="text" name="id" placeholder="아이디 입력" maxlength="10">
-                                <button id="btnCheckUid" type="button">중복체크</button>
-                                <span class="uidResult" style="margin-left: 10px; color: #333333;">영문·숫자 조합 4~10자 이내</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>비밀번호<span style="color: red;">*</span></th>
-                            <td><input type="password" name="password" placeholder="비밀번호 입력" maxlength="16">
-                            <span class="passResult" style="margin-left: 10px; color: #333333;">비밀번호는 8-16자리 이내, 영문ㆍ숫자ㆍ특수문자 조합</span>
-                            </td>
-                            
-                        </tr>
-                        <tr>
-                            <th>비밀번호 확인<span style="color: red;">*</span></th>
-                            <td><input type="password" name="password" placeholder="비밀번호 확인입력" maxlength="16"></td>
-                        </tr>
-                        <tr>
-                            <th>이름<span style="color: red;">*</span></th>
-                            <td>
-                                <input type="text" name="name" placeholder="이름 입력">
-                                <span class="nameResult"></span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th style="padding: 20px;">성별<span style="color: red;">*</span></th>
-                            <td>
-                              <label><input type="radio" name="gender" value="M" checked> 남</label>
-                              <label style="margin-left: 20px;"><input type="radio" name="gender" value="F"> 여</label>
-                            </td>
-                          </tr>
-                        <tr>
-                            <th>휴대폰<span style="color: red;">*</span></th>
-                            <td>
-                                <input type="text" name="hp" placeholder="휴대폰 입력" maxlength="13">
-                                <button id="btnSendHp" type="button">휴대폰 인증</button>
-                                <span class="hpResult"></span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>이메일<span style="color: red;">*</span></th>
-                            <td>
-                                <input type="email" name="email" placeholder="이메일 입력"/>
-                                <button id="btnSendEmail" type="button">인증코드 전송</button>
-                                <span class="emailResult"></span>
-                                <div class="auth" style="display: none">
-                                    <input type="text" name="auth" placeholder="인증번호 입력"/>
-                                    <button id="btnAuthEmail" type="button">확인</button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>주소</th>
-                            <td>
-                                <input type="text" id="zip" name="zip" placeholder="우편번호"/>
-                                <button type="button" onclick="postcode()">우편번호 찾기</button><br>
-                                <input type="text" id="addr1" name="addr1" placeholder="주소 검색"/><br>
-                                <input type="text" id="addr2" name="addr2" placeholder="상세주소 입력"/>
-                            </td>
-                        </tr>
-                        
-                    </table>
-                    <p style="margin-top: 10px; color: #666666;"><span style="color: red;">*</span>필수입력</p>
-
-                    <button class="agree-button">회원가입</button>
-                </form>
-              
-
-              
-
-            </div>
-          </article>
+  <!-- MAIN -->
+  <main>
+    <div class="csmain">
+      <article class="main_content">
+        <div class="main_title">
+          <p>일반 회원가입</p>
         </div>
-      </main>
 
-      <!-- FOOTER -->
-        <th:block th:insert="~{/common/footer}"></th:block>
+        <div class="main_content_detail">
+
+          <form name="formRegister" th:action="@{/user/general}" method="post">
+            <table style="border-collapse: collapse;">
+              <tr>
+                <th>아이디<span style="color: red;">*</span></th>
+                <td>
+                  <input type="text" name="id" placeholder="아이디 입력" maxlength="10">
+                  <button id="btnCheckUid" type="button">중복체크</button>
+                  <span class="uidResult" style="margin-left: 10px; color: #333333;">영문·숫자 조합 4~10자 이내</span>
+                </td>
+              </tr>
+              <tr>
+                <th>비밀번호<span style="color: red;">*</span></th>
+                <td><input type="password" name="password" placeholder="비밀번호 입력" maxlength="16">
+                  <span class="passResult" style="margin-left: 10px; color: #333333;">비밀번호는 8-16자리 이내, 영문ㆍ숫자ㆍ특수문자 조합</span>
+                </td>
+
+              </tr>
+              <tr>
+                <th>비밀번호 확인<span style="color: red;">*</span></th>
+                <td><input type="password" name="password" placeholder="비밀번호 확인입력" maxlength="16">
+                </td>
+              </tr>
+              <tr>
+                <th>이름<span style="color: red;">*</span></th>
+                <td>
+                  <input type="text" name="name" placeholder="이름 입력">
+                  <span class="nameResult"></span>
+                </td>
+              </tr>
+              <tr>
+                <th style="padding: 20px;">성별<span style="color: red;">*</span></th>
+                <td>
+                  <label><input type="radio" name="gender" value="M" checked> 남</label>
+                  <label style="margin-left: 20px;"><input type="radio" name="gender" value="F">
+                    여</label>
+                </td>
+              </tr>
+              <tr>
+                <th>휴대폰<span style="color: red;">*</span></th>
+                <td>
+                  <input type="text" name="contact" placeholder="휴대폰 입력" maxlength="13">
+                  <button id="btnSendHp" type="button">휴대폰 인증</button>
+                  <span class="hpResult"></span>
+                </td>
+              </tr>
+              <tr>
+                <th>이메일<span style="color: red;">*</span></th>
+                <td>
+                  <input type="email" name="email" placeholder="이메일 입력"/>
+                  <button id="btnSendEmail" type="button">인증코드 전송</button>
+                  <span class="emailResult"></span>
+                  <div class="auth" style="display: none">
+                    <input type="text" name="auth" placeholder="인증번호 입력"/>
+                    <button id="btnAuthEmail" type="button">확인</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <th>주소</th>
+                <td>
+                  <input type="text" id="zip" name="zip" placeholder="우편번호"/>
+                  <button type="button" onclick="postcode()">우편번호 찾기</button>
+                  <br>
+                  <input type="text" id="addr1" name="address" placeholder="주소 검색"/><br>
+                  <input type="text" id="addr2" name="addressDetail" placeholder="상세주소 입력"/>
+                </td>
+              </tr>
+
+            </table>
+            <p style="margin-top: 10px; color: #666666;"><span style="color: red;">*</span>필수입력</p>
+
+            <button class="agree-button">회원가입</button>
+          </form>
+
+
+        </div>
+      </article>
     </div>
-  </body>
+  </main>
+
+  <!-- FOOTER -->
+  <th:block th:insert="~{/common/footer}"></th:block>
+</div>
+</body>
 </html>
