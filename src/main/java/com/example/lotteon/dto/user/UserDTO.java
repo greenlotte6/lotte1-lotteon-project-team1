@@ -1,5 +1,6 @@
 package com.example.lotteon.dto.user;
 
+import java.time.LocalDate;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -25,5 +26,5 @@ public class UserDTO {
   private String address;
   private String addressDetail;
   private String role;
-  private String registerDate;
+  private LocalDate registerDate;
 }

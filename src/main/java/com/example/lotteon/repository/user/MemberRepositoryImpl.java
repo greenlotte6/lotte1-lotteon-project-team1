@@ -17,12 +17,11 @@ public class MemberRepositoryImpl implements MemberRepositoryCustom {
 
   @Override
   public Long countNewMembersOf(LocalDate date) {
-    LocalDate now = LocalDate.now();
     return query.select(member.count())
         .from(member)
         .join(user)
         .on(member.userCompositeKey.user.id.eq(user.id))
-        .where(member.userCompositeKey.user.registerDate.eq(now))
+        .where(member.userCompositeKey.user.registerDate.eq(date))
         .fetchFirst();
   }
 }

@@ -14,9 +14,10 @@ public class MemberDTO {
 
   private static final String[] GENDERS = {"m", "f"};
 
-  private UserDTO user;
+  private UserCompositeKeyDTO userCompositeKey;
   private String name;
   private String gender;
   private LocalDate recentLoginDate;
   private String description;
+
 }
