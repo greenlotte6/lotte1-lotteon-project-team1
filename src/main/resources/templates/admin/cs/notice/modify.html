@@ -42,40 +42,37 @@
             </span>
           </div>
           <div class="content">
-            <form action="#" method="POST" class="post-form">
+            <form th:action="@{/admin/cs/notice/modify}" enctype="multipart/form-data" method="POST" class="post-form">
+              <input type="hidden" name="id" th:value="${noticeDTO.id}" />
               <table class="post-form-table">
                 <tbody>
                   <tr>
                     <th>유형</th>
                     <td>
-                      <select name="filter" class="search-filter">
-                        <option value="customerService">고객서비스</option>
-                        <option value="customerService">이벤트</option>
-                        <option value="customerService">안전거래</option>
-                        <option value="customerService">위해상품</option>
+                      <select name="type_id" class="search-filter">
+                        <option value="1">고객서비스</option>
+                        <option value="2">이벤트</option>
+                        <option value="3">안전거래</option>
+                        <option value="4">위해상품</option>
                       </select>
                     </td>
                   </tr>
                   <tr>
                     <th>제목</th>
                     <td>
-                      <input type="" placeholder="제목을 입력합니다" />
+                      <input type="text" name="title" th:value="${noticeDTO.title}" placeholder="제목을 입력하세요.">
                     </td>
                   </tr>
                   <tr>
                     <th>내용</th>
                     <td>
-                      <textarea
-                        name="noticeContent"
-                        id="notice-content"
-                        placeholder="내용을 입력합니다"
-                      ></textarea>
+                      <textarea name="content" id="notice-content">[[${noticeDTO.content}]]</textarea>
                     </td>
                   </tr>
                 </tbody>
               </table>
               <div class="crud-btn-area">
-                <button class="enroll-btn delete-btn">취소하기</button>
+                <button class="enroll-btn delete-btn" onclick="location.href='/admin/cs/notice/notice'">취소하기</button>
                 <input class="post-submit-btn" type="submit" value="등록하기" />
               </div>
             </form>

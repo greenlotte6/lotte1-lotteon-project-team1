@@ -1,0 +1,36 @@
+/*
+    작성자: 이현민(id3ntity99)
+*/
+.pagination {
+  width: 1260px;
+  height: auto;
+  border-top: 1px solid #ddd;
+  box-sizing: border-box;
+  margin: 0px auto;
+  margin-top: 48px;
+  margin-bottom: 30px;
+  text-align: center;
+  padding: 42px;
+}
+
+.pagination > a {
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  margin-left: 20px;
+  line-height: 32px;
+  border-radius: 50%;
+  color: #757575;
+}
+
+.pagination > a.move {
+  border: 1px solid #ddd;
+}
+
+/*
+현재 선택된 페이지에만 아래 스타일을 적용
+*/
+a.current {
+  background-color: #343b4d;
+  color: #fff;
+}

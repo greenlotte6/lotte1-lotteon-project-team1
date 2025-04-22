@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="/style/common/admin/aside.css"/>
   <link rel="stylesheet" href="/style/common/admin/content.css"/>
   <link rel="stylesheet" href="/style/common/admin/footer.css"/>
-  <link rel="stylesheet" href="/style/common/pagination.css"/>
+  <link rel="stylesheet" href="/style/common/cspagination.css"/>
   <link rel="stylesheet" href="/style/admin/cs/notice/notice.css"/>
   <link
       rel="icon"
@@ -48,8 +48,9 @@
             </span>
       </div>
       <div class="content">
-        <form action="#" method="GET" id="search-area">
-          <select name="filter" class="search-filter">
+        <form th:action="@{/admin/cs/notice/search}" method="GET" id="search-area">
+          <select name="type_id" class="search-filter" id="typeSelect" onchange="this.form.submit()">
+            <option value="0">유형선택</option>
             <option value="1">고객서비스</option>
             <option value="2">이벤트</option>
             <option value="3">안전거래</option>
@@ -66,7 +67,7 @@
           <tbody>
           <tr>
             <th>
-              <input type="checkbox" onclick="return false;"/>
+              <input type="checkbox" id="check-all" />
             </th>
             <th>번호</th>
             <th>유형</th>
@@ -77,7 +78,7 @@
           </tr>
           <tr th:each="notice, i:${pageResponseDTO.dtoList}">
             <td>
-              <input type="checkbox"/>
+              <input type="checkbox" class="notice-checkbox" th:attr="data-id=${notice.id}" />
             </td>
             <td>[[${pageResponseDTO.startNo - i.index}]]</td>
             <td>[[${notice.subtype_name}]]</td>
@@ -85,7 +86,11 @@
             <td>[[${notice.hit}]]</td>
             <td>[[${notice.register_date}]]</td>
             <td>
-              <button class="control-btn default">수정</button>
+              <button class="control-btn default"
+                      type="button"
+                      th:attr="data-id=${notice.id}"
+                      onclick="modifyNotice(this)">수정
+              </button>
               <button class="control-btn delete"
                       type="button"
                       th:attr="data-id=${notice.id}"
@@ -103,24 +108,34 @@
     </section>
   </main>
   <section class="pagination">
-    <a class="page move" href="#">
+    <a class="page move"
+       th:href="@{/admin/cs/notice/search(pg=1, type_id=${pageResponseDTO.type_id}, filter=${pageResponseDTO.filter})}">
       <i class="fa-solid fa-angles-left"></i>
     </a>
-    <a class="page move" href="#">
+
+    <a class="page move"
+       th:href="@{/admin/cs/notice/search(pg=${pageResponseDTO.start - 1}, type_id=${pageResponseDTO.type_id}, filter=${pageResponseDTO.filter})}">
       <i class="fa-solid fa-chevron-left"></i>
     </a>
-    <a class="page" href="">1</a>
-    <a class="page" href="">2</a>
-    <a class="page" href="">3</a>
-    <a class="page" href="">4</a>
-    <a class="page move" href="#">
+
+    <th:block th:each="num : ${#numbers.sequence(pageResponseDTO.start, pageResponseDTO.end)}">
+      <a class="page"
+         th:href="@{/admin/cs/notice/search(pg=${num}, type_id=${pageResponseDTO.type_id}, filter=${pageResponseDTO.filter})}"
+         th:class="${num == pageResponseDTO.pg} ? 'current' : 'num'">
+        [[${num}]]
+      </a>
+    </th:block>
+
+    <a class="page move"
+       th:href="@{/admin/cs/notice/search(pg=${pageResponseDTO.end + 1}, type_id=${pageResponseDTO.type_id}, filter=${pageResponseDTO.filter})}">
       <i class="fa-solid fa-chevron-right"></i>
     </a>
-    <a class="page move" href="#">
+
+    <a class="page move"
+       th:href="@{/admin/cs/notice/search(pg=${pageResponseDTO.lastPage}, type_id=${pageResponseDTO.type_id}, filter=${pageResponseDTO.filter})}">
       <i class="fa-solid fa-angles-right"></i>
     </a>
   </section>
-
   <th:block th:insert="~{/common/admin/footer}"></th:block>
 </div>
 </body>
@@ -134,3 +149,58 @@
     }
   }
 </script>
+
+<script>
+  function modifyNotice(button) {
+    const id = button.getAttribute('data-id');
+    window.location.href = `/admin/cs/notice/modify?id=${id}`;
+  }
+</script>
+
+<script>
+  document.getElementById("search-area").addEventListener("submit", function (e) {
+    const typeId = document.getElementById("typeSelect").value;
+
+    if (typeId === "0") {
+      // 기본 리스트 페이지에 머무르도록 form 전송 자체를 막음
+      e.preventDefault();
+    }
+  });
+</script>
+
+<script>
+  document.querySelector(".delete-btn").addEventListener("click", async function () {
+    const checkboxes = document.querySelectorAll(".notice-checkbox:checked");
+
+    if (checkboxes.length === 0) {
+      alert("삭제할 공지사항을 선택해주세요.");
+      return;
+    }
+
+    if (!confirm("선택한 공지사항을 삭제하시겠습니까?")) {
+      return;
+    }
+
+    // 체크된 항목들의 id 리스트 추출
+    const ids = Array.from(checkboxes).map(cb => cb.getAttribute("data-id"));
+
+    // 순차적으로 삭제 요청
+    for (const id of ids) {
+      await fetch(`/admin/cs/notice/delete?id=${id}`);
+    }
+
+    // 삭제 후 새로고침 또는 리스트 페이지로 이동
+    alert("삭제가 완료되었습니다.");
+    window.location.href = "/admin/cs/notice/notice"; // 너의 목록 페이지 경로
+  });
+</script>
+
+<script>
+  // 전체 선택 체크박스 이벤트
+  document.getElementById("check-all").addEventListener("change", function () {
+    const allChecked = this.checked;
+    const checkboxes = document.querySelectorAll(".notice-checkbox");
+    checkboxes.forEach(cb => cb.checked = allChecked);
+  });
+</script>
+

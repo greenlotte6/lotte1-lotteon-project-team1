@@ -23,6 +23,18 @@ public class AdminCsController {
     private final HttpServletRequest request;
     private final CsService csService;
 
+    @GetMapping("/notice/search")
+    public String noticesearch(PageRequestDTO pageRequestDTO, Model model) {
+
+        int type_id = pageRequestDTO.getType_id();
+        //서비스 호출
+        PageResponseDTO pageResponseDTO = csService.searchAll(pageRequestDTO, type_id);
+
+        model.addAttribute(pageResponseDTO);
+        return "/admin/cs/notice/searchnotice";
+
+    }
+
     @GetMapping("/notice/notice")
     public String notice(Model model, PageRequestDTO pageRequestDTO) {
 
@@ -58,9 +70,27 @@ public class AdminCsController {
     }
 
     @GetMapping("/notice/modify")
-    public String modify() {
+    public String modify(int id, Model model) {
+
+        // 수정 데이터 조회 서비스
+        NoticeDTO noticeDTO = csService.findById(id);
+        //모델참조
+        model.addAttribute(noticeDTO);
+
         return "/admin/cs/notice/modify";
     }
+
+    @PostMapping("/notice/modify")
+    public String modify(NoticeDTO noticeDTO) {
+
+        // 서비스호출
+        csService.modifyNotice(noticeDTO);
+
+
+        return "redirect:/admin/cs/notice/notice";
+    }
+
+
 
     @GetMapping("/notice/delete")
     public String delete(int id) {

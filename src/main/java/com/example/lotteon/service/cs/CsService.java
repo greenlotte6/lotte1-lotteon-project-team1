@@ -115,4 +115,53 @@ public class CsService {
                 .build();
 
     }
+
+    @Transactional
+    public void modifyNotice(NoticeDTO noticeDTO) {
+        
+        //pk
+        Optional<Notice> optNotice = noticeRepository.findById(noticeDTO.getId());
+        if (optNotice.isPresent()) {
+            Notice notice = optNotice.get(); //기존 데이터 조회
+            
+            //새로운 값으로 업데이트
+            notice.setType_id(Article_Type.builder().id(noticeDTO.getType_id()).build());
+            notice.setTitle(noticeDTO.getTitle());
+            notice.setContent(noticeDTO.getContent());
+            
+            //저장
+            noticeRepository.save(notice);
+            
+            
+        }
+    }
+
+    public PageResponseDTO searchAll(PageRequestDTO pageRequestDTO, int typeId) {
+
+        Pageable pageable = pageRequestDTO.getPageable("id");
+
+        Page<Tuple> pageNotice = noticeRepository.selectAllForSearch(pageRequestDTO, pageable, typeId);
+
+        List<NoticeDTO> noticeDTOList = pageNotice.getContent().stream().map(tuple -> {
+            Notice notice = tuple.get(0, Notice.class);
+            NoticeDTO noticeDTO = NoticeDTO.builder()
+                    .id(notice.getId())
+                    .title(notice.getTitle())
+                    .content(notice.getContent())
+                    .hit(notice.getHit())
+                    .register_date(notice.getRegister_date().toString())
+                    .type_id(notice.getType_id().getId())
+                    .subtype_name(notice.getType_id().getSubtype_name())
+                    .build();
+            return noticeDTO;
+        }).toList();
+
+        int total = (int) pageNotice.getTotalElements();
+
+        return PageResponseDTO.builder()
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(noticeDTOList)
+                .total(total)
+                .build();
+    }
 }
