@@ -4,11 +4,13 @@ import com.example.lotteon.service.order.OrderService;
 import com.example.lotteon.service.user.MemberService;
 import java.time.LocalDate;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+@Slf4j
 @Controller
 @RequestMapping("/admin")
 @RequiredArgsConstructor
@@ -19,6 +21,7 @@ public class AdminMainController {
 
   @GetMapping(value = {"", "/", "/index"})
   public String index(Model model) {
+    log.info("request received");
     LocalDate today = LocalDate.now();
     LocalDate yesterday = LocalDate.now().minusDays(1);
 
@@ -47,8 +50,6 @@ public class AdminMainController {
     long yesterdayValidOrders = orderService.countValidOrdersAt(yesterday);
     model.addAttribute("todayValidOrders", todayValidOrders);
     model.addAttribute("yesterdayValidOrders", yesterdayValidOrders);
-
     return "/admin/index";
   }
-
 }

@@ -1,9 +1,9 @@
 package com.example.lotteon.redis.entity;
 
-import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 import org.springframework.data.redis.core.TimeToLive;
 
@@ -14,8 +14,10 @@ import org.springframework.data.redis.core.TimeToLive;
 public class GlobalHit {
 
   @Id
-  private int hit;
+  private final String id = "counter";
+
+  private long hit;
 
   @TimeToLive
-  private int ttl;
+  private long ttl;
 }
