@@ -36,6 +36,7 @@ dependencies {
     implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
     implementation 'org.modelmapper:modelmapper:3.2.2'
     implementation 'com.querydsl:querydsl-jpa:5.1.0:jakarta'
+    implementation 'com.google.code.gson:gson:2.13.0'
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'com.mysql:mysql-connector-j'

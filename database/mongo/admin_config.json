@@ -1,0 +1,27 @@
+{
+  "version": "0.0.3-SNAPSHOT",
+  "site": {
+    "title": "롯데 ON",
+    "subtitle": "1조"
+  },
+  "logo": {
+    "header_location": "",
+    "footer_location": "",
+    "favicon": ""
+  },
+  "corp_info": {
+    "name": "롯데쇼핑주식회사",
+    "ceo": "홍길동",
+    "business_num": "123-12-12345",
+    "seller_num": "2024-서울강남-1234",
+    "address": "서울특별시 강남구 테헤란로 507",
+    "address_detail": "삼성동, WeWork 빌딩 7층"
+  },
+  "cs_info": {
+    "contact": "02-1234-5678",
+    "office_hour": "평일 09:00 ~ 18:00",
+    "email": "lotteon@lotte.net",
+    "dispute_contact": "1234-1234"
+  },
+  "copyright": "Copyright@Lotte ON. All rights reserved"
+}

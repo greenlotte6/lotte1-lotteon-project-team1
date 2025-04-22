@@ -1,10 +1,16 @@
 package com.example.lotteon.entity.admin.config;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 
+@Data
 @Document
+@NoArgsConstructor
+@AllArgsConstructor
 public class CorpInfo {
 
   @Field(name = "name")
@@ -13,10 +19,10 @@ public class CorpInfo {
   @Field(name = "ceo")
   private String ceo;
 
-  @Field(name = "business_number")
+  @Field(name = "business_num")
   private String businessNumber;
 
-  @Field(name = "seller_number")
+  @Field(name = "seller_num")
   private String sellerNumber;
 
   @Field(name = "address")

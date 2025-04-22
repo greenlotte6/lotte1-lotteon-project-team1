@@ -1,7 +1,6 @@
 package com.example.lotteon.entity.admin.config;
 
 import jakarta.persistence.Id;
-import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,16 +8,16 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 @Data
-@Document
+@Document(collection = "admin")
 @NoArgsConstructor
 @AllArgsConstructor
 public class ConfigDocument {
 
   @Id
-  private UUID id;
+  private String id;
 
   @Field(name = "version")
-  private VersionInformation version;
+  private String version;
 
   @Field(name = "site")
   private Site site;

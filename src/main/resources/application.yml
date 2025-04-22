@@ -6,7 +6,7 @@ spring:
 
   application:
     name: lotteon
-    version: 0.0.2
+    version: 0.0.3
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -60,7 +60,7 @@ spring:
 
   application:
     name: lotteon
-    version: 0.0.2
+    version: 0.0.3
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -84,11 +84,7 @@ spring:
 
   data:
     mongodb:
-      uri: mongodb://52.79.234.26:27018
-      username: lotteon-dev
-      password: 1234
-      authentication-database: lotteon
-      database: lotteon
+      uri: mongodb://lotteon-dev:1234@52.79.234.26:27018/lotteon?authSource=lotteon
 
     redis:
       host: 52.79.234.26
@@ -108,5 +104,12 @@ server:
   port: 8080
   servlet:
     context-path: /
+
+lotteon:
+  data:
+    mongodb:
+      admin:
+        config:
+          id: 680752923a618b12ce9cd98b
 
 ---
