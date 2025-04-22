@@ -18,7 +18,7 @@ public class PageRequestDTO {
     private int no = 1;
 
     @Builder.Default
-    private int type_id = 1;
+    private int type_id = 0;
 
     @Builder.Default
     private int pg = 1;

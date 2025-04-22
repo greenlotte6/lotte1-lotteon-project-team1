@@ -44,6 +44,7 @@ public class PageResponseDTO {
 
         int last = (int) (Math.ceil(total / (double) size));
         this.end = end > last ? last : end;
+        this.lastPage = last; // ✅ 마지막 페이지 계산
         this.prev = this.start > 1;
         this.next = total > this.end * this.size;
     }

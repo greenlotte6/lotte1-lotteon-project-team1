@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 public interface NoticeRepositoryCustom {
 
     public Page<Tuple> selectAllForList(Pageable pageable, int type_id);
+    public Page<Tuple> selectAllForSearch(PageRequestDTO pageRequestDTO, Pageable pageable, int type_id);
 
 
 
