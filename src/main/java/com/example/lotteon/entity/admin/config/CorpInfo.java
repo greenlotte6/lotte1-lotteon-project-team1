@@ -30,5 +30,4 @@ public class CorpInfo {
 
   @Field(name = "address_detail")
   private String addressDetail;
-
 }

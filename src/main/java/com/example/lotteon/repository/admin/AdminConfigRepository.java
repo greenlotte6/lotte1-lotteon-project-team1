@@ -5,7 +5,6 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface AdminConfigRepository extends MongoRepository<ConfigDocument, String>,
-    CustomAdminConfigRepository {
+public interface AdminConfigRepository extends MongoRepository<ConfigDocument, String> {
 
 }

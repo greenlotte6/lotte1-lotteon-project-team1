@@ -1,6 +1,6 @@
 package com.example.lotteon.controller.api;
 
-import com.example.lotteon.dto.admin.ConfigDTO;
+import com.example.lotteon.entity.admin.config.Site;
 import com.example.lotteon.service.admin.AdminConfigService;
 import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;
@@ -21,12 +21,12 @@ public class AdminConfigRestController {
   private final Gson gson;
   private final AdminConfigService service;
 
-  @PutMapping(value = {"/basic", "/basic/"})
-  public ResponseEntity<String> postBasic(@RequestBody ConfigDTO docDTO) {
-    log.info(docDTO.toString());
+  @PutMapping("/basic/site")
+  public ResponseEntity<String> postBasic(@RequestBody Site doc) {
+    log.info(doc.toString());
 
     //ConfigDocument doc = service.update(docDTO);
 
-    return new ResponseEntity<>(gson.toJson(docDTO), HttpStatus.OK);
+    return new ResponseEntity<>(gson.toJson(doc), HttpStatus.OK);
   }
 }

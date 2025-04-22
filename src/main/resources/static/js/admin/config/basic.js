@@ -6,41 +6,34 @@ $(() => {
 
   $(".post-submit-btn").click((event) => {
     const parent = event.target.parentNode.parentElement;
+    const form = parent.querySelector(".post-form")
     const inputs = parent.querySelectorAll("input[type=text]")
-    const topNodeKey = event.target.name;
-    let parentJsonStr = {}
     let jsonStr = {}
 
     for (let input of inputs) {
-      const key = input.name
-      const value = input.value
-      jsonStr[key] = value;
+      jsonStr[input.name] = input.value;
     }
 
-    if (topNodeKey) {
-      parentJsonStr[event.target.name] = jsonStr;
-    } else {
-      parentJsonStr = jsonStr;
-    }
+    console.log(jsonStr)
 
-    console.log(parentJsonStr)
+    const url = form.action;
 
-//    $.ajax({
-//      type: "PUT",
-//      url: "/api/admin/config/basic/",
-//      dataType: "json",
-//      contentType: "application/json;utf-8",
-//      data: JSON.stringify(parentJsonStr),
-//      success: function (res) {
-//        if (res.status === 302) {
-//          window.location.href = res.url;
-//        }
-//        console.log(res);
-//      },
-//      error: function (err) {
-//        console.log(err)
-//      }
-//    })
+    $.ajax({
+      type: "PUT",
+      url: url,
+      dataType: "json",
+      contentType: "application/json;utf-8",
+      data: JSON.stringify(jsonStr),
+      success: function (res) {
+        if (res.status === 302) {
+          window.location.href = res.url;
+        }
+        console.log(res);
+      },
+      error: function (err) {
+        console.log(err)
+      }
+    })
   });
 
   $(".post-submit-btn.multipart").click((event) => {
