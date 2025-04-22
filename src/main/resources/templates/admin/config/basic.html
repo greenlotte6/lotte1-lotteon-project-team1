@@ -25,6 +25,7 @@
   <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
   <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
   <script th:src="@{/js/admin/config/aside-drop.js}"></script>
+  <script src="/js/admin/config/basic.js"></script>
 </head>
 <body>
 <div id="wrapper">
@@ -48,7 +49,10 @@
         <table class="settings-input version">
           <tr>
             <th>사이트 버전</th>
-            <td>1.0.1-RELEASE</td>
+            <td th:text="${config.getVersion()}">
+              <input type="text" name="version"
+                     th:value="${config.getVersion()}"/>
+            </td>
           </tr>
         </table>
       </div>
@@ -60,25 +64,27 @@
         <p class="desc">
           브라우저 탭, header 및 footer에 노출될 정보를 입력합니다
         </p>
-        <form action="#" method="POST" class="post-form">
+        <form th:action="@{/admin/config/basic}" method="POST" class="post-form">
           <table class="post-form-table">
             <tr>
               <th>제목</th>
               <td>
-                <input type="text" name="siteTitle"/>
+                <input type="text" name="title"
+                       th:value="${config.getSite().getTitle()}"/>
               </td>
             </tr>
             <tr>
               <th>부제</th>
               <td>
-                <input type="text" name="siteSubTitle"/>
+                <input type="text" name="subtitle"
+                       th:value="${config.getSite().getSubtitle()}"/>
               </td>
             </tr>
           </table>
         </form>
         <div class="crud-btn-area">
           <span></span>
-          <input type="submit" class="post-submit-btn" value="수정하기"/>
+          <input type="submit" class="post-submit-btn" name="site" value="수정하기"/>
         </div>
       </div>
 
@@ -106,14 +112,14 @@
             <tr>
               <th>favicon</th>
               <td>
-                <input type="file" name="footerLogo"/>
+                <input type="file" name="favicon"/>
               </td>
             </tr>
           </table>
         </form>
         <div class="crud-btn-area">
           <span></span>
-          <input type="submit" class="post-submit-btn" value="수정하기"/>
+          <input type="submit" class="post-submit-btn multipart" value="수정하기"/>
         </div>
       </div>
 
@@ -127,44 +133,50 @@
             <tr>
               <th>상호명</th>
               <td>
-                <input type="text" name="name"/>
+                <input type="text" name="name"
+                       th:value="${config.getCorpInfo().getName()}"/>
               </td>
             </tr>
             <tr>
               <th>대표이사</th>
               <td>
-                <input type="text" name="ceo"/>
+                <input type="text" name="ceo"
+                       th:value="${config.getCorpInfo().getCeo()}"/>
               </td>
             </tr>
             <tr>
               <th>사업자등록번호</th>
               <td>
-                <input type="text" name="businessId"/>
+                <input type="text" name="businessNumber"
+                       th:value="${config.getCorpInfo().getBusinessNumber()}"/>
               </td>
             </tr>
             <tr>
               <th>통신판매업신고</th>
               <td>
-                <input type="text" name="reportId"/>
+                <input type="text" name="sellerNumber"
+                       th:value="${config.getCorpInfo().getSellerNumber()}"/>
               </td>
             </tr>
             <tr>
               <th>기본주소</th>
               <td>
-                <input type="text" name="address"/>
+                <input type="text" name="address"
+                       th:value="${config.getCorpInfo().getAddress()}"/>
               </td>
             </tr>
             <tr>
               <th>상세주소</th>
               <td>
-                <input type="text" name="addressDetail"/>
+                <input type="text" name="addressDetail"
+                       th:value="${config.getCorpInfo().getAddressDetail()}"/>
               </td>
             </tr>
           </table>
         </form>
         <div class="crud-btn-area">
           <span></span>
-          <input type="submit" class="post-submit-btn" value="수정하기"/>
+          <input type="submit" class="post-submit-btn" name="corpInfo" value="수정하기"/>
         </div>
       </div>
 
@@ -178,32 +190,35 @@
             <tr>
               <th>전화번호</th>
               <td>
-                <input type="text" name="contact"/>
+                <input type="text" name="contact"
+                       th:value="${config.getCsInfo().getContact()}"/>
               </td>
             </tr>
             <tr>
               <th>업무시간</th>
               <td>
-                <input type="text" name="officeHours"/>
+                <input type="text" name="officeHour"
+                       th:value="${config.getCsInfo().getOfficeHour()}"/>
               </td>
             </tr>
             <tr>
               <th>이메일</th>
               <td>
-                <input type="text" name="email"/>
+                <input type="text" name="email" th:value="${config.getCsInfo().getEmail()}"/>
               </td>
             </tr>
             <tr>
               <th>전자금융거래 분쟁담당</th>
               <td>
-                <input type="text" name="disputeOfficerContact"/>
+                <input type="text" name="disputeContact"
+                       th:value="${config.getCsInfo().getDisputeContact()}"/>
               </td>
             </tr>
           </table>
         </form>
         <div class="crud-btn-area">
           <span></span>
-          <input type="submit" class="post-submit-btn" value="수정하기"/>
+          <input type="submit" class="post-submit-btn" name="csInfo" value="수정하기"/>
         </div>
       </div>
 
@@ -219,7 +234,8 @@
             <tr>
               <th>카피라이트</th>
               <td>
-                <input type="text" name="copyright"/>
+                <input class="copyright-input" type="text" name="copyright"
+                       th:value="${config.getCopyright()}"/>
               </td>
             </tr>
           </table>

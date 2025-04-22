@@ -1,3 +1,11 @@
 .content table td {
   text-align: left;
 }
+
+.post-submit-btn {
+  margin-top: 30px;
+}
+
+.copyright-input {
+  width: 300px;
+}
