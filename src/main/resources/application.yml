@@ -4,6 +4,19 @@ spring:
     activate:
       on-profile: prod
 
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: fafa5271783@gmail.com
+    password: kuyk ffoc bbhu vjwf
+    properties:
+      mail:
+        smtp:
+          auth: true
+          timeout: 5000
+          starttls:
+            enable: true
+
   application:
     name: lotteon
     version: 0.0.2
@@ -57,6 +70,19 @@ spring:
   config:
     activate:
       on-profile: dev
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: fafa5271783@gmail.com
+    password: kuyk ffoc bbhu vjwf
+    properties:
+      mail:
+        smtp:
+          auth: true
+          timeout: 5000
+          starttls:
+            enable: true
 
   application:
     name: lotteon
