@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>자주묻는질문 목록</title>
+  <link rel="stylesheet" href="/style/init.css" />
+  <link rel="stylesheet" href="/style/common/admin/header.css" />
+  <link rel="stylesheet" href="/style/common/admin/aside.css" />
+  <link rel="stylesheet" href="/style/common/admin/content.css" />
+  <link rel="stylesheet" href="/style/common/admin/footer.css" />
+  <link rel="stylesheet" href="/style/common/cspagination.css" />
+  <link rel="stylesheet" href="/style/admin/cs/faq/list.css" />
+  <link
+          rel="icon"
+          href="https://static.lotteon.com/p/common/assets/favicon/1/favicon-32.png"
+  />
+  <link
+          rel="stylesheet"
+          href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css"
+  />
+  <script
+          src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/all.min.js"
+          crossorigin="anonymous"
+  ></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+  <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
+  <script src="/js/admin/config/aside-drop.js"></script>
+</head>
+<body>
+<div id="wrapper">
+  <th:block th:insert="~{/common/admin/header}"></th:block>
+  <main>
+    <th:block th:insert="~{/common/admin/aside}"></th:block>
+    <section id="content-area">
+      <div class="content-area-title">
+        <h3>자주묻는질문 목록</h3>
+        <span>
+              <a href="#">HOME&nbsp;>&nbsp;</a>
+              <a href="#">고객센터&nbsp;>&nbsp;</a>
+              <a href="#">자주묻는질문</a>
+            </span>
+      </div>
+      <div class="content">
+        <form th:action="@{/admin/cs/faq/search}" method="GET" id="search-area">
+          <!--TODO: 아래의 select를 피그마 상의 요구사항에 맞게 만들기-->
+          <select id="faq-category-select" class="search-filter">
+            <option value="">1차 분류 선택</option>
+            <option value="member">회원</option>
+            <option value="event">쿠폰/혜택/이벤트</option>
+            <option value="order_payment">주문/결제</option>
+            <option value="delivery">배송</option>
+            <option value="return_exchange">취소/반품/교환</option>
+            <option value="travel_stay_airline">여행/숙박/항공</option>
+            <option value="safe_transaction">안전거래</option>
+          </select>
+
+          <select id="faq-subcategory-select" class="search-filter">
+            <option value="">2차 분류 선택</option>
+          </select>
+
+          <input type="hidden" name="type_id" id="faq-type-id-input" />
+          <input
+                  type="submit"
+                  class="search-submit-btn"
+                  value="검색"
+                  style="display: none"
+          />
+        </form>
+        <table>
+          <tbody>
+          <tr>
+            <th>
+              <input type="checkbox" id="check-all" />
+            </th>
+            <th>번호</th>
+            <th>1차유형</th>
+            <th>2차유형</th>
+            <th>제목</th>
+            <th>조회</th>
+            <th>날짜</th>
+            <th>관리</th>
+          </tr>
+          <tr th:each="faq, i:${pageResponseDTO.dtoList}">
+            <td>
+              <input type="checkbox" class="faq-checkbox" th:attr="data-id=${faq.id}" />
+            </td>
+            <td>[[${pageResponseDTO.startNo - i.index}]]</td>
+            <td>[[${faq.name}]]</td>
+            <td>[[${faq.subtype_name}]]</td>
+            <td><a th:href="@{/admin/cs/faq/view(id=${faq.id})}">[[${faq.title}]]</a></td>
+            <td>[[${faq.hit}]]</td>
+            <td>[[${faq.register_date}]]</td>
+            <td>
+              <a th:href="@{/admin/cs/faq/modify(id=${faq.id})}" class="control-btn default"
+              >수정</a
+              >
+              <a th:href="@{/admin/cs/faq/delete(id=${faq.id})}" class="post-submit-btn red">
+                삭제
+              </a>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+        <div class="crud-btn-area">
+          <button class="enroll-btn delete-btn">선택삭제</button>
+          <a class="control-btn default write-faq-btn" th:href="@{/admin/cs/faq/write}">
+            작성하기
+          </a>
+        </div>
+
+      </div>
+    </section>
+  </main>
+  <section class="pagination">
+    <a class="page move"
+       th:href="@{/admin/cs/faq/search(pg=1, type_id=${pageResponseDTO.type_id}, filter=${pageResponseDTO.filter})}">
+      <i class="fa-solid fa-angles-left"></i>
+    </a>
+
+    <a class="page move"
+       th:href="@{/admin/cs/faq/search(pg=${pageResponseDTO.start - 1}, type_id=${pageResponseDTO.type_id}, filter=${pageResponseDTO.filter})}">
+      <i class="fa-solid fa-chevron-left"></i>
+    </a>
+
+    <th:block th:each="num : ${#numbers.sequence(pageResponseDTO.start, pageResponseDTO.end)}">
+      <a class="page"
+         th:href="@{/admin/cs/faq/search(pg=${num}, type_id=${pageResponseDTO.type_id}, filter=${pageResponseDTO.filter})}"
+         th:class="${num == pageResponseDTO.pg} ? 'current' : 'num'">
+        [[${num}]]
+      </a>
+    </th:block>
+
+    <a class="page move"
+       th:href="@{/admin/cs/faq/search(pg=${pageResponseDTO.end + 1}, type_id=${pageResponseDTO.type_id}, filter=${pageResponseDTO.filter})}">
+      <i class="fa-solid fa-chevron-right"></i>
+    </a>
+
+    <a class="page move"
+       th:href="@{/admin/cs/faq/search(pg=${pageResponseDTO.lastPage}, type_id=${pageResponseDTO.type_id}, filter=${pageResponseDTO.filter})}">
+      <i class="fa-solid fa-angles-right"></i>
+    </a>
+  </section>
+
+  <th:block th:insert="~{/common/admin/footer}"></th:block>
+</div>
+</body>
+</html>
+
+<!-- 1차 유형 선택해야 2차로 넘어가고 type_id 넘기는 js , 검색버튼 안보이게, -->
+<script>
+  const subcategories = {
+    member: { 가입: 5, 탈퇴: 6, 회원정보: 7, 로그인: 8 },
+    event: { '쿠폰/할인혜택': 9, 포인트: 10, 제휴: 11, 이벤트: 12 },
+    order_payment: { 상품: 13, 결제: 14, 구매내역: 15, '영수증/증빙': 16 },
+    delivery: { '배송상태/기간': 17, '배송정보확인/변경': 18, 해외배송: 19, 당일배송: 20, 해외직구: 21 },
+    return_exchange: { '반품신청/철회': 22, '반품정보확인/변경': 23, '교환 AS신청/철회': 24, '교환정보확인/변경': 25, '취소신청/철회': 26, '취소확인/환불정보': 27 },
+    travel_stay_airline: { '여행/숙박': 28, 항공: 29 },
+    safe_transaction: { '서비스 이용규칙 위반': 30, '지식재산권침해': 31, '법령 및 정책위반 상품': 32, '게시물 정책위반': 33, '직거래/외부거래유도': 34, 표시광고: 35, '청소년 위해상품/이미지': 36 }
+  };
+
+  const categorySelect = document.getElementById('faq-category-select');
+  const subcategorySelect = document.getElementById('faq-subcategory-select');
+  const typeIdInput = document.getElementById('faq-type-id-input');
+
+  categorySelect.addEventListener('change', () => {
+    const selectedCategory = categorySelect.value;
+    const options = subcategories[selectedCategory] || {};
+
+    subcategorySelect.innerHTML = '<option value="">2차 분류 선택</option>';
+    Object.keys(options).forEach(key => {
+      const option = document.createElement('option');
+      option.value = key;
+      option.textContent = key;
+      subcategorySelect.appendChild(option);
+    });
+
+    typeIdInput.value = '';
+  });
+
+  subcategorySelect.addEventListener('change', () => {
+    const selectedCategory = categorySelect.value;
+    const selectedSub = subcategorySelect.value;
+
+    const typeId = subcategories[selectedCategory]?.[selectedSub] || '';
+    typeIdInput.value = typeId;
+  });
+
+  // 2차 분류 선택 후 자동 검색 기능 추가
+  subcategorySelect.addEventListener('change', () => {
+    const selectedCategory = categorySelect.value;
+    const selectedSub = subcategorySelect.value;
+
+    const typeId = subcategories[selectedCategory]?.[selectedSub] || '';
+    typeIdInput.value = typeId;
+
+    if (typeId) {
+      document.getElementById('search-area').submit();
+    }
+  });
+</script>
+
+
+<script>
+  // 전체 선택 체크박스 이벤트
+  document.getElementById("check-all").addEventListener("change", function () {
+    const allChecked = this.checked;
+    const checkboxes = document.querySelectorAll(".faq-checkbox");
+    checkboxes.forEach(cb => cb.checked = allChecked);
+  });
+</script>
+
+
+<script>
+  //선택 삭제 하는 기능
+  document.querySelector(".delete-btn").addEventListener("click", async function () {
+    const checkboxes = document.querySelectorAll(".faq-checkbox:checked");
+
+    if (checkboxes.length === 0) {
+      alert("삭제할 공지사항을 선택해주세요.");
+      return;
+    }
+
+    if (!confirm("선택한 공지사항을 삭제하시겠습니까?")) {
+      return;
+    }
+
+    // 체크된 항목들의 id 리스트 추출
+    const ids = Array.from(checkboxes).map(cb => cb.getAttribute("data-id"));
+
+    // 순차적으로 삭제 요청
+    for (const id of ids) {
+      await fetch(`/admin/cs/faq/delete?id=${id}`);
+    }
+
+    // 삭제 후 새로고침 또는 리스트 페이지로 이동
+    alert("삭제가 완료되었습니다.");
+    window.location.href = "/admin/cs/faq/list"; // 너의 목록 페이지 경로
+  });
+</script>
