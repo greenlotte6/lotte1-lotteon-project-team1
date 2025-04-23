@@ -1,11 +1,10 @@
 package com.example.lotteon.controller.admin;
 
 import com.example.lotteon.entity.admin.config.ConfigDocument;
-import com.example.lotteon.repository.admin.AdminConfigRepository;
-import java.util.Optional;
+import com.example.lotteon.service.admin.AdminConfigService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,18 +16,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequiredArgsConstructor
 public class AdminConfigController {
 
-  private final AdminConfigRepository repo;
-
-  @Value("${lotteon.data.mongodb.admin.config.id}")
-  private String docId;
+  private final AdminConfigService service;
 
   @GetMapping("/basic")
-  public String basic(Model model) {
-    Optional<ConfigDocument> opt = repo.findById(docId);
-
-    ConfigDocument doc = null;
-    doc = opt.orElseGet(ConfigDocument::new); // DB에 데이터가 존재하지 않는다면 모든 속성값이 null인 객체 생성
-    model.addAttribute("config", doc);
+  public String basic(Model model, HttpServletRequest request) {
+    ConfigDocument config = (ConfigDocument) request.getAttribute("cachedConfig");
+    if (config == null) { //캐싱된 기본설정 데이터가 없는 경우
+      config = service.getConfig(); // MongoDB에서 조회 후 캐싱
+    }
+    model.addAttribute("config", config);
     return "/admin/config/basic";
   }
 
