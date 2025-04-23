@@ -1,5 +1,6 @@
 package com.example.lotteon.entity.admin.config;
 
+import com.google.gson.annotations.SerializedName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,11 +12,14 @@ import org.springframework.data.mongodb.core.mapping.Field;
 public class Logo {
 
   @Field(name = "header_location")
+  @SerializedName("header_location")
   private String headerLogoLocation;
 
   @Field(name = "footer_location")
+  @SerializedName("footer_location")
   private String footerLogoLocation;
 
   @Field(name = "favicon")
+  @SerializedName("favicon")
   private String faviconLocation;
 }
