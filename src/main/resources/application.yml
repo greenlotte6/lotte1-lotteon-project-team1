@@ -134,8 +134,14 @@ server:
 lotteon:
   data:
     mongodb:
-      admin:
-        config:
-          id: 680752923a618b12ce9cd98b
-
+      config:
+        basic:
+          collection-name: BasicConfig
+          document-namespace:
+            version: basic_confi::version
+            site: basic_config::site
+            logo: basic_config::logo
+            corp-info: basic_config::corp-info
+            cs-info: basic_config::cs_inf
+            copyright: basic_config::copyright;
 ---
