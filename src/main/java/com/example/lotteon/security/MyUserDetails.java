@@ -16,11 +16,13 @@ import java.util.List;
 public class MyUserDetails implements UserDetails {
 
     private User user;
+
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         // 권한 목록 생성
         List<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority("ROLE_" + user.getRole())); // 계정 권한 앞에 접두어 ROLE_ 붙여야 됨
+        authorities.add(new SimpleGrantedAuthority("ROLE_" + user.getRole()));
         return authorities;
     }
 
@@ -57,6 +59,4 @@ public class MyUserDetails implements UserDetails {
         // 계정 활성화 여부
         return true;
     }
-
-
 }

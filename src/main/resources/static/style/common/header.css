@@ -176,3 +176,18 @@ header {
   background: none;
   outline: none;
 }
+
+.logout > form {
+  display: flex;
+  align-items: center;
+}
+
+.logout button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 11px;
+  line-height: 35px;
+  color: #757575;
+  width: 60px;
+}

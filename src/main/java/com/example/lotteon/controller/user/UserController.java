@@ -47,8 +47,10 @@ public class UserController {
     userService.userRegister(userDTO);
     memberService.memberRegister(memberDTO);
 
+
+
     // 리다이렉트
-    return "redirect:/user/login";
+    return "redirect:/login";
   }
 
   @GetMapping("/login")
@@ -79,7 +81,7 @@ public class UserController {
   }
 
   // 유효성 검사
-  @GetMapping("/{type}/{value}")
+  @GetMapping("check/{type}/{value}")
   public ResponseEntity user(@PathVariable("type") String type, @PathVariable("value") String value) {
     log.info("type : " + type + ", value : " + value);
 
