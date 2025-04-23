@@ -4,13 +4,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>자주묻는질문 수정</title>
-    <link rel="stylesheet" href="/static/style/init.css" />
-    <link rel="stylesheet" href="/static/style/common/admin/header.css" />
-    <link rel="stylesheet" href="/static/style/common/admin/aside.css" />
-    <link rel="stylesheet" href="/static/style/common/admin/content.css" />
-    <link rel="stylesheet" href="/static/style/common/admin/footer.css" />
-    <link rel="stylesheet" href="/static/style/admin/cs/notice/write.css" />
-    <link rel="stylesheet" href="/static/style/admin/cs/faq/modify.css" />
+    <link rel="stylesheet" href="/style/init.css" />
+    <link rel="stylesheet" href="/style/common/admin/header.css" />
+    <link rel="stylesheet" href="/style/common/admin/aside.css" />
+    <link rel="stylesheet" href="/style/common/admin/content.css" />
+    <link rel="stylesheet" href="/style/common/admin/footer.css" />
+    <link rel="stylesheet" href="/style/admin/cs/notice/write.css" />
+    <link rel="stylesheet" href="/style/admin/cs/faq/modify.css" />
     <link
       rel="icon"
       href="https://static.lotteon.com/p/common/assets/favicon/1/favicon-32.png"
@@ -25,137 +25,13 @@
     ></script>
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
     <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
-    <script src="/static/js/admin/config/aside-drop.js"></script>
+    <script src="/js/admin/config/aside-drop.js"></script>
   </head>
   <body>
     <div id="wrapper">
-      <header>
-        <div class="header-wrapper">
-          <img
-            src="https://static.lotteon.com/p/common/foCommon/assets/img/logo_lotte-on@2x.png"
-            alt="logo"
-          />
-          <h1>ADMINISTRATOR</h1>
-          <ul>
-            <li>
-              <span class="greeting">
-                안녕하세요, [홍길동]님, 반갑습니다.
-              </span>
-            </li>
-            <li>
-              <a href="#"> 홈 </a>
-            </li>
-            <li>
-              <a href="#"> 로그아웃 </a>
-            </li>
-            <li>
-              <a href="#"> 고객센터 </a>
-            </li>
-          </ul>
-        </div>
-        <nav class="header-padding"></nav>
-      </header>
+      <th:block th:insert="~{/common/admin/header}"></th:block>
       <main>
-        <aside class="side-menu">
-          <ul>
-            <li id="settings-menu">
-              <i class="fa-solid fa-gear"></i>
-              <a href="/admin/config/basic"> 환경설정 </a>
-            </li>
-            <ul class="submenu settings" style="display: none">
-              <li>
-                <a href="/admin/config/basic"> 기본설정 </a>
-              </li>
-              <li>
-                <a href="/admin/config/banner"> 배너관리 </a>
-              </li>
-              <li>
-                <a href="/admin/config/policy"> 약관관리 </a>
-              </li>
-              <li>
-                <a href="/admin/config/category"> 카테고리 </a>
-              </li>
-              <li>
-                <a href="/admin/config/version"> 버전이력 </a>
-              </li>
-            </ul>
-            <li id="store-menu">
-              <i class="fa-solid fa-store"></i>
-              <a href="/admin/shop/list"> 상점관리 </a>
-            </li>
-            <ul class="submenu store" style="display: none">
-              <li>
-                <a href="/admin/shop/list"> 상점목록 </a>
-              </li>
-              <li>
-                <a href="/admin/shop/sales"> 매출현황 </a>
-              </li>
-            </ul>
-            <li id="member-menu">
-              <i class="fa-solid fa-users"></i>
-              <a href="/admin/member/list"> 회원관리 </a>
-            </li>
-            <ul class="submenu member" style="display: none">
-              <li>
-                <a href="/admin/member/list"> 회원목록 </a>
-              </li>
-              <li>
-                <a href="/admin/member/point"> 포인트 관리 </a>
-              </li>
-            </ul>
-            <li id="product-menu">
-              <i class="fa-solid fa-box-open"></i>
-              <a href="/admin/product/list"> 상품관리 </a>
-            </li>
-            <ul class="submenu product" style="display: none">
-              <li>
-                <a href="/admin/product/list"> 상품목록 </a>
-              </li>
-              <li>
-                <a href="/admin/product/register"> 상품등록 </a>
-              </li>
-            </ul>
-            <li id="order-menu">
-              <i class="fa-solid fa-credit-card"></i>
-              <a href="/admin/settings/order/list"> 주문관리 </a>
-            </li>
-            <ul class="submenu order" style="display: none">
-              <li>
-                <a href="/admin/order/list"> 주문현황 </a>
-              </li>
-              <li>
-                <a href="/admin/order/delivery"> 배송현황 </a>
-              </li>
-            </ul>
-            <li id="coupon-menu">
-              <i class="fa-solid fa-ticket"></i>
-              <a href="/admin/settings/coupon/list"> 쿠폰관리 </a>
-            </li>
-            <ul class="submenu coupon" style="display: none">
-              <li>
-                <a href="/admin/coupon/list"> 쿠폰목록 </a>
-              </li>
-              <li>
-                <a href="/admin/coupon/issued"> 쿠폰발급현황 </a>
-              </li>
-            </ul>
-            <li id="cs-menu">
-              <i class="fa-solid fa-headphones"></i>
-              <a href="/admin/cs/notice/list"> 고객센터 </a>
-            </li>
-            <ul class="submenu customer-service" style="display: none">
-              <li>
-                <a href="/admin/cs/notice/list"> 공지사항 </a>
-              </li>
-              <li>
-                <a href="/admin/cs/faq/list"> 자주묻는질문 </a>
-              </li>
-              <li>
-                <a href="/admin/cs/qna/list"> 문의하기 </a>
-              </li>
-            </ul>
-          </ul>
-        </aside>
+        <th:block th:insert="~{/common/admin/aside}"></th:block>
         <section id="content-area">
           <div class="content-area-title">
             <h3>자주묻는질문 수정</h3>
@@ -166,47 +42,45 @@
             </span>
           </div>
           <div class="content">
-            <form action="#" method="POST" class="post-form">
+            <form th:action="@{/admin/cs/faq/modify}" enctype="multipart/form-data" method="POST" class="post-form">
+              <input type="hidden" name="id" th:value="${faqDTO.id}" />
               <table class="post-form-table">
                 <tbody>
                   <tr>
                     <th>유형</th>
                     <td>
-                      <!--TODO: 아래의 select를 피그마 상의 요구사항에 맞게 만들기-->
-                      <select name="filter" class="search-filter">
-                        <option value="customerService">고객서비스</option>
-                        <option value="customerService">이벤트</option>
-                        <option value="customerService">안전거래</option>
-                        <option value="customerService">위해상품</option>
+                      <select id="category-select" class="search-filter">
+                        <option value="">1차 분류 선택</option>
+                        <option value="member">회원</option>
+                        <option value="event">쿠폰/혜택/이벤트</option>
+                        <option value="order_payment">주문/결제</option>
+                        <option value="delivery">배송</option>
+                        <option value="return_exchange">취소/반품/교환</option>
+                        <option value="travel_stay_airline">여행/숙박/항공</option>
+                        <option value="safe_transaction">안전거래</option>
                       </select>
-                      <select name="filter" class="search-filter">
-                        <option value="customerService">고객서비스</option>
-                        <option value="customerService">이벤트</option>
-                        <option value="customerService">안전거래</option>
-                        <option value="customerService">위해상품</option>
+                      <select id="subcategory-select" class="search-filter">
+                        <option value="">2차 분류 선택</option>
                       </select>
+                      <input type="hidden" name="type_id" id="type-id-input" />
                     </td>
                   </tr>
                   <tr>
                     <th>제목</th>
                     <td>
-                      <input type="" placeholder="제목을 입력합니다" />
+                      <input type="text" name="title" th:value="${faqDTO.title}" placeholder="제목을 입력하세요.">
                     </td>
                   </tr>
                   <tr>
                     <th>내용</th>
                     <td>
-                      <textarea
-                        name="noticeContent"
-                        id="notice-content"
-                        placeholder="내용을 입력합니다"
-                      ></textarea>
+                      <textarea name="content" id="notice-content">[[${faqDTO.content}]]</textarea>
                     </td>
                   </tr>
                 </tbody>
               </table>
               <div class="crud-btn-area">
-                <a href="#" class="control-btn delete">취소하기</a>
+                <a th:href="@{/admin/cs/faq/list}" class="control-btn delete">취소하기</a>
                 <input class="post-submit-btn" type="submit" value="등록하기" />
               </div>
             </form>
@@ -224,3 +98,81 @@
     </div>
   </body>
 </html>
+
+<script>
+  const subcategories = {
+    member: {
+      가입: 5,
+      탈퇴: 6,
+      회원정보: 7,
+      로그인: 8
+    },
+    event: {
+      '쿠폰/할인혜택': 9,
+      포인트: 10,
+      제휴: 11,
+      이벤트: 12
+    },
+    order_payment: {
+      상품: 13,
+      결제: 14,
+      구매내역: 15,
+      '영수증/증빙': 16
+    },
+    delivery: {
+      '배송상태/기간': 17,
+      '배송정보확인/변경': 18,
+      해외배송: 19,
+      당일배송: 20,
+      해외직구: 21
+    },
+    return_exchange: {
+      '반품신청/철회': 22,
+      '반품정보확인/변경': 23,
+      '교환 AS신청/철회': 24,
+      '교환정보확인/변경': 25,
+      '취소신청/철회': 26,
+      '취소확인/환불정보': 27
+    },
+    travel_stay_airline: {
+      '여행/숙박': 28,
+      항공: 29
+    },
+    safe_transaction: {
+      '서비스 이용규칙 위반': 30,
+      '지식재산권침해': 31,
+      '법령 및 정책위반 상품': 32,
+      '게시물 정책위반': 33,
+      '직거래/외부거래유도': 34,
+      표시광고: 35,
+      '청소년 위해상품/이미지': 36
+    }
+  };
+
+  const categorySelect = document.getElementById('category-select');
+  const subcategorySelect = document.getElementById('subcategory-select');
+  const typeIdInput = document.getElementById('type-id-input');
+
+  categorySelect.addEventListener('change', () => {
+    const selectedCategory = categorySelect.value;
+    const options = subcategories[selectedCategory] || {};
+
+    subcategorySelect.innerHTML = '<option value="">2차 분류 선택</option>';
+    Object.keys(options).forEach(key => {
+      const option = document.createElement('option');
+      option.value = key;
+      option.textContent = key;
+      subcategorySelect.appendChild(option);
+    });
+
+    typeIdInput.value = ''; // 초기화
+  });
+
+  subcategorySelect.addEventListener('change', () => {
+    const selectedCategory = categorySelect.value;
+    const selectedSub = subcategorySelect.value;
+
+    const typeId = subcategories[selectedCategory]?.[selectedSub] || '';
+    typeIdInput.value = typeId;
+  });
+</script>

@@ -79,7 +79,7 @@ public class CsService {
         noticeRepository.deleteById(id);
     }
 
-    public PageResponseDTO findAll(PageRequestDTO pageRequestDTO, int type_id) {
+    public PageResponseDTO<NoticeDTO> findAll(PageRequestDTO pageRequestDTO, int type_id) {
 
         // 페이징 처리를 위한 pageable 객체 생성
         Pageable pageable = pageRequestDTO.getPageable("id");
@@ -87,9 +87,9 @@ public class CsService {
         Page<Tuple> pageNotice = noticeRepository.selectAllForList(pageable, type_id);
 
         List<NoticeDTO> noticeDTOList = pageNotice.getContent().stream().map(tuple -> {
-
             Notice notice = tuple.get(0, Notice.class);
-            NoticeDTO noticeDTO = NoticeDTO.builder()
+
+            return NoticeDTO.builder()
                     .id(notice.getId())
                     .title(notice.getTitle())
                     .content(notice.getContent())
@@ -98,22 +98,15 @@ public class CsService {
                     .type_id(notice.getType_id().getId()) // Article_Type의 id
                     .subtype_name(notice.getType_id().getSubtype_name()) // Article_Type의 subtype_name
                     .build();
-
-
-
-            return noticeDTO;
-
         }).toList();
 
         int total = (int) pageNotice.getTotalElements();
 
-        return PageResponseDTO
-                .builder()
+        return PageResponseDTO.<NoticeDTO>builder()
                 .pageRequestDTO(pageRequestDTO)
                 .dtoList(noticeDTOList)
                 .total(total)
                 .build();
-
     }
 
     @Transactional
@@ -136,7 +129,7 @@ public class CsService {
         }
     }
 
-    public PageResponseDTO searchAll(PageRequestDTO pageRequestDTO, int typeId) {
+    public PageResponseDTO<NoticeDTO> searchAll(PageRequestDTO pageRequestDTO, int typeId) {
 
         Pageable pageable = pageRequestDTO.getPageable("id");
 
@@ -144,7 +137,7 @@ public class CsService {
 
         List<NoticeDTO> noticeDTOList = pageNotice.getContent().stream().map(tuple -> {
             Notice notice = tuple.get(0, Notice.class);
-            NoticeDTO noticeDTO = NoticeDTO.builder()
+            return NoticeDTO.builder()
                     .id(notice.getId())
                     .title(notice.getTitle())
                     .content(notice.getContent())
@@ -153,12 +146,11 @@ public class CsService {
                     .type_id(notice.getType_id().getId())
                     .subtype_name(notice.getType_id().getSubtype_name())
                     .build();
-            return noticeDTO;
         }).toList();
 
         int total = (int) pageNotice.getTotalElements();
 
-        return PageResponseDTO.builder()
+        return PageResponseDTO.<NoticeDTO>builder()
                 .pageRequestDTO(pageRequestDTO)
                 .dtoList(noticeDTOList)
                 .total(total)
