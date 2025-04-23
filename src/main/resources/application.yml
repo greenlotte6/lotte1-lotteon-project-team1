@@ -1,5 +1,7 @@
 # 배포용 설정
 spring:
+  cache:
+    type: redis
   config:
     activate:
       on-profile: prod
@@ -64,9 +66,24 @@ server:
   servlet:
     context-path: /
 
+lotteon:
+  data:
+    mongodb:
+      config:
+        basic:
+          collection-name: BasicConfig
+          document-namespace:
+            version: basic_confi::version
+            site: basic_config::site
+            logo: basic_config::logo
+            corp-info: basic_config::corp-info
+            cs-info: basic_config::cs_inf
+            copyright: basic_config::copyright;
 ---
 # 개발용 설정
 spring:
+  cache:
+    type: redis
   config:
     activate:
       on-profile: dev
