@@ -1,10 +1,108 @@
 package com.example.lotteon.repository.admin;
 
 import com.example.lotteon.entity.admin.config.ConfigDocument;
-import org.springframework.data.mongodb.repository.MongoRepository;
+import com.example.lotteon.entity.admin.config.CorpInfo;
+import com.example.lotteon.entity.admin.config.CustomerServiceInfo;
+import com.example.lotteon.entity.admin.config.Logo;
+import com.example.lotteon.entity.admin.config.Site;
+import com.google.gson.Gson;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface AdminConfigRepository extends MongoRepository<ConfigDocument, String> {
+@RequiredArgsConstructor
+public class AdminConfigRepository {
 
+  private final MongoTemplate template;
+  private final Gson gson;
+
+  public String findVersion() {
+    Query query = new Query(Criteria.where("id").is("basic_config::version"));
+
+    //version 문서의 "version" 필드만 조회 결과에 포함. "id", "_id"는 조회 결과에서 제외
+    query.fields().include("version").exclude("_id");
+    return template.findDistinct(query, "version", "BasicConfig", String.class).get(0);
+  }
+
+  public Site findSite() {
+    Query query = new Query(Criteria.where("id").is("basic_config::site"));
+    return template.findOne(query, Site.class, "BasicConfig");
+  }
+
+  public Logo findLogo() {
+    Query query = new Query(Criteria.where("id").is("basic_config::logo"));
+    return template.findOne(query, Logo.class, "BasicConfig");
+  }
+
+  public CorpInfo findCorpInfo() {
+    Query query = new Query(Criteria.where("id").is("basic_config::corp_info"));
+    return template.findOne(query, CorpInfo.class, "BasicConfig");
+  }
+
+  public CustomerServiceInfo findCsInfo() {
+    Query query = new Query(Criteria.where("id").is("basic_config::cs_info"));
+    return template.findOne(query, CustomerServiceInfo.class, "BasicConfig");
+  }
+
+  public String findCopyright() {
+    Query query = new Query(Criteria.where("id").is("basic_config::copyright"));
+    query.fields().include("copyright").exclude("_id");
+    return template.findDistinct(query, "copyright", "BasicConfig", String.class).get(0);
+  }
+
+  public ConfigDocument find() {
+    String version = findVersion();
+    Site site = findSite();
+    Logo logo = findLogo();
+    CorpInfo corpInfo = findCorpInfo();
+    CustomerServiceInfo csInfo = findCsInfo();
+    String copyright = findCopyright();
+
+    return ConfigDocument.builder()
+        .version(version)
+        .site(site)
+        .logo(logo)
+        .corpInfo(corpInfo)
+        .csInfo(csInfo)
+        .copyright(copyright)
+        .build();
+  }
+
+  public void updateSite(Site config) {
+    Query query = new Query(Criteria.where("id").is("basic_config::site"));
+    Update update = new Update();
+    update.set("title", config.getTitle());
+    update.set("subtitle", config.getSubtitle());
+    template.updateFirst(query, update, "BasicConfig");
+  }
+
+  public void updateCorpInfo(CorpInfo config) {
+    Query query = new Query(Criteria.where("id").is("basic_config::corp_info"));
+    Update update = new Update().set("name", config.getName())
+        .set("ceo", config.getCeo())
+        .set("business_num", config.getBusinessNumber())
+        .set("seller_num", config.getSellerNumber())
+        .set("address", config.getAddress())
+        .set("address_detail", config.getAddressDetail());
+    template.updateFirst(query, update, "BasicConfig");
+  }
+
+  public void updateCsInfo(CustomerServiceInfo config) {
+    Query query = new Query(Criteria.where("id").is("basic_config::cs_info"));
+    Update update = new Update().set("contact", config.getContact())
+        .set("office_hour", config.getOfficeHour())
+        .set("email", config.getEmail())
+        .set("dispute_contact", config.getDisputeContact());
+    template.updateFirst(query, update, "BasicConfig");
+  }
+
+  public void updateCopyright(String copyright) {
+    Query query = new Query(Criteria.where("id").is("basic_config::copyright"));
+    Update update = new Update().set("copyright", copyright);
+    template.updateFirst(query, update, "BasicConfig");
+  }
 }
