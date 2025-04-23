@@ -5,6 +5,7 @@ $(() => {
   })
 
   $(".post-submit-btn").click((event) => {
+    const key = event.target.name;
     const parent = event.target.parentNode.parentElement;
     const form = parent.querySelector(".post-form")
     const inputs = parent.querySelectorAll("input[type=text]")
@@ -16,7 +17,7 @@ $(() => {
 
     console.log(jsonStr)
 
-    const url = form.action;
+    const url = form.action + `?key=${key}`;
 
     $.ajax({
       type: "PUT",
@@ -24,10 +25,10 @@ $(() => {
       dataType: "json",
       contentType: "application/json;utf-8",
       data: JSON.stringify(jsonStr),
+      beforeSend: function (xhr) {
+        console.log(`Initiating request to ${url}`)
+      },
       success: function (res) {
-        if (res.status === 302) {
-          window.location.href = res.url;
-        }
         console.log(res);
       },
       error: function (err) {
