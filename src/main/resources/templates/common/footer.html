@@ -97,19 +97,20 @@
       <td>
         <h3>롯데쇼핑 주식회사</h3>
         <p>
-          대표이사: 김사무엘상현, 신동빈, 정준호, 강성현 <br/>
-          주소: 서울특별시 강남구 테헤란로 507 (삼성동, WeWork빌딩), 7층<br/>
-          사업자등록번호 : 529-85-00774(롯데쇼핑(주) e커머스사업부)
+          대표이사: [[${config.getCorpInfo().getCeo()}]] <br/>
+          주소: [[${config.getCorpInfo().getAddress()}]]&nbsp;[[${config.getCorpInfo().getAddressDetail()}]]<br/>
+          사업자등록번호 : [[${config.getCorpInfo().getBusinessNumber()}]](롯데쇼핑(주) e커머스사업부)
           <br/>
-          통신판매업 신고 : 2024-서울강남-04439 사업자 정보 확인 <br/>
+          통신판매업 신고 : [[${config.getCorpInfo().getSellerNumber}]] 사업자 정보 확인 <br/>
           호스팅 서비스사업자 : 롯데쇼핑(주) e커머스사업부사업자등록번호
         </p>
       </td>
       <td>
         <h4>고객센터</h4>
         <p>
-          전화번호 : 1899-7000(유료) <br/>
-          E-mail : lotteon@lotte.net
+          전화번호: [[${config.getCsInfo().getContact()}]] <br/>
+          업무시간: [[${config.getCsInfo().getOfficeHour()}]] <br/>
+          E-mail : [[${config.getCsInfo().getEmail()}]] <br/>
         </p>
         <a href="#"> 분쟁해결기준 </a>
         <div class="service-shortcut">
@@ -132,10 +133,10 @@
       </td>
       <td>
         <h4>전자금융거래 분쟁 담당</h4>
-        <p>Tel : 1899-7000(유료) <br/></p>
+        <p>Tel: [[${config.getCsInfo().getDisputeContact()}]]<br/></p>
         <span>
             E-mail:
-            <a href="#">lotteon@lotte.net</a>
+            <a href="#" th:text="${config.getCsInfo().getEmail()}">lotteon@lotte.net</a>
           </span>
         <a href="https://www.lotteon.com/p/trustsafety/main">안전거래센터</a>
       </td>
@@ -180,7 +181,7 @@
         지지 않습니다.
       </p>
       <p>
-        Copyright © LOTTESHOPPING Co., LTD. All rights reserved.
+        [[${config.getCopyright()}]]
         <br/>
         <br/>
         Version: lotteon-[[${appVersion}]]-SNAPSHOT
