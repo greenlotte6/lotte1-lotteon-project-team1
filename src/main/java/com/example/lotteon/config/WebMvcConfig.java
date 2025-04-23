@@ -1,5 +1,6 @@
 package com.example.lotteon.config;
 
+import com.example.lotteon.interceptor.AppVersionSetter;
 import com.example.lotteon.interceptor.ConfigApplicationInterceptor;
 import com.example.lotteon.redis.repository.GlobalHitRepository;
 import com.example.lotteon.service.admin.CacheService;
@@ -12,12 +13,15 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @RequiredArgsConstructor
 public class WebMvcConfig implements WebMvcConfigurer {
 
+  private final AppVersionSetter appVersionSetter;
   private final GlobalHitRepository globalHitRepository;
   private final CacheService adminConfigService;
 
   @Override
   public void addInterceptors(InterceptorRegistry registry) {
-    registry.addInterceptor(new ConfigApplicationInterceptor(adminConfigService))
+    registry.addInterceptor(appVersionSetter)
         .excludePathPatterns("/style/**", "/js/**", "/images/**");
+    registry.addInterceptor(new ConfigApplicationInterceptor(adminConfigService))
+        .excludePathPatterns("/style/**", "/js/**", "/images/**", "/admin/**");
   }
 }

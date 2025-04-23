@@ -1,21 +1,28 @@
 package com.example.lotteon.controller;
 
+import com.example.lotteon.entity.admin.config.ConfigDocument;
+import com.example.lotteon.service.admin.AdminConfigService;
+import jakarta.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Slf4j
 @Controller
+@RequiredArgsConstructor
 public class MainController {
 
-  @Value("${spring.application.version}")
-  private String version;
+  private final AdminConfigService adminConfigService;
 
   @GetMapping(value = {"/", "/index"})
-  public String index(Model model) {
-    model.addAttribute("version", version);
+  public String index(Model model, HttpServletRequest request) {
+    ConfigDocument config = (ConfigDocument) request.getAttribute("cachedConfig");
+    if (config == null) {
+      config = adminConfigService.getConfig();
+    }
+    model.addAttribute("config", config);
     return "/index";
   }
 }
