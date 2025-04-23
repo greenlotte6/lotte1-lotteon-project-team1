@@ -1,7 +1,8 @@
 package com.example.lotteon.controller.admin;
 
 import com.example.lotteon.entity.admin.config.ConfigDocument;
-import com.example.lotteon.repository.admin.AdminConfigRepository;
+import com.example.lotteon.service.admin.AdminConfigService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -15,12 +16,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequiredArgsConstructor
 public class AdminConfigController {
 
-  private final AdminConfigRepository repo;
+  private final AdminConfigService service;
 
   @GetMapping("/basic")
-  public String basic(Model model) {
-    ConfigDocument doc = repo.find();
-    model.addAttribute("config", doc);
+  public String basic(Model model, HttpServletRequest request) {
+    ConfigDocument config = (ConfigDocument) request.getAttribute("cachedConfig");
+    if (config == null) { //캐싱된 기본설정 데이터가 없는 경우
+      config = service.getConfig(); // MongoDB에서 조회 후 캐싱
+    }
+    model.addAttribute("config", config);
     return "/admin/config/basic";
   }
 

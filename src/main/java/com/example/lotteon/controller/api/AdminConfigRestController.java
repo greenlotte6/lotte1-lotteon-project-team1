@@ -29,6 +29,7 @@ public class AdminConfigRestController {
       @RequestParam String key) {
     log.info("PUT request for {} with {}", key, config.toString());
 
+    //TODO: Cache updated config, or update the cached config using redis
     service.updateSite(config);
 
     return new ResponseEntity<>(gson.toJson(config), HttpStatus.OK);
