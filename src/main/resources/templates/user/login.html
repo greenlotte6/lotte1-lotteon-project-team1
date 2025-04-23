@@ -37,9 +37,9 @@
             <div class="main_content_detail">
               <div class="login-wrapper">
                 <div class="login-box">
-                  <form id="loginForm">
-                    <input type="text" placeholder="아이디 또는 이메일 아이디" required />
-                    <input type="password" placeholder="8~15자리 영문+숫자+특수문자 조합" required />
+                  <form id="loginForm" th:action="@{/login}" method="post">
+                    <input type="text" name="id" placeholder="아이디 또는 이메일 아이디" required />
+                    <input type="password" name="password" placeholder="8~15자리 영문+숫자+특수문자 조합" required />
                     <button type="submit" class="login-btn">로그인하기</button>
 
                     <div class="login-options">

@@ -48,23 +48,23 @@ public class UserService {
 
     long count = 0;
 
-    if(type.equals("id")) {
-      count = userRepository.countById(value);
-    }else if(type.equals("email")) {
-      count = userRepository.countByEmail(value);
+      if(type.equals("id")) {
+        count = userRepository.countById(value);
+      }else if(type.equals("email")) {
+        count = userRepository.countByEmail(value);
 
-      if(count == 0) {
-        String code = sendEmailCode(value);
+        if(count == 0) {
+          String code = sendEmailCode(value);
 
-        // 인증코드 비교를 위해 세션 저장
-        HttpSession session = request.getSession();
-        session.setAttribute("Code", code);
+          // 인증코드 비교를 위해 세션 저장
+          HttpSession session = request.getSession();
+          session.setAttribute("code", code);
+        }
       }
-    }
-    else if(type.equals("contact")) {
-      count = userRepository.countByContact(value);
-    }
-    return count;
+      else if(type.equals("contact")) {
+        count = userRepository.countByContact(value);
+      }
+      return count;
   }
 
   @Value("${spring.mail.username}")

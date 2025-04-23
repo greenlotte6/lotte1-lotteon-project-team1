@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }
 
         // 중복 체크
-        fetch(`/id/${value}`)// 서버에 get 요청
+        fetch(`/check/id/${value}`)// 서버에 get 요청
             .then(response => response.json())
             .then((data)=> {
                 console.log(data);
@@ -109,7 +109,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }
 
         // 휴대폰 중복체크
-        const response = await fetch(`/contact/${value}`);
+        const response = await fetch(`/check/contact/${value}`);
         const data = await response.json();
 
         if(data.count > 0){
@@ -127,16 +127,16 @@ document.addEventListener("DOMContentLoaded", function() {
     const btnSendEmail = document.getElementById("btnSendEmail");
     const emailResult = document.querySelector('.emailResult');
     const auth = document.querySelector('.auth');
-    let preventDoubleClick = false;
+    //let preventDoubleClick = false;
 
     btnSendEmail.onclick = async function() {
 
         const value = formRegister.email.value;
 
         // 이중 클릭 방지
-        if(preventDoubleClick) {
-            return;
-        }
+        //if(preventDoubleClick) {
+         //   return;
+       // }
 
         if(!value.match(reEmail)) {
             emailResult.innerText = "이메일이 유효하지 않습니다.";
@@ -146,7 +146,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }
 
         preventDoubleClick = true;
-        const response = await fetch(`/email/${value}`);
+        const response = await fetch(`/check/email/${value}`);
         const data = await response.json();
 
         if(data.count > 0) {
@@ -154,7 +154,7 @@ document.addEventListener("DOMContentLoaded", function() {
             emailResult.style.color = "red";
             isEmailOk = false;
         }else {
-            // 중복되지 않은 이메일이면 인증번호 필드 출력
+            // 중복되지 않은 이메일이면 인증번호 필드 출력\
             auth.style.display = "block";
         }
     };
@@ -167,7 +167,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
         // JSON 생성
         const jsonData = {
-            "Code" : value
+            "code" : value
         };
 
         // 서버 전송
@@ -216,6 +216,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }
 
         return true;
+
     };
 
 });
