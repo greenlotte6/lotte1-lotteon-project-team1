@@ -11,9 +11,9 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PageResponseDTO {
+public class PageResponseDTO<T> {
 
-    private List<NoticeDTO> dtoList;
+    private List<T> dtoList; // 제네릭 타입으로 변경
 
     private int type_id;
     private int pg;
@@ -29,7 +29,7 @@ public class PageResponseDTO {
     private String filter;
 
     @Builder
-    public PageResponseDTO(PageRequestDTO pageRequestDTO, List<NoticeDTO> dtoList, int total){
+    public PageResponseDTO(PageRequestDTO pageRequestDTO, List<T> dtoList, int total) {
         this.type_id = pageRequestDTO.getType_id();
         this.pg = pageRequestDTO.getPg();
         this.size = pageRequestDTO.getSize();

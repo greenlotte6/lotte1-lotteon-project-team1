@@ -2,8 +2,10 @@ package com.example.lotteon.controller.admin;
 
 import com.example.lotteon.dto.PageRequestDTO;
 import com.example.lotteon.dto.PageResponseDTO;
+import com.example.lotteon.dto.cs.FaqDTO;
 import com.example.lotteon.dto.cs.NoticeDTO;
 import com.example.lotteon.service.cs.CsService;
+import com.example.lotteon.service.cs.faqService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +24,10 @@ public class AdminCsController {
 
     private final HttpServletRequest request;
     private final CsService csService;
+    private final faqService faqService;
 
+
+    /* 여기부터 노티스 컨트롤러 */
     @GetMapping("/notice/search")
     public String noticesearch(PageRequestDTO pageRequestDTO, Model model) {
 
@@ -91,7 +96,6 @@ public class AdminCsController {
     }
 
 
-
     @GetMapping("/notice/delete")
     public String delete(int id) {
 
@@ -99,5 +103,84 @@ public class AdminCsController {
 
         return "redirect:/admin/cs/notice/notice";
     }
+    /* 위까지 노티스 컨트롤러 */
+
+
+
+    /* 여기부터 faq 자주묻는질문 컨트롤러*/
+    @GetMapping("/faq/write")
+    public String faqwrite() {
+        return "/admin/cs/faq/write";
+    }
+
+    @PostMapping("/faq/write")
+    public String faqwrite(FaqDTO faqDTO) {
+
+        int id = faqService.faqRegister(faqDTO);
+        log.info("faqDTO = {}", faqDTO);
+        return "redirect:/admin/cs/faq/list";
+    }
+
+    @GetMapping("/faq/view")
+    public String faqview(@RequestParam("id")int id, Model model) {
+
+        // 글 조회 서비스 호출
+        FaqDTO faqDTO = faqService.findById(id);
+        model.addAttribute("faqDTO", faqDTO);
+
+        return "/admin/cs/faq/view";
+    }
+
+    @GetMapping("/faq/delete")
+    public String faqdelete(int id) {
+
+        faqService.deletefaq(id);
+
+        return "redirect:/admin/cs/faq/list";
+    }
+
+    @GetMapping("/faq/modify")
+    public String faqmodify(int id, Model model) {
+
+        // 수정 데이터 조회 서비스
+        FaqDTO faqDTO = faqService.findById(id);
+        //모델참조
+        model.addAttribute(faqDTO);
+
+        return "/admin/cs/faq/modify";
+    }
+
+    @PostMapping("/faq/modify")
+    public String faqmodify(FaqDTO faqDTO) {
+
+        // 서비스호출
+        faqService.modifyFaq(faqDTO);
+
+
+        return "redirect:/admin/cs/faq/list";
+    }
+
+    @GetMapping("/faq/list")
+    public String faqlist(Model model, PageRequestDTO pageRequestDTO) {
+
+        int type_id = pageRequestDTO.getType_id();
+        PageResponseDTO pageResponseDTO = faqService.findAll(pageRequestDTO, type_id);
+
+        model.addAttribute(pageResponseDTO);
+        return "/admin/cs/faq/list";
+    }
+
+    @GetMapping("/faq/search")
+    public String faqsearch(PageRequestDTO pageRequestDTO, Model model) {
+
+        int type_id = pageRequestDTO.getType_id();
+        //서비스 호출
+        PageResponseDTO pageResponseDTO = faqService.searchAll(pageRequestDTO, type_id);
+
+        model.addAttribute(pageResponseDTO);
+        return "/admin/cs/faq/searchlist";
+
+    }
+
 
 }

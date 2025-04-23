@@ -114,10 +114,10 @@ main{
   /*
   현재 선택된 페이지에만 아래 스타일을 적용
   */
-  .pagination > a:nth-child(3) {
+a.current {
     background-color: #343b4d;
     color: #fff;
-  }
+}
   
 
 
