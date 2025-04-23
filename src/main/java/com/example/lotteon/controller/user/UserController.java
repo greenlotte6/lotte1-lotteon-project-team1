@@ -79,20 +79,20 @@ public class UserController {
   }
 
   // 유효성 검사
-  @GetMapping("/{type}/{value}")
-  public ResponseEntity user(@PathVariable("type") String type, @PathVariable("value") String value) {
-    log.info("type : " + type + ", value : " + value);
+ // @GetMapping("/{type}/{value}")
+ // public ResponseEntity user(@PathVariable("type") String type, @PathVariable("value") String value) {
+  //  log.info("type : " + type + ", value : " + value);
 
     // 서비스 호출
-    long count = userService.checkUser(type, value);
+    //long count = userService.checkUser(type, value);
 
     // JSON 생성
-    Map<String, Long> resultMap = new HashMap<>();
-    resultMap.put("count", count);
+    //Map<String, Long> resultMap = new HashMap<>();
+    //resultMap.put("count", count);
 
     // JSON 반환
-    return ResponseEntity.ok().body(resultMap);
-  }
+    //return ResponseEntity.ok().body(resultMap);
+  //}
 
   // JSON 단일 문자열값이 직접 String으로 매핑되지 않기 때문에 JSON과 호환되는 Map 타입으로 JSON 수신
   @PostMapping("/email/auth")
