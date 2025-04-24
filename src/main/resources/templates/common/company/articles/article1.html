@@ -3,26 +3,15 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>UX 디자이너 김지영 인터뷰 - 롯데ON</title>
-  <link rel="stylesheet" href="/static/style/common/company/article.css">
+  <link rel="stylesheet" href="/style/common/company/article.css">
 </head>
 <body>
-  <header>
-    <div class="logo">
-      <a href="index.html"><img src="https://story.lotteon.com/wp-content/uploads/2021/12/%EB%A1%AF%EB%8D%B0ON_CI_BI.png" alt="롯데ON 로고"></a>
-    </div>
-    <nav class="nav">
-      <a href="/templates/common/company/index.html">HOME</a>
-      <a href="/templates/common/company/culture.html">기업문화</a>
-      <a href="/templates/common/company/blog.html">소식과 이야기</a>
-      <a href="/templates/common/company/recruit.html">채용</a>
-      <a href="/templates/common/company/media.html">미디어</a>
-    </nav>
-  </header>
+<th:block th:insert="~{/common/company/_header.html}"></th:block>
 
   <main class="article">
     <h1>함께 성장하는 팀, UX 디자이너 김지영</h1>
     <p class="date">2025.04.16</p>
-    <img src="/static/images/interview.jpg" alt="UX 디자이너 김지영" class="hero-img"/>
+    <img src="/images/interview.jpg" alt="UX 디자이너 김지영" class="hero-img"/>
 
     <article>
       <p><strong>김지영 UX 디자이너</strong>는 롯데ON의 사용자 중심 디자인을 이끄는 핵심 인물입니다. 그녀는 ‘사용자 경험’이 단순한 디자인을 넘어서 비즈니스의 핵심이 되어야 한다고 말합니다. 디자인이 비즈니스와 어떻게 연결되는지에 대해 이야기하며, UX 디자인의 중요성을 강조합니다.</p>
@@ -36,7 +25,7 @@
       <h2>앞으로의 목표는?</h2>
       <p>“고객이 롯데ON 서비스를 사용하며 기분 좋은 경험을 하도록 만드는 것이 제 일입니다.” 김지영 디자이너는 앞으로도 끊임없는 관찰과 실험을 통해 더 나은 사용자 경험을 제공하고 싶다고 밝혔습니다. 그녀의 목표는 단순히 좋은 디자인을 만드는 것이 아니라, 롯데ON의 모든 사용자에게 긍정적인 경험을 전달하는 것입니다.</p>
 
-      <p class="closing">🎤 더 많은 인터뷰 기사는 <a href="/templates/common/company/blog.html">소식과 이야기</a>에서 확인하세요!</p>
+      <p class="closing">🎤 더 많은 인터뷰 기사는 <a th:href="@{/company/blog}">소식과 이야기</a>에서 확인하세요!</p>
     </article>
   </main>
 

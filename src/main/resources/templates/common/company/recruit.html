@@ -24,45 +24,27 @@
       <tr>
         <th>번호</th>
         <th>채용부서</th>
-        <th>채용직무</th>
+        <th>경력사항</th>
         <th>채용형태</th>
-        <th>근무지</th>
+        <th>제목</th>
+        <th>상태</th>
         <th>모집기간</th>
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td>4</td>
-        <td>로지스틱스</td>
-        <td>운영관리</td>
-        <td>정규직 (신입)</td>
-        <td>서울</td>
-        <td>2025-04-01 ~ 2025-04-30</td>
-      </tr>
-      <tr>
-        <td>3</td>
-        <td>IT</td>
-        <td>프론트엔드 개발</td>
-        <td>정규직 (경력)</td>
-        <td>서울/원격</td>
-        <td>2025-04-01 ~ 2025-04-30</td>
-      </tr>
-      <tr>
-        <td>2</td>
-        <td>플랫폼</td>
-        <td>데이터 엔지니어</td>
-        <td>정규직 (경력)</td>
-        <td>서울</td>
-        <td>2025-04-01 ~ 2025-04-30</td>
-      </tr>
-      <tr>
-        <td>1</td>
-        <td>마케팅</td>
-        <td>콘텐츠 기획</td>
-        <td>계약직 (1년)</td>
-        <td>서울</td>
-        <td>2025-04-01 ~ 2025-04-30</td>
-      </tr>
+    <tr th:each="post, stat : ${posts}">
+      <td th:text="${stat.count}">1</td>
+      <td th:text="${post.dept}">광고사업</td>
+      <td th:text="${post.career}">경력 4~15년</td>
+      <td th:text="${post.hireType}">정규직</td>
+      <td th:text="${post.title}">광고 플랫폼 기획</td>
+      <td th:text="${post.status}">모집중</td>
+      <td>
+        <span th:text="${#temporals.format(post.startDate,'yyyy-MM-dd')}"></span>
+        ~
+        <span th:text="${#temporals.format(post.endDate,'yyyy-MM-dd')}"></span>
+      </td>
+    </tr>
     </tbody>
   </table>
   <div class="pagination">
@@ -80,7 +62,7 @@
 
 
 
-  <th:block th:insert="~{/common/company/_footer.html.html}"></th:block>
+  <th:block th:insert="~{/common/company/_footer.html}"></th:block>
   <script>
     function scrollToNextSection() {
       const nextSection = document.getElementById('description');
