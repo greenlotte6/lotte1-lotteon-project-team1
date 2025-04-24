@@ -59,7 +59,7 @@
                 <div class="main_content_detail">
                     <table>
                         <tr th:each="notice, i:${pageResponseDTO.dtoList}">
-                            <td><a th:href="@{/cs/notice/view(id=${notice.id})}">[[${notice.title}]]</a></td>
+                            <td><a th:href="@{/cs/notice/csnoticeview(id=${notice.id})}">[[${notice.title}]]</a></td>
                             <td>[[${notice.register_date}]]</td>
                         </tr>
 
@@ -68,30 +68,30 @@
 
                 <section class="pagination">
                     <a class="page move"
-                       th:href="@{/cs/notice/search(pg=1, type_id=${pageResponseDTO.type_id}, filter=${pageResponseDTO.filter})}">
+                       th:href="@{/cs/notice/csnoticeall(pg=1, type_id=${pageResponseDTO.type_id}, filter=${pageResponseDTO.filter})}">
                         <i class="fa-solid fa-angles-left"></i>
                     </a>
 
                     <a class="page move"
-                       th:href="@{/cs/notice/search(pg=${pageResponseDTO.start - 1}, type_id=${pageResponseDTO.type_id}, filter=${pageResponseDTO.filter})}">
+                       th:href="@{/cs/notice/csnoticeall(pg=${pageResponseDTO.start - 1}, type_id=${pageResponseDTO.type_id}, filter=${pageResponseDTO.filter})}">
                         <i class="fa-solid fa-chevron-left"></i>
                     </a>
 
                     <th:block th:each="num : ${#numbers.sequence(pageResponseDTO.start, pageResponseDTO.end)}">
                         <a class="page"
-                           th:href="@{/cs/notice/search(pg=${num}, type_id=${pageResponseDTO.type_id}, filter=${pageResponseDTO.filter})}"
+                           th:href="@{/cs/notice/csnoticeall(pg=${num}, type_id=${pageResponseDTO.type_id}, filter=${pageResponseDTO.filter})}"
                            th:class="${num == pageResponseDTO.pg} ? 'current' : 'num'">
                             [[${num}]]
                         </a>
                     </th:block>
 
                     <a class="page move"
-                       th:href="@{/cs/notice/search(pg=${pageResponseDTO.end + 1}, type_id=${pageResponseDTO.type_id}, filter=${pageResponseDTO.filter})}">
+                       th:href="@{/cs/notice/csnoticeall(pg=${pageResponseDTO.end + 1}, type_id=${pageResponseDTO.type_id}, filter=${pageResponseDTO.filter})}">
                         <i class="fa-solid fa-chevron-right"></i>
                     </a>
 
                     <a class="page move"
-                       th:href="@{/cs/notice/search(pg=${pageResponseDTO.lastPage}, type_id=${pageResponseDTO.type_id}, filter=${pageResponseDTO.filter})}">
+                       th:href="@{/cs/notice/csnoticeall(pg=${pageResponseDTO.lastPage}, type_id=${pageResponseDTO.type_id}, filter=${pageResponseDTO.filter})}">
                         <i class="fa-solid fa-angles-right"></i>
                     </a>
                 </section>

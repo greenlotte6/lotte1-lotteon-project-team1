@@ -1,0 +1,172 @@
+<!--
+  작성자: 손준오(sjo112777)
+  내용: 고객센터 > 자주묻는질문 목록 view
+-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+  <head>
+    <meta charset="UTF-8" />
+    <title>고객센터 > 자주묻는질문 목록</title>
+    <link rel="stylesheet" href="/style/init.css" />
+    <link rel="stylesheet" href="/style/index.css" />
+    <link rel="stylesheet" href="/style/common/header.css" />
+    <link rel="stylesheet" href="/style/common/footer.css" />
+    <!--<link rel="stylesheet" href="//style/common/pagination.css" />-->
+    <link rel="stylesheet" href="/style/cs/cscommon.css" />
+    <link rel="stylesheet" href="/style/cs/csfaqlist.css" />
+    <link
+      rel="icon"
+      href="https://static.lotteon.com/p/common/assets/favicon/1/favicon-32.png"
+    />
+    <link
+      rel="stylesheet"
+      href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css"
+    />
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
+    <script src="/js/common/header.js"></script>
+    <script src="/js/common/footer.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/all.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const maxQuestions = 3; // 기본 보이는 개수
+            const maxVisibleQuestions = 10; // 더보기 시 최대 보이는 개수
+
+            document.querySelectorAll('table').forEach(table => {
+                const btn = table.querySelector('.moreBtn');
+                if (!btn) return;
+
+                // 버튼을 제외한 tr만 따로 추림 (즉, 질문 리스트만)
+                const questionRows = Array.from(table.querySelectorAll('tr')).filter(row => !row.contains(btn));
+
+                let isExpanded = false;
+
+                // 초기 상태 설정: 3개만 보이기
+                function setUpQuestions() {
+                    questionRows.forEach((row, index) => {
+                        row.style.display = index < maxQuestions ? '' : 'none';
+                    });
+                    btn.textContent = '더보기';
+                    isExpanded = false;
+                }
+
+                // 더보기 / 간단히 보기 토글
+                function toggleQuestions() {
+                    questionRows.forEach((row, index) => {
+                        row.style.display = isExpanded
+                            ? (index < maxQuestions ? '' : 'none')
+                            : (index < maxVisibleQuestions ? '' : 'none');
+                    });
+                    btn.textContent = isExpanded ? '더보기' : '간단히 보기';
+                    isExpanded = !isExpanded;
+                }
+
+                setUpQuestions();
+                btn.addEventListener('click', toggleQuestions);
+            });
+        });
+      </script>
+  </head>
+  <body>
+    <div id="wrapper">
+
+      <th:block th:insert="~{/common/cs/csheader}"></th:block>
+        <nav id="quick-menu">
+          <ul>
+            <li>
+              <span>홈 > 자주묻는 질문</span>
+            </li>
+          </ul>
+        </nav>
+      </header>
+
+
+      <main>
+        <div class="csmain">
+          <!-- 왼쪽 사이드바 -->
+            <th:block th:insert="~{/common/cs/faqsidebar}"></th:block>
+            <!-- 오른쪽 글 -->
+            <article class="main_content">
+              <div class="main_title">
+                  <p>회원</p>
+                  <span style="color: #808080; margin-top: 10px;">회원관련 자주묻는 질문 입니다.</span>
+              </div>
+              <div class="main_content_detail">
+                <p>가입</p>
+                <table id="joinTable">
+                    <tr th:each="faq : ${joinFaqs}">
+                        <td>
+                            <a th:href="@{/cs/faq/csfaqview(id=${faq.id})}"><span style="color: #0070c0; font-weight: 700;">Q.</span> [[${faq.title}]]</a>
+                        </td>
+                    </tr>
+                    <tr>
+                      <td colspan="1" style="text-align:center;">
+                        <button class="moreBtn">더보기</button>
+                      </td>
+                    </tr>
+                </table>
+
+                <p>탈퇴</p>
+                <table id="leaveTable">
+                    <tr th:each="faq : ${leaveFaqs}">
+                          <td>
+                              <a th:href="@{/cs/faq/csfaqview(id=${faq.id})}"><span style="color: #0070c0; font-weight: 700;">Q.</span> [[${faq.title}]]</a>
+                          </td>
+                      </tr>
+                      <tr>
+                          <td colspan="1" style="text-align:center;">
+                              <button class="moreBtn">더보기</button>
+                          </td>
+                      </tr>
+                    </table>
+
+                  <p>회원정보</p>
+                  <table id="infoTable">
+                      <tr th:each="faq : ${infoFaqs}">
+                          <td>
+                              <a th:href="@{/cs/faq/csfaqview(id=${faq.id})}"><span style="color: #0070c0; font-weight: 700;">Q.</span> [[${faq.title}]]</a>
+                          </td>
+                      </tr>
+                      <tr>
+                          <td colspan="1" style="text-align:center;">
+                              <button class="moreBtn">더보기</button>
+                          </td>
+                      </tr>
+                  </table>
+
+                  <p>로그인</p>
+                  <table id="loginTable">
+                      <tr th:each="faq : ${loginFaqs}">
+                          <td>
+                              <a th:href="@{/cs/faq/csfaqview(id=${faq.id})}"><span style="color: #0070c0; font-weight: 700;">Q.</span> [[${faq.title}]]</a>
+                          </td>
+                      </tr>
+                      <tr>
+                          <td colspan="1" style="text-align:center;">
+                              <button class="moreBtn">더보기</button>
+                          </td>
+                      </tr>
+                  </table>
+                  
+              </div>
+
+
+            </article>
+
+        </div>
+
+
+
+
+      </main>
+
+
+
+      <th:block th:insert="~{/common/footer}"></th:block>
+    </div>
+  </body>
+</html>

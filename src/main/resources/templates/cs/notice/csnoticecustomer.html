@@ -3,7 +3,8 @@
   내용: 고객센터 > 공지사항 목록 view
 -->
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
     <meta charset="UTF-8" />
     <title>고객센터 > 공지사항목록</title>
@@ -57,39 +58,39 @@
                 </div>
                 <div class="main_content_detail">
                     <table>
-                        <tr>
-                            <td>[안내]</td>
-                            <td><a href="#">해외 결제사칭 문자 주의</a></td>
-                            <td>00.00.00</td>
-                        </tr>
-                        <tr>
-                            <td>[안내]</td>
-                            <td><a href="#">해외 결제사칭 문자 주의</a></td>
-                            <td>00.00.00</td>
-                        </tr>
-                        <tr>
-                            <td>[안내]</td>
-                            <td><a href="#">해외 결제사칭 문자 주의</a></td>
-                            <td>00.00.00</td>
+                        <tr th:each="notice, i:${pageResponseDTO.dtoList}">
+                            <td><a th:href="@{/cs/notice/csnoticeview(id=${notice.id})}">[[${notice.title}]]</a></td>
+                            <td>[[${notice.register_date}]]</td>
                         </tr>
                     </table>
                 </div>
 
                 <section class="pagination">
-                    <a class="page move" href="#">
+                    <a class="page move"
+                       th:href="@{/cs/notice/csnoticecustomer(pg=1, type_id=${pageResponseDTO.type_id}, filter=${pageResponseDTO.filter})}">
                         <i class="fa-solid fa-angles-left"></i>
                     </a>
-                    <a class="page move" href="#">
+
+                    <a class="page move"
+                       th:href="@{/cs/notice/csnoticecustomer(pg=${pageResponseDTO.start - 1}, type_id=${pageResponseDTO.type_id}, filter=${pageResponseDTO.filter})}">
                         <i class="fa-solid fa-chevron-left"></i>
                     </a>
-                    <a class="page" href="">1</a>
-                    <a class="page" href="">2</a>
-                    <a class="page" href="">3</a>
-                    <a class="page" href="">4</a>
-                    <a class="page move" href="#">
+
+                    <th:block th:each="num : ${#numbers.sequence(pageResponseDTO.start, pageResponseDTO.end)}">
+                        <a class="page"
+                           th:href="@{/cs/notice/csnoticecustomer(pg=${num}, type_id=${pageResponseDTO.type_id}, filter=${pageResponseDTO.filter})}"
+                           th:class="${num == pageResponseDTO.pg} ? 'current' : 'num'">
+                            [[${num}]]
+                        </a>
+                    </th:block>
+
+                    <a class="page move"
+                       th:href="@{/cs/notice/csnoticecustomer(pg=${pageResponseDTO.end + 1}, type_id=${pageResponseDTO.type_id}, filter=${pageResponseDTO.filter})}">
                         <i class="fa-solid fa-chevron-right"></i>
                     </a>
-                    <a class="page move" href="#">
+
+                    <a class="page move"
+                       th:href="@{/cs/notice/csnoticecustomer(pg=${pageResponseDTO.lastPage}, type_id=${pageResponseDTO.type_id}, filter=${pageResponseDTO.filter})}">
                         <i class="fa-solid fa-angles-right"></i>
                     </a>
                 </section>
