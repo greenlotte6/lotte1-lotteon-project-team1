@@ -19,7 +19,7 @@ public class Logo {
   @SerializedName("footer_location")
   private String footerLogoLocation;
 
-  @Field(name = "favicon")
-  @SerializedName("favicon")
+  @Field(name = "favicon_location")
+  @SerializedName("favicon_location")
   private String faviconLocation;
 }
