@@ -20,6 +20,7 @@ import lombok.NoArgsConstructor;
 public class Product {
 
   @Id
+  @Column(name = "id")
   private int id;
 
   @JoinColumn(name = "category_id")

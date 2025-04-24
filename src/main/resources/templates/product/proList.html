@@ -61,8 +61,8 @@
                 </div>
              </div>
 
-                <div class="grid">
-                    <a th:href="@{/product/detail}" class="product">
+                <div class="grid" th:each="products : ${products}">
+                    <a th:href="@{/product/detail(id=${products.id})}" class="product">
                         <div class="grid-img">
                             <img th:src="@{/proDetail-img/img5.png}" alt="이미지">
                         </div>
@@ -73,7 +73,40 @@
                         </div>
                         
                         <div class="Protitle">
-                            <span>어반드레스</span> 
+                            <span>[[${products.getCompany()}]]</span>
+                            <span>[[${products.getName()}]]</span>
+                        </div>
+
+                        <div class="Proprice">
+                            <del>[[${products.getPrice()}]]원</del>
+                        </div>
+                        <div class="sela-price">
+                            <span class="sale">[[${products.getDiscountRate()}]]%</span>
+                            <span th:text="${products.getPrice() - (products.getPrice()/100) * products.getDiscountRate() + '원'}"></span>
+                        </div>
+                        <div class="rank">
+                            <i class="fa-solid fa-star"></i>
+                            <span>5.0 |</span>
+                            <span>리뷰 1</span>
+                        </div>
+
+                        <div class="free">
+                            <span>무료배송</span>
+                        </div>
+                    </a>
+
+                    <a href="#" class="product">
+                        <div class="grid-img">
+                            <img src="/proDetail-img/img5.png" alt="이미지">
+                        </div>
+
+                        <div class="icon">
+                            <button><i class="fa-regular fa-heart" id="heart"></i></button>
+                            <button><i class="fa-solid fa-cart-plus"></i></button>
+                        </div>
+
+                        <div class="Protitle">
+                            <span>어반드레스</span>
                             <span>스티치 데님 자켓 - 2COL</span>
                         </div>
 
@@ -81,7 +114,7 @@
                             <del>82,000원</del>
                         </div>
                         <div class="sela-price">
-                            <span class="sale">60%</span> 
+                            <span class="sale">60%</span>
                             <span>32,800원</span>
                         </div>
                         <div class="rank">
@@ -104,9 +137,9 @@
                             <button><i class="fa-regular fa-heart" id="heart"></i></button>
                             <button><i class="fa-solid fa-cart-plus"></i></button>
                         </div>
-                        
+
                         <div class="Protitle">
-                            <span>어반드레스</span> 
+                            <span>어반드레스</span>
                             <span>스티치 데님 자켓 - 2COL</span>
                         </div>
 
@@ -114,40 +147,7 @@
                             <del>82,000원</del>
                         </div>
                         <div class="sela-price">
-                            <span class="sale">60%</span> 
-                            <span>32,800원</span>
-                        </div>
-                        <div class="rank">
-                            <i class="fa-solid fa-star"></i>
-                            <span>5.0 |</span>
-                            <span>리뷰 1</span>
-                        </div>
-
-                        <div class="free">
-                            <span>무료배송</span>
-                        </div>
-                    </a>
-
-                    <a href="#" class="product">
-                        <div class="grid-img">
-                            <img src="/proDetail-img/img5.png" alt="이미지">
-                        </div>
-
-                        <div class="icon">
-                            <button><i class="fa-regular fa-heart" id="heart"></i></button>
-                            <button><i class="fa-solid fa-cart-plus"></i></button>
-                        </div>
-                        
-                        <div class="Protitle">
-                            <span>어반드레스</span> 
-                            <span>스티치 데님 자켓 - 2COL</span>
-                        </div>
-
-                        <div class="Proprice">
-                            <del>82,000원</del>
-                        </div>
-                        <div class="sela-price">
-                            <span class="sale">60%</span> 
+                            <span class="sale">60%</span>
                             <span>32,800원</span>
                         </div>
                         <div class="rank">
@@ -170,9 +170,9 @@
                             <button><i class="fa-regular fa-heart" id="heart"></i></button>
                             <button><i class="fa-solid fa-cart-plus"></i></button>
                         </div>
-                        
+
                         <div class="Protitle">
-                            <span>어반드레스</span> 
+                            <span>어반드레스</span>
                             <span>스티치 데님 자켓 - 2COL</span>
                         </div>
 
@@ -180,7 +180,7 @@
                             <del>82,000원</del>
                         </div>
                         <div class="sela-price">
-                            <span class="sale">60%</span> 
+                            <span class="sale">60%</span>
                             <span>32,800원</span>
                         </div>
                         <div class="rank">
@@ -203,9 +203,9 @@
                             <button><i class="fa-regular fa-heart" id="heart"></i></button>
                             <button><i class="fa-solid fa-cart-plus"></i></button>
                         </div>
-                        
+
                         <div class="Protitle">
-                            <span>어반드레스</span> 
+                            <span>어반드레스</span>
                             <span>스티치 데님 자켓 - 2COL</span>
                         </div>
 
@@ -213,7 +213,7 @@
                             <del>82,000원</del>
                         </div>
                         <div class="sela-price">
-                            <span class="sale">60%</span> 
+                            <span class="sale">60%</span>
                             <span>32,800원</span>
                         </div>
                         <div class="rank">
@@ -236,9 +236,9 @@
                             <button><i class="fa-regular fa-heart" id="heart"></i></button>
                             <button><i class="fa-solid fa-cart-plus"></i></button>
                         </div>
-                        
+
                         <div class="Protitle">
-                            <span>어반드레스</span> 
+                            <span>어반드레스</span>
                             <span>스티치 데님 자켓 - 2COL</span>
                         </div>
 
@@ -246,7 +246,7 @@
                             <del>82,000원</del>
                         </div>
                         <div class="sela-price">
-                            <span class="sale">60%</span> 
+                            <span class="sale">60%</span>
                             <span>32,800원</span>
                         </div>
                         <div class="rank">
@@ -270,9 +270,9 @@
                             <button><i class="fa-regular fa-heart" id="heart"></i></button>
                             <button><i class="fa-solid fa-cart-plus"></i></button>
                         </div>
-                        
+
                         <div class="Protitle">
-                            <span>어반드레스</span> 
+                            <span>어반드레스</span>
                             <span>스티치 데님 자켓 - 2COL</span>
                         </div>
 
@@ -280,7 +280,7 @@
                             <del>82,000원</del>
                         </div>
                         <div class="sela-price">
-                            <span class="sale">60%</span> 
+                            <span class="sale">60%</span>
                             <span>32,800원</span>
                         </div>
                         <div class="rank">
@@ -303,9 +303,9 @@
                             <button><i class="fa-regular fa-heart" id="heart"></i></button>
                             <button><i class="fa-solid fa-cart-plus"></i></button>
                         </div>
-                        
+
                         <div class="Protitle">
-                            <span>어반드레스</span> 
+                            <span>어반드레스</span>
                             <span>스티치 데님 자켓 - 2COL</span>
                         </div>
 
@@ -313,7 +313,7 @@
                             <del>82,000원</del>
                         </div>
                         <div class="sela-price">
-                            <span class="sale">60%</span> 
+                            <span class="sale">60%</span>
                             <span>32,800원</span>
                         </div>
                         <div class="rank">
@@ -336,9 +336,9 @@
                             <button><i class="fa-regular fa-heart" id="heart"></i></button>
                             <button><i class="fa-solid fa-cart-plus"></i></button>
                         </div>
-                        
+
                         <div class="Protitle">
-                            <span>어반드레스</span> 
+                            <span>어반드레스</span>
                             <span>스티치 데님 자켓 - 2COL</span>
                         </div>
 
@@ -346,7 +346,7 @@
                             <del>82,000원</del>
                         </div>
                         <div class="sela-price">
-                            <span class="sale">60%</span> 
+                            <span class="sale">60%</span>
                             <span>32,800원</span>
                         </div>
                         <div class="rank">
@@ -369,9 +369,9 @@
                             <button><i class="fa-regular fa-heart" id="heart"></i></button>
                             <button><i class="fa-solid fa-cart-plus"></i></button>
                         </div>
-                        
+
                         <div class="Protitle">
-                            <span>어반드레스</span> 
+                            <span>어반드레스</span>
                             <span>스티치 데님 자켓 - 2COL</span>
                         </div>
 
@@ -379,7 +379,7 @@
                             <del>82,000원</del>
                         </div>
                         <div class="sela-price">
-                            <span class="sale">60%</span> 
+                            <span class="sale">60%</span>
                             <span>32,800원</span>
                         </div>
                         <div class="rank">

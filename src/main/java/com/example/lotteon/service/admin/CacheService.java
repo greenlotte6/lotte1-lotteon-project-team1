@@ -20,7 +20,6 @@ public class CacheService {
     ValueOperations<String, String> ops = template.opsForValue();
     String cachedData = ops.get("admin::basic_config");
     if (cachedData != null) {
-      log.info("Cached config found. \n{}", cachedData);
       return gson.fromJson(cachedData, ConfigDocument.class);
     }
     return null;

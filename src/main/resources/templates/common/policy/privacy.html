@@ -27,69 +27,24 @@
   </head>
   <body>
   <!-- HEADER -->
-  <th:block th:insert="~{/common/policy/_header.html}"></th:block>
+  <th:block th:insert="~{/common/user/userheader}"></th:block>
     <main>
       <div class="terms-wrapper">
         <h1>LotteON 서비스 이용약관</h1>
 
-        <!-- 약관 탭 -->
-        <ul class="terms-tabs">
-          <li>
-            <a href="buyer.html"
-              ><i class="fa-solid fa-cart-shopping"></i> 구매회원 약관</a
-            >
-          </li>
-          <li>
-            <a href="seller.html"
-              ><i class="fa-solid fa-store"></i> 판매회원 약관</a
-            >
-          </li>
-          <li>
-            <a href="finance.html"
-              ><i class="fa-solid fa-credit-card"></i> 전자금융거래</a
-            >
-          </li>
-          <li>
-            <a href="location.html"
-              ><i class="fa-solid fa-location-dot"></i> 위치정보 약관</a
-            >
-          </li>
-          <li class="active">
-            <a href="privacy.html"
-              ><i class="fa-solid fa-user-shield"></i> 개인정보처리</a
-            >
-          </li>
-        </ul>
+        <th:block th:insert="~{/policy/_termsMenu}"></th:block>
 
         <!-- 약관 제목 -->
-        <div class="terms-title">구매회원 이용약관</div>
-
-        <!-- 약관 내용 -->
-        <div class="terms-content" id="terms-content">
-          <p>
-            제 1 조 (목적)<br />
-            이 약관은 주식회사 롯데쇼핑 (이하 '회사'라 함)이...
-          </p>
-
-          <p>
-            제 2 조 (약관의 명시, 효력 및 개정)<br />
-            약관내용 제공
-          </p>
-
-          <p>
-            제 3 조<br />
-            약관내용 또 제공
-          </p>
-
-          <p>
-            제 4 조<br />
-            약관내용 또 제공
-          </p>
-
-          <p>
-            제 5 조<br />
-            약관내용 또 제공
-          </p>
+        <div>
+          <div class="terms-title" th:text="${terms.get(0).getTitle()}"></div>
+          <!-- 약관 내용 -->
+          <div class="terms-content" id="terms-content">
+            <div class="terms-box">
+            <textarea class="terms-content">
+                [[${terms.get(0).getContent()}]]
+            </textarea>
+            </div>
+          </div>
         </div>
 
         <!-- 인쇄 버튼 -->
@@ -100,6 +55,6 @@
         </div>
       </div>
     </main>
-  <th:block th:insert="~{/common/policy/_footer.html.html}"></th:block>
+  <th:block th:insert="~{/common/footer}"></th:block>
   </body>
 </html>
