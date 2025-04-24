@@ -74,7 +74,7 @@ lotteon:
           cs-info: basic_config::cs_inf
           copyright: basic_config::copyright;
   upload:
-    path: /var/www/uploads
+    path: /var/www/upload
 ---
 # 개발용 설정
 spring:

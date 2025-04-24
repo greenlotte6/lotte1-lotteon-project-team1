@@ -2,7 +2,7 @@ FROM amazoncorretto:17
 
 COPY ["./build/libs/lotteon-*.jar", "/home/root/app.jar"]
 
-CMD ["mkdir", "-p", "/var/www/uploads"]
+RUN mkdir -p /var/www/upload
 
 VOLUME ["/data"]
 
