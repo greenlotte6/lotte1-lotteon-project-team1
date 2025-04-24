@@ -55,7 +55,6 @@ spring:
 
 logging:
   file:
-    name: lotteon.log
     path: /data
   level:
     root: info
