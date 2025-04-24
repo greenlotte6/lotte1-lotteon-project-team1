@@ -8,14 +8,14 @@
             내용: header 요소. header 요소를 사용하는 모든 페이지는 반드시 아래의 <link>, <script>를 적절한 위치에 삽입해야 함. thymeleaf 사용 시 본 파일에 있는 link, script 태그는 삭제할 것.
                 <div id="wrapper"></div> 태그 사이에 삽입할 것.
             -->
-    <link rel="stylesheet" href="/static/style/init.css" />
-    <link rel="stylesheet" href="/static/style/common/header.css" />
-    <link rel="stylesheet" href="/static/style/common/footer.css" />
+    <link rel="stylesheet" href="/style/init.css" />
+    <link rel="stylesheet" href="/style/common/header.css" />
+    <link rel="stylesheet" href="/style/common/footer.css" />
     <link
       rel="stylesheet"
       href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css"
     />
-    <link rel="stylesheet" href="/static/style/common/policy/policy.css" />
+    <link rel="stylesheet" href="/style/common/policy/policy.css" />
     <link
       rel="icon"
       href="https://static.lotteon.com/p/common/assets/favicon/1/favicon-32.png"
@@ -26,87 +26,68 @@
     ></script>
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
     <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
-    <script src="/static/js/common/header.js"></script>
-    <script src="/static/js/common/footer.js"></script>
-    <script src="/static/js/common/terms/terms.js"></script>
+    <script src="/js/common/header.js"></script>
+    <script src="/js/common/footer.js"></script>
+    <script src="/js/common/terms/terms.js"></script>
   </head>
   <body>
   <!-- HEADER -->
-  <th:block th:insert="~{/common/policy/_header.html}"></th:block>
+  <th:block th:insert="~{/policy/_header}"></th:block>
 
 
     <main>
       <div class="terms-wrapper">
         <h1>LotteON 서비스 이용약관</h1>
+        <th:block th:insert="~{/policy/_termsMenu}"></th:block>
 
-        <!-- 약관 탭 -->
-        <ul class="terms-tabs">
-          <li class="active">
-            <a href="buyer.html"
-              ><i class="fa-solid fa-cart-shopping"></i> 구매회원 약관</a
-            >
-          </li>
-          <li>
-            <a href="seller.html"
-              ><i class="fa-solid fa-store"></i> 판매회원 약관</a
-            >
-          </li>
-          <li>
-            <a href="finance.html"
-              ><i class="fa-solid fa-credit-card"></i> 전자금융거래</a
-            >
-          </li>
-          <li>
-            <a href="location.html"
-              ><i class="fa-solid fa-location-dot"></i> 위치정보 약관</a
-            >
-          </li>
-          <li>
-            <a href="privacy.html"
-              ><i class="fa-solid fa-user-shield"></i> 개인정보처리</a
-            >
-          </li>
-        </ul>
 
         <!-- 약관 제목 -->
-        <div class="terms-title">구매회원 이용약관</div>
-
-        <!-- 약관 내용 -->
-        <div class="terms-content" id="terms-content">
-          <p>
-            제 1 조 (목적)<br />
-            이 약관은 주식회사 롯데쇼핑 (이하 '회사'라 함)이...
-          </p>
-
-          <p>
-            제 2 조 (약관의 명시, 효력 및 개정)<br />
-            약관내용 제공
-          </p>
-
-          <p>
-            제 3 조<br />
-            약관내용 또 제공
-          </p>
-
-          <p>
-            제 4 조<br />
-            약관내용 또 제공
-          </p>
-
-          <p>
-            제 5 조<br />
-            약관내용 또 제공
-          </p>
+        <div>
+          <div class="terms-title" th:text="${terms.get(0).getTitle()}"></div>
+          <!-- 약관 내용 -->
+          <div class="terms-content" id="terms-content">
+            <div class="terms-box">
+            <textarea class="terms-content">
+                [[${terms.get(0).getContent()}]]
+            </textarea>
+            </div>
+          </div>
         </div>
 
-        <!-- 인쇄 버튼 -->
-        <div class="print-button-wrapper">
-          <button class="print-button" onclick="window.print()">
-            <i class="fa-solid fa-print"></i> 인쇄하기
-          </button>
+        <!-- 약관 제목 -->
+        <div>
+          <div class="terms-title" th:text="${terms.get(0).getTitle()}"></div>
+          <!-- 약관 내용 -->
+          <div class="terms-content" id="terms-content">
+            <div class="terms-box">
+            <textarea class="terms-content">
+                [[${terms.get(0).getContent()}]]
+            </textarea>
+            </div>
+          </div>
         </div>
+
+        <!-- 약관 제목 -->
+        <div>
+          <div class="terms-title" th:text="${terms.get(0).getTitle()}"></div>
+          <!-- 약관 내용 -->
+          <div class="terms-content" id="terms-content">
+            <div class="terms-box">
+            <textarea class="terms-content">
+                [[${terms.get(0).getContent()}]]
+            </textarea>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <!-- 인쇄 버튼 -->
+      <div class="print-button-wrapper">
+        <button class="print-button" onclick="window.print()">
+          <i class="fa-solid fa-print"></i> 인쇄하기
+        </button>
       </div>
     </main>
-  <th:block th:insert="~{/common/policy/_footer.html.html}"></th:block>
+  <th:block th:insert="~{/policy/_footer}"></th:block>
   </body>
 </html>
