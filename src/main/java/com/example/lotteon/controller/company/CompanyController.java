@@ -9,4 +9,26 @@ public class CompanyController {
     public String company() {
         return "/common/company/index";
     }
+
+    @GetMapping("/company/culture")
+    public String culture() {
+        return "/common/company/culture";
+    }
+    @GetMapping("/company/blog")
+    public String blog() {
+        return "/common/company/blog";
+    }
+    @GetMapping("/company/recruit")
+    public String recruit() {
+        return "/common/company/recruit";
+    }
+    @GetMapping("/company/media")
+    public String media() {
+        return "/common/company/media";
+    }
+
+
+
+
+
 }

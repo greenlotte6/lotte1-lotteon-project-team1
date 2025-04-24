@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>회사소개 - 롯데ON</title>
  
-  <link rel="stylesheet" href="/static/style/common/company/index.css">
-  <link rel="stylesheet" href="/static/style/common/company/blog.css">
+  <link rel="stylesheet" href="/style/common/company/index.css">
+  <link rel="stylesheet" href="/style/common/company/blog.css">
 
 </head>
 
@@ -30,8 +30,8 @@
 
 
   <div class="container">
-    <a href="articles/article1.html" class="card" data-category="인터뷰">
-      <img src="/static/images/interview.jpg" alt="팀워크">
+    <a th:href="@{/company/blog/article1}" class="card" data-category="인터뷰">
+      <img src="/images/interview.jpg" alt="팀워크">
       <div class="contents">
         <div class="tag">인터뷰</div>
         <h3>함께 성장하는 팀, UX 디자이너 김지영</h3>
@@ -40,7 +40,7 @@
     </a>
   
     <div class="card" data-category="채용">
-      <img src="/static/images/recruit.jpg" alt="채용설명회">
+      <img src="/images/recruit.jpg" alt="채용설명회">
       <div class="contents">
         <div class="tag">채용</div>
         <h3>2025 상반기 채용 설명회 스케치</h3>
@@ -49,7 +49,7 @@
     </div>
   
     <div class="card" data-category="ESG">
-      <img src="/static/images/esg.jpg" alt="ESG활동">
+      <img src="/images/esg.jpg" alt="ESG활동">
       <div class="contents">
         <div class="tag">ESG</div>
         <h3>친환경 포장재 도입으로 한 걸음 더</h3>
@@ -58,7 +58,7 @@
     </div>
   
     <div class="card" data-category="기업문화">
-      <img src="/static/images/company_culture.jpg" alt="팀프로젝트">
+      <img src="/images/company_culture.jpg" alt="팀프로젝트">
       <div class="contents">
         <div class="tag">기업문화</div>
         <h3>일 잘하는 조직 문화, 어떻게 만들까?</h3>
@@ -67,7 +67,7 @@
     </div>
   
     <div class="card" data-category="롯데ON">
-      <img src="/static/images/delivery.jpg" alt="신제품 론칭">
+      <img src="/images/delivery.jpg" alt="신제품 론칭">
       <div class="contents">
         <div class="tag">롯데ON</div>
         <h3>롯데ON, 신선식품 새벽배송 서비스 런칭</h3>
@@ -76,7 +76,7 @@
     </div>
   
     <div class="card" data-category="기술">
-      <img src="/static/images/tech.jpg" alt="기술이야기">
+      <img src="/images/tech.jpg" alt="기술이야기">
       <div class="contents">
         <div class="tag">기술</div>
         <h3>AI 추천 시스템, 어떻게 작동하나요?</h3>
@@ -87,7 +87,7 @@
   
     
     <div class="card" data-category="기술">
-      <img src="/static/images/tech_team.jpg" alt="개발팀">
+      <img src="/images/tech_team.jpg" alt="개발팀">
       <div class="contents">
         <div class="tag">기술</div>
         <h3>백엔드 개발팀의 하루를 공개합니다</h3>
@@ -96,7 +96,7 @@
     </div>
     
     <div class="card" data-category="기업문화">
-      <img src="/static/images/culture1.jpg" alt="기업문화">
+      <img src="/images/culture1.jpg" alt="기업문화">
       <div class="contents">
         <div class="tag">기업문화</div>
         <h3>유연한 출퇴근, 진짜 될까?</h3>
@@ -105,7 +105,7 @@
     </div>
     
     <div class="card" data-category="인터뷰">
-      <img src="/static/images/interview1.jpg" alt="인터뷰">
+      <img src="/images/interview1.jpg" alt="인터뷰">
       <div class="contents">
         <div class="tag">인터뷰</div>
         <h3>MD 직무자 인터뷰: 상품 기획의 모든 것</h3>
@@ -114,7 +114,7 @@
     </div>
     
     <div class="card" data-category="채용">
-      <img src="/static/images/recruit2.jpg" alt="채용">
+      <img src="/images/recruit2.jpg" alt="채용">
       <div class="contents">
         <div class="tag">채용</div>
         <h3>롯데ON, 신입 개발자 채용 스타트!</h3>
@@ -123,7 +123,7 @@
     </div>
     
     <div class="card" data-category="롯데ON">
-      <img src="/static/images/lotteon1.jpg" alt="롯데ON">
+      <img src="/images/lotteon1.jpg" alt="롯데ON">
       <div class="contents">
         <div class="tag">롯데ON</div>
         <h3>롯데ON의 UX 개편 비하인드</h3>
@@ -132,7 +132,7 @@
     </div>
     
     <div class="card" data-category="보도자료">
-      <img src="/static/images/press1.jpg" alt="보도자료">
+      <img src="/images/press1.jpg" alt="보도자료">
       <div class="contents">
         <div class="tag">보도자료</div>
         <h3>2025년 매출 1조 돌파 예상</h3>
@@ -141,7 +141,7 @@
     </div>
     
     <div class="card" data-category="ESG">
-      <img src="/static/images/esg2.jpg" alt="ESG">
+      <img src="/images/esg2.jpg" alt="ESG">
       <div class="contents">
         <div class="tag">ESG</div>
         <h3>탄소배출 줄이는 물류 시스템 도입</h3>
@@ -151,7 +151,7 @@
     
     <!-- 14개 추가 카드도 이어서 -->
     <div class="card" data-category="기업문화">
-      <img src="/static/images/culture2.jpg" alt="기업문화">
+      <img src="/images/culture2.jpg" alt="기업문화">
       <div class="contents">
         <div class="tag">기업문화</div>
         <h3>업무 몰입을 높이는 워케이션</h3>
@@ -160,7 +160,7 @@
     </div>
     
     <div class="card" data-category="인터뷰">
-      <img src="/static/images/interview2.jpg" alt="인터뷰">
+      <img src="/images/interview2.jpg" alt="인터뷰">
       <div class="contents">
         <div class="tag">인터뷰</div>
         <h3>디자이너의 하루는 어떤 모습?</h3>
@@ -169,7 +169,7 @@
     </div>
     
     <div class="card" data-category="채용">
-      <img src="/static/images/recruit3.jpg" alt="채용">
+      <img src="/images/recruit3.jpg" alt="채용">
       <div class="contents">
         <div class="tag">채용</div>
         <h3>2025 인턴십 프로그램 모집 중</h3>
@@ -178,7 +178,7 @@
     </div>
     
     <div class="card" data-category="롯데ON">
-      <img src="/static/images/lotteon2.jpg" alt="롯데ON">
+      <img src="/images/lotteon2.jpg" alt="롯데ON">
       <div class="contents">
         <div class="tag">롯데ON</div>
         <h3>롯데ON, 쇼핑 앱 1위 달성</h3>
@@ -187,7 +187,7 @@
     </div>
     
     <div class="card" data-category="보도자료">
-      <img src="/static/images/press2.jpg" alt="보도자료">
+      <img src="/images/press2.jpg" alt="보도자료">
       <div class="contents">
         <div class="tag">보도자료</div>
         <h3>롯데ON, 소상공인 상생 협약 체결</h3>
@@ -196,7 +196,7 @@
     </div>
     
     <div class="card" data-category="ESG">
-      <img src="/static/images/esg3.jpg" alt="ESG">
+      <img src="/images/esg3.jpg" alt="ESG">
       <div class="contents">
         <div class="tag">ESG</div>
         <h3>모든 포장재에 재활용 소재 도입</h3>
@@ -205,7 +205,7 @@
     </div>
     
     <div class="card" data-category="기업문화">
-      <img src="/static/images/culture3.jpg" alt="기업문화">
+      <img src="/images/culture3.jpg" alt="기업문화">
       <div class="contents">
         <div class="tag">기업문화</div>
         <h3>사내 소통 프로그램, "온톡" 인기</h3>
@@ -214,7 +214,7 @@
     </div>
     
     <div class="card" data-category="인터뷰">
-      <img src="/static/images/interview3.jpg" alt="인터뷰">
+      <img src="/images/interview3.jpg" alt="인터뷰">
       <div class="contents">
         <div class="tag">인터뷰</div>
         <h3>신입사원이 말하는 입사 후기</h3>
@@ -223,7 +223,7 @@
     </div>
     
     <div class="card" data-category="채용">
-      <img src="/static/images/recruit4.jpg" alt="채용">
+      <img src="/images/recruit4.jpg" alt="채용">
       <div class="contents">
         <div class="tag">채용</div>
         <h3>개발 직군 역량 강화 교육 실시</h3>
@@ -232,7 +232,7 @@
     </div>
     
     <div class="card" data-category="롯데ON">
-      <img src="/static/images/lotteon3.jpg" alt="롯데ON">
+      <img src="/images/lotteon3.jpg" alt="롯데ON">
       <div class="contents">
         <div class="tag">롯데ON</div>
         <h3>고객과의 소통 강화를 위한 챗봇 도입</h3>
@@ -241,7 +241,7 @@
     </div>
     
     <div class="card" data-category="보도자료">
-      <img src="/static/images/press3.jpg" alt="보도자료">
+      <img src="/images/press3.jpg" alt="보도자료">
       <div class="contents">
         <div class="tag">보도자료</div>
         <h3>롯데ON, 글로벌 시장 진출 발표</h3>
@@ -250,7 +250,7 @@
     </div>
     
     <div class="card" data-category="ESG">
-      <img src="/static/images/esg4.jpg" alt="ESG">
+      <img src="/images/esg4.jpg" alt="ESG">
       <div class="contents">
         <div class="tag">ESG</div>
         <h3>롯데ON의 사회공헌 활동 확대</h3>
@@ -263,7 +263,7 @@
 
 
 
-  <th:block th:insert="~{/common/company/_footer.html.html}"></th:block>
+  <th:block th:insert="~{/common/company/_footer.html}"></th:block>
   <script>
     function scrollToNextSection() {
       const nextSection = document.getElementById('description');
@@ -330,7 +330,7 @@
     link.addEventListener("click", (e) => {
       e.preventDefault(); // a 태그 기본 동작 막기
 
-      const category = link.textcontents.trim(); // 클릭한 카테고리 이름 가져오기
+      const category = link.innerText.trim(); // 클릭한 카테고리 이름 가져오기
 
       cards.forEach(card => {
         const cardCategory = card.dataset.category;

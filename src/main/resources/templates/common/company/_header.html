@@ -1,12 +1,13 @@
 <header>
-    <div class="logo">
-        <img src="https://story.lotteon.com/wp-content/uploads/2021/12/%EB%A1%AF%EB%8D%B0ON_CI_BI.png">
-    </div>
+    <a th:href="@{/company}" class="logo">
+        <img src="https://story.lotteon.com/wp-content/uploads/2021/12/%EB%A1%AF%EB%8D%B0ON_CI_BI.png" alt="LOTTE ON 로고">
+    </a>
     <nav class="nav">
-        <a href="/templates/common/company/index.html">HOME</a>
-        <a href="/templates/common/company/culture.html">기업문화</a>
-        <a href="/templates/common/company/blog.html">소식과 이야기</a>
-        <a href="/templates/common/company/recruit.html">채용</a>
-        <a href="/templates/common/company/media.html">미디어</a>
+        <a th:href="@{/company}">HOME</a>
+        <a th:href="@{/company/culture}">기업문화</a>
+        <a th:href="@{/company/blog}">소식과 이야기</a>
+        <a th:href="@{/company/recruit}">채용</a>
+        <a th:href="@{/company/media}">미디어</a>
     </nav>
 </header>
+
