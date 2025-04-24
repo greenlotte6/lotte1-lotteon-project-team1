@@ -40,11 +40,7 @@ spring:
 
   data:
     mongodb:
-      uri: mongodb://lotteon-mongo:27017
-      username: lotteon
-      password: QqKa4j67Ljw4E05u8Fpl0c2O55xKvFdu
-      authentication-database: lotteon
-      database: lotteon
+      uri: mongodb://lotteon-dev:1234@52.79.234.26:27018/lotteon?authSource=lotteon
 
     redis:
       host: lotteon-redis
