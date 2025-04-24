@@ -25,4 +25,5 @@ public class MainController {
     model.addAttribute("config", config);
     return "/index";
   }
+  
 }
