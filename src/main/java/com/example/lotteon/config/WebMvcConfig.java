@@ -6,14 +6,18 @@ import com.example.lotteon.redis.repository.GlobalHitRepository;
 import com.example.lotteon.service.admin.AdminConfigService;
 import com.example.lotteon.service.admin.CacheService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @RequiredArgsConstructor
 public class WebMvcConfig implements WebMvcConfigurer {
 
+  @Value("${lotteon.upload.path}")
+  private String uploadPath;
   private final AppVersionSetter appVersionSetter;
   private final GlobalHitRepository globalHitRepository;
   private final CacheService cacheService;
@@ -24,6 +28,12 @@ public class WebMvcConfig implements WebMvcConfigurer {
     registry.addInterceptor(appVersionSetter)
         .excludePathPatterns("/style/**", "/js/**", "/images/**");
     registry.addInterceptor(new ConfigApplicationInterceptor(cacheService, adminConfigService))
-        .excludePathPatterns("/style/**", "/js/**", "/images/**", "/admin/**");
+        .excludePathPatterns("/error", "/static/**", "/style/**", "/js/**", "/images/**");
+  }
+
+  @Override
+  public void addResourceHandlers(ResourceHandlerRegistry registry) {
+    registry.addResourceHandler("/upload/**")
+        .addResourceLocations("file:" + uploadPath + "/");
   }
 }
