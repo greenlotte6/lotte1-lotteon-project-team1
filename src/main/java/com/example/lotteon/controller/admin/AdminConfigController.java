@@ -1,6 +1,5 @@
 package com.example.lotteon.controller.admin;
 
-import com.example.lotteon.entity.admin.config.ConfigDocument;
 import com.example.lotteon.service.admin.AdminConfigService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -20,11 +19,6 @@ public class AdminConfigController {
 
   @GetMapping("/basic")
   public String basic(Model model, HttpServletRequest request) {
-    ConfigDocument config = (ConfigDocument) request.getAttribute("cachedConfig");
-    if (config == null) { //캐싱된 기본설정 데이터가 없는 경우
-      config = service.getConfig(); // MongoDB에서 조회 후 캐싱
-    }
-    model.addAttribute("config", config);
     return "/admin/config/basic";
   }
 

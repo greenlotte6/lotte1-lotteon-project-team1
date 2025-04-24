@@ -7,19 +7,19 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
-<link rel="stylesheet" href="/static/style/init.css" />
-<link rel="stylesheet" href="/static/style/common/header.css" />
+<link rel="stylesheet" href="/static/style/init.css"/>
+<link rel="stylesheet" href="/static/style/common/header.css"/>
 <link
 
-  rel="stylesheet"
-  href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css"
+    rel="stylesheet"
+    href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css"
 />
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
 <script src="/static/js/common/header.js"></script>
 <script
-  src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/all.min.js"
-  crossorigin="anonymous"
+    src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/all.min.js"
+    crossorigin="anonymous"
 ></script>
 <header>
   <div id="header-wrapper">
@@ -35,7 +35,7 @@
           <span sec:authorize="isAnonymous()"><a th:href="@{/login}"> 로그인/회원가입 </a></span>
           <span sec:authorize="isAuthenticated()" class="logout">
             <form th:action="@{/logout}" method="post">
-                <button type="submit" >로그아웃</button>
+                <button type="submit">로그아웃</button>
             </form>
           </span>
         </li>
@@ -45,14 +45,14 @@
       <div id="logo-area">
         <a href="#">
           <img
-            src="https://static.lotteon.com/p/common/foCommon/assets/img/logo_lotte-on@2x.png"
-            alt="logo"
+              th:src="${config.getLogo().getHeaderLogoLocation()}"
+              alt="logo"
           />
         </a>
       </div>
 
       <div id="search-area">
-        <input type="text" placeholder="검색어를 입력하세요" />
+        <input type="text" placeholder="검색어를 입력하세요"/>
         <button>
           <i class="fa-solid fa-magnifying-glass"></i>
         </button>

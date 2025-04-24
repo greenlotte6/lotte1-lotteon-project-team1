@@ -7,12 +7,14 @@ import com.example.lotteon.entity.admin.config.Logo;
 import com.example.lotteon.entity.admin.config.Site;
 import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
 
+@Slf4j
 @Repository
 @RequiredArgsConstructor
 public class AdminConfigRepository {
@@ -55,6 +57,7 @@ public class AdminConfigRepository {
   }
 
   public ConfigDocument find() {
+    log.info("Retrieving config document from database");
     String version = findVersion();
     Site site = findSite();
     Logo logo = findLogo();
@@ -72,13 +75,21 @@ public class AdminConfigRepository {
         .build();
   }
 
-  public ConfigDocument updateSite(Site config) {
+  public void updateSite(Site config) {
     Query query = new Query(Criteria.where("id").is("basic_config::site"));
     Update update = new Update();
     update.set("title", config.getTitle());
     update.set("subtitle", config.getSubtitle());
     template.updateFirst(query, update, "BasicConfig");
-    return find();
+  }
+
+  public void updateLogo(Logo config) {
+    Query query = new Query(Criteria.where("id").is("basic_config::logo"));
+    Update update = new Update();
+    update.set("header_location", config.getHeaderLogoLocation());
+    update.set("footer_location", config.getFooterLogoLocation());
+    update.set("favicon_location", config.getFaviconLocation());
+    template.updateFirst(query, update, "BasicConfig");
   }
 
   public void updateCorpInfo(CorpInfo config) {

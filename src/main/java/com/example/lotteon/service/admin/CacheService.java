@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class CacheService {
 
+  private final static String KEY = "admin::basic_config";
+
   private final RedisTemplate<String, String> template;
   private final Gson gson;
 
@@ -39,5 +41,10 @@ public class CacheService {
       return gson.fromJson(serializedConfig, ConfigDocument.class);
     }
     return cachedConfig;
+  }
+
+  public void invalidateCache() {
+    template.delete("admin::basic_config");
+    log.info("Cache invalidated");
   }
 }
