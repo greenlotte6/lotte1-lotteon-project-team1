@@ -26,6 +26,7 @@
   <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
   <script th:src="@{/js/admin/config/aside-drop.js}"></script>
   <script src="/js/admin/config/basic.js"></script>
+  <script src="/js/admin/config/upload.js"></script>
 </head>
 <body>
 <div id="wrapper">
@@ -64,7 +65,7 @@
         <p class="desc">
           브라우저 탭, header 및 footer에 노출될 정보를 입력합니다
         </p>
-        <form th:action="@{/api/admin/config/basic/site}" method="POST" class="post-form">
+        <form th:action="@{/api/admin/config/basic/site}" method="POST" class="post-form update">
           <table class="post-form-table">
             <tr>
               <th>제목</th>
@@ -84,7 +85,7 @@
         </form>
         <div class="crud-btn-area">
           <span></span>
-          <input type="submit" class="post-submit-btn" name="site" value="수정하기"/>
+          <input type="submit" class="post-submit-btn update-btn" name="site" value="수정하기"/>
         </div>
       </div>
 
@@ -95,7 +96,7 @@
         <p class="desc">
           브라우저 탭, header 및 footer에 노출될 로고 이미지를 선택합니다
         </p>
-        <form action="#" method="POST" class="post-form">
+        <form action="/api/admin/config/basic/upload" method="POST" class="post-form upload">
           <table class="post-form-table">
             <tr>
               <th>헤더 로고</th>
@@ -119,7 +120,7 @@
         </form>
         <div class="crud-btn-area">
           <span></span>
-          <input type="submit" class="post-submit-btn multipart" value="수정하기"/>
+          <input type="submit" class="post-submit-btn upload" value="수정하기"/>
         </div>
       </div>
 
@@ -128,7 +129,7 @@
           <h3>기업 정보</h3>
         </div>
         <p class="desc">footer에 노출될 기업의 정보를 입력합니다</p>
-        <form action="/api/admin/config/basic/corp" method="POST" class="post-form">
+        <form action="/api/admin/config/basic/corp" method="POST" class="post-form update">
           <table class="post-form-table">
             <tr>
               <th>상호명</th>
@@ -176,7 +177,7 @@
         </form>
         <div class="crud-btn-area">
           <span></span>
-          <input type="submit" class="post-submit-btn" name="corpInfo" value="수정하기"/>
+          <input type="submit" class="post-submit-btn update-btn" name="corpInfo" value="수정하기"/>
         </div>
       </div>
 
@@ -185,7 +186,7 @@
           <h3>고객센터 정보</h3>
         </div>
         <p class="desc">footer에 노출될 고객센터 정보를 입력합니다</p>
-        <form action="/api/admin/config/basic/cs" method="POST" class="post-form">
+        <form action="/api/admin/config/basic/cs" method="POST" class="post-form update">
           <table class="post-form-table">
             <tr>
               <th>전화번호</th>
@@ -218,7 +219,7 @@
         </form>
         <div class="crud-btn-area">
           <span></span>
-          <input type="submit" class="post-submit-btn" name="csInfo" value="수정하기"/>
+          <input type="submit" class="post-submit-btn update-btn" name="csInfo" value="수정하기"/>
         </div>
       </div>
 
@@ -229,7 +230,7 @@
         <p class="desc">
           footer에 노출될 카피라이트(Copyright) 정보를 입력합니다.
         </p>
-        <form action="/api/admin/config/basic/copyright" method="POST" class="post-form">
+        <form action="/api/admin/config/basic/copyright" method="POST" class="post-form update">
           <table class="post-form-table">
             <tr>
               <th>카피라이트</th>
@@ -242,7 +243,7 @@
         </form>
         <div class="crud-btn-area">
           <span></span>
-          <input type="submit" class="post-submit-btn" name="copyright" value="수정하기"/>
+          <input type="submit" class="post-submit-btn update-btn" name="copyright" value="수정하기"/>
         </div>
       </div>
     </section>

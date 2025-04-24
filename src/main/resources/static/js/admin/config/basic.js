@@ -1,31 +1,19 @@
 $(() => {
-  function beforeRequest(xhr, url) {
-    console.log(`Initiating request to ${url}`)
-  }
-
-  function onRequestSuccess(res) {
-    alert("수정 완료")
-  }
-
-  function onRequestError(err) {
-    alert(err);
-  }
-
   function request(url, json) {
     $.ajax({
       type: "PUT",
       url: url,
-      dataType: "json",
+      dataType: "application/json",
       contentType: "application/json;utf-8",
       data: JSON.stringify(json),
       beforeSend: function (xhr) {
-        beforeRequest(xhr, url)
+        console.log(`Initiating request to ${url}`)
       },
       success: function (res) {
-        onRequestSuccess(res);
+        alert("수정 완료")
       },
       error: function (err) {
-        onRequestError(err)
+        alert("에러 발생")
       }
     })
   }
@@ -35,7 +23,7 @@ $(() => {
     event.preventDefault();
   })
 
-  $(".post-submit-btn").click((event) => {
+  $(".post-submit-btn.update-btn").click((event) => {
     const key = event.target.name;
     const parent = event.target.parentNode.parentElement;
     const form = parent.querySelector(".post-form")
@@ -51,8 +39,4 @@ $(() => {
     request(url, json);
 
   });
-
-  $(".post-submit-btn.multipart").click((event) => {
-    console.log("멀티파트 데이터 전송하기")
-  })
 });

@@ -2,18 +2,26 @@ package com.example.lotteon.controller.api;
 
 import com.example.lotteon.entity.admin.config.CorpInfo;
 import com.example.lotteon.entity.admin.config.CustomerServiceInfo;
+import com.example.lotteon.entity.admin.config.Logo;
 import com.example.lotteon.entity.admin.config.Site;
 import com.example.lotteon.service.admin.AdminConfigService;
+import com.example.lotteon.service.admin.CacheService;
 import com.google.gson.Gson;
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 @Slf4j
 @RestController
@@ -21,18 +29,46 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class AdminConfigRestController {
 
+  @Value("${lotteon.upload.path}")
+  private String uploadPath;
+
   private final Gson gson;
   private final AdminConfigService service;
+  private final CacheService cacheService;
+
+  private void doUpload(List<MultipartFile> images, List<String> metadata) throws IOException {
+    Logo logo = new Logo();
+
+    int idx = 0;
+    for (MultipartFile image : images) { //전송된 이미지를 /var/www/upload에 저장
+      if (!image.isEmpty()) {
+        String imageName = image.getOriginalFilename();
+        File dest = new File(uploadPath + "/" + imageName);
+        image.transferTo(dest);
+
+        String currentMetaData = metadata.get(idx);
+        if (currentMetaData.contains("header")) {
+          logo.setHeaderLogoLocation("/upload/" + imageName);
+        } else if (currentMetaData.contains("footer")) {
+          logo.setFooterLogoLocation("/upload/" + imageName);
+        } else if (currentMetaData.contains("favicon")) {
+          logo.setFaviconLocation("/upload/" + imageName);
+        }
+      }
+      idx++;
+    }
+    service.updateLogo(logo);
+  }
 
   @PutMapping("/site")
-  public ResponseEntity<String> postBasic(@RequestBody Site config,
+  public ResponseEntity<String> updateSite(@RequestBody Site config,
       @RequestParam String key) {
     log.info("PUT request for {} with {}", key, config.toString());
 
-    //TODO: Cache updated config, or update the cached config using redis
     service.updateSite(config);
 
-    return new ResponseEntity<>(gson.toJson(config), HttpStatus.OK);
+    cacheService.invalidateCache();
+    return new ResponseEntity<>("{'status': 'ok'}", HttpStatus.OK);
   }
 
   @PutMapping("/corp")
@@ -40,7 +76,9 @@ public class AdminConfigRestController {
       @RequestParam String key) {
     log.info("PUT request for {} with {}", key, config.toString());
     service.updateCorpInfo(config);
-    return new ResponseEntity<>("", HttpStatus.OK);
+
+    cacheService.invalidateCache();
+    return new ResponseEntity<>("OK", HttpStatus.OK);
   }
 
   @PutMapping("/cs")
@@ -48,7 +86,9 @@ public class AdminConfigRestController {
       @RequestParam String key) {
     log.info("PUT request for {} with {}", key, config.toString());
     service.updateCsInfo(config);
-    return new ResponseEntity<>("", HttpStatus.OK);
+
+    cacheService.invalidateCache();
+    return new ResponseEntity<>("OK", HttpStatus.OK);
   }
 
   @PutMapping("/copyright")
@@ -56,6 +96,24 @@ public class AdminConfigRestController {
       @RequestParam String key) {
     log.info("PUT request for {} with {}", key, copyright);
     service.updateCopyright(key, copyright);
-    return new ResponseEntity<>("", HttpStatus.OK);
+
+    cacheService.invalidateCache();
+    return new ResponseEntity<>("OK", HttpStatus.OK);
+  }
+
+  @PostMapping("/upload")
+  public ResponseEntity<String> upload(
+      @RequestParam(value = "images") List<MultipartFile> images,
+      @RequestParam(value = "metadata") List<String> metadata) {
+    try {
+      doUpload(images, metadata);
+    } catch (IOException e) {
+      log.warn("Could not transfer file \"{}\"", e.getMessage());
+      return new ResponseEntity<>("Could not transfer file\n " + e.getMessage(),
+          HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    cacheService.invalidateCache();
+    return new ResponseEntity<>("OK", HttpStatus.OK);
   }
 }

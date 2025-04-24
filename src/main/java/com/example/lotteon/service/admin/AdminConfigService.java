@@ -3,6 +3,7 @@ package com.example.lotteon.service.admin;
 import com.example.lotteon.entity.admin.config.ConfigDocument;
 import com.example.lotteon.entity.admin.config.CorpInfo;
 import com.example.lotteon.entity.admin.config.CustomerServiceInfo;
+import com.example.lotteon.entity.admin.config.Logo;
 import com.example.lotteon.entity.admin.config.Site;
 import com.example.lotteon.repository.admin.AdminConfigRepository;
 import com.google.gson.Gson;
@@ -31,6 +32,10 @@ public class AdminConfigService {
 
   public void updateSite(Site config) {
     repo.updateSite(config);
+  }
+
+  public void updateLogo(Logo config) {
+    repo.updateLogo(config);
   }
 
   public void updateCorpInfo(CorpInfo config) {
