@@ -1,6 +1,7 @@
 package com.example.lotteon.interceptor;
 
 import com.example.lotteon.entity.admin.config.ConfigDocument;
+import com.example.lotteon.service.admin.AdminConfigService;
 import com.example.lotteon.service.admin.CacheService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -18,13 +19,18 @@ import org.springframework.web.servlet.HandlerInterceptor;
 public class ConfigApplicationInterceptor implements HandlerInterceptor {
 
   private final CacheService service;
+  private final AdminConfigService adminConfigService;
 
   @Override
   public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
       throws Exception {
     log.info("Intercepted incoming request to {}", request.getRequestURI());
     ConfigDocument cachedConfig = service.getCachedConfig();
-    request.setAttribute("cachedConfig", cachedConfig);
+
+    if (cachedConfig == null) {
+      cachedConfig = adminConfigService.getConfig();
+    }
+    request.setAttribute("config", cachedConfig);
 
     return true;
   }
