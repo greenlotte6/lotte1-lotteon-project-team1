@@ -72,12 +72,13 @@ public class AdminConfigRepository {
         .build();
   }
 
-  public void updateSite(Site config) {
+  public ConfigDocument updateSite(Site config) {
     Query query = new Query(Criteria.where("id").is("basic_config::site"));
     Update update = new Update();
     update.set("title", config.getTitle());
     update.set("subtitle", config.getSubtitle());
     template.updateFirst(query, update, "BasicConfig");
+    return find();
   }
 
   public void updateCorpInfo(CorpInfo config) {
