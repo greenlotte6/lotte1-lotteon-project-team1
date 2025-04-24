@@ -40,7 +40,7 @@ spring:
 
   data:
     mongodb:
-      uri: mongodb://lotteon-dev:1234@52.79.234.26:27018/lotteon?authSource=lotteon
+      uri: mongodb://lotteon-dev:1234@52.79.234.26:27017/lotteon?authSource=lotteon
 
     redis:
       host: lotteon-redis
