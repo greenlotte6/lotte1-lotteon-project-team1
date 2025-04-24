@@ -66,14 +66,15 @@ lotteon:
     mongodb:
       config:
         basic:
-          collection-name: BasicConfig
-          document-namespace:
-            version: basic_confi::version
-            site: basic_config::site
-            logo: basic_config::logo
-            corp-info: basic_config::corp-info
-            cs-info: basic_config::cs_inf
-            copyright: basic_config::copyright;
+          collection: BasicConfig
+          version: basic_config::version
+          site: basic_config::site
+          logo: basic_config::logo
+          corp-info: basic_config::corp-info
+          cs-info: basic_config::cs_inf
+          copyright: basic_config::copyright;
+  upload:
+    path: /var/www/uploads
 ---
 # 개발용 설정
 spring:
@@ -148,12 +149,13 @@ lotteon:
     mongodb:
       config:
         basic:
-          collection-name: BasicConfig
-          document-namespace:
-            version: basic_confi::version
-            site: basic_config::site
-            logo: basic_config::logo
-            corp-info: basic_config::corp-info
-            cs-info: basic_config::cs_inf
-            copyright: basic_config::copyright;
+          collection: BasicConfig
+          version: basic_config::version
+          site: basic_config::site
+          logo: basic_config::logo
+          corp-info: basic_config::corp-info
+          cs-info: basic_config::cs_inf
+          copyright: basic_config::copyright;
+  upload:
+    path: C:\var\www\upload
 ---
