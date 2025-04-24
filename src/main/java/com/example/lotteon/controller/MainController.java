@@ -1,6 +1,5 @@
 package com.example.lotteon.controller;
 
-import com.example.lotteon.entity.admin.config.ConfigDocument;
 import com.example.lotteon.service.admin.AdminConfigService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -18,11 +17,6 @@ public class MainController {
 
   @GetMapping(value = {"/", "/index"})
   public String index(Model model, HttpServletRequest request) {
-    ConfigDocument config = (ConfigDocument) request.getAttribute("cachedConfig");
-    if (config == null) {
-      config = adminConfigService.getConfig();
-    }
-    model.addAttribute("config", config);
     return "/index";
   }
 }
