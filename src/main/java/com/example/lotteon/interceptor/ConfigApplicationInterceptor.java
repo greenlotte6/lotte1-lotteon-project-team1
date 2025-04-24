@@ -22,6 +22,7 @@ public class ConfigApplicationInterceptor implements HandlerInterceptor {
   @Override
   public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
       throws Exception {
+    log.info("Intercepted incoming request to {}", request.getRequestURI());
     ConfigDocument cachedConfig = service.getCachedConfig();
     request.setAttribute("cachedConfig", cachedConfig);
 
