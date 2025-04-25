@@ -36,10 +36,9 @@ public class AdminConfigRestController {
   private final AdminConfigService service;
   private final CacheService cacheService;
 
-  private void doUpload(List<MultipartFile> images, List<String> metadata) throws IOException {
-    Logo logo = new Logo();
-
+  private Logo doUpload(List<MultipartFile> images, List<String> metadata) throws IOException {
     int idx = 0;
+    Logo updatedLogo = null;
     for (MultipartFile image : images) { //전송된 이미지를 /var/www/upload에 저장
       if (!image.isEmpty()) {
         String imageName = image.getOriginalFilename();
@@ -48,16 +47,16 @@ public class AdminConfigRestController {
 
         String currentMetaData = metadata.get(idx);
         if (currentMetaData.contains("header")) {
-          logo.setHeaderLogoLocation("/upload/" + imageName);
+          updatedLogo = service.updateLogoBy("header_location", "/upload/" + imageName);
         } else if (currentMetaData.contains("footer")) {
-          logo.setFooterLogoLocation("/upload/" + imageName);
+          updatedLogo = service.updateLogoBy("header_location", "/upload/" + imageName);
         } else if (currentMetaData.contains("favicon")) {
-          logo.setFaviconLocation("/upload/" + imageName);
+          updatedLogo = service.updateLogoBy("header_location", "/upload/" + imageName);
         }
       }
       idx++;
     }
-    service.updateLogo(logo);
+    return updatedLogo;
   }
 
   @PutMapping("/site")
@@ -105,8 +104,10 @@ public class AdminConfigRestController {
   public ResponseEntity<String> upload(
       @RequestParam(value = "images") List<MultipartFile> images,
       @RequestParam(value = "metadata") List<String> metadata) {
+    String responseBody = "";
     try {
-      doUpload(images, metadata);
+      Logo updatedLogo = doUpload(images, metadata);
+      responseBody = gson.toJson(updatedLogo);
     } catch (IOException e) {
       log.warn("Could not transfer file \"{}\"", e.getMessage());
       return new ResponseEntity<>("Could not transfer file\n " + e.getMessage(),
@@ -114,6 +115,6 @@ public class AdminConfigRestController {
     }
 
     cacheService.invalidateCache();
-    return new ResponseEntity<>("OK", HttpStatus.OK);
+    return new ResponseEntity<>(responseBody, HttpStatus.OK);
   }
 }
