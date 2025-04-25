@@ -1,0 +1,58 @@
+<aside class="sidebar">
+    <article class="side_content">
+        <div class="side_title">
+            <p>자주묻는 질문</p>
+        </div>
+        <a th:href="@{/cs/qna/csqnamember}">
+            <div id="csqnamember">회원</div>
+        </a>
+        <a th:href="@{/cs/qna/csqnacoupon}">
+            <div id="csqnacoupon">쿠폰/혜택/이벤트</div>
+        </a>
+        <a th:href="@{/cs/qna/csqnaorder}">
+            <div id="csqnaorder">주문/결제</div>
+        </a>
+        <a th:href="@{/cs/qna/csqnadeliver}">
+            <div id="csqnadeliver">배송</div>
+        </a>
+        <a th:href="@{/cs/qna/csqnacancel}">
+            <div id="csqnacancel">취소/반품/교환</div>
+        </a>
+        <a th:href="@{/cs/qna/csqnatrip}">
+            <div id="csqnatrip">여행/숙박/항공</div>
+        </a>
+        <a th:href="@{/cs/qna/csqnasafe}">
+            <div id="csqnasafe">안전거래</div>
+        </a>
+    </article>
+</aside>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const path = location.pathname;
+
+        if (path.includes("csqnamember")) {
+            document.getElementById("csqnamember").classList.add("active");
+        }else if (path.includes("csqnacoupon")) {
+            document.getElementById("csqnacoupon").classList.add("active");
+        }else if (path.includes("csqnaorder")) {
+            document.getElementById("csqnaorder").classList.add("active");
+        }else if (path.includes("csqnadeliver")) {
+            document.getElementById("csqnadeliver").classList.add("active");
+        }else if (path.includes("csqnacancel")) {
+            document.getElementById("csqnacancel").classList.add("active");
+        }else if (path.includes("csqnatrip")) {
+            document.getElementById("csqnatrip").classList.add("active");
+        }else if (path.includes("csqnasafe")) {
+            document.getElementById("csqnasafe").classList.add("active");
+        }
+
+    });
+</script>
+
+<style>
+    .active {
+        font-weight: 600;
+        text-decoration: underline;
+    }
+</style>

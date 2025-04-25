@@ -5,6 +5,7 @@ import com.example.lotteon.dto.PageResponseDTO;
 import com.example.lotteon.dto.cs.FaqDTO;
 import com.example.lotteon.dto.cs.NoticeDTO;
 import com.example.lotteon.service.cs.CsService;
+import com.example.lotteon.service.cs.QnaService;
 import com.example.lotteon.service.cs.faqService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +26,7 @@ public class AdminCsController {
     private final HttpServletRequest request;
     private final CsService csService;
     private final faqService faqService;
+    private final QnaService qnaService;
 
 
     /* 여기부터 노티스 컨트롤러 */
