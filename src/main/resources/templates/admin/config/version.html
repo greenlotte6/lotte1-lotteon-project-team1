@@ -28,6 +28,7 @@
   ></script>
   <script th:src="@{/js/admin/config/aside-drop.js}"></script>
   <script th:src="@{/js/admin/config/version.js}"></script>
+  <script src="/js/admin/config/search.js"></script>
 </head>
 <body>
 <div id="wrapper">
@@ -51,24 +52,29 @@
         <table class="versions">
           <tr>
             <th>
-              <input type="checkbox" onclick="return false;"/>
+              <input type="checkbox"/>
             </th>
-            <th>번호</th>
             <th>버전</th>
             <th>작성자</th>
             <th>등록일시</th>
             <th>변경내역</th>
           </tr>
-          <tr>
+          <tr th:each="version : ${versions}">
             <td>
               <input type="checkbox"/>
             </td>
-            <td>1</td>
-            <td>0.0.1-SNAPSHOT</td>
-            <td>chhak0503</td>
-            <td>2025.04.15 10:28:31</td>
+            <td th:text="${version.getVersion()}">0.0.1-SNAPSHOT</td>
+            <td th:text="${version.getAuthor()}">chhak0503</td>
+            <td th:with="year=${#dates.format(version.getCreatedAt(), 'yyyy')},
+            month=${#dates.format(version.getCreatedAt(), 'MM')},
+            day=${#dates.format(version.getCreatedAt(), 'dd')},
+            hour=${#dates.format(version.getCreatedAt(), 'HH')},
+            minute=${#dates.format(version.getCreatedAt(), 'mm')},
+            second=${#dates.format(version.getCreatedAt(), 'ss')}">
+              [[${year}]]-[[${month}]]-[[${day}]] [[${hour}]]:[[${minute}]]:[[${second}]]
+            </td>
             <td>
-              <button class="version-detail-btn">상세</button>
+              <button class="version-detail-btn" th:name="${version.getVersion()}">상세</button>
             </td>
           </tr>
         </table>
@@ -81,18 +87,14 @@
             <tbody>
             <tr>
               <th>버전</th>
-              <td>0.0.1-SNAPSHOT</td>
+              <td id="version-detail-name">0.0.1-SNAPSHOT</td>
             </tr>
             <tr>
               <th>변경내역</th>
               <td>
-                <ul>
-                  <li>- 프로젝트 생성 및 전체 구조 설계</li>
-                  <li>- 회원가입 아이디 중복체크 완료</li>
-                  <li>- 관리자 상품 등록 완료</li>
-                  <li>- 쇼핑몰 메인 및 개별 페이지 링크 작업</li>
-                  <li>- 개발을 위한 제반 사항 처리</li>
-                </ul>
+                <p id="version-detail-description">
+
+                </p>
               </td>
             </tr>
             </tbody>

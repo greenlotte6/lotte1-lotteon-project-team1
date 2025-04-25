@@ -6,7 +6,9 @@ import com.example.lotteon.entity.admin.config.CustomerServiceInfo;
 import com.example.lotteon.entity.admin.config.Logo;
 import com.example.lotteon.entity.admin.config.Site;
 import com.example.lotteon.entity.admin.config.VersionConfig;
+import com.example.lotteon.exception.NoDocumentFoundException;
 import com.google.gson.Gson;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.mongodb.core.FindAndModifyOptions;
@@ -27,6 +29,22 @@ public class BasicConfigRepository {
   public VersionConfig findVersion() {
     Query query = new Query(Criteria.where("id").is("basic_config::version"));
     return template.findOne(query, VersionConfig.class, "BasicConfig");
+  }
+
+  public VersionConfig findVersionByName(String versionName) throws NoDocumentFoundException {
+    Query query = new Query(
+        Criteria.where("id").is("basic_config::version").and("version").is(versionName));
+    VersionConfig config = template.findOne(query, VersionConfig.class, "BasicConfig");
+    if (config == null) {
+      String message = String.format("Cannot find version document %s", versionName);
+      throw new NoDocumentFoundException(message);
+    }
+    return config;
+  }
+
+  public List<VersionConfig> findAllVersion() {
+    Query query = new Query(Criteria.where("id").is("basic_config::version"));
+    return template.find(query, VersionConfig.class, "BasicConfig");
   }
 
   public Site findSite() {

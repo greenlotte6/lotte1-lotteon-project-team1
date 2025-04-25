@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS `lotteon`.`member` (
   `name` VARCHAR(20) NOT NULL,
   `gender` ENUM("m", "f") NOT NULL,
   `recent_login_date` DATE NOT NULL,
-  `description` TEXT NOT NULL,
+  `description` TEXT NULL,
   PRIMARY KEY (`user_id`),
   INDEX `fk_member_user1_idx` (`user_id` ASC) VISIBLE,
   UNIQUE INDEX `user_id_UNIQUE` (`user_id` ASC) VISIBLE,
@@ -92,6 +92,7 @@ CREATE TABLE IF NOT EXISTS `lotteon`.`notice` (
   `content` TEXT NOT NULL,
   `register_date` DATE NULL,
   `type_id` INT NOT NULL,
+  `hit` INT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   INDEX `fk_notice_article_type1_idx` (`type_id` ASC) VISIBLE,
   CONSTRAINT `fk_notice_article_type1`
@@ -201,7 +202,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `lotteon`.`order_status` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(45) NOT NULL COMMENT 'possible values = [\"paid\", \"on_delivery\", \"delivered\", \"purchase_confirmed\", \"cancel_requested\", \"canceled\", \"refund_requetsed\", \"refunded\"]',
+  `name` VARCHAR(45) NOT NULL COMMENT 'possible values = [\"payment_waiting\", \"paid\", \"on_delivery\", \"delivered\", \"purchase_confirmed\", \"cancel_requested\", \"canceled\", \"refund_requetsed\", \"refunded\", \"exchange_requested\", \"exchange\"]',
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -308,7 +309,7 @@ ENGINE = InnoDB;
 -- Table `lotteon`.`qna`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `lotteon`.`qna` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `member_id` VARCHAR(16) NOT NULL,
   `title` VARCHAR(50) NOT NULL,
   `type_id` INT NOT NULL,
@@ -335,10 +336,10 @@ ENGINE = InnoDB;
 -- Table `lotteon`.`reply`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `lotteon`.`reply` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `qna_id` INT NOT NULL,
+  `qna_id` INT NOT NULL AUTO_INCREMENT,
+  `id` INT NOT NULL,
   `content` TEXT NOT NULL,
-  PRIMARY KEY (`id`, `qna_id`),
+  PRIMARY KEY (`qna_id`, `id`),
   INDEX `fk_reply_qna1_idx` (`qna_id` ASC) VISIBLE,
   CONSTRAINT `fk_reply_qna1`
     FOREIGN KEY (`qna_id`)
@@ -421,6 +422,7 @@ CREATE TABLE IF NOT EXISTS `lotteon`.`faq` (
   `type_id` INT NOT NULL,
   `content` TEXT NOT NULL,
   `register_date` DATE NULL,
+  `hit` INT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   INDEX `fk_faq_article_type1_idx` (`type_id` ASC) VISIBLE,
   CONSTRAINT `fk_faq_article_type1`
