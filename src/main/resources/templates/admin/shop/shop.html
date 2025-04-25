@@ -1,391 +1,264 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>상점관리 > 상점관리</title>
-    <link rel="stylesheet" href="/static/style/init.css" />
-    <link rel="stylesheet" href="/static/style/common/admin/header.css" />
-    <link rel="stylesheet" href="/static/style/common/admin/aside.css" />
-    <link rel="stylesheet" href="/static/style/common/admin/content.css" />
-    <link rel="stylesheet" href="/static/style/common/admin/footer.css" />
-    <link rel="stylesheet" href="/static/style/common/pagination.css" />
-    <link rel="stylesheet" href="/static/style/admin/shop/shop.css" />
-    <link
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>상점관리 > 상점관리</title>
+  <link rel="stylesheet" href="/style/init.css"/>
+  <link rel="stylesheet" href="/style/common/admin/header.css"/>
+  <link rel="stylesheet" href="/style/common/admin/aside.css"/>
+  <link rel="stylesheet" href="/style/common/admin/content.css"/>
+  <link rel="stylesheet" href="/style/common/admin/footer.css"/>
+  <link rel="stylesheet" href="/style/common/pagination.css"/>
+  <link rel="stylesheet" href="/style/admin/shop/shop.css"/>
+  <link
       rel="icon"
       href="https://static.lotteon.com/p/common/assets/favicon/1/favicon-32.png"
-    />
-    <link
+  />
+  <link
       rel="stylesheet"
       href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css"
-    />
-    <script
+  />
+  <script
       src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/all.min.js"
       crossorigin="anonymous"
-    ></script>
-    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-    <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
-    <script src="/static/js/admin/config/aside-drop.js"></script>
-    <script type="module" src="/static/js/common/admin/modal.mjs"></script>
-    <script
+  ></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+  <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
+  <script src="/js/admin/config/aside-drop.js"></script>
+  <script type="module" src="/js/common/admin/modal.mjs"></script>
+  <script
       type="module"
-      src="/static/js/common/admin/registryModal.js"
-    ></script>
-  </head>
-  <body>
-    <div id="wrapper">
-      <header>
-        <div class="header-wrapper">
-          <img
-            src="https://static.lotteon.com/p/common/foCommon/assets/img/logo_lotte-on@2x.png"
-            alt="logo"
-          />
-          <h1>ADMINISTRATOR</h1>
-          <ul>
-            <li>
-              <span class="greeting">
-                안녕하세요, [홍길동]님, 반갑습니다.
-              </span>
-            </li>
-            <li>
-              <a href="#"> 홈 </a>
-            </li>
-            <li>
-              <a href="#"> 로그아웃 </a>
-            </li>
-            <li>
-              <a href="#"> 고객센터 </a>
-            </li>
-          </ul>
-        </div>
-        <nav class="header-padding"></nav>
-      </header>
-      <main>
-        <aside class="side-menu">
-          <ul>
-            <li id="settings-menu">
-              <i class="fa-solid fa-gear"></i>
-              <a href="/admin/config/basic"> 환경설정 </a>
-            </li>
-            <ul class="submenu settings" style="display: none">
-              <li>
-                <a href="/admin/config/basic"> 기본설정 </a>
-              </li>
-              <li>
-                <a href="/admin/config/banner"> 배너관리 </a>
-              </li>
-              <li>
-                <a href="/admin/config/policy"> 약관관리 </a>
-              </li>
-              <li>
-                <a href="/admin/config/category"> 카테고리 </a>
-              </li>
-              <li>
-                <a href="/admin/config/version"> 버전이력 </a>
-              </li>
-            </ul>
-            <li id="store-menu">
-              <i class="fa-solid fa-store"></i>
-              <a href="/admin/shop/list"> 상점관리 </a>
-            </li>
-            <ul class="submenu store" style="display: none">
-              <li>
-                <a href="/admin/shop/list"> 상점목록 </a>
-              </li>
-              <li>
-                <a href="/admin/shop/sales"> 매출현황 </a>
-              </li>
-            </ul>
-            <li id="member-menu">
-              <i class="fa-solid fa-users"></i>
-              <a href="/admin/member/list"> 회원관리 </a>
-            </li>
-            <ul class="submenu member" style="display: none">
-              <li>
-                <a href="/admin/member/list"> 회원목록 </a>
-              </li>
-              <li>
-                <a href="/admin/member/point"> 포인트 관리 </a>
-              </li>
-            </ul>
-            <li id="product-menu">
-              <i class="fa-solid fa-box-open"></i>
-              <a href="/admin/product/list"> 상품관리 </a>
-            </li>
-            <ul class="submenu product" style="display: none">
-              <li>
-                <a href="/admin/product/list"> 상품목록 </a>
-              </li>
-              <li>
-                <a href="/admin/product/register"> 상품등록 </a>
-              </li>
-            </ul>
-            <li id="order-menu">
-              <i class="fa-solid fa-credit-card"></i>
-              <a href="/admin/settings/order/list"> 주문관리 </a>
-            </li>
-            <ul class="submenu order" style="display: none">
-              <li>
-                <a href="/admin/order/list"> 주문현황 </a>
-              </li>
-              <li>
-                <a href="/admin/order/delivery"> 배송현황 </a>
-              </li>
-            </ul>
-            <li id="coupon-menu">
-              <i class="fa-solid fa-ticket"></i>
-              <a href="/admin/settings/coupon/list"> 쿠폰관리 </a>
-            </li>
-            <ul class="submenu coupon" style="display: none">
-              <li>
-                <a href="/admin/coupon/list"> 쿠폰목록 </a>
-              </li>
-              <li>
-                <a href="/admin/coupon/issued"> 쿠폰발급현황 </a>
-              </li>
-            </ul>
-            <li id="cs-menu">
-              <i class="fa-solid fa-headphones"></i>
-              <a href="/admin/cs/notice/list"> 고객센터 </a>
-            </li>
-            <ul class="submenu customer-service" style="display: none">
-              <li>
-                <a href="/admin/cs/notice/list"> 공지사항 </a>
-              </li>
-              <li>
-                <a href="/admin/cs/faq/list"> 자주묻는질문 </a>
-              </li>
-              <li>
-                <a href="/admin/cs/qna/list"> 문의하기 </a>
-              </li>
-            </ul>
-          </ul>
-        </aside>
-        <section id="content-area">
-          <div class="content-area-title">
-            <h3>상점목록</h3>
-            <span>
+      src="/js/common/admin/registryModal.js"
+  ></script>
+</head>
+<body>
+<div id="wrapper">
+  <th:block th:insert="~{/common/admin/header}"></th:block>
+  <main>
+    <th:block th:insert="~{/common/admin/aside}"></th:block>
+    <section id="content-area">
+      <div class="content-area-title">
+        <h3>상점목록</h3>
+        <span>
               <a href="#">HOME&nbsp;>&nbsp; </a>
               <a href="#">상점관리&nbsp;>&nbsp; </a>
               <a href="#">상점목록</a>
             </span>
-          </div>
-          <div class="content">
-            <form action="#" method="GET" id="search-area">
-              <select name="filter" class="search-filter">
-                <option value="tradeName">상호명</option>
-                <option value="representative">대표자</option>
-                <option value="businessId">사업자등록번호</option>
-                <option value="contact">연락처</option>
-                <option value="keyword">키워드</option>
-              </select>
-              <input
-                type="text"
-                class="search-input"
-                placeholder="검색어 입력"
-              />
-              <input type="submit" class="search-submit-btn" value="검색" />
-            </form>
-            <div id="legends-area">
-              <span class="legend green"></span>
-              <span>운영중</span>
-              <span class="legend red"></span>
-              <span>운영중지</span>
-              <span class="legend blue"></span>
-              <span>운영준비</span>
-            </div>
-
-            <table>
-              <tr>
-                <th>
-                  <input
-                    type="checkbox"
-                    name="selected"
-                    onclick="return false"
-                  />
-                </th>
-                <th>번호</th>
-                <th>상호명</th>
-                <th>대표</th>
-                <th>사업자등록번호</th>
-                <th>통신판매업번호</th>
-                <th>연락처</th>
-                <th>운영</th>
-                <th>관리</th>
-              </tr>
-
-              <tr>
-                <td>
-                  <input type="checkbox" />
-                </td>
-                <td>5</td>
-                <td>(주)다나와</td>
-                <td>정우성</td>
-                <td>112-12-12345</td>
-                <td>2024-서울강남-04433</td>
-                <td>010-1234-1001</td>
-                <td>
-                  <span class="legend green"></span>
-                </td>
-                <td>
-                  <button class="manage-btn shutdown red">중단</button>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <input type="checkbox" />
-                </td>
-                <td>5</td>
-                <td>(주)다나와</td>
-                <td>정우성</td>
-                <td>112-12-12345</td>
-                <td>2024-서울강남-04433</td>
-                <td>010-1234-1001</td>
-                <td>
-                  <span class="legend red"></span>
-                </td>
-                <td>
-                  <button class="manage-btn continue blue">재개</button>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <input type="checkbox" />
-                </td>
-                <td>5</td>
-                <td>(주)다나와</td>
-                <td>정우성</td>
-                <td>112-12-12345</td>
-                <td>2024-서울강남-04433</td>
-                <td>010-1234-1001</td>
-                <td>
-                  <span class="legend blue"></span>
-                </td>
-                <td>
-                  <button class="manage-btn grant green">승인</button>
-                </td>
-              </tr>
-            </table>
-            <div class="crud-btn-area">
-              <button class="enroll-btn delete-btn">선택삭제</button>
-              <button class="enroll-btn register-btn registry-modal-btn">
-                상점등록
-              </button>
-            </div>
-          </div>
-          <div class="registry-modal shop-registry" title="상점등록">
-            <form action="#" method="POST">
-              <table>
-                <tr>
-                  <th>아이디</th>
-                  <td>
-                    <input type="text" />
-                  </td>
-                </tr>
-                <tr>
-                  <th>비밀번호</th>
-                  <td>
-                    <input type="text" />
-                  </td>
-                </tr>
-                <tr>
-                  <th>비밀번호 확인</th>
-                  <td>
-                    <input type="text" />
-                  </td>
-                </tr>
-              </table>
-              <table>
-                <tr>
-                  <th>상호명</th>
-                  <td>
-                    <input
-                      type="text"
-                      placeholder="상오명 입력 예: (주) 상호명"
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <th>대표</th>
-                  <td>
-                    <input type="text" placeholder="대표이사 성명" />
-                  </td>
-                </tr>
-                <tr>
-                  <th>사업자등록번호</th>
-                  <td>
-                    <input type="text" placeholder="사업자등록번호 입력" />
-                  </td>
-                </tr>
-                <tr>
-                  <th>통신판매업번호</th>
-                  <td>
-                    <input type="text" placeholder="통신판매업번호 입력" />
-                  </td>
-                </tr>
-                <tr>
-                  <th>전화번호</th>
-                  <td>
-                    <input type="text" placeholder="전화번호 입력" />
-                  </td>
-                </tr>
-                <tr>
-                  <th>팩스</th>
-                  <td>
-                    <input type="text" placeholder="팩스번호 입력" />
-                  </td>
-                </tr>
-                <tr>
-                  <th>주소</th>
-                  <td>
-                    <input
-                      type="text"
-                      placeholder="기본주소 검색"
-                      style="display: block; margin-bottom: 5px"
-                    />
-                    <input
-                      type="text"
-                      placeholder="상세주소 입력"
-                      style="display: block"
-                    />
-                  </td>
-                </tr>
-              </table>
-              <input
-                type="submit"
-                class="modal-register-btn"
-                value="등록하기"
-              />
-            </form>
-          </div>
-          <div class="pagination">
-            <a class="page move" href="#">
-              <i class="fa-solid fa-angles-left"></i>
-            </a>
-            <a class="page move" href="#">
-              <i class="fa-solid fa-chevron-left"></i>
-            </a>
-            <a class="page" href="">1</a>
-            <a class="page" href="">2</a>
-            <a class="page" href="">3</a>
-            <a class="page" href="">4</a>
-            <a class="page move" href="#">
-              <i class="fa-solid fa-chevron-right"></i>
-            </a>
-            <a class="page move" href="#">
-              <i class="fa-solid fa-angles-right"></i>
-            </a>
-          </div>
-        </section>
-      </main>
-      <footer>
-        <div id="footer-wrapper">
-          <span>
-            Copyright ©LotteON.co.kr All rights reserved. LotteON ADMINISTRATOR
-            Version 0.0.1
-          </span>
+      </div>
+      <div class="content">
+        <form action="#" method="GET" id="search-area">
+          <select name="filter" class="search-filter">
+            <option value="tradeName">상호명</option>
+            <option value="representative">대표자</option>
+            <option value="businessId">사업자등록번호</option>
+            <option value="contact">연락처</option>
+            <option value="keyword">키워드</option>
+          </select>
+          <input
+              type="text"
+              class="search-input"
+              placeholder="검색어 입력"
+          />
+          <input type="submit" class="search-submit-btn" value="검색"/>
+        </form>
+        <div id="legends-area">
+          <span class="legend green"></span>
+          <span>운영중</span>
+          <span class="legend red"></span>
+          <span>운영중지</span>
+          <span class="legend blue"></span>
+          <span>운영준비</span>
         </div>
-      </footer>
-    </div>
-  </body>
+
+        <table>
+          <tr>
+            <th>
+              <input
+                  type="checkbox"
+                  name="selected"
+                  onclick="return false"
+              />
+            </th>
+            <th>번호</th>
+            <th>상호명</th>
+            <th>대표</th>
+            <th>사업자등록번호</th>
+            <th>통신판매업번호</th>
+            <th>연락처</th>
+            <th>운영</th>
+            <th>관리</th>
+          </tr>
+
+          <tr th:each="seller : ${sellers}">
+            <td>
+              <input type="checkbox"/>
+            </td>
+            <td>5</td>
+            <td th:text="${seller.getCompanyName()}">(주)다나와</td>
+            <td th:text="${seller.getCeo()}">정우성</td>
+            <td th:text="${seller.getSellerCompositeKey().getBusinessNumber()}">112-12-12345</td>
+            <td th:text="${seller.getSellerNumber()}">2024-서울강남-04433</td>
+            <td th:text="${seller.getSellerCompositeKey().getUser().getContact()}">010-1234-1001
+            </td>
+            <td>
+              <span class="legend green"></span>
+            </td>
+            <td>
+              <button class="manage-btn shutdown red">중단</button>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input type="checkbox"/>
+            </td>
+            <td>5</td>
+            <td>dummy</td>
+            <td>정우성</td>
+            <td>112-12-12345</td>
+            <td>2024-서울강남-04433</td>
+            <td>010-1234-1001</td>
+            <td>
+              <span class="legend red"></span>
+            </td>
+            <td>
+              <button class="manage-btn continue blue">재개</button>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input type="checkbox"/>
+            </td>
+            <td>5</td>
+            <td>dummy</td>
+            <td>정우성</td>
+            <td>112-12-12345</td>
+            <td>2024-서울강남-04433</td>
+            <td>010-1234-1001</td>
+            <td>
+              <span class="legend blue"></span>
+            </td>
+            <td>
+              <button class="manage-btn grant green">승인</button>
+            </td>
+          </tr>
+        </table>
+        <div class="crud-btn-area">
+          <button class="enroll-btn delete-btn">선택삭제</button>
+          <button class="enroll-btn register-btn registry-modal-btn">
+            상점등록
+          </button>
+        </div>
+      </div>
+      <div class="registry-modal shop-registry" title="상점등록">
+        <form action="/admin/seller/register" method="POST">
+          <table>
+            <tr>
+              <th>아이디</th>
+              <td>
+                <input name="id" type="text"/>
+              </td>
+            </tr>
+            <tr>
+              <th>비밀번호</th>
+              <td>
+                <input name="password" type="text"/>
+              </td>
+            </tr>
+            <tr>
+              <th>비밀번호 확인</th>
+              <td>
+                <input name="passwordConfirm" type="text"/>
+              </td>
+            </tr>
+          </table>
+          <table>
+            <tr>
+              <th>상호명</th>
+              <td>
+                <input
+                    name="companyName"
+                    type="text"
+                    placeholder="상오명 입력 예: (주) 상호명"
+                />
+              </td>
+            </tr>
+            <tr>
+              <th>대표</th>
+              <td>
+                <input name="ceo" type="text" placeholder="대표이사 성명"/>
+              </td>
+            </tr>
+            <tr>
+              <th>사업자등록번호</th>
+              <td>
+                <input name="businessNumber" type="text" placeholder="사업자등록번호 입력"/>
+              </td>
+            </tr>
+            <tr>
+              <th>통신판매업번호</th>
+              <td>
+                <input name="sellerNumber" type="text" placeholder="통신판매업번호 입력"/>
+              </td>
+            </tr>
+            <tr>
+              <th>전화번호</th>
+              <td>
+                <input name="contact" type="text" placeholder="전화번호 입력"/>
+              </td>
+            </tr>
+            <tr>
+              <th>팩스</th>
+              <td>
+                <input name="fax" type="text" placeholder="팩스번호 입력"/>
+              </td>
+            </tr>
+            <tr>
+              <th>주소</th>
+              <td>
+                <input
+                    type="text"
+                    name="address"
+                    placeholder="기본주소 검색"
+                    style="display: block; margin-bottom: 5px"
+                />
+                <input
+                    name="addressDetail"
+                    type="text"
+                    placeholder="상세주소 입력"
+                    style="display: block"
+                />
+              </td>
+            </tr>
+          </table>
+          <input
+              type="submit"
+              class="modal-register-btn"
+              value="등록하기"
+          />
+        </form>
+      </div>
+      <div class="pagination">
+        <a class="page move" href="#">
+          <i class="fa-solid fa-angles-left"></i>
+        </a>
+        <a class="page move" href="#">
+          <i class="fa-solid fa-chevron-left"></i>
+        </a>
+        <a class="page" href="">1</a>
+        <a class="page" href="">2</a>
+        <a class="page" href="">3</a>
+        <a class="page" href="">4</a>
+        <a class="page move" href="#">
+          <i class="fa-solid fa-chevron-right"></i>
+        </a>
+        <a class="page move" href="#">
+          <i class="fa-solid fa-angles-right"></i>
+        </a>
+      </div>
+    </section>
+  </main>
+  <th:block th:insert="~{/common/admin/footer}"></th:block>
+</div>
+</body>
 </html>
