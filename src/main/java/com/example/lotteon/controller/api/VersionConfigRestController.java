@@ -16,7 +16,7 @@ public class VersionConfigController {
 
   private final BasicConfigService configService;
 
-  @GetMapping("/")
+  @GetMapping(value = {""})
   public String version(Model model) {
     List<VersionConfig> versions = configService.getAllVersions();
     model.addAttribute("versions", versions);
