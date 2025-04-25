@@ -16,7 +16,7 @@ import lombok.ToString;
 @Builder
 public class UserDTO {
 
-  private static final String[] ROLES = {"member", "seller", "admin"};
+  public static final String[] ROLES = {"member", "seller", "admin"};
 
   private String id;
   private String password;
