@@ -20,6 +20,7 @@ public class QnaDTO {
     private String status;
 
 
+    private String user_id;
     private String name;
     private String subtype_name;
 
