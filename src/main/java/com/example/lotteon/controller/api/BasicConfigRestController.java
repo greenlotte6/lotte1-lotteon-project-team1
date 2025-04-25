@@ -27,7 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @RequestMapping("/api/admin/config/basic")
 @RequiredArgsConstructor
-public class AdminConfigRestController {
+public class BasicConfigRestController {
 
   @Value("${lotteon.upload.path}")
   private String uploadPath;

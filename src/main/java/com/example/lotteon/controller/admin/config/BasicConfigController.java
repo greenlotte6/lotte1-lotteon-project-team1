@@ -1,7 +1,9 @@
 package com.example.lotteon.controller.admin.config;
 
+import com.example.lotteon.entity.admin.config.VersionConfig;
 import com.example.lotteon.service.admin.BasicConfigService;
 import jakarta.servlet.http.HttpServletRequest;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -38,7 +40,9 @@ public class BasicConfigController {
   }
 
   @GetMapping("/version")
-  public String version() {
+  public String version(Model model) {
+    List<VersionConfig> versions = service.getAllVersions();
+    model.addAttribute("versions", versions);
     return "/admin/config/version";
   }
 }

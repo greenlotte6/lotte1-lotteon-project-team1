@@ -1,5 +1,20 @@
+function search(versionName) {
+  let resJson = null;
+  return resJson;
+}
+
+function dialogControl(isOpened) {
+  if (!isOpened) {
+    $(".version-detail").dialog("open");
+  } else {
+    $(".version-detail").dialog("close");
+  }
+}
+
 $(() => {
   //버전 상세 확인 dialog
+  const dialogVersionName = $("#version-detail-name")
+  const dialogVersionDesc = $("#version-detail-description")
   let isOpened = false;
   $(".version-detail").dialog({
     width: 800,
@@ -15,12 +30,21 @@ $(() => {
     },
   });
 
-  $(".version-detail-btn").on("click", () => {
-    if (!isOpened) {
-      $(".version-detail").dialog("open");
-    } else {
-      $(".version-detail").dialog("close");
-    }
+  $(".version-detail-btn").on("click", async (event) => {
+    dialogControl(isOpened)
+    const versionName = event.target.name;
+    $.ajax({
+      url: `/api/admin/config/version/search?version=${versionName}`,
+      dataType: "json",
+      success: function (res) {
+        dialogVersionName.text(res["version"]);
+        dialogVersionDesc.text(res["description"])
+        console.log(dialogVersionDesc)
+      },
+      error: function (err) {
+        alert("에러 발생")
+      }
+    })
   });
 
   $(".version-detail .close-btn").on("click", () => {
