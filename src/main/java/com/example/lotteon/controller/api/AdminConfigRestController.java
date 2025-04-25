@@ -75,9 +75,8 @@ public class AdminConfigRestController {
       @RequestParam String key) {
     log.info("PUT request for {} with {}", key, config.toString());
     service.updateCorpInfo(config);
-
     cacheService.invalidateCache();
-    return new ResponseEntity<>("OK", HttpStatus.OK);
+    return new ResponseEntity<>("{}", HttpStatus.OK);
   }
 
   @PutMapping("/cs")
