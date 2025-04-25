@@ -1,7 +1,7 @@
 package com.example.lotteon.interceptor;
 
 import com.example.lotteon.entity.admin.config.ConfigDocument;
-import com.example.lotteon.service.admin.AdminConfigService;
+import com.example.lotteon.service.admin.BasicConfigService;
 import com.example.lotteon.service.admin.CacheService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -19,7 +19,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 public class ConfigApplicationInterceptor implements HandlerInterceptor {
 
   private final CacheService service;
-  private final AdminConfigService adminConfigService;
+  private final BasicConfigService basicConfigService;
 
   @Override
   public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
@@ -34,7 +34,7 @@ public class ConfigApplicationInterceptor implements HandlerInterceptor {
 
     if (cachedConfig == null) {
       log.info("No cached config found. Retrieving config from database");
-      cachedConfig = adminConfigService.getConfig();
+      cachedConfig = basicConfigService.getConfig();
     }
     request.setAttribute("config", cachedConfig);
 

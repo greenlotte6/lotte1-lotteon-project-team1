@@ -30,231 +30,56 @@ public class CsController {
     private final QnaService qnaService;
 
 
-    @GetMapping("/csmain")
-    public String csmain() {
-        return "/cs/csmain";
-    }
+  @GetMapping("/csmain")
+  public String csmain() {
+    return "/cs/csmain";
+  }
 
-    /*전체*/
-    @GetMapping("/notice/csnoticeall")
-    public String csnoticeall(Model model, PageRequestDTO pageRequestDTO) {
+  /*전체*/
+  @GetMapping("/notice/csnoticeall")
+  public String csnoticeall(Model model, PageRequestDTO pageRequestDTO) {
 
-        int type_id = pageRequestDTO.getType_id();
-        PageResponseDTO pageResponseDTO = csService.findAll(pageRequestDTO, type_id);
+    int type_id = pageRequestDTO.getType_id();
+    PageResponseDTO pageResponseDTO = csService.findAll(pageRequestDTO, type_id);
 
-        model.addAttribute(pageResponseDTO);
+    model.addAttribute(pageResponseDTO);
 
-        return "/cs/notice/csnoticeall";
-    }
+    return "/cs/notice/csnoticeall";
+  }
 
-    /*고객 서비스*/
-    @GetMapping("/notice/csnoticecustomer")
-    public String csnoticecustomer(Model model, PageRequestDTO pageRequestDTO) {
+  /*고객 서비스*/
+  @GetMapping("/notice/csnoticecustomer")
+  public String csnoticecustomer(Model model, PageRequestDTO pageRequestDTO) {
 
-        pageRequestDTO.setType_id(1);
-        PageResponseDTO pageResponseDTO = csService.findAll(pageRequestDTO, 1);
+    pageRequestDTO.setType_id(1);
+    PageResponseDTO pageResponseDTO = csService.findAll(pageRequestDTO, 1);
 
-        model.addAttribute(pageResponseDTO);
+    model.addAttribute(pageResponseDTO);
 
-        return "/cs/notice/csnoticecustomer";
-    }
+    return "/cs/notice/csnoticecustomer";
+  }
 
-    /*이벤트*/
-    @GetMapping("/notice/csnoticeevent")
-    public String csnoticeevent(Model model, PageRequestDTO pageRequestDTO) {
+  /*이벤트*/
+  @GetMapping("/notice/csnoticeevent")
+  public String csnoticeevent(Model model, PageRequestDTO pageRequestDTO) {
 
-        pageRequestDTO.setType_id(2);
-        PageResponseDTO pageResponseDTO = csService.findAll(pageRequestDTO, 2);
+    pageRequestDTO.setType_id(2);
+    PageResponseDTO pageResponseDTO = csService.findAll(pageRequestDTO, 2);
 
-        model.addAttribute(pageResponseDTO);
-        return "/cs/notice/csnoticeevent";
-    }
+    model.addAttribute(pageResponseDTO);
+    return "/cs/notice/csnoticeevent";
+  }
 
-    /*위해상품*/
-    @GetMapping("/notice/csnoticehazard")
-    public String csnoticehazard(Model model, PageRequestDTO pageRequestDTO) {
+  /*위해상품*/
+  @GetMapping("/notice/csnoticehazard")
+  public String csnoticehazard(Model model, PageRequestDTO pageRequestDTO) {
 
-        pageRequestDTO.setType_id(4);
-        PageResponseDTO pageResponseDTO = csService.findAll(pageRequestDTO, 4);
+    pageRequestDTO.setType_id(4);
+    PageResponseDTO pageResponseDTO = csService.findAll(pageRequestDTO, 4);
 
-        model.addAttribute(pageResponseDTO);
-
-        return "/cs/notice/csnoticehazard";
-    }
-
-    /*안전거래*/
-    @GetMapping("/notice/csnoticesafe")
-    public String csnoticesafe(Model model, PageRequestDTO pageRequestDTO) {
-
-        pageRequestDTO.setType_id(4);
-        PageResponseDTO pageResponseDTO = csService.findAll(pageRequestDTO, 4);
-
-        model.addAttribute(pageResponseDTO);
-
-        return "/cs/notice/csnoticesafe";
-    }
-
-    /*노티스 뷰*/
-    @GetMapping("/notice/csnoticeview")
-    public String csnoticeview(@RequestParam("id")int id, Model model) {
-
-        //글 조회 서비스 호출
-        NoticeDTO noticeDTO = csService.findById(id);
-        model.addAttribute("noticeDTO", noticeDTO);
-
-        String referer = request.getHeader("Referer");
-        if (referer != null && referer.contains("csnoticeall")) {
-            model.addAttribute("fromAll", true);
-        } else {
-            model.addAttribute("fromAll", false);
-        }
-
-        return "/cs/notice/csnoticeview";
-    }
-
-
-
-    /*faq 회원 리스트*/
-    @GetMapping("/faq/csfaqmember")
-    public String csfaqmember(Model model, PageRequestDTO pageRequestDTO) {
-
-        // type_id별로 4번 호출해서 각각 리스트를 만듦
-        PageResponseDTO joinFaqs = faqService.findAll(pageRequestDTO, 5);   // 가입
-        PageResponseDTO leaveFaqs = faqService.findAll(pageRequestDTO, 6);  // 탈퇴
-        PageResponseDTO infoFaqs = faqService.findAll(pageRequestDTO, 7);   // 회원정보
-        PageResponseDTO loginFaqs = faqService.findAll(pageRequestDTO, 8);  // 로그인
-
-        model.addAttribute("joinFaqs", joinFaqs.getDtoList());
-        model.addAttribute("leaveFaqs", leaveFaqs.getDtoList());
-        model.addAttribute("infoFaqs", infoFaqs.getDtoList());
-        model.addAttribute("loginFaqs", loginFaqs.getDtoList());
-
-        return "/cs/faq/csfaqmember";
-    }
-
-    /*faq 쿠폰 리스트*/
-    @GetMapping("/faq/csfaqcoupon")
-    public String csfaqcoupon(Model model, PageRequestDTO pageRequestDTO) {
-
-        // type_id별로 4번 호출해서 각각 리스트를 만듦
-        PageResponseDTO couponFaqs = faqService.findAll(pageRequestDTO, 9);
-        PageResponseDTO pointFaqs = faqService.findAll(pageRequestDTO, 10);
-        PageResponseDTO partnerFaqs = faqService.findAll(pageRequestDTO, 11);
-        PageResponseDTO eventFaqs = faqService.findAll(pageRequestDTO, 12);
-
-        model.addAttribute("couponFaqs", couponFaqs.getDtoList());
-        model.addAttribute("pointFaqs", pointFaqs.getDtoList());
-        model.addAttribute("partnerFaqs", partnerFaqs.getDtoList());
-        model.addAttribute("eventFaqs", eventFaqs.getDtoList());
-
-        return "/cs/faq/csfaqcoupon";
-    }
-
-    /*faq 주문/결제 리스트*/
-    @GetMapping("/faq/csfaqorder")
-    public String csfaqorder(Model model, PageRequestDTO pageRequestDTO) {
-
-        PageResponseDTO productFaqs = faqService.findAll(pageRequestDTO, 13);
-        PageResponseDTO paymentFaqs = faqService.findAll(pageRequestDTO, 14);
-        PageResponseDTO historyFaqs = faqService.findAll(pageRequestDTO, 15);
-        PageResponseDTO receiptFaqs = faqService.findAll(pageRequestDTO, 16);
-
-        model.addAttribute("productFaqs", productFaqs.getDtoList());
-        model.addAttribute("paymentFaqs", paymentFaqs.getDtoList());
-        model.addAttribute("historyFaqs", historyFaqs.getDtoList());
-        model.addAttribute("receiptFaqs", receiptFaqs.getDtoList());
-
-        return "/cs/faq/csfaqorder";
-    }
-
-    /*faq 배송 리스트*/
-    @GetMapping("/faq/csfaqdeliver")
-    public String csfaqdeliver(Model model, PageRequestDTO pageRequestDTO) {
-
-        PageResponseDTO statusFaqs = faqService.findAll(pageRequestDTO, 17);
-        PageResponseDTO infoFaqs = faqService.findAll(pageRequestDTO, 18);
-        PageResponseDTO globalFaqs = faqService.findAll(pageRequestDTO, 19);
-        PageResponseDTO sameDayFaqs = faqService.findAll(pageRequestDTO, 20);
-        PageResponseDTO directFaqs = faqService.findAll(pageRequestDTO, 21);
-
-        model.addAttribute("statusFaqs", statusFaqs.getDtoList());
-        model.addAttribute("infoFaqs", infoFaqs.getDtoList());
-        model.addAttribute("globalFaqs", globalFaqs.getDtoList());
-        model.addAttribute("sameDayFaqs", sameDayFaqs.getDtoList());
-        model.addAttribute("directFaqs", directFaqs.getDtoList());
-
-        return "/cs/faq/csfaqdeliver";
-    }
-
-    /*faq 취소/반품/교환 리스트*/
-    @GetMapping("/faq/csfaqcancel")
-    public String csfaqcancel(Model model, PageRequestDTO pageRequestDTO) {
-
-        PageResponseDTO returnReqFaqs = faqService.findAll(pageRequestDTO, 22);
-        PageResponseDTO returnInfoFaqs = faqService.findAll(pageRequestDTO, 23);
-        PageResponseDTO exchangeReqFaqs = faqService.findAll(pageRequestDTO, 24);
-        PageResponseDTO exchangeInfoFaqs = faqService.findAll(pageRequestDTO, 25);
-        PageResponseDTO cancelReqFaqs = faqService.findAll(pageRequestDTO, 26);
-        PageResponseDTO refundFaqs = faqService.findAll(pageRequestDTO, 27);
-
-        model.addAttribute("returnReqFaqs", returnReqFaqs.getDtoList());
-        model.addAttribute("returnInfoFaqs", returnInfoFaqs.getDtoList());
-        model.addAttribute("exchangeReqFaqs", exchangeReqFaqs.getDtoList());
-        model.addAttribute("exchangeInfoFaqs", exchangeInfoFaqs.getDtoList());
-        model.addAttribute("cancelReqFaqs", cancelReqFaqs.getDtoList());
-        model.addAttribute("refundFaqs", refundFaqs.getDtoList());
-
-        return "/cs/faq/csfaqcancel";
-    }
-
-    /*faq 여행/숙박/항공 리스트*/
-    @GetMapping("/faq/csfaqtrip")
-    public String csfaqtrip(Model model, PageRequestDTO pageRequestDTO) {
-
-        PageResponseDTO travelFaqs = faqService.findAll(pageRequestDTO, 28);
-        PageResponseDTO flightFaqs = faqService.findAll(pageRequestDTO, 29);
-
-        model.addAttribute("travelFaqs", travelFaqs.getDtoList());
-        model.addAttribute("flightFaqs", flightFaqs.getDtoList());
-
-        return "/cs/faq/csfaqtrip";
-    }
-
-    /*faq 안전거래 리스트*/
-    @GetMapping("/faq/csfaqsafe")
-    public String csfaqsafe(Model model, PageRequestDTO pageRequestDTO) {
-
-        PageResponseDTO ruleFaqs = faqService.findAll(pageRequestDTO, 30);
-        PageResponseDTO ipFaqs = faqService.findAll(pageRequestDTO, 31);
-        PageResponseDTO illegalFaqs = faqService.findAll(pageRequestDTO, 32);
-        PageResponseDTO policyFaqs = faqService.findAll(pageRequestDTO, 33);
-        PageResponseDTO dealFaqs = faqService.findAll(pageRequestDTO, 34);
-        PageResponseDTO adFaqs = faqService.findAll(pageRequestDTO, 35);
-        PageResponseDTO youthFaqs = faqService.findAll(pageRequestDTO, 36);
-
-        model.addAttribute("ruleFaqs", ruleFaqs.getDtoList());
-        model.addAttribute("ipFaqs", ipFaqs.getDtoList());
-        model.addAttribute("illegalFaqs", illegalFaqs.getDtoList());
-        model.addAttribute("policyFaqs", policyFaqs.getDtoList());
-        model.addAttribute("dealFaqs", dealFaqs.getDtoList());
-        model.addAttribute("adFaqs", adFaqs.getDtoList());
-        model.addAttribute("youthFaqs", youthFaqs.getDtoList());
-
-        return "/cs/faq/csfaqsafe";
-    }
-
-    /*faq 회원 글 보기*/
-    @GetMapping("/faq/csfaqview")
-    public String csfaqview(@RequestParam("id")int id, Model model) {
-
-        // 글 조회 서비스 호출
-        FaqDTO faqDTO = faqService.findById(id);
-        model.addAttribute("faqDTO", faqDTO);
-
-        return "/cs/faq/csfaqview";
-    }
-
-
+    model.addAttribute(pageResponseDTO);
+    return "/cs/notice/csnoticehazard";
+  }
 
     /* qna 문의하기 글쓰기*/
     @GetMapping("/qna/csqnawrite")
@@ -267,33 +92,198 @@ public class CsController {
 
         int id = qnaService.qnaRegister(qnaDTO);
         return "redirect:/cs/qna/csqnamember";
-
-
     }
 
+  /*안전거래*/
+  @GetMapping("/notice/csnoticesafe")
+  public String csnoticesafe(Model model, PageRequestDTO pageRequestDTO) {
 
+    pageRequestDTO.setType_id(4);
+    PageResponseDTO pageResponseDTO = csService.findAll(pageRequestDTO, 4);
 
+    model.addAttribute(pageResponseDTO);
+    return "/cs/notice/csnoticesafe";
+  }
 
-    @GetMapping("/cscontactlist")
-    public String cscontactlist() {
-        return "/cs/cscontactlist";
+  /*노티스 뷰*/
+  @GetMapping("/notice/csnoticeview")
+  public String csnoticeview(@RequestParam("id") int id, Model model) {
+
+    //글 조회 서비스 호출
+    NoticeDTO noticeDTO = csService.findById(id);
+    model.addAttribute("noticeDTO", noticeDTO);
+
+    String referer = request.getHeader("Referer");
+    if (referer != null && referer.contains("csnoticeall")) {
+      model.addAttribute("fromAll", true);
+    } else {
+      model.addAttribute("fromAll", false);
     }
 
-    @GetMapping("/cscontactview")
-    public String cscontactview() {
-        return "/cs/cscontactview";
-    }
+    return "/cs/notice/csnoticeview";
+  }
 
 
+  /*faq 회원 리스트*/
+  @GetMapping("/faq/csfaqmember")
+  public String csfaqmember(Model model, PageRequestDTO pageRequestDTO) {
+
+    // type_id별로 4번 호출해서 각각 리스트를 만듦
+    PageResponseDTO joinFaqs = faqService.findAll(pageRequestDTO, 5);   // 가입
+    PageResponseDTO leaveFaqs = faqService.findAll(pageRequestDTO, 6);  // 탈퇴
+    PageResponseDTO infoFaqs = faqService.findAll(pageRequestDTO, 7);   // 회원정보
+    PageResponseDTO loginFaqs = faqService.findAll(pageRequestDTO, 8);  // 로그인
+
+    model.addAttribute("joinFaqs", joinFaqs.getDtoList());
+    model.addAttribute("leaveFaqs", leaveFaqs.getDtoList());
+    model.addAttribute("infoFaqs", infoFaqs.getDtoList());
+    model.addAttribute("loginFaqs", loginFaqs.getDtoList());
+
+    return "/cs/faq/csfaqmember";
+  }
+
+  /*faq 쿠폰 리스트*/
+  @GetMapping("/faq/csfaqcoupon")
+  public String csfaqcoupon(Model model, PageRequestDTO pageRequestDTO) {
+
+    // type_id별로 4번 호출해서 각각 리스트를 만듦
+    PageResponseDTO couponFaqs = faqService.findAll(pageRequestDTO, 9);
+    PageResponseDTO pointFaqs = faqService.findAll(pageRequestDTO, 10);
+    PageResponseDTO partnerFaqs = faqService.findAll(pageRequestDTO, 11);
+    PageResponseDTO eventFaqs = faqService.findAll(pageRequestDTO, 12);
+
+    model.addAttribute("couponFaqs", couponFaqs.getDtoList());
+    model.addAttribute("pointFaqs", pointFaqs.getDtoList());
+    model.addAttribute("partnerFaqs", partnerFaqs.getDtoList());
+    model.addAttribute("eventFaqs", eventFaqs.getDtoList());
+
+    return "/cs/faq/csfaqcoupon";
+  }
+
+  /*faq 주문/결제 리스트*/
+  @GetMapping("/faq/csfaqorder")
+  public String csfaqorder(Model model, PageRequestDTO pageRequestDTO) {
+
+    PageResponseDTO productFaqs = faqService.findAll(pageRequestDTO, 13);
+    PageResponseDTO paymentFaqs = faqService.findAll(pageRequestDTO, 14);
+    PageResponseDTO historyFaqs = faqService.findAll(pageRequestDTO, 15);
+    PageResponseDTO receiptFaqs = faqService.findAll(pageRequestDTO, 16);
+
+    model.addAttribute("productFaqs", productFaqs.getDtoList());
+    model.addAttribute("paymentFaqs", paymentFaqs.getDtoList());
+    model.addAttribute("historyFaqs", historyFaqs.getDtoList());
+    model.addAttribute("receiptFaqs", receiptFaqs.getDtoList());
+
+    return "/cs/faq/csfaqorder";
+  }
+
+  /*faq 배송 리스트*/
+  @GetMapping("/faq/csfaqdeliver")
+  public String csfaqdeliver(Model model, PageRequestDTO pageRequestDTO) {
+
+    PageResponseDTO statusFaqs = faqService.findAll(pageRequestDTO, 17);
+    PageResponseDTO infoFaqs = faqService.findAll(pageRequestDTO, 18);
+    PageResponseDTO globalFaqs = faqService.findAll(pageRequestDTO, 19);
+    PageResponseDTO sameDayFaqs = faqService.findAll(pageRequestDTO, 20);
+    PageResponseDTO directFaqs = faqService.findAll(pageRequestDTO, 21);
+
+    model.addAttribute("statusFaqs", statusFaqs.getDtoList());
+    model.addAttribute("infoFaqs", infoFaqs.getDtoList());
+    model.addAttribute("globalFaqs", globalFaqs.getDtoList());
+    model.addAttribute("sameDayFaqs", sameDayFaqs.getDtoList());
+    model.addAttribute("directFaqs", directFaqs.getDtoList());
+
+    return "/cs/faq/csfaqdeliver";
+  }
+
+  /*faq 취소/반품/교환 리스트*/
+  @GetMapping("/faq/csfaqcancel")
+  public String csfaqcancel(Model model, PageRequestDTO pageRequestDTO) {
+
+    PageResponseDTO returnReqFaqs = faqService.findAll(pageRequestDTO, 22);
+    PageResponseDTO returnInfoFaqs = faqService.findAll(pageRequestDTO, 23);
+    PageResponseDTO exchangeReqFaqs = faqService.findAll(pageRequestDTO, 24);
+    PageResponseDTO exchangeInfoFaqs = faqService.findAll(pageRequestDTO, 25);
+    PageResponseDTO cancelReqFaqs = faqService.findAll(pageRequestDTO, 26);
+    PageResponseDTO refundFaqs = faqService.findAll(pageRequestDTO, 27);
+
+    model.addAttribute("returnReqFaqs", returnReqFaqs.getDtoList());
+    model.addAttribute("returnInfoFaqs", returnInfoFaqs.getDtoList());
+    model.addAttribute("exchangeReqFaqs", exchangeReqFaqs.getDtoList());
+    model.addAttribute("exchangeInfoFaqs", exchangeInfoFaqs.getDtoList());
+    model.addAttribute("cancelReqFaqs", cancelReqFaqs.getDtoList());
+    model.addAttribute("refundFaqs", refundFaqs.getDtoList());
+
+    return "/cs/faq/csfaqcancel";
+  }
+
+  /*faq 여행/숙박/항공 리스트*/
+  @GetMapping("/faq/csfaqtrip")
+  public String csfaqtrip(Model model, PageRequestDTO pageRequestDTO) {
+
+    PageResponseDTO travelFaqs = faqService.findAll(pageRequestDTO, 28);
+    PageResponseDTO flightFaqs = faqService.findAll(pageRequestDTO, 29);
+
+    model.addAttribute("travelFaqs", travelFaqs.getDtoList());
+    model.addAttribute("flightFaqs", flightFaqs.getDtoList());
+
+    return "/cs/faq/csfaqtrip";
+  }
+
+  /*faq 안전거래 리스트*/
+  @GetMapping("/faq/csfaqsafe")
+  public String csfaqsafe(Model model, PageRequestDTO pageRequestDTO) {
+
+    PageResponseDTO ruleFaqs = faqService.findAll(pageRequestDTO, 30);
+    PageResponseDTO ipFaqs = faqService.findAll(pageRequestDTO, 31);
+    PageResponseDTO illegalFaqs = faqService.findAll(pageRequestDTO, 32);
+    PageResponseDTO policyFaqs = faqService.findAll(pageRequestDTO, 33);
+    PageResponseDTO dealFaqs = faqService.findAll(pageRequestDTO, 34);
+    PageResponseDTO adFaqs = faqService.findAll(pageRequestDTO, 35);
+    PageResponseDTO youthFaqs = faqService.findAll(pageRequestDTO, 36);
+
+    model.addAttribute("ruleFaqs", ruleFaqs.getDtoList());
+    model.addAttribute("ipFaqs", ipFaqs.getDtoList());
+    model.addAttribute("illegalFaqs", illegalFaqs.getDtoList());
+    model.addAttribute("policyFaqs", policyFaqs.getDtoList());
+    model.addAttribute("dealFaqs", dealFaqs.getDtoList());
+    model.addAttribute("adFaqs", adFaqs.getDtoList());
+    model.addAttribute("youthFaqs", youthFaqs.getDtoList());
+
+    return "/cs/faq/csfaqsafe";
+  }
+
+  /*faq 회원 글 보기*/
+  @GetMapping("/faq/csfaqview")
+  public String csfaqview(@RequestParam("id") int id, Model model) {
+
+    // 글 조회 서비스 호출
+    FaqDTO faqDTO = faqService.findById(id);
+    model.addAttribute("faqDTO", faqDTO);
+
+    return "/cs/faq/csfaqview";
+  }
+
+  @GetMapping("/cscontactlist")
+  public String cscontactlist() {
+    return "/cs/cscontactlist";
+  }
+
+  @GetMapping("/cscontactview")
+  public String cscontactview() {
+    return "/cs/cscontactview";
+  }
+
+  @GetMapping("/cscontactwrite")
+  public String cscontactwrite() {
+    return "/cs/cscontactwrite";
+  }
 
 
-
-    @GetMapping("/csqnalist")
-    public String csqnalist() {
-        return "/cs/csqnalist";
-    }
-
-
+  @GetMapping("/csqnalist")
+  public String csqnalist() {
+    return "/cs/csqnalist";
+  }
 
 
 }

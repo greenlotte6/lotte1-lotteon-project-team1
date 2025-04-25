@@ -1,4 +1,4 @@
-package com.example.lotteon.repository.admin;
+package com.example.lotteon.repository.admin.config;
 
 import com.example.lotteon.entity.admin.config.ConfigDocument;
 import com.example.lotteon.entity.admin.config.CorpInfo;
@@ -19,7 +19,7 @@ import org.springframework.stereotype.Repository;
 @Slf4j
 @Repository
 @RequiredArgsConstructor
-public class AdminConfigRepository {
+public class BasicConfigRepository {
 
   private final MongoTemplate template;
   private final Gson gson;
