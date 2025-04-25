@@ -5,8 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CollectionId;
 
 import java.time.LocalDate;
+
 
 @Entity
 @Table(name = "recruit")
@@ -17,14 +19,27 @@ import java.time.LocalDate;
 public class Recruit {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
-    private String dept;
-    private String career;
-    private String hireType;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "department_id")
+    private RecruitDepartment dept;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "career_id")
+    private RecruitCareer career;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "employment_type_id")
+    private EmploymentType hireType;
     private String title;
+
+    @Column(name = "description")
     private String status;
 
-    private LocalDate startDate;
-    private LocalDate endDate;
+    private LocalDate dateFrom;
+    private LocalDate dateTo;
+
+
 }
