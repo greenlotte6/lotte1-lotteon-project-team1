@@ -130,7 +130,7 @@
                         <button>쿠폰받기</button>
                         <span><i class="fa-regular fa-square-minus"></i>무이자할부</span>
                         <span><i class="fa-regular fa-credit-card"></i>카드추가혜택</span>
-                        <p th:text="${prodtos.getPrice() - (prodtos.getPrice()/100) * prodtos.getDiscountRate() + '원'}"></p>
+                        <p th:text="${prodtos.getPrice - (prodtos.getPrice/100) * prodtos.getDiscountRate + '원'}"></p>
                     </div>
                     <div class="delivery">
                         <p>
@@ -156,19 +156,19 @@
 
                     <div class="count-option">
                         <p>선택한 상품명</p>
-                        <div class="count-main">
+                        <div class="count-main" >
                             <div class="count">
                                 <button class="minus">-</button>
                                 <input type="number" value="1" min="1" class="count-input">
                                 <button class="plus">+</button>
                             </div>
                             <div>
-                                <span id="sum_price"></span>
+                                <span id="sum_price">[[${prodtos.getPrice - (prodtos.getPrice/100) * prodtos.getDiscountRate}]]</span>
                             </div>
                         </div>
                         <div class="sum-price">
                             <p>총 상품금액</p>
-                            <p></p>  
+                            <p></p>
                         </div>
                     </div>
                     <div class="cart-and-purchase">

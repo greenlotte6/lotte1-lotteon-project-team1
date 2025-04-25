@@ -21,6 +21,7 @@ public class ProductDetailService {
     private final ProductDetailRepository detailRepository;
     private final ModelMapper modelMapper;
 
+    // 상세 페이지 데이터 출력
     public ProductDTO productDetail(int id) {
         log.info("id: " + id);
 
@@ -37,12 +38,5 @@ public class ProductDetailService {
         }
         return null;
     }
-
-    public void cartRegister(ProductDTO productDTO) {
-        log.info("productDTO: " + productDTO);
-
-        Product product = modelMapper.map(productDTO, Product.class);
-
-        detailRepository.save(product);
-    }
+    
 }

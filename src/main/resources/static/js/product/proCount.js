@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const totalPriceDisplay = document.querySelector('.sum-price p:last-child');
 
     // 초기값 설정
-    const unitPrice = 54000;
+    const unitPrice = priceDisplay.innerText;
 
     // 💡 가격 업데이트
     function updatePrice() {
@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", function () {
         let current = parseInt(countInput.value);
         if (current > 1) {
             countInput.value = current - 1;
-            updatePrice(); // 👈 수량 줄일 때 가격 갱신
+            updatePrice(); //  수량 줄일 때 가격 갱신
         }
     });
 
@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", function () {
         event.preventDefault();
         let current = parseInt(countInput.value);
         countInput.value = current + 1;
-        updatePrice(); // 👈 수량 늘릴 때 가격 갱신
+        updatePrice(); //  수량 늘릴 때 가격 갱신
     });
 
     // 수동으로 input 변경될 때도 가격 업데이트

@@ -2,6 +2,7 @@ package com.example.lotteon.controller.product;
 
 import com.example.lotteon.dto.product.ProductDTO;
 import com.example.lotteon.service.product.ShoppingCartService;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -19,28 +20,25 @@ public class ShoppingCart {
 
     private final ShoppingCartService shoppingService;
 
-    //@GetMapping("/product/cart")
-    //public String shoppingCart(@RequestParam("id") int id , Model model) {
+    @GetMapping("/product/cart")
+    public String shoppingCart(@RequestParam("id") int id , Model model) {
 
-    //    ProductDTO proDTO = shoppingService.shoppingCart(id);
-      //  model.addAttribute("proDTOs", proDTO);
+        ProductDTO proDTO = shoppingService.getCart(id);
+        model.addAttribute("proDTO", proDTO);
 
-        //return "/product/shoppingCart";
+        return "/product/shoppingCart";
+    }
+
+   // @GetMapping("/product/cart")
+    //public String shoppingCart(@RequestParam("id") int id, Model model) {
+
+
+      //  return "/product/shoppingCart";
    // }
 
-    @GetMapping("/product/cart")
-    public String shoppingCart(Model model) {
-
-        List<ProductDTO> productDTOS = shoppingService.shoppingCart();
-        model.addAttribute("products", productDTOS);
-
-        return "/product/shoppingCart";
-    }
-
-    @PostMapping("/product/cart")
-    public String shoppingCart(ProductDTO productDTO,Model model) {
-
-
-        return "/product/shoppingCart";
-    }
+    //@PostMapping("/product/cart")
+    //public String shoppingCart(@RequestParam("id") int id, HttpSession session) {
+     //   shoppingService.addCart(id);
+      //  return "redirect:/product/cart";
+   // }
 }
