@@ -1,7 +1,11 @@
 package com.example.lotteon.controller.admin.config;
 
+import com.example.lotteon.entity.admin.config.VersionConfig;
+import com.example.lotteon.service.admin.BasicConfigService;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -10,9 +14,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequiredArgsConstructor
 public class VersionConfigController {
 
-  @GetMapping("/")
-  public String version() {
+  private final BasicConfigService configService;
 
+  @GetMapping("/")
+  public String version(Model model) {
+    List<VersionConfig> versions = configService.getAllVersions();
+    model.addAttribute("versions", versions);
     return "/admin/config/version";
   }
 }

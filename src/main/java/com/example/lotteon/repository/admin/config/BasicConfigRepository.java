@@ -7,6 +7,7 @@ import com.example.lotteon.entity.admin.config.Logo;
 import com.example.lotteon.entity.admin.config.Site;
 import com.example.lotteon.entity.admin.config.VersionConfig;
 import com.google.gson.Gson;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.mongodb.core.FindAndModifyOptions;
@@ -27,6 +28,11 @@ public class BasicConfigRepository {
   public VersionConfig findVersion() {
     Query query = new Query(Criteria.where("id").is("basic_config::version"));
     return template.findOne(query, VersionConfig.class, "BasicConfig");
+  }
+
+  public List<VersionConfig> findAllVersion() {
+    Query query = new Query(Criteria.where("id").is("basic_config::version"));
+    return template.find(query, VersionConfig.class, "BasicConfig");
   }
 
   public Site findSite() {
