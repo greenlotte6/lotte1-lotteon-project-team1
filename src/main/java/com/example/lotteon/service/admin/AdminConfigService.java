@@ -23,11 +23,11 @@ public class AdminConfigService {
   private final AdminConfigRepository repo;
   private final Gson gson;
 
-  //TODO: Cache updated config, or update the cached config using redis
   public ConfigDocument getConfig() {
     ConfigDocument config = repo.find();
     String serializedConfig = gson.toJson(config);
-    return cacheService.doCache(serializedConfig);
+    cacheService.cache(serializedConfig);
+    return config;
   }
 
   public void updateSite(Site config) {
@@ -36,6 +36,10 @@ public class AdminConfigService {
 
   public void updateLogo(Logo config) {
     repo.updateLogo(config);
+  }
+
+  public Logo updateLogoBy(String field, String value) {
+    return repo.updateLogoBy(field, value);
   }
 
   public void updateCorpInfo(CorpInfo config) {

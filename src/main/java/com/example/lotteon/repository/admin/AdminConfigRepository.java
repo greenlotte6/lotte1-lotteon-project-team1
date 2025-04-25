@@ -5,9 +5,11 @@ import com.example.lotteon.entity.admin.config.CorpInfo;
 import com.example.lotteon.entity.admin.config.CustomerServiceInfo;
 import com.example.lotteon.entity.admin.config.Logo;
 import com.example.lotteon.entity.admin.config.Site;
+import com.example.lotteon.entity.admin.config.VersionConfig;
 import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.mongodb.core.FindAndModifyOptions;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -22,12 +24,9 @@ public class AdminConfigRepository {
   private final MongoTemplate template;
   private final Gson gson;
 
-  public String findVersion() {
+  public VersionConfig findVersion() {
     Query query = new Query(Criteria.where("id").is("basic_config::version"));
-
-    //version 문서의 "version" 필드만 조회 결과에 포함. "id", "_id"는 조회 결과에서 제외
-    query.fields().include("version").exclude("_id");
-    return template.findDistinct(query, "version", "BasicConfig", String.class).get(0);
+    return template.findOne(query, VersionConfig.class, "BasicConfig");
   }
 
   public Site findSite() {
@@ -58,7 +57,7 @@ public class AdminConfigRepository {
 
   public ConfigDocument find() {
     log.info("Retrieving config document from database");
-    String version = findVersion();
+    VersionConfig version = findVersion();
     Site site = findSite();
     Logo logo = findLogo();
     CorpInfo corpInfo = findCorpInfo();
@@ -90,6 +89,14 @@ public class AdminConfigRepository {
     update.set("footer_location", config.getFooterLogoLocation());
     update.set("favicon_location", config.getFaviconLocation());
     template.updateFirst(query, update, "BasicConfig");
+  }
+
+  public Logo updateLogoBy(String field, String value) {
+    Query query = new Query(Criteria.where("id").is("basic_config::logo"));
+    Update update = new Update();
+    update.set(field, value);
+    FindAndModifyOptions options = new FindAndModifyOptions().returnNew(true);
+    return template.findAndModify(query, update, options, Logo.class, "BasicConfig");
   }
 
   public void updateCorpInfo(CorpInfo config) {

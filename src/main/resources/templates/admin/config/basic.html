@@ -50,9 +50,7 @@
         <table class="settings-input version">
           <tr>
             <th>사이트 버전</th>
-            <td th:text="${config.getVersion()}">
-              <input type="text" name="version"
-                     th:value="${config.getVersion()}"/>
+            <td th:text="${config.getVersion().getVersion()}">
             </td>
           </tr>
         </table>

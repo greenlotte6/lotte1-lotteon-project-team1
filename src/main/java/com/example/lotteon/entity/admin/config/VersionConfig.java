@@ -1,0 +1,32 @@
+package com.example.lotteon.entity.admin.config;
+
+import com.google.gson.annotations.SerializedName;
+import java.util.Date;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.data.mongodb.core.mapping.Field;
+
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class VersionConfig {
+
+  @Field("version")
+  @SerializedName("version")
+  private String version;
+
+  @Field("author")
+  @SerializedName("author")
+  private String author;
+
+  @Field("created_at")
+  @SerializedName("created_at")
+  private Date createdAt;
+
+  @Field("description")
+  @SerializedName("description")
+  private String description;
+}

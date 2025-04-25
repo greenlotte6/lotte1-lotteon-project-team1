@@ -13,8 +13,6 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class CacheService {
 
-  private final static String KEY = "admin::basic_config";
-
   private final RedisTemplate<String, String> template;
   private final Gson gson;
 
@@ -27,19 +25,11 @@ public class CacheService {
     return null;
   }
 
-  /**
-   * Get cached config if one exists, or perform caching and return cached config
-   */
-  public ConfigDocument doCache(String serializedConfig) {
-    ConfigDocument cachedConfig = getCachedConfig();
-    if (cachedConfig == null) { // 캐싱된 기본설정이 없는 경우, 캐싱 진행
-      ValueOperations<String, String> ops = template.opsForValue();
-      log.info("Cached config not found. Caching config...");
-      ops.set("admin::basic_config", serializedConfig);
-      log.info("Caching complete.\n {}", serializedConfig);
-      return gson.fromJson(serializedConfig, ConfigDocument.class);
-    }
-    return cachedConfig;
+  public void cache(String serializedConfig) {
+    ValueOperations<String, String> ops = template.opsForValue();
+    log.info("Cached config not found. Caching config...");
+    ops.set("admin::basic_config", serializedConfig);
+    log.info("Caching complete.\n {}", serializedConfig);
   }
 
   public void invalidateCache() {

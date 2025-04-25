@@ -33,6 +33,7 @@ public class ConfigApplicationInterceptor implements HandlerInterceptor {
     ConfigDocument cachedConfig = service.getCachedConfig();
 
     if (cachedConfig == null) {
+      log.info("No cached config found. Retrieving config from database");
       cachedConfig = adminConfigService.getConfig();
     }
     request.setAttribute("config", cachedConfig);

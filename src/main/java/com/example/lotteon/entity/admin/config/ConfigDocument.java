@@ -15,7 +15,7 @@ public class ConfigDocument {
 
   @Field(name = "version")
   @SerializedName("version")
-  private String version;
+  private VersionConfig version;
 
   @Field(name = "site")
   @SerializedName("site")
