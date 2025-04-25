@@ -1,6 +1,6 @@
-package com.example.lotteon.controller.admin;
+package com.example.lotteon.controller.admin.config;
 
-import com.example.lotteon.service.admin.AdminConfigService;
+import com.example.lotteon.service.admin.BasicConfigService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/admin/config")
 @RequiredArgsConstructor
-public class AdminConfigController {
+public class BasicConfigController {
 
-  private final AdminConfigService service;
+  private final BasicConfigService service;
 
   @GetMapping("/basic")
   public String basic(Model model, HttpServletRequest request) {

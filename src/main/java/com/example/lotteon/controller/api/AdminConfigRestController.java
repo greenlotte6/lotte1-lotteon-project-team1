@@ -4,7 +4,7 @@ import com.example.lotteon.entity.admin.config.CorpInfo;
 import com.example.lotteon.entity.admin.config.CustomerServiceInfo;
 import com.example.lotteon.entity.admin.config.Logo;
 import com.example.lotteon.entity.admin.config.Site;
-import com.example.lotteon.service.admin.AdminConfigService;
+import com.example.lotteon.service.admin.BasicConfigService;
 import com.example.lotteon.service.admin.CacheService;
 import com.google.gson.Gson;
 import java.io.File;
@@ -33,7 +33,7 @@ public class AdminConfigRestController {
   private String uploadPath;
 
   private final Gson gson;
-  private final AdminConfigService service;
+  private final BasicConfigService service;
   private final CacheService cacheService;
 
   private Logo doUpload(List<MultipartFile> images, List<String> metadata) throws IOException {
