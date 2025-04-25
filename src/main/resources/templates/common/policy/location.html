@@ -1,60 +1,60 @@
 <!DOCTYPE html>
 <html lang="ko">
-  <head>
-    <meta charset="UTF-8" />
-    <title>위치정보 약관</title>
-    <link rel="stylesheet" href="/style/init.css" />
-    <link rel="stylesheet" href="/style/common/header.css" />
-    <link rel="stylesheet" href="/style/common/footer.css" />
-    <link rel="stylesheet" href="/style/common/policy/policy.css" />
-    <link
+<head>
+  <meta charset="UTF-8"/>
+  <title>위치정보 약관</title>
+  <link rel="stylesheet" href="/style/init.css"/>
+  <link rel="stylesheet" href="/style/common/header.css"/>
+  <link rel="stylesheet" href="/style/common/footer.css"/>
+  <link rel="stylesheet" href="/style/common/policy/policy.css"/>
+  <link
       rel="stylesheet"
       href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css"
-    />
-    <link
+  />
+  <link
       rel="icon"
       href="https://static.lotteon.com/p/common/assets/favicon/1/favicon-32.png"
-    />
-    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-    <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
-    <script src="/js/common/header.js"></script>
-    <script src="/js/common/footer.js"></script>
-    <script src="/js/common/terms/terms.js"></script>
-    <script
+  />
+  <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+  <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
+  <script src="/js/common/header.js"></script>
+  <script src="/js/common/footer.js"></script>
+  <script src="/js/common/terms/terms.js"></script>
+  <script
       src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/all.min.js"
       crossorigin="anonymous"
-    ></script>
-  </head>
-  <body>
-  <!-- HEADER -->
-  <th:block th:insert="~{/common/policy/_header.html}"></th:block>
-    <main>
-      <div class="terms-wrapper">
-        <h1>LotteON 서비스 이용약관</h1>
+  ></script>
+</head>
+<body>
+<!-- HEADER -->
+<th:block th:insert="~{/common/policy/_header.html}"></th:block>
+<main>
+  <div class="terms-wrapper">
+    <h1>LotteON 서비스 이용약관</h1>
 
-        <th:block th:insert="~{/policy/_termsMenu}"></th:block>
+    <th:block th:insert="~{/common/policy/_termsMenu}"></th:block>
 
-        <!-- 약관 제목 -->
-        <div>
-          <div class="terms-title" th:text="${terms.get(0).getTitle()}"></div>
-          <!-- 약관 내용 -->
-          <div class="terms-content" id="terms-content">
-            <div class="terms-box">
+    <!-- 약관 제목 -->
+    <div>
+      <div class="terms-title" th:text="${terms.get(0).getTitle()}"></div>
+      <!-- 약관 내용 -->
+      <div class="terms-content" id="terms-content">
+        <div class="terms-box">
             <textarea class="terms-content">
                 [[${terms.get(0).getContent()}]]
             </textarea>
-            </div>
-          </div>
-        </div>
-
-        <!-- 인쇄 버튼 -->
-        <div class="print-button-wrapper">
-          <button class="print-button" onclick="window.print()">
-            <i class="fa-solid fa-print"></i> 인쇄하기
-          </button>
         </div>
       </div>
-    </main>
-  <th:block th:insert="~{/common/policy/_footer.html.html}"></th:block>
-  </body>
+    </div>
+
+    <!-- 인쇄 버튼 -->
+    <div class="print-button-wrapper">
+      <button class="print-button" onclick="window.print()">
+        <i class="fa-solid fa-print"></i> 인쇄하기
+      </button>
+    </div>
+  </div>
+</main>
+<th:block th:insert="~{/common/policy/_footer.html}"></th:block>
+</body>
 </html>
