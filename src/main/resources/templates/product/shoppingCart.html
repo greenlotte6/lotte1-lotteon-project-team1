@@ -100,18 +100,18 @@
                         <th>배송비</th>
                         <th>총합</th>
                     </tr>
-                    <tr class="table_bd" th:each="product : ${products}">
+                    <tr class="table_bd">
                         <td><input type="checkbox"></td>
                         <td>
                             <img src="/proDetail-img/img5.png" alt="#">
                         </td>
-                        <td th:text="${product.name}"></td>
-                        <td th:text="${product.stock}"></td>
-                        <td th:text="${product.price}"></td>
-                        <td th:text="${product.discountRate}"></td>
-                        <td th:text="${product.point}"></td>
+                        <td>[[${proDTO.name}]]</td>
+                        <td>[[${proDTO.stock}]]</td>
+                        <td>[[${proDTO.price}]]</td>
+                        <td>[[${proDTO.discountRate}]]</td>
+                        <td>[[${proDTO.point}]]</td>
                         <td>무료배송</td>
-                        <td class="sumprice" th:text="${product.price - (product.price/100) * product.discountRate + '원'}"></td>
+                        <td class="sumprice" th:text="${proDTO.price - (proDTO.price/100) * proDTO.discountRate + '원'}"></td>
                     </tr>
                 </table>
 

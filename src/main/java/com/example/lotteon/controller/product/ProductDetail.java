@@ -28,11 +28,4 @@ public class ProductDetail {
         return "/product/proDetail";
     }
 
-    @PostMapping("/product/detail")
-    public String productDetails(ProductDTO productDTO ,Model model) {
-
-        productDetailService.cartRegister(productDTO);
-
-        return "/product/shoppingCart";
-    }
 }
