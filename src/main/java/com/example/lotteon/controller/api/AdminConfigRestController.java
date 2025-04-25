@@ -49,9 +49,9 @@ public class AdminConfigRestController {
         if (currentMetaData.contains("header")) {
           updatedLogo = service.updateLogoBy("header_location", "/upload/" + imageName);
         } else if (currentMetaData.contains("footer")) {
-          updatedLogo = service.updateLogoBy("header_location", "/upload/" + imageName);
+          updatedLogo = service.updateLogoBy("footer_location", "/upload/" + imageName);
         } else if (currentMetaData.contains("favicon")) {
-          updatedLogo = service.updateLogoBy("header_location", "/upload/" + imageName);
+          updatedLogo = service.updateLogoBy("favicon_location", "/upload/" + imageName);
         }
       }
       idx++;
