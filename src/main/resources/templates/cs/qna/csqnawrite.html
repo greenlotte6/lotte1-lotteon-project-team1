@@ -1,0 +1,201 @@
+<!--
+  작성자: 손준오(sjo112777)
+  내용: 고객센터 > 문의하기 보기 view
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>고객센터 >문의하기 보기</title>
+    <link rel="stylesheet" href="/style/init.css" />
+    <link rel="stylesheet" href="/style/index.css" />
+    <link rel="stylesheet" href="/style/common/header.css" />
+    <link rel="stylesheet" href="/style/common/footer.css" />
+    <!--<link rel="stylesheet" href="//style/common/pagination.css" />-->
+    <link rel="stylesheet" href="/style/cs/cscommon.css" />
+    <link rel="stylesheet" href="/style/cs/csqnawrite.css" />
+    <link
+      rel="icon"
+      href="https://static.lotteon.com/p/common/assets/favicon/1/favicon-32.png"
+    />
+    <link
+      rel="stylesheet"
+      href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css"
+    />
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
+    <script src="/js/common/header.js"></script>
+    <script src="/js/common/footer.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/all.min.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <div id="wrapper">
+
+      <th:block th:insert="~{/common/cs/csheader}"></th:block>
+        <nav id="quick-menu">
+          <ul>
+            <li>
+              <span>홈 > 문의하기</span>
+            </li>
+          </ul>
+        </nav>
+      </header>
+
+
+      <main>
+        <div class="csmain">
+          <!-- 왼쪽 사이드바 -->
+            <th:block th:insert="~{/common/cs/qnasidebar}"></th:block>
+            <!-- 오른쪽 글 -->
+            <article class="main_content">
+              <div class="main_title">
+                  <p>회원</p>
+                  <span style="color: #808080; margin-top: 10px;">회원 관련 문의내용 입니다.</span>
+              </div>
+              <div class="main_content_detail">
+                <form th:action="@{/cs/qna/csqnawrite}" method="post" enctype="multipart/form-data" id="newsWriteForm" class="post-form">
+                    <input type="hidden" name="member_id" th:value="${member.userCompositeKey.user.id}" />
+                    <table border="0" class="write_table">
+                        <tbody>
+                            <tr>
+                                <th>문의유형</th>
+                                <td>
+                                    <select id="category-select" class="search-filter">
+                                        <option value="">1차 분류 선택</option>
+                                        <option value="member">회원</option>
+                                        <option value="event">쿠폰/혜택/이벤트</option>
+                                        <option value="order_payment">주문/결제</option>
+                                        <option value="delivery">배송</option>
+                                        <option value="return_exchange">취소/반품/교환</option>
+                                        <option value="travel_stay_airline">여행/숙박/항공</option>
+                                        <option value="safe_transaction">안전거래</option>
+                                    </select>
+                                    <select id="subcategory-select" class="search-filter">
+                                        <option value="">2차 분류 선택</option>
+                                    </select>
+                                    <input type="hidden" name="type_id" id="type-id-input" />
+                                </td>
+
+                            </tr>
+                        <tr>
+                            <th>제목</th>
+                            <td>
+                                <input type="text" name="title" placeholder="제목을 입력하세요.">
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>내용</th>
+                            <td>
+                                <textarea
+                                        name="content"
+                                        id="notice-content"
+                                        placeholder="내용을 입력합니다"
+                                ></textarea>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div style="margin-top: 30px; margin-bottom: 30px; text-align: center;">
+                        <a th:href="@{/cs/qna/csqnamember}" class="btn btnCancel" style="color: #ffffff; background-color: #bfbfbf;">취소하기</a>
+                        <input type="submit" value="등록하기" class="btn btnComplete btn">
+                    </div>
+                </form>
+              </div>
+
+
+            </article>
+
+        </div>
+
+
+
+
+      </main>
+
+
+
+      <th:block th:insert="~{/common/footer}"></th:block>
+    </div>
+  </body>
+</html>
+
+<script>
+    const subcategories = {
+        member: {
+            가입: 5,
+            탈퇴: 6,
+            회원정보: 7,
+            로그인: 8
+        },
+        event: {
+            '쿠폰/할인혜택': 9,
+            포인트: 10,
+            제휴: 11,
+            이벤트: 12
+        },
+        order_payment: {
+            상품: 13,
+            결제: 14,
+            구매내역: 15,
+            '영수증/증빙': 16
+        },
+        delivery: {
+            '배송상태/기간': 17,
+            '배송정보확인/변경': 18,
+            해외배송: 19,
+            당일배송: 20,
+            해외직구: 21
+        },
+        return_exchange: {
+            '반품신청/철회': 22,
+            '반품정보확인/변경': 23,
+            '교환 AS신청/철회': 24,
+            '교환정보확인/변경': 25,
+            '취소신청/철회': 26,
+            '취소확인/환불정보': 27
+        },
+        travel_stay_airline: {
+            '여행/숙박': 28,
+            항공: 29
+        },
+        safe_transaction: {
+            '서비스 이용규칙 위반': 30,
+            '지식재산권침해': 31,
+            '법령 및 정책위반 상품': 32,
+            '게시물 정책위반': 33,
+            '직거래/외부거래유도': 34,
+            표시광고: 35,
+            '청소년 위해상품/이미지': 36
+        }
+    };
+
+    const categorySelect = document.getElementById('category-select');
+    const subcategorySelect = document.getElementById('subcategory-select');
+    const typeIdInput = document.getElementById('type-id-input');
+
+    categorySelect.addEventListener('change', () => {
+        const selectedCategory = categorySelect.value;
+        const options = subcategories[selectedCategory] || {};
+
+        subcategorySelect.innerHTML = '<option value="">2차 분류 선택</option>';
+        Object.keys(options).forEach(key => {
+            const option = document.createElement('option');
+            option.value = key;
+            option.textContent = key;
+            subcategorySelect.appendChild(option);
+        });
+
+        typeIdInput.value = ''; // 초기화
+    });
+
+    subcategorySelect.addEventListener('change', () => {
+        const selectedCategory = categorySelect.value;
+        const selectedSub = subcategorySelect.value;
+
+        const typeId = subcategories[selectedCategory]?.[selectedSub] || '';
+        typeIdInput.value = typeId;
+    });
+</script>

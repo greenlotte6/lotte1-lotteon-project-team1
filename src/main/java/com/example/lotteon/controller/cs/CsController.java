@@ -4,7 +4,9 @@ import com.example.lotteon.dto.PageRequestDTO;
 import com.example.lotteon.dto.PageResponseDTO;
 import com.example.lotteon.dto.cs.FaqDTO;
 import com.example.lotteon.dto.cs.NoticeDTO;
+import com.example.lotteon.dto.cs.QnaDTO;
 import com.example.lotteon.service.cs.CsService;
+import com.example.lotteon.service.cs.QnaService;
 import com.example.lotteon.service.cs.faqService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -21,9 +24,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/cs")
 public class CsController {
 
-  private final HttpServletRequest request;
-  private final CsService csService;
-  private final faqService faqService;
+    private final HttpServletRequest request;
+    private final CsService csService;
+    private final faqService faqService;
+    private final QnaService qnaService;
 
 
   @GetMapping("/csmain")
@@ -74,9 +78,21 @@ public class CsController {
     PageResponseDTO pageResponseDTO = csService.findAll(pageRequestDTO, 4);
 
     model.addAttribute(pageResponseDTO);
-
     return "/cs/notice/csnoticehazard";
   }
+
+    /* qna 문의하기 글쓰기*/
+    @GetMapping("/qna/csqnawrite")
+    public String csqnawrite() {
+        return "/cs/qna/csqnawrite";
+    }
+
+    @PostMapping("/qna/csqnawrite")
+    public String csqnawrite(QnaDTO qnaDTO) {
+
+        int id = qnaService.qnaRegister(qnaDTO);
+        return "redirect:/cs/qna/csqnamember";
+    }
 
   /*안전거래*/
   @GetMapping("/notice/csnoticesafe")
@@ -86,7 +102,6 @@ public class CsController {
     PageResponseDTO pageResponseDTO = csService.findAll(pageRequestDTO, 4);
 
     model.addAttribute(pageResponseDTO);
-
     return "/cs/notice/csnoticesafe";
   }
 
