@@ -1,3 +1,6 @@
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <header>
     <div id="header-wrapper">
         <div id="account-area">
@@ -9,7 +12,12 @@
                     <a href="#"> 주문배송 </a>
                 </li>
                 <li>
-                    <a href="/user/login"> 로그인/회원가입 </a>
+                    <span sec:authorize="isAnonymous()"><a th:href="@{/login}"> 로그인/회원가입 </a></span>
+                    <span sec:authorize="isAuthenticated()" class="logout">
+            <form th:action="@{/logout}" method="post">
+                <button type="submit">로그아웃</button>
+            </form>
+          </span>
                 </li>
             </ul>
         </div>

@@ -25,9 +25,7 @@ public class Qna {
     private int id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumns({
-            @JoinColumn(name = "member_id", referencedColumnName = "user_id")
-    })
+    @JoinColumn(name = "member_id", referencedColumnName = "user_id")
     private Member member_id;
 
     private String title;

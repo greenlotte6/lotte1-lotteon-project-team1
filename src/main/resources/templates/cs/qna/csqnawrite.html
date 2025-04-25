@@ -57,7 +57,7 @@
               </div>
               <div class="main_content_detail">
                 <form th:action="@{/cs/qna/csqnawrite}" method="post" enctype="multipart/form-data" id="newsWriteForm" class="post-form">
-                    <input type="hidden" name="member_id" th:value="${member.userCompositeKey.user.id}" />
+                    <input type="hidden" name="member_id" th:value="${member_id}" />
                     <table border="0" class="write_table">
                         <tbody>
                             <tr>

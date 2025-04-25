@@ -5,12 +5,16 @@ import com.example.lotteon.dto.PageResponseDTO;
 import com.example.lotteon.dto.cs.FaqDTO;
 import com.example.lotteon.dto.cs.NoticeDTO;
 import com.example.lotteon.dto.cs.QnaDTO;
+import com.example.lotteon.entity.cs.Qna;
+import com.example.lotteon.security.MyUserDetails;
 import com.example.lotteon.service.cs.CsService;
 import com.example.lotteon.service.cs.QnaService;
 import com.example.lotteon.service.cs.faqService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -81,18 +85,7 @@ public class CsController {
     return "/cs/notice/csnoticehazard";
   }
 
-    /* qna 문의하기 글쓰기*/
-    @GetMapping("/qna/csqnawrite")
-    public String csqnawrite() {
-        return "/cs/qna/csqnawrite";
-    }
 
-    @PostMapping("/qna/csqnawrite")
-    public String csqnawrite(QnaDTO qnaDTO) {
-
-        int id = qnaService.qnaRegister(qnaDTO);
-        return "redirect:/cs/qna/csqnamember";
-    }
 
   /*안전거래*/
   @GetMapping("/notice/csnoticesafe")
@@ -182,16 +175,16 @@ public class CsController {
   public String csfaqdeliver(Model model, PageRequestDTO pageRequestDTO) {
 
     PageResponseDTO statusFaqs = faqService.findAll(pageRequestDTO, 17);
-    PageResponseDTO infoFaqs = faqService.findAll(pageRequestDTO, 18);
+    PageResponseDTO infoChangeFaqs = faqService.findAll(pageRequestDTO, 18);
     PageResponseDTO globalFaqs = faqService.findAll(pageRequestDTO, 19);
     PageResponseDTO sameDayFaqs = faqService.findAll(pageRequestDTO, 20);
-    PageResponseDTO directFaqs = faqService.findAll(pageRequestDTO, 21);
+    PageResponseDTO directGlobalFaqs = faqService.findAll(pageRequestDTO, 21);
 
     model.addAttribute("statusFaqs", statusFaqs.getDtoList());
-    model.addAttribute("infoFaqs", infoFaqs.getDtoList());
+    model.addAttribute("infoChangeFaqs", infoChangeFaqs.getDtoList());
     model.addAttribute("globalFaqs", globalFaqs.getDtoList());
     model.addAttribute("sameDayFaqs", sameDayFaqs.getDtoList());
-    model.addAttribute("directFaqs", directFaqs.getDtoList());
+    model.addAttribute("directGlobalFaqs", directGlobalFaqs.getDtoList());
 
     return "/cs/faq/csfaqdeliver";
   }
@@ -263,6 +256,27 @@ public class CsController {
 
     return "/cs/faq/csfaqview";
   }
+
+
+  /* qna 문의하기 글쓰기*/
+  @GetMapping("/qna/csqnawrite")
+  public String csqnawrite(Model model, @AuthenticationPrincipal MyUserDetails userDetails) {
+
+    String username = userDetails.getUsername();
+    model.addAttribute("member_id", username);
+
+    return "/cs/qna/csqnawrite";
+  }
+
+  @PostMapping("/qna/csqnawrite")
+  public String csqnawrite(QnaDTO qnaDTO) {
+
+    int id = qnaService.qnaRegister(qnaDTO);
+    return "redirect:/cs/qna/csqnamember";
+  }
+
+
+
 
   @GetMapping("/cscontactlist")
   public String cscontactlist() {

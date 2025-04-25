@@ -99,7 +99,7 @@
                 <div class="main_content_detail">
                     <p>서비스 이용규칙 위반</p>
                     <table id="rulesTable">
-                        <tr th:each="faq : ${rulesFaqs}">
+                        <tr th:each="faq : ${ruleFaqs}">
                             <td><a th:href="@{/cs/faq/csfaqview(id=${faq.id})}"><span style="color: #0070c0; font-weight: 700;">Q.</span> [[${faq.title}]]</a></td>
                         </tr>
                         <tr><td colspan="1" style="text-align:center;"><button class="moreBtn">더보기</button></td></tr>
@@ -115,7 +115,7 @@
 
                     <p>법령 및 정책위반 상품</p>
                     <table id="policyViolationTable">
-                        <tr th:each="faq : ${policyViolationFaqs}">
+                        <tr th:each="faq : ${illegalFaqs}">
                             <td><a th:href="@{/cs/faq/csfaqview(id=${faq.id})}"><span style="color: #0070c0; font-weight: 700;">Q.</span> [[${faq.title}]]</a></td>
                         </tr>
                         <tr><td colspan="1" style="text-align:center;"><button class="moreBtn">더보기</button></td></tr>
@@ -123,7 +123,7 @@
 
                     <p>게시물 정책위반</p>
                     <table id="postPolicyTable">
-                        <tr th:each="faq : ${postPolicyFaqs}">
+                        <tr th:each="faq : ${policyFaqs}">
                             <td><a th:href="@{/cs/faq/csfaqview(id=${faq.id})}"><span style="color: #0070c0; font-weight: 700;">Q.</span> [[${faq.title}]]</a></td>
                         </tr>
                         <tr><td colspan="1" style="text-align:center;"><button class="moreBtn">더보기</button></td></tr>
@@ -131,7 +131,7 @@
 
                     <p>직거래/외부거래유도</p>
                     <table id="directDealTable">
-                        <tr th:each="faq : ${directDealFaqs}">
+                        <tr th:each="faq : ${dealFaqs}">
                             <td><a th:href="@{/cs/faq/csfaqview(id=${faq.id})}"><span style="color: #0070c0; font-weight: 700;">Q.</span> [[${faq.title}]]</a></td>
                         </tr>
                         <tr><td colspan="1" style="text-align:center;"><button class="moreBtn">더보기</button></td></tr>
@@ -139,7 +139,7 @@
 
                     <p>표시광고</p>
                     <table id="adLabelTable">
-                        <tr th:each="faq : ${adLabelFaqs}">
+                        <tr th:each="faq : ${adFaqs}">
                             <td><a th:href="@{/cs/faq/csfaqview(id=${faq.id})}"><span style="color: #0070c0; font-weight: 700;">Q.</span> [[${faq.title}]]</a></td>
                         </tr>
                         <tr><td colspan="1" style="text-align:center;"><button class="moreBtn">더보기</button></td></tr>
