@@ -8,6 +8,7 @@ import com.example.lotteon.entity.admin.config.Site;
 import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.mongodb.core.FindAndModifyOptions;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -90,6 +91,14 @@ public class AdminConfigRepository {
     update.set("footer_location", config.getFooterLogoLocation());
     update.set("favicon_location", config.getFaviconLocation());
     template.updateFirst(query, update, "BasicConfig");
+  }
+
+  public Logo updateLogoBy(String field, String value) {
+    Query query = new Query(Criteria.where("id").is("basic_config::logo"));
+    Update update = new Update();
+    update.set(field, value);
+    FindAndModifyOptions options = new FindAndModifyOptions().returnNew(true);
+    return template.findAndModify(query, update, options, Logo.class, "BasicConfig");
   }
 
   public void updateCorpInfo(CorpInfo config) {

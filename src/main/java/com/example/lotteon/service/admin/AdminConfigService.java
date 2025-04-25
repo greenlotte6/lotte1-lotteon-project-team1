@@ -38,6 +38,10 @@ public class AdminConfigService {
     repo.updateLogo(config);
   }
 
+  public Logo updateLogoBy(String field, String value) {
+    return repo.updateLogoBy(field, value);
+  }
+
   public void updateCorpInfo(CorpInfo config) {
     repo.updateCorpInfo(config);
   }
