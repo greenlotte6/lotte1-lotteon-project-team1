@@ -98,7 +98,7 @@
                 <div class="main_content_detail">
                     <p>여행/숙박</p>
                     <table id="travelHotelTable">
-                        <tr th:each="faq : ${travelHotelFaqs}">
+                        <tr th:each="faq : ${travelFaqs}">
                             <td><a th:href="@{/cs/faq/csfaqview(id=${faq.id})}"><span style="color: #0070c0; font-weight: 700;">Q.</span> [[${faq.title}]]</a></td>
                         </tr>
                         <tr><td colspan="1" style="text-align:center;"><button class="moreBtn">더보기</button></td></tr>
@@ -106,7 +106,7 @@
 
                     <p>항공</p>
                     <table id="airlineTable">
-                        <tr th:each="faq : ${airlineFaqs}">
+                        <tr th:each="faq : ${flightFaqs}">
                             <td><a th:href="@{/cs/faq/csfaqview(id=${faq.id})}"><span style="color: #0070c0; font-weight: 700;">Q.</span> [[${faq.title}]]</a></td>
                         </tr>
                         <tr><td colspan="1" style="text-align:center;"><button class="moreBtn">더보기</button></td></tr>
