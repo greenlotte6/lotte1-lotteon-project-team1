@@ -2,12 +2,14 @@ package com.example.lotteon.service.user;
 
 import com.example.lotteon.dto.user.UserDTO;
 import com.example.lotteon.entity.user.User;
+import com.example.lotteon.exception.EntityAlreadyExistsException;
 import com.example.lotteon.repository.UserRepository;
 import jakarta.mail.Message;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import java.util.concurrent.ThreadLocalRandom;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -15,8 +17,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.concurrent.ThreadLocalRandom;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -29,10 +29,14 @@ public class UserService {
   private final JavaMailSender mailSender;
   private final HttpServletRequest request;
 
-  public void userRegister(UserDTO userDTO) {
-    log.info("userDTO: {}", userDTO);
+  public void register(UserDTO userDTO, String role) throws EntityAlreadyExistsException {
+    log.info("Registry requested for userDTO: {}", userDTO);
 
-    userDTO.setRole("member");
+    if (userRepository.existsById(userDTO.getId())) {
+      throw new EntityAlreadyExistsException("User already exists");
+    }
+
+    userDTO.setRole(role);
     String encodedPassword = passwordEncoder.encode(userDTO.getPassword());
     userDTO.setPassword(encodedPassword);
 
@@ -48,27 +52,27 @@ public class UserService {
 
     long count = 0;
 
-      if(type.equals("id")) {
-        count = userRepository.countById(value);
-      }else if(type.equals("email")) {
-        count = userRepository.countByEmail(value);
+    if (type.equals("id")) {
+      count = userRepository.countById(value);
+    } else if (type.equals("email")) {
+      count = userRepository.countByEmail(value);
 
-        if(count == 0) {
-          String code = sendEmailCode(value);
+      if (count == 0) {
+        String code = sendEmailCode(value);
 
-          // 인증코드 비교를 위해 세션 저장
-          HttpSession session = request.getSession();
-          session.setAttribute("code", code);
-        }
+        // 인증코드 비교를 위해 세션 저장
+        HttpSession session = request.getSession();
+        session.setAttribute("code", code);
       }
-      else if(type.equals("contact")) {
-        count = userRepository.countByContact(value);
-      }
-      return count;
+    } else if (type.equals("contact")) {
+      count = userRepository.countByContact(value);
+    }
+    return count;
   }
 
   @Value("${spring.mail.username}")
   private String sender;
+
   public String sendEmailCode(String receiver) {
 
     // MimeMessage 생성
