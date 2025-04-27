@@ -21,7 +21,7 @@ public class Reply {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "qna_id")
-    private Qna qna_id;
+    private Qna qna;
 
     private String content;
 

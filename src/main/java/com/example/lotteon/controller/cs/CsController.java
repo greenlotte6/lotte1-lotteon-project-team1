@@ -278,9 +278,20 @@ public class CsController {
 
 
 
-  @GetMapping("/cscontactlist")
-  public String cscontactlist() {
-    return "/cs/cscontactlist";
+  @GetMapping("/qna/csqnamember")
+  public String csqnamember(Model model, PageRequestDTO pageRequestDTO) {
+
+    pageRequestDTO.setName("회원");  // Set the filter for "name"
+
+    // ✅ type_id는 전체니까 0 넘기기
+    pageRequestDTO.setType_id(0);  // Ensure type_id is set to 0
+
+    // Now calling the method that only takes PageRequestDTO and int
+    PageResponseDTO pageResponseDTO = qnaService.findAll(pageRequestDTO, 0);
+
+    model.addAttribute("pageResponseDTO", pageResponseDTO);
+
+    return "/cs/qna/csqnamember";
   }
 
   @GetMapping("/cscontactview")
