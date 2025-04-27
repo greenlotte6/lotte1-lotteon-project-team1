@@ -4,9 +4,11 @@ import com.example.lotteon.dto.TermsDTO;
 import com.example.lotteon.dto.user.MemberDTO;
 import com.example.lotteon.dto.user.UserCompositeKeyDTO;
 import com.example.lotteon.dto.user.UserDTO;
+import com.example.lotteon.exception.EntityAlreadyExistsException;
 import com.example.lotteon.service.TermsService;
 import com.example.lotteon.service.user.MemberService;
 import com.example.lotteon.service.user.UserService;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
@@ -36,7 +38,7 @@ public class UserController {
   }
 
   @PostMapping("/general")
-  public String general(UserDTO userDTO, MemberDTO memberDTO) {
+  public String general(UserDTO userDTO, MemberDTO memberDTO, HttpServletResponse response) {
     UserCompositeKeyDTO compositeKeyDTO = UserCompositeKeyDTO.builder()
         .user(userDTO)
         .build();
@@ -44,7 +46,12 @@ public class UserController {
     memberDTO.setUserCompositeKey(compositeKeyDTO);
 
     // 서비스 호출
-    userService.userRegister(userDTO);
+    try {
+      userService.register(userDTO, UserDTO.ROLE_MEMBER);
+    } catch (EntityAlreadyExistsException e) { // 같은 id의 유저가 이미 존재할 경우
+      response.setStatus(HttpServletResponse.SC_CONFLICT); // 409 에러 응답 전송
+      return null;
+    }
     memberService.memberRegister(memberDTO);
 
     // 리다이렉트
