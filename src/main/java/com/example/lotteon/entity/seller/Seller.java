@@ -1,8 +1,8 @@
 package com.example.lotteon.entity.seller;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "seller")
 public class Seller {
 
-  @Id
+  @EmbeddedId
   private SellerCompositeKey sellerCompositeKey;
 
   @Column(name = "ceo")
@@ -31,5 +31,4 @@ public class Seller {
 
   @Column(name = "fax")
   private String fax;
-
 }

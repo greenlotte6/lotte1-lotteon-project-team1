@@ -156,19 +156,19 @@
             <tr>
               <th>아이디</th>
               <td>
-                <input name="id" type="text"/>
+                <input name="sellerId.user.id" type="text"/>
               </td>
             </tr>
             <tr>
               <th>비밀번호</th>
               <td>
-                <input name="password" type="text"/>
+                <input type="password" name="sellerId.user.password"/>
               </td>
             </tr>
             <tr>
               <th>비밀번호 확인</th>
               <td>
-                <input name="passwordConfirm" type="text"/>
+                <input type="password" name="passwordConfirm"/>
               </td>
             </tr>
           </table>
@@ -179,7 +179,7 @@
                 <input
                     name="companyName"
                     type="text"
-                    placeholder="상오명 입력 예: (주) 상호명"
+                    placeholder="상호명 입력 예: (주) 상호명"
                 />
               </td>
             </tr>
@@ -192,7 +192,7 @@
             <tr>
               <th>사업자등록번호</th>
               <td>
-                <input name="businessNumber" type="text" placeholder="사업자등록번호 입력"/>
+                <input name="sellerId.businessNumber" type="text" placeholder="사업자등록번호 입력"/>
               </td>
             </tr>
             <tr>
@@ -202,9 +202,15 @@
               </td>
             </tr>
             <tr>
+              <th>이메일</th>
+              <td>
+                <input type="email" name="sellerId.user.email" placeholder="이메일 입력"/>
+              </td>
+            </tr>
+            <tr>
               <th>전화번호</th>
               <td>
-                <input name="contact" type="text" placeholder="전화번호 입력"/>
+                <input name="sellerId.user.contact" type="text" placeholder="전화번호 입력"/>
               </td>
             </tr>
             <tr>
@@ -218,12 +224,17 @@
               <td>
                 <input
                     type="text"
-                    name="address"
+                    name="sellerId.user.zip"
+                    placeholder="우편번호 입력"
+                    style="display: block; margin-bottom:5px"/>
+                <input
+                    type="text"
+                    name="sellerId.user.address"
                     placeholder="기본주소 검색"
                     style="display: block; margin-bottom: 5px"
                 />
                 <input
-                    name="addressDetail"
+                    name="sellerId.user.addressDetail"
                     type="text"
                     placeholder="상세주소 입력"
                     style="display: block"
