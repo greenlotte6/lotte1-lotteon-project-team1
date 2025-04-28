@@ -31,6 +31,8 @@
       type="module"
       src="/js/common/admin/registryModal.js"
   ></script>
+  <script src="/js/admin/member/updateLevel.js"></script>
+  <script src="/js/common/admin/checkbox.js"></script>
 </head>
 <body>
 <div id="wrapper">
@@ -50,15 +52,16 @@
         <div class="content-title">
           <h3>회원목록</h3>
         </div>
-        <form action="#" method="GET" id="search-area">
+        <form th:action="@{/admin/member/search}" method="GET" id="search-area">
           <select name="filter" class="search-filter">
-            <option value="uid">아이디</option>
+            <option value="id">아이디</option>
             <option value="name">이름</option>
             <option value="email">이메일</option>
             <option value="contact">연락처</option>
           </select>
           <input
               type="text"
+              name="keyword"
               class="search-input"
               placeholder="검색어 입력"
           />
@@ -67,7 +70,7 @@
         <table>
           <tr>
             <th>
-              <input type="checkbox" onclick="return false;"/>
+              <input type="checkbox" class="select-all"/>
             </th>
             <th>아이디</th>
             <th>이름</th>
@@ -82,18 +85,22 @@
           </tr>
           <tr th:each="member : ${pages}">
             <td>
-              <input type="checkbox"/>
+              <input
+                  class="item-checkbox"
+                  type="checkbox"/>
             </td>
-            <td th:text="${member.getUserCompositeKey().getUser().getId()}"></td>
+            <td class="member-id"
+                th:data-value="${member.getUserCompositeKey().getUser().getId()}"
+                th:text="${member.getUserCompositeKey().getUser().getId()}"></td>
             <td th:text="${member.getName()}">정우성</td>
             <td th:text="${member.getGender().toUpperCase()}">M</td>
             <td>
               <select name="level" id="member-level">
                 <option value="family">FAMILY</option>
                 <option value="silver">SILVER</option>
-                <option value="gold">gold</option>
+                <option value="gold">GOLD</option>
                 <option value="vip">VIP</option>
-                <option value="vvip">vvip</option>
+                <option value="vvip">VVIP</option>
               </select>
             </td>
             <td th:text="${member.getPoint().getTotal()}">15,000</td>
@@ -131,7 +138,7 @@
         </table>
       </div>
       <div class="crud-btn-area">
-        <button class="enroll-btn delete-btn registry-modal-btn">
+        <button class="enroll-btn delete-btn">
           선택수정
         </button>
       </div>

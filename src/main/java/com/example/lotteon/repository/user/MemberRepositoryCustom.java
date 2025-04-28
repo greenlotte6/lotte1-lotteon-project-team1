@@ -17,4 +17,14 @@ public interface MemberRepositoryCustom {
   Long countNewMembersOf(LocalDate date);
 
   Page<Member> findAll(Pageable pageable);
+
+  Page<Member> findAllById(Pageable pageable, String id);
+
+  Page<Member> findAllByName(Pageable pageable, String name);
+
+  Page<Member> findAllByEmail(Pageable pageable, String email);
+
+  Page<Member> findAllByContact(Pageable pageable, String contact);
+
+  void updateLevel(Member member);
 }

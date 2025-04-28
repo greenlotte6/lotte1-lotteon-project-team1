@@ -32,4 +32,34 @@ public class MemberManagementController {
     model.addAttribute("currentPage", page);
     return "/admin/member/member";
   }
+
+  @GetMapping("/search")
+  public String search(@RequestParam String filter,
+      @RequestParam String keyword,
+      @RequestParam(name = "page", defaultValue = "1") int page,
+      @RequestParam(name = "size", defaultValue = "10") int size,
+      Model model) {
+    Pageable pageable = PageRequest.of(page - 1, size);
+    Page<Member> pages = null;
+    switch (filter) {
+      case "id": {
+        pages = service.getAllById(pageable, keyword);
+        break;
+      }
+      case "name": {
+        pages = service.getAllByName(pageable, keyword);
+        break;
+      }
+      case "email": {
+        pages = service.getAllByEmail(pageable, keyword);
+        break;
+      }
+      case "contacnt": {
+        pages = service.getAllByContact(pageable, keyword);
+        break;
+      }
+    }
+    model.addAttribute("pages", pages);
+    return "/admin/member/member";
+  }
 }
