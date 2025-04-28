@@ -1,5 +1,6 @@
-package com.example.lotteon.dto.product;
+package com.example.lotteon.dto.seller;
 
+import com.example.lotteon.dto.user.UserDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,10 +10,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductOptionsDTO {
+public class SellerIdDTO {
 
-  private int id;
-  private ProductDTO product;
-  private String name;
-  private String value;
+  private String businessNumber;
+  private UserDTO user;
 }

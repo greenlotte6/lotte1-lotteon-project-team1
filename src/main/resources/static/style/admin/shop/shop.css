@@ -88,10 +88,12 @@
 .content table td > .legend {
   margin-right: 90px;
 }
+
 .content table .manage-btn {
   color: white;
   border: none;
   outline: none;
+  cursor: pointer;
 }
 
 .content table .manage-btn.grant {

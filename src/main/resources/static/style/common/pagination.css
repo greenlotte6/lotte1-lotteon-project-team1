@@ -13,7 +13,8 @@
   padding: 42px;
 }
 
-.pagination > a {
+.pagination > a,
+.pagination > span > a {
   display: inline-block;
   width: 32px;
   height: 32px;
@@ -23,14 +24,15 @@
   color: #757575;
 }
 
-.pagination > a.move {
+.pagination > a.move,
+.pagination > span > a {
   border: 1px solid #ddd;
 }
 
 /*
 현재 선택된 페이지에만 아래 스타일을 적용
 */
-.pagination > a:nth-child(3) {
+.pagination .page.current-page {
   background-color: #343b4d;
   color: #fff;
 }

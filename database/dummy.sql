@@ -105,3 +105,7 @@ INSERT INTO `faq` VALUES (19, "구매내역 관련 FAQ입니다.", 15, "구매�
 INSERT INTO `faq` VALUES (20, "영수증/증빙 관련 FAQ입니다.", 16, "영수증/증빙 관련 FAQ 테스트 입니다.", NOW(), 0);
 INSERT INTO `faq` VALUES (21, "상품 관련 FAQ입니다.", 13, "상품 FAQ 테스트 입니다.", NOW(), 0);
 INSERT INTO `faq` VALUES (22, "결제 관련 FAQ입니다.", 14, "결제 관련 FAQ 테스트 입니다.", NOW(), 0);
+
+-- 상점(seller)
+INSERT INTO `user` VALUES ("seller1", "$2a$12$7nR.CgoesCyfsETEl74Dtuk0Mu2wEzmJPCljlJddYY14UmIY100uG", "seller1@example.com", "051-123-4567", "12345", "부산광역시 부산진구", "행복로 127-11", "seller", NOW());
+INSERT INTO `seller` VALUES ("112-12-12345", "seller1", "김유신", "(주)행복상점", "2025-부산진구-12345", "0503-1234-5678");

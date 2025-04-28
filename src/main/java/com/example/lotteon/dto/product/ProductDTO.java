@@ -14,7 +14,6 @@ public class ProductDTO {
   private int id;
   private ProductCategoryDTO category;
   private ProductSubCategoryDTO subCategory;
-  private ProductOptionsDTO options;
   private String name;
   private String description;
   private String company;
