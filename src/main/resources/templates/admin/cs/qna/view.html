@@ -65,7 +65,12 @@
                   <th>답변</th>
                   <td>
                     <th:block th:if="${replyDTO == null}">
-                      <textarea name="content" id="notice-content" placeholder="내용을 입력합니다"></textarea>
+                      <textarea
+                              name="content"
+                              id="notice-content"
+                              placeholder="내용을 입력합니다"
+                              style="width: 700px; height: 200px; padding: 10px; border: 1px solid #ccc; border-radius: 8px; font-size: 16px; resize: vertical; box-sizing: border-box;"
+                      ></textarea>
                     </th:block>
                     <th:block th:if="${replyDTO != null}">
                       <p th:text="${replyDTO.content}"></p>
@@ -78,7 +83,7 @@
                 <a class="control-btn delete" th:href="@{/admin/cs/qna/delete(id=${qnaDTO.id})}">삭제</a>
                 <a class="control-btn default" th:href="@{/admin/cs/qna/list}">목록</a>
                 <th:block th:if="${replyDTO == null}">
-                  <input class="post-submit-btn" type="submit" value="등록하기" />
+                  <input style="margin-top: 30px; margin-left: 10px;" class="post-submit-btn" type="submit" value="등록하기" />
                 </th:block>
               </div>
             </form>

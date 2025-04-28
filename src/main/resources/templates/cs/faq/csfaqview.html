@@ -49,7 +49,7 @@
       <main>
         <div class="csmain">
           <!-- 왼쪽 사이드바 -->
-          <th:block th:insert="~{/common/cs/noticesidebar}"></th:block>
+          <th:block th:insert="~{/common/cs/faqsidebar}"></th:block>
             <!-- 오른쪽 글 -->
             <article class="main_content">
               <div class="main_title">
@@ -103,7 +103,35 @@
                     </td>
                   </tr>
                 </table>
-                <a th:href="@{/cs/faq/csfaqmember}" class="btn btnlist">목록</a>
+                <div class="btn_wrap">
+                  <div th:if="${faqDTO.type_id == 5 or faqDTO.type_id == 6 or faqDTO.type_id == 7 or faqDTO.type_id == 8}">
+                    <a th:href="@{/cs/faq/csfaqmember}" class="btn btnlist">목록</a>
+                  </div>
+
+                  <div th:if="${faqDTO.type_id == 9 or faqDTO.type_id == 10 or faqDTO.type_id == 11 or faqDTO.type_id == 12}">
+                    <a th:href="@{/cs/faq/csfaqcoupon}" class="btn btnlist">목록</a>
+                  </div>
+
+                  <div th:if="${faqDTO.type_id == 13 or faqDTO.type_id == 14 or faqDTO.type_id == 15 or faqDTO.type_id == 16}">
+                    <a th:href="@{/cs/faq/csfaqorder}" class="btn btnlist">목록</a>
+                  </div>
+
+                  <div th:if="${faqDTO.type_id == 17 or faqDTO.type_id == 18 or faqDTO.type_id == 19 or faqDTO.type_id == 20 or faqDTO.type_id == 21}">
+                    <a th:href="@{/cs/faq/csfaqdeliver}" class="btn btnlist">목록</a>
+                  </div>
+
+                  <div th:if="${faqDTO.type_id == 22 or faqDTO.type_id == 23 or faqDTO.type_id == 24 or faqDTO.type_id == 25 or faqDTO.type_id == 26 or faqDTO.type_id == 27}">
+                    <a th:href="@{/cs/faq/csfaqcancel}" class="btn btnlist">목록</a>
+                  </div>
+
+                  <div th:if="${faqDTO.type_id == 28 or faqDTO.type_id == 29}">
+                    <a th:href="@{/cs/faq/csfaqtrip}" class="btn btnlist">목록</a>
+                  </div>
+
+                  <div th:if="${faqDTO.type_id == 30 or faqDTO.type_id == 31 or faqDTO.type_id == 32 or faqDTO.type_id == 33 or faqDTO.type_id == 34 or faqDTO.type_id == 35 or faqDTO.type_id == 36}">
+                    <a th:href="@{/cs/faq/csfaqsafe}" class="btn btnlist">목록</a>
+                  </div>
+                </div>
 
 
               </div>

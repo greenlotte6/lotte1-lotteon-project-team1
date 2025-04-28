@@ -5,13 +5,13 @@ import com.example.lotteon.dto.PageResponseDTO;
 import com.example.lotteon.dto.cs.FaqDTO;
 import com.example.lotteon.dto.cs.NoticeDTO;
 import com.example.lotteon.dto.cs.QnaDTO;
-import com.example.lotteon.entity.cs.Qna;
+import com.example.lotteon.dto.cs.ReplyDTO;
 import com.example.lotteon.security.MyUserDetails;
 import com.example.lotteon.service.cs.CsService;
 import com.example.lotteon.service.cs.QnaService;
+import com.example.lotteon.service.cs.ReplyService;
 import com.example.lotteon.service.cs.faqService;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -32,6 +32,7 @@ public class CsController {
     private final CsService csService;
     private final faqService faqService;
     private final QnaService qnaService;
+    private final ReplyService replyService;
 
 
   @GetMapping("/csmain")
@@ -270,9 +271,27 @@ public class CsController {
 
   @PostMapping("/qna/csqnawrite")
   public String csqnawrite(QnaDTO qnaDTO) {
-
     int id = qnaService.qnaRegister(qnaDTO);
-    return "redirect:/cs/qna/csqnamember";
+
+    int typeId = qnaDTO.getType_id(); // type_id 꺼냄
+
+    if (typeId >= 5 && typeId <= 8) {
+      return "redirect:/cs/qna/csqnamember"; // 회원 리스트
+    } else if (typeId >= 9 && typeId <= 12) {
+      return "redirect:/cs/qna/csqnacoupon"; // 쿠폰/혜택/이벤트 리스트
+    } else if (typeId >= 13 && typeId <= 16) {
+      return "redirect:/cs/qna/csqnaorder"; // 주문/결제 리스트
+    } else if (typeId >= 17 && typeId <= 21) {
+      return "redirect:/cs/qna/csqnadeliver"; // 배송 리스트
+    } else if (typeId >= 22 && typeId <= 27) {
+      return "redirect:/cs/qna/csqnacancel"; // 취소/반품/교환 리스트
+    } else if (typeId >= 28 && typeId <= 29) {
+      return "redirect:/cs/qna/csqnatrip"; // 여행/숙박/항공 리스트
+    } else if (typeId >= 30 && typeId <= 36) {
+      return "redirect:/cs/qna/csqnasafe"; // 안전거래 리스트
+    } else {
+      return "redirect:/cs/qna/csqnamember"; // fallback (예외처리)
+    }
   }
 
 
@@ -294,15 +313,126 @@ public class CsController {
     return "/cs/qna/csqnamember";
   }
 
-  @GetMapping("/cscontactview")
-  public String cscontactview() {
-    return "/cs/cscontactview";
+  @GetMapping("/qna/csqnacoupon")
+  public String csqnacoupon(Model model, PageRequestDTO pageRequestDTO) {
+
+    pageRequestDTO.setName("쿠폰");  // Set the filter for "name"
+
+    // ✅ type_id는 전체니까 0 넘기기
+    pageRequestDTO.setType_id(0);  // Ensure type_id is set to 0
+
+    // Now calling the method that only takes PageRequestDTO and int
+    PageResponseDTO pageResponseDTO = qnaService.findAll(pageRequestDTO, 0);
+
+    model.addAttribute("pageResponseDTO", pageResponseDTO);
+
+    return "/cs/qna/csqnacoupon";
   }
 
-  @GetMapping("/cscontactwrite")
-  public String cscontactwrite() {
-    return "/cs/cscontactwrite";
+  @GetMapping("/qna/csqnaorder")
+  public String csqnaorder(Model model, PageRequestDTO pageRequestDTO) {
+
+    pageRequestDTO.setName("주문");  // Set the filter for "name"
+
+    // ✅ type_id는 전체니까 0 넘기기
+    pageRequestDTO.setType_id(0);  // Ensure type_id is set to 0
+
+    // Now calling the method that only takes PageRequestDTO and int
+    PageResponseDTO pageResponseDTO = qnaService.findAll(pageRequestDTO, 0);
+
+    model.addAttribute("pageResponseDTO", pageResponseDTO);
+
+    return "/cs/qna/csqnaorder";
   }
+
+  @GetMapping("/qna/csqnadeliver")
+  public String csqnadeliver(Model model, PageRequestDTO pageRequestDTO) {
+
+    pageRequestDTO.setName("배송");  // Set the filter for "name"
+
+    // ✅ type_id는 전체니까 0 넘기기
+    pageRequestDTO.setType_id(0);  // Ensure type_id is set to 0
+
+    // Now calling the method that only takes PageRequestDTO and int
+    PageResponseDTO pageResponseDTO = qnaService.findAll(pageRequestDTO, 0);
+
+    model.addAttribute("pageResponseDTO", pageResponseDTO);
+
+    return "/cs/qna/csqnadeliver";
+  }
+
+  @GetMapping("/qna/csqnacancel")
+  public String csqnacancel(Model model, PageRequestDTO pageRequestDTO) {
+
+    pageRequestDTO.setName("취소");  // Set the filter for "name"
+
+    // ✅ type_id는 전체니까 0 넘기기
+    pageRequestDTO.setType_id(0);  // Ensure type_id is set to 0
+
+    // Now calling the method that only takes PageRequestDTO and int
+    PageResponseDTO pageResponseDTO = qnaService.findAll(pageRequestDTO, 0);
+
+    model.addAttribute("pageResponseDTO", pageResponseDTO);
+
+    return "/cs/qna/csqnacancel";
+  }
+
+  @GetMapping("/qna/csqnatrip")
+  public String csqnatrip(Model model, PageRequestDTO pageRequestDTO) {
+
+    pageRequestDTO.setName("여행");  // Set the filter for "name"
+
+    // ✅ type_id는 전체니까 0 넘기기
+    pageRequestDTO.setType_id(0);  // Ensure type_id is set to 0
+
+    // Now calling the method that only takes PageRequestDTO and int
+    PageResponseDTO pageResponseDTO = qnaService.findAll(pageRequestDTO, 0);
+
+    model.addAttribute("pageResponseDTO", pageResponseDTO);
+
+    return "/cs/qna/csqnatrip";
+  }
+
+  @GetMapping("/qna/csqnasafe")
+  public String csqnasafe(Model model, PageRequestDTO pageRequestDTO) {
+
+    pageRequestDTO.setName("안전");  // Set the filter for "name"
+
+    // ✅ type_id는 전체니까 0 넘기기
+    pageRequestDTO.setType_id(0);  // Ensure type_id is set to 0
+
+    // Now calling the method that only takes PageRequestDTO and int
+    PageResponseDTO pageResponseDTO = qnaService.findAll(pageRequestDTO, 0);
+
+    model.addAttribute("pageResponseDTO", pageResponseDTO);
+
+    return "/cs/qna/csqnasafe";
+  }
+
+
+  /*qna 회원 글 보기*/
+  @GetMapping("/qna/csqnaview")
+  public String csqnaview(@RequestParam("id") int id, Model model) {
+
+    // 글 조회 서비스 호출
+    QnaDTO qnaDTO = qnaService.findById(id);
+    model.addAttribute("qnaDTO", qnaDTO);
+
+    // 답글 조회
+    ReplyDTO replyDTO = replyService.findByQnaId(id);
+    model.addAttribute("replyDTO", replyDTO);
+
+    return "/cs/qna/csqnaview";
+  }
+
+
+
+  @GetMapping("/cscontactview")
+  public String cscontactview() {
+    return "csqnaview";
+  }
+
+
 
 
   @GetMapping("/csqnalist")

@@ -51,10 +51,7 @@
             <th:block th:insert="~{/common/cs/qnasidebar}"></th:block>
             <!-- 오른쪽 글 -->
             <article class="main_content">
-              <div class="main_title">
-                  <p>회원</p>
-                  <span style="color: #808080; margin-top: 10px;">회원 관련 문의내용 입니다.</span>
-              </div>
+
               <div class="main_content_detail">
                 <form th:action="@{/cs/qna/csqnawrite}" method="post" enctype="multipart/form-data" id="newsWriteForm" class="post-form">
                     <input type="hidden" name="member_id" th:value="${member_id}" />

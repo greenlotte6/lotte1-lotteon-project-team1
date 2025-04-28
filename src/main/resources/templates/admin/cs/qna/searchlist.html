@@ -67,45 +67,42 @@
                   style="display: none"
           />
         </form>
-        <form action="#" methos="POST" class="post-form">
-          <table>
-            <tbody>
-            <tr>
-              <th>
-                <input type="checkbox" id="check-all" />
-              </th>
-              <th>번호</th>
-              <th>1차유형</th>
-              <th>2차유형</th>
-              <th>제목</th>
-              <th>작성자</th>
-              <th>작성일</th>
-              <th>상태</th>
-            </tr>
-            <tr th:each="qna, i:${pageResponseDTO.dtoList}">
-              <td>
-                <input type="checkbox" class="faq-checkbox" th:attr="data-id=${qna.id}" />
-              </td>
-              <td>[[${pageResponseDTO.startNo - i.index}]]</td>
-              <td>[[${qna.name}]]</td>
-              <td>[[${qna.subtype_name}]]</td>
-              <td><a th:href="@{/admin/cs/qna/view(id=${qna.id})}">[[${qna.title}]]</a></td>
-              <td>[[${qna.member_id}]]</td>
-              <td>[[${qna.register_date}]]</td>
-              <td>
-                <span style="color: #808080;" th:if="${qna.status == 'open'}">검토중</span>
-                <span style="color: #0070C0;" th:if="${qna.status == 'close'}">답변완료</span>
-              </td>
-            </tr>
-            </tbody>
-          </table>
-          <div class="crud-btn-area">
-            <button class="enroll-btn delete-btn">선택삭제</button>
-            <a class="control-btn default write-faq-btn" th:href="@{/admin/cs/qna/write}">
-              작성하기
-            </a>
-          </div>
-        </form>
+
+        <table>
+          <tbody>
+          <tr>
+            <th>
+              <input type="checkbox" id="check-all" />
+            </th>
+            <th>번호</th>
+            <th>1차유형</th>
+            <th>2차유형</th>
+            <th>제목</th>
+            <th>작성자</th>
+            <th>작성일</th>
+            <th>상태</th>
+          </tr>
+          <tr th:each="qna, i:${pageResponseDTO.dtoList}">
+            <td>
+              <input type="checkbox" class="faq-checkbox" th:attr="data-id=${qna.id}" />
+            </td>
+            <td>[[${pageResponseDTO.startNo - i.index}]]</td>
+            <td>[[${qna.name}]]</td>
+            <td>[[${qna.subtype_name}]]</td>
+            <td><a th:href="@{/admin/cs/qna/view(id=${qna.id})}">[[${qna.title}]]</a></td>
+            <td>[[${qna.member_id}]]</td>
+            <td>[[${qna.register_date}]]</td>
+            <td>
+              <span style="color: #808080;" th:if="${qna.status == 'open'}">검토중</span>
+              <span style="color: #0070C0;" th:if="${qna.status == 'close'}">답변완료</span>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+        <div class="crud-btn-area">
+          <button class="enroll-btn delete-btn">선택삭제</button>
+
+        </div>
       </div>
     </section>
   </main>

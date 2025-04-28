@@ -6,7 +6,7 @@
         <div id="account-area">
             <ul>
                 <li>
-                    <a href="/cs/csmain"> 고객센터 </a>
+                    <a th:href="@{/cs/csmain}"> 고객센터 </a>
                 </li>
                 <li>
                     <a href="#"> 주문배송 </a>
@@ -23,11 +23,13 @@
         </div>
         <div id="header-area">
             <div id="logo-area">
-                <img
-                        src="https://static.lotteon.com/p/common/foCommon/assets/img/logo_lotte-on@2x.png"
-                        alt="logo"
-                />
-                <a href="/cs/csmain" style="font-size: 35px; font-weight: bold; margin-left: 10px;">고객센터</a>
+                <a th:href="/">
+                    <img
+                            th:src="${config.getLogo().getHeaderLogoLocation()}"
+                            alt="logo"
+                    />
+                </a>
+                <a th:href="@{/cs/csmain}" style="font-size: 35px; font-weight: bold; margin-left: 10px;">고객센터</a>
             </div>
         </div>
     </div>
