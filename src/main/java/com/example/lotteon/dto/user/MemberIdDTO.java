@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserCompositeKeyDTO {
+public class MemberIdDTO {
 
   private UserDTO user;
 }
