@@ -132,3 +132,16 @@ INSERT INTO `user` VALUES ("seller10", "abc123", "seller11@example.com", "051-11
 INSERT INTO `seller` VALUES ("112-12-11118", "seller10", "김유신", "(주)행복상점", "2025-해운대구-12345", "0503-1234-5678", "ready");
 INSERT INTO `user` VALUES ("seller11", "abc123", "seller10@example.com", "051-111-2229", "12345", "부산광역시", "해운대구", "seller", NOW());
 INSERT INTO `seller` VALUES ("112-12-11119", "seller11", "김유신", "(주)행복상점", "2025-해운대구-12345", "0503-1234-5678", "ready");
+-- 포인트
+INSERT INTO `point_history` VALUES(1, "abc123", 1000, "회원가입 기념 포인트 1,000원", NOW());
+INSERT INTO `point` VALUES ("abc123", 1000);
+
+-- 회원(member)
+INSERT INTO `user` VALUES ("abc123", "abc@123", "abc123@example.com", "010-1111-2222", "12345", "부산광역시", "부산진구", "member", NOW());
+INSERT INTO `member` (`user_id`, 1,  `name`, `gender`, `recent_login_date`) VALUES ("abc123", "장보고", "m", NOW());
+
+INSERT INTO `terms` VALUES (1, "구매자 약관", "구매자 약관 테스트");
+INSERT INTO `terms` VALUES (2, "판매자 약관", "판매자 약관 테스트");
+INSERT INTO `terms` VALUES (3, "해외사업자 약관", "해외사업자 약관 테스트");
+INSERT INTO `terms` VALUES (4, "위치기반서비스 약관", "위치기반서비스 약관 테스트");
+INSERT INTO `terms` VALUES (5, "개인정보처리기본약관", "개인정보처리기본 약관 테스트");

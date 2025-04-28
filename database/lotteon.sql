@@ -32,22 +32,41 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
+-- Table `lotteon`.`point`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `lotteon`.`point` (
+  `member_id` VARCHAR(16) NOT NULL,
+  `total` INT NOT NULL DEFAULT 0,
+  PRIMARY KEY (`member_id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
 -- Table `lotteon`.`member`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `lotteon`.`member` (
   `user_id` VARCHAR(16) NOT NULL,
+  `point_id` VARCHAR(45) NOT NULL,
   `name` VARCHAR(20) NOT NULL,
   `gender` ENUM("m", "f") NOT NULL,
   `recent_login_date` DATE NOT NULL,
   `description` TEXT NULL,
+  `status` ENUM("normal", "stopped", "dormant", "withdrawed") NULL DEFAULT 'normal',
+  `level` ENUM("family", "silver", "gold", "vip", "vvip") NULL DEFAULT 'family',
   PRIMARY KEY (`user_id`),
   INDEX `fk_member_user1_idx` (`user_id` ASC) VISIBLE,
   UNIQUE INDEX `user_id_UNIQUE` (`user_id` ASC) VISIBLE,
+  INDEX `fk_member_point_state1_idx` (`point_id` ASC) VISIBLE,
   CONSTRAINT `fk_member_user1`
     FOREIGN KEY (`user_id`)
     REFERENCES `lotteon`.`user` (`id`)
     ON DELETE CASCADE
-    ON UPDATE CASCADE)
+    ON UPDATE CASCADE,
+  CONSTRAINT `fk_member_point1`
+    FOREIGN KEY (`point_id`)
+    REFERENCES `lotteon`.`point` (`member_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
@@ -337,10 +356,10 @@ ENGINE = InnoDB;
 -- Table `lotteon`.`reply`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `lotteon`.`reply` (
-  `qna_id` INT NOT NULL AUTO_INCREMENT,
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `qna_id` INT NOT NULL,
   `content` TEXT NOT NULL,
-  PRIMARY KEY (`qna_id`, `id`),
+  PRIMARY KEY (`id`, `qna_id`),
   INDEX `fk_reply_qna1_idx` (`qna_id` ASC) VISIBLE,
   CONSTRAINT `fk_reply_qna1`
     FOREIGN KEY (`qna_id`)
@@ -578,22 +597,6 @@ CREATE TABLE IF NOT EXISTS `lotteon`.`cart` (
     FOREIGN KEY (`product_id`)
     REFERENCES `lotteon`.`product` (`id`)
     ON DELETE NO ACTION
-    ON UPDATE CASCADE)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `lotteon`.`point_state`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `lotteon`.`point_state` (
-  `member_id` VARCHAR(16) NOT NULL,
-  `total` INT NOT NULL DEFAULT 0,
-  PRIMARY KEY (`member_id`),
-  INDEX `fk_point_state_member1_idx` (`member_id` ASC) VISIBLE,
-  CONSTRAINT `fk_point_state_member1`
-    FOREIGN KEY (`member_id`)
-    REFERENCES `lotteon`.`member` (`user_id`)
-    ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
