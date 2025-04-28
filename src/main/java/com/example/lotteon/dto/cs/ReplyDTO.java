@@ -13,4 +13,6 @@ public class ReplyDTO {
     private int qna_id;
     private String content;
 
+    private QnaDTO qna;
+
 }

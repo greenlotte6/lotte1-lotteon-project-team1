@@ -1,5 +1,8 @@
 package com.example.lotteon.service.cs;
 
+import com.example.lotteon.dto.PageRequestDTO;
+import com.example.lotteon.dto.PageResponseDTO;
+import com.example.lotteon.dto.cs.FaqDTO;
 import com.example.lotteon.dto.cs.QnaDTO;
 import com.example.lotteon.entity.cs.Article_Type;
 import com.example.lotteon.entity.cs.Faq;
@@ -8,12 +11,17 @@ import com.example.lotteon.entity.user.Member;
 import com.example.lotteon.entity.user.User;
 import com.example.lotteon.entity.user.UserCompositeKey;
 import com.example.lotteon.repository.cs.QnaRepository;
+import com.querydsl.core.Tuple;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -56,5 +64,97 @@ public class QnaService {
 
         //저장한 글번호 반환
         return savedQna.getId();
+    }
+
+    public PageResponseDTO findAll(PageRequestDTO pageRequestDTO, int type_id) {
+        // 페이징 처리를 위한 pageable 객체 생성
+        Pageable pageable = pageRequestDTO.getPageable("id");
+        String name = pageRequestDTO.getName();
+
+        Page<Tuple> pageQna = qnaRepository.selectAllForList(pageable, type_id, name);
+
+        List<QnaDTO> qnaDTOList = pageQna.getContent().stream().map(tuple -> {
+
+            Qna qna = tuple.get(0, Qna.class);
+
+            return QnaDTO.builder()
+                    .id(qna.getId())
+                    .member_id(qna.getMember_id().getUserCompositeKey().getUser().getId())
+                    .title(qna.getTitle())
+                    .content(qna.getContent())
+                    .register_date(qna.getRegister_date().toString())
+                    .type_id(qna.getType_id().getId()) // Article_Type의 id
+                    .name(qna.getType_id().getName()) // Article_Type의 name
+                    .subtype_name(qna.getType_id().getSubtype_name()) // Article_Type의 subtype_name
+                    .status(qna.getStatus())
+                    .build();
+
+        }).toList();
+
+        int total = (int) pageQna.getTotalElements();
+
+        return PageResponseDTO.<QnaDTO>builder()
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(qnaDTOList)
+                .total(total)
+                .build();
+    }
+
+    public PageResponseDTO searchAll(PageRequestDTO pageRequestDTO, int typeId) {
+        Pageable pageable = pageRequestDTO.getPageable("id");
+
+        Page<Tuple> pageQna = qnaRepository.selectAllForSearch(pageRequestDTO, pageable, typeId);
+
+        List<QnaDTO> qnaDTOList = pageQna.getContent().stream().map(tuple -> {
+            Qna qna = tuple.get(0, Qna.class);
+            return QnaDTO.builder()
+                    .id(qna.getId())
+                    .member_id(qna.getMember_id().getUserCompositeKey().getUser().getId())
+                    .title(qna.getTitle())
+                    .content(qna.getContent())
+                    .register_date(qna.getRegister_date().toString())
+                    .type_id(qna.getType_id().getId()) // Article_Type의 id
+                    .name(qna.getType_id().getName()) // Article_Type의 name
+                    .subtype_name(qna.getType_id().getSubtype_name()) // Article_Type의 subtype_name
+                    .status(qna.getStatus())
+                    .build();
+        }).toList();
+
+        int total = (int) pageQna.getTotalElements();
+
+        return PageResponseDTO.<QnaDTO>builder()
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(qnaDTOList)
+                .total(total)
+                .build();
+    }
+
+
+    public QnaDTO findById(int id) {
+
+        Optional<Qna> optQna = qnaRepository.findById(id);
+
+        if (optQna.isPresent()) {
+            Qna qna = optQna.get();
+            Article_Type type = qna.getType_id();
+
+            QnaDTO qnaDTO = QnaDTO.builder()
+                    .id(qna.getId())
+                    .member_id(qna.getMember_id().getUserCompositeKey().getUser().getId())
+                    .title(qna.getTitle())
+                    .content(qna.getContent())
+                    .register_date(qna.getRegister_date().toString())
+                    .type_id(qna.getType_id().getId()) // Article_Type의 id
+                    .name(qna.getType_id().getName()) // Article_Type의 name
+                    .subtype_name(qna.getType_id().getSubtype_name()) // Article_Type의 subtype_name
+                    .status(qna.getStatus())
+                    .build();
+
+
+            return qnaDTO;
+
+        }
+        return null;
+
     }
 }

@@ -28,8 +28,11 @@ public class PageResponseDTO<T> {
 
     private String filter;
 
+    private String name;
+
     @Builder
     public PageResponseDTO(PageRequestDTO pageRequestDTO, List<T> dtoList, int total) {
+        this.name = pageRequestDTO.getName();
         this.type_id = pageRequestDTO.getType_id();
         this.pg = pageRequestDTO.getPg();
         this.size = pageRequestDTO.getSize();

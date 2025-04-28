@@ -4,8 +4,11 @@ import com.example.lotteon.dto.PageRequestDTO;
 import com.example.lotteon.dto.PageResponseDTO;
 import com.example.lotteon.dto.cs.FaqDTO;
 import com.example.lotteon.dto.cs.NoticeDTO;
+import com.example.lotteon.dto.cs.QnaDTO;
+import com.example.lotteon.dto.cs.ReplyDTO;
 import com.example.lotteon.service.cs.CsService;
 import com.example.lotteon.service.cs.QnaService;
+import com.example.lotteon.service.cs.ReplyService;
 import com.example.lotteon.service.cs.faqService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +30,7 @@ public class AdminCsController {
     private final CsService csService;
     private final faqService faqService;
     private final QnaService qnaService;
+    private final ReplyService replyService;
 
 
     /* 여기부터 노티스 컨트롤러 */
@@ -182,6 +186,44 @@ public class AdminCsController {
         model.addAttribute(pageResponseDTO);
         return "/admin/cs/faq/searchlist";
 
+    }
+
+
+    /*여기 부터 qna 목록*/
+    @GetMapping("/qna/list")
+    public String qnalist(Model model, PageRequestDTO pageRequestDTO) {
+
+        int type_id = pageRequestDTO.getType_id();
+        PageResponseDTO pageResponseDTO = qnaService.findAll(pageRequestDTO, type_id);
+
+        model.addAttribute(pageResponseDTO);
+        return "/admin/cs/qna/list";
+    }
+
+    @GetMapping("/qna/search")
+    public String qnasearch(PageRequestDTO pageRequestDTO, Model model) {
+
+        int type_id = pageRequestDTO.getType_id();
+        //서비스 호출
+        PageResponseDTO pageResponseDTO = qnaService.searchAll(pageRequestDTO, type_id);
+
+        model.addAttribute(pageResponseDTO);
+        return "/admin/cs/qna/searchlist";
+
+    }
+
+    @GetMapping("/qna/view")
+    public String qnaview(@RequestParam("id")int id, Model model) {
+
+        // 글 조회 서비스 호출
+        QnaDTO qnaDTO = qnaService.findById(id);
+        model.addAttribute("qnaDTO", qnaDTO);
+
+        // 답글 조회
+        ReplyDTO replyDTO = replyService.findByQnaId(id);
+        model.addAttribute("replyDTO", replyDTO);
+
+        return "/admin/cs/qna/view";
     }
 
 

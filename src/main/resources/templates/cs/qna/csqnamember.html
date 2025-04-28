@@ -1,0 +1,119 @@
+<!--
+  작성자: 손준오(sjo112777)
+  내용: 고객센터 > 자주묻는질문 목록 view
+-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+  <head>
+    <meta charset="UTF-8" />
+    <title>고객센터 > 문의하기 회원 목록</title>
+    <link rel="stylesheet" href="/style/init.css" />
+    <link rel="stylesheet" href="/style/index.css" />
+    <link rel="stylesheet" href="/style/common/header.css" />
+    <link rel="stylesheet" href="/style/common/footer.css" />
+    <!--<link rel="stylesheet" href="//style/common/pagination.css" />-->
+    <link rel="stylesheet" href="/style/cs/cscommon.css" />
+    <link rel="stylesheet" href="/style/cs/csqna.css" />
+    <link
+      rel="icon"
+      href="https://static.lotteon.com/p/common/assets/favicon/1/favicon-32.png"
+    />
+    <link
+      rel="stylesheet"
+      href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css"
+    />
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
+    <script src="/js/common/header.js"></script>
+    <script src="/js/common/footer.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/all.min.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <div id="wrapper">
+
+      <th:block th:insert="~{/common/cs/csheader}"></th:block>
+        <nav id="quick-menu">
+          <ul>
+            <li>
+                <span>홈 > 문의하기</span>
+            </li>
+          </ul>
+        </nav>
+      </header>
+
+
+      <main>
+        <div class="csmain">
+          <!-- 왼쪽 사이드바 -->
+            <th:block th:insert="~{/common/cs/qnasidebar}"></th:block>
+            <!-- 오른쪽 글 -->
+            <article class="main_content">
+              <div class="main_title">
+                  <p>회원</p>
+                  <span style="color: #808080; margin-top: 10px;">회원관련 문의내용 입니다.</span>
+              </div>
+              <div class="main_content_detail">
+                  <table>
+                      <tr th:each="qna, i:${pageResponseDTO.dtoList}">
+                          <td><a th:href="@{/cs/qna/csqnaview(id=${qna.id})}">[[${qna.title}]]</a></td>
+                          <td>[[${qna.status}]]</td>
+                          <td>
+                              <span style="color: #808080;" th:if="${qna.status == 'open'}">검토중</span>
+                              <span style="color: #0070C0;" th:if="${qna.status == 'close'}">답변완료</span>
+                          </td>
+                          <td>[[${qna.register_date}]]</td>
+                      </tr>
+
+                  </table>
+                  <a th:href="@{/cs/qna/csqnawrite}" class="btn btnWrite">문의하기</a>
+              </div>
+
+                <section class="pagination" style="margin-top: 60px;">
+                    <a class="page move"
+                       th:href="@{/cs/qna/csqnamember(pg=1, type_id=${pageResponseDTO.type_id}, filter=${pageResponseDTO.filter})}">
+                        <i class="fa-solid fa-angles-left"></i>
+                    </a>
+
+                    <a class="page move"
+                       th:href="@{/cs/qna/csqnamember(pg=${pageResponseDTO.start - 1}, type_id=${pageResponseDTO.type_id}, filter=${pageResponseDTO.filter})}">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </a>
+
+                    <th:block th:each="num : ${#numbers.sequence(pageResponseDTO.start, pageResponseDTO.end)}">
+                        <a class="page"
+                           th:href="@{/cs/qna/csqnamember(pg=${num}, type_id=${pageResponseDTO.type_id}, filter=${pageResponseDTO.filter})}"
+                           th:class="${num == pageResponseDTO.pg} ? 'current' : 'num'">
+                            [[${num}]]
+                        </a>
+                    </th:block>
+
+                    <a class="page move"
+                       th:href="@{/cs/qna/csqnamember(pg=${pageResponseDTO.end + 1}, type_id=${pageResponseDTO.type_id}, filter=${pageResponseDTO.filter})}">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </a>
+
+                    <a class="page move"
+                       th:href="@{/cs/qna/csqnamember(pg=${pageResponseDTO.lastPage}, type_id=${pageResponseDTO.type_id}, filter=${pageResponseDTO.filter})}">
+                        <i class="fa-solid fa-angles-right"></i>
+                    </a>
+                </section>
+
+            </article>
+
+        </div>
+
+
+
+
+      </main>
+
+
+
+      <th:block th:insert="~{/common/footer}"></th:block>
+    </div>
+  </body>
+</html>
