@@ -1,443 +1,259 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>회원관리 > 회원목록</title>
-    <link rel="stylesheet" href="/static/style/init.css" />
-    <link rel="stylesheet" href="/static/style/common/admin/header.css" />
-    <link rel="stylesheet" href="/static/style/common/admin/aside.css" />
-    <link rel="stylesheet" href="/static/style/common/admin/content.css" />
-    <link rel="stylesheet" href="/static/style/common/admin/footer.css" />
-    <link rel="stylesheet" href="/static/style/common/pagination.css" />
-    <link rel="stylesheet" href="/static/style/admin/member/member.css" />
-    <link
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>회원관리 > 회원목록</title>
+  <link rel="stylesheet" href="/style/init.css"/>
+  <link rel="stylesheet" href="/style/common/admin/header.css"/>
+  <link rel="stylesheet" href="/style/common/admin/aside.css"/>
+  <link rel="stylesheet" href="/style/common/admin/content.css"/>
+  <link rel="stylesheet" href="/style/common/admin/footer.css"/>
+  <link rel="stylesheet" href="/style/common/pagination.css"/>
+  <link rel="stylesheet" href="/style/admin/member/member.css"/>
+  <link
       rel="icon"
       href="https://static.lotteon.com/p/common/assets/favicon/1/favicon-32.png"
-    />
-    <link
+  />
+  <link
       rel="stylesheet"
       href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css"
-    />
-    <script
+  />
+  <script
       src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/all.min.js"
       crossorigin="anonymous"
-    ></script>
-    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-    <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
-    <script src="/static/js/admin/config/aside-drop.js"></script>
-    <script type="module" src="/static/js/common/admin/modal.mjs"></script>
-    <script
+  ></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+  <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
+  <script src="/js/admin/config/aside-drop.js"></script>
+  <script type="module" src="/js/common/admin/modal.mjs"></script>
+  <script
       type="module"
-      src="/static/js/common/admin/registryModal.js"
-    ></script>
-  </head>
-  <body>
-    <div id="wrapper">
-      <header>
-        <div class="header-wrapper">
-          <img
-            src="https://static.lotteon.com/p/common/foCommon/assets/img/logo_lotte-on@2x.png"
-            alt="logo"
-          />
-          <h1>ADMINISTRATOR</h1>
-          <ul>
-            <li>
-              <span class="greeting">
-                안녕하세요, [홍길동]님, 반갑습니다.
-              </span>
-            </li>
-            <li>
-              <a href="#"> 홈 </a>
-            </li>
-            <li>
-              <a href="#"> 로그아웃 </a>
-            </li>
-            <li>
-              <a href="#"> 고객센터 </a>
-            </li>
-          </ul>
-        </div>
-        <nav class="header-padding"></nav>
-      </header>
-      <main>
-        <aside class="side-menu">
-          <ul>
-            <li id="settings-menu">
-              <i class="fa-solid fa-gear"></i>
-              <a href="/admin/config/basic"> 환경설정 </a>
-            </li>
-            <ul class="submenu settings" style="display: none">
-              <li>
-                <a href="/admin/config/basic"> 기본설정 </a>
-              </li>
-              <li>
-                <a href="/admin/config/banner"> 배너관리 </a>
-              </li>
-              <li>
-                <a href="/admin/config/policy"> 약관관리 </a>
-              </li>
-              <li>
-                <a href="/admin/config/category"> 카테고리 </a>
-              </li>
-              <li>
-                <a href="/admin/config/version"> 버전이력 </a>
-              </li>
-            </ul>
-            <li id="store-menu">
-              <i class="fa-solid fa-store"></i>
-              <a href="/admin/shop/list"> 상점관리 </a>
-            </li>
-            <ul class="submenu store" style="display: none">
-              <li>
-                <a href="/admin/shop/list"> 상점목록 </a>
-              </li>
-              <li>
-                <a href="/admin/shop/sales"> 매출현황 </a>
-              </li>
-            </ul>
-            <li id="member-menu">
-              <i class="fa-solid fa-users"></i>
-              <a href="/admin/member/list"> 회원관리 </a>
-            </li>
-            <ul class="submenu member" style="display: none">
-              <li>
-                <a href="/admin/member/list"> 회원목록 </a>
-              </li>
-              <li>
-                <a href="/admin/member/point"> 포인트 관리 </a>
-              </li>
-            </ul>
-            <li id="product-menu">
-              <i class="fa-solid fa-box-open"></i>
-              <a href="/admin/product/list"> 상품관리 </a>
-            </li>
-            <ul class="submenu product" style="display: none">
-              <li>
-                <a href="/admin/product/list"> 상품목록 </a>
-              </li>
-              <li>
-                <a href="/admin/product/register"> 상품등록 </a>
-              </li>
-            </ul>
-            <li id="order-menu">
-              <i class="fa-solid fa-credit-card"></i>
-              <a href="/admin/settings/order/list"> 주문관리 </a>
-            </li>
-            <ul class="submenu order" style="display: none">
-              <li>
-                <a href="/admin/order/list"> 주문현황 </a>
-              </li>
-              <li>
-                <a href="/admin/order/delivery"> 배송현황 </a>
-              </li>
-            </ul>
-            <li id="coupon-menu">
-              <i class="fa-solid fa-ticket"></i>
-              <a href="/admin/settings/coupon/list"> 쿠폰관리 </a>
-            </li>
-            <ul class="submenu coupon" style="display: none">
-              <li>
-                <a href="/admin/coupon/list"> 쿠폰목록 </a>
-              </li>
-              <li>
-                <a href="/admin/coupon/issued"> 쿠폰발급현황 </a>
-              </li>
-            </ul>
-            <li id="cs-menu">
-              <i class="fa-solid fa-headphones"></i>
-              <a href="/admin/cs/notice/list"> 고객센터 </a>
-            </li>
-            <ul class="submenu customer-service" style="display: none">
-              <li>
-                <a href="/admin/cs/notice/list"> 공지사항 </a>
-              </li>
-              <li>
-                <a href="/admin/cs/faq/list"> 자주묻는질문 </a>
-              </li>
-              <li>
-                <a href="/admin/cs/qna/list"> 문의하기 </a>
-              </li>
-            </ul>
-          </ul>
-        </aside>
-        <section id="content-area">
-          <div class="content-area-title">
-            <h3>회원목록</h3>
-            <span>
+      src="/js/common/admin/registryModal.js"
+  ></script>
+</head>
+<body>
+<div id="wrapper">
+  <th:block th:insert="~{/common/admin/header}"></th:block>
+  <main>
+    <th:block th:insert="~{/common/admin/aside}"></th:block>
+    <section id="content-area">
+      <div class="content-area-title">
+        <h3>회원목록</h3>
+        <span>
               <a href="#">HOME&nbsp;>&nbsp; </a>
               <a href="#">회원관리&nbsp;>&nbsp; </a>
               <a href="#">회원목록</a>
             </span>
-          </div>
-          <div class="content">
-            <div class="content-title">
-              <h3>회원목록</h3>
-            </div>
-            <form action="#" method="GET" id="search-area">
-              <select name="filter" class="search-filter">
-                <option value="uid">아이디</option>
-                <option value="name">이름</option>
-                <option value="email">이메일</option>
-                <option value="contact">연락처</option>
-              </select>
-              <input
-                type="text"
-                class="search-input"
-                placeholder="검색어 입력"
-              />
-              <input type="submit" class="search-submit-btn" value="검색" />
-            </form>
-            <table>
-              <tr>
-                <th>
-                  <input type="checkbox" onclick="return false;" />
-                </th>
-                <th>번호</th>
-                <th>아이디</th>
-                <th>이름</th>
-                <th>성별</th>
-                <th>등급</th>
-                <th>포인트</th>
-                <th>이메일</th>
-                <th>휴대폰</th>
-                <th>가입일</th>
-                <th>상태</th>
-                <th>관리</th>
-              </tr>
-              <tr>
-                <td>
-                  <input type="checkbox" />
-                </td>
-                <td>5</td>
-                <td>adklfj3oir000</td>
-                <td>정우성</td>
-                <td>M</td>
-                <td>
-                  <select name="level" id="member-level">
-                    <option value="family">FAMILY</option>
-                    <option value="silver">SILVER</option>
-                    <option value="gold">gold</option>
-                    <option value="vip">VIP</option>
-                    <option value="vvip">vvip</option>
-                  </select>
-                </td>
-                <td>15,000</td>
-                <td>loremIpsum@example.com</td>
-                <td>010-3338-2313</td>
-                <td>2023-01-01 01:23:45</td>
-                <td class="text-green">정상</td>
-                <td>
-                  <button class="registry-modal-btn">수정</button>
-                  <button class="background-red">중지</button>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <input type="checkbox" />
-                </td>
-                <td>5</td>
-                <td>adklfj3oir000</td>
-                <td>정우성</td>
-                <td>M</td>
-                <td>
-                  <select name="level" id="member-level">
-                    <option value="family">FAMILY</option>
-                    <option value="silver">SILVER</option>
-                    <option value="gold">gold</option>
-                    <option value="vip">VIP</option>
-                    <option value="vvip">vvip</option>
-                  </select>
-                </td>
-                <td>15,000</td>
-                <td>loremIpsum@example.com</td>
-                <td>010-3338-2313</td>
-                <td>2023-01-01 01:23:45</td>
-                <td class="text-red">중지</td>
-                <td>
-                  <button class="registry-modal-btn">수정</button>
-                  <button class="background-green">재개</button>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <input type="checkbox" />
-                </td>
-                <td>5</td>
-                <td>adklfj3oir000</td>
-                <td>정우성</td>
-                <td>M</td>
-                <td>
-                  <select name="level" id="member-level">
-                    <option value="family">FAMILY</option>
-                    <option value="silver">SILVER</option>
-                    <option value="gold">gold</option>
-                    <option value="vip">VIP</option>
-                    <option value="vvip">vvip</option>
-                  </select>
-                </td>
-                <td>15,000</td>
-                <td>loremIpsum@example.com</td>
-                <td>010-3338-2313</td>
-                <td>2023-01-01 01:23:45</td>
-                <td class="text-gray">휴면</td>
-                <td>
-                  <button class="registry-modal-btn">수정</button>
-                  <button class="background-green">재개</button>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <input type="checkbox" />
-                </td>
-                <td>5</td>
-                <td>adklfj3oir000</td>
-                <td>정우성</td>
-                <td>M</td>
-                <td>
-                  <select name="level" id="member-level">
-                    <option value="family">FAMILY</option>
-                    <option value="silver">SILVER</option>
-                    <option value="gold">gold</option>
-                    <option value="vip">VIP</option>
-                    <option value="vvip">vvip</option>
-                  </select>
-                </td>
-                <td>15,000</td>
-                <td>loremIpsum@example.com</td>
-                <td>010-3338-2313</td>
-                <td>2023-01-01 01:23:45</td>
-                <td class="text-gray">탈퇴</td>
-                <td>
-                  <button class="registry-modal-btn">수정</button>
-                  <button class="background-red destroy-btn">비활성</button>
-                </td>
-              </tr>
-            </table>
-          </div>
-          <div class="crud-btn-area">
-            <button class="enroll-btn delete-btn registry-modal-btn">
-              선택수정
-            </button>
-          </div>
-          <div class="registry-modal member-modification" title="회원수정">
-            <form action="#" method="POST">
-              <table>
-                <tr>
-                  <th>아이디</th>
-                  <td>
-                    <input type="text" value="abc1234" />
-                  </td>
-                </tr>
-                <tr>
-                  <th>이름</th>
-                  <td>
-                    <input type="text" value="홍길동" />
-                  </td>
-                </tr>
-                <tr>
-                  <th>성별</th>
-                  <td>
-                    <input type="radio" id="male" />
-                    <label for="male">M</label>
-                    <input type="radio" id="female" />
-                    <label for="female">F</label>
-                  </td>
-                </tr>
-                <tr>
-                  <th>등급</th>
-                  <td>
-                    <input type="text" readonly value="FAMILY" />
-                  </td>
-                </tr>
-                <tr>
-                  <th>상태</th>
-                  <td class="text-green">정상</td>
-                </tr>
-                <tr>
-                  <th>EMAIL</th>
-                  <td>
-                    <input type="email" value="abc1234@gmail.com" />
-                  </td>
-                </tr>
-                <tr>
-                  <th>휴대폰</th>
-                  <td>
-                    <input type="text" value="010-1234-1001" />
-                  </td>
-                </tr>
-                <tr>
-                  <th>우편번호</th>
-                  <td>
-                    <input type="text" value="12345" />
-                    <button class="post-btn">검색</button>
-                  </td>
-                </tr>
-                <tr>
-                  <th>기본주소</th>
-                  <td>
-                    <input
-                      type="text"
-                      value="부산 광역시 부산진구 부전동 123"
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <th>상세주소</th>
-                  <td>
-                    <input type="text" value="00 빌딩 3층 301호" />
-                  </td>
-                </tr>
-                <tr>
-                  <th>가입일</th>
-                  <td>0000-00-00 00:00:00</td>
-                </tr>
-                <tr>
-                  <th>최근 로그인 날짜</th>
-                  <td>0000-00-00 00:00:00</td>
-                </tr>
-                <tr>
-                  <th>기타</th>
-                  <td>
-                    <textarea name="member-etc-info" id="member-etc"></textarea>
-                  </td>
-                </tr>
-              </table>
-              <input
-                type="submit"
-                class="modal-register-btn"
-                value="등록하기"
-              />
-            </form>
-          </div>
-          <div class="pagination">
-            <a class="page move" href="#">
-              <i class="fa-solid fa-angles-left"></i>
-            </a>
-            <a class="page move" href="#">
-              <i class="fa-solid fa-chevron-left"></i>
-            </a>
-            <a class="page" href="">1</a>
-            <a class="page" href="">2</a>
-            <a class="page" href="">3</a>
-            <a class="page" href="">4</a>
-            <a class="page move" href="#">
-              <i class="fa-solid fa-chevron-right"></i>
-            </a>
-            <a class="page move" href="#">
-              <i class="fa-solid fa-angles-right"></i>
-            </a>
-          </div>
-        </section>
-      </main>
-      <footer>
-        <div id="footer-wrapper">
-          <span>
-            Copyright ©LotteON.co.kr All rights reserved. LotteON ADMINISTRATOR
-            Version 0.0.1
-          </span>
+      </div>
+      <div class="content">
+        <div class="content-title">
+          <h3>회원목록</h3>
         </div>
-      </footer>
-    </div>
-  </body>
+        <form action="#" method="GET" id="search-area">
+          <select name="filter" class="search-filter">
+            <option value="uid">아이디</option>
+            <option value="name">이름</option>
+            <option value="email">이메일</option>
+            <option value="contact">연락처</option>
+          </select>
+          <input
+              type="text"
+              class="search-input"
+              placeholder="검색어 입력"
+          />
+          <input type="submit" class="search-submit-btn" value="검색"/>
+        </form>
+        <table>
+          <tr>
+            <th>
+              <input type="checkbox" onclick="return false;"/>
+            </th>
+            <th>아이디</th>
+            <th>이름</th>
+            <th>성별</th>
+            <th>등급</th>
+            <th>포인트</th>
+            <th>이메일</th>
+            <th>휴대폰</th>
+            <th>가입일</th>
+            <th>상태</th>
+            <th>관리</th>
+          </tr>
+          <tr th:each="member : ${pages}">
+            <td>
+              <input type="checkbox"/>
+            </td>
+            <td th:text="${member.getUserCompositeKey().getUser().getId()}"></td>
+            <td th:text="${member.getName()}">정우성</td>
+            <td th:text="${member.getGender().toUpperCase()}">M</td>
+            <td>
+              <select name="level" id="member-level">
+                <option value="family">FAMILY</option>
+                <option value="silver">SILVER</option>
+                <option value="gold">gold</option>
+                <option value="vip">VIP</option>
+                <option value="vvip">vvip</option>
+              </select>
+            </td>
+            <td th:text="${member.getPoint().getTotal()}">15,000</td>
+            <td th:text="${member.getUserCompositeKey().getUser().getEmail()}">
+              loremIpsum@example.com
+            </td>
+            <td th:text="${member.getUserCompositeKey().getUser().getContact()}">010-3338-2313</td>
+            <td>
+              [[${member.getUserCompositeKey().getUser().getRegisterDate().getYear()}]]
+              -[[${#temporals.format(member.getUserCompositeKey().getUser().getRegisterDate(),
+              'MM')}]]
+              -[[${member.getUserCompositeKey().getUser().getRegisterDate().getDayOfMonth()}]]
+            </td>
+            <td class="text-red" th:if="${member.getStatus().equals('stopped')}">중지</td>
+            <td th:if="${member.getStatus().equals('stopped')}">
+              <button class="registry-modal-btn">수정</button>
+              <button class="background-green">재개</button>
+            </td>
+            <td class="text-green" th:if="${member.getStatus().equals('normal')}">정상</td>
+            <td th:if="${member.getStatus().equals('normal')}">
+              <button class="registry-modal-btn">수정</button>
+              <button class="background-red">중지</button>
+            </td>
+            <td class="text-gray" th:if="${member.getStatus().equals('dormant')}">휴면</td>
+            <td th:if="${member.getStatus().equals('dormant')}">
+              <button class="registry-modal-btn">수정</button>
+              <button class="background-green">재개</button>
+            </td>
+            <td class="text-gray" th:if="${member.getStatus().equals('withdrawed')}">탈퇴</td>
+            <td th:if="${member.getStatus().equals('withdrawed')}">
+              <button class="registry-modal-btn">수정</button>
+              <button class="background-red destroy-btn">비활성</button>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="crud-btn-area">
+        <button class="enroll-btn delete-btn registry-modal-btn">
+          선택수정
+        </button>
+      </div>
+      <div class="registry-modal member-modification" title="회원수정">
+        <form action="#" method="POST">
+          <table>
+            <tr>
+              <th>아이디</th>
+              <td>
+                <input type="text" value="abc1234"/>
+              </td>
+            </tr>
+            <tr>
+              <th>이름</th>
+              <td>
+                <input type="text" value="홍길동"/>
+              </td>
+            </tr>
+            <tr>
+              <th>성별</th>
+              <td>
+                <input type="radio" id="male"/>
+                <label for="male">M</label>
+                <input type="radio" id="female"/>
+                <label for="female">F</label>
+              </td>
+            </tr>
+            <tr>
+              <th>등급</th>
+              <td>
+                <input type="text" readonly value="FAMILY"/>
+              </td>
+            </tr>
+            <tr>
+              <th>상태</th>
+              <td class="text-green">정상</td>
+            </tr>
+            <tr>
+              <th>EMAIL</th>
+              <td>
+                <input type="email" value="abc1234@gmail.com"/>
+              </td>
+            </tr>
+            <tr>
+              <th>휴대폰</th>
+              <td>
+                <input type="text" value="010-1234-1001"/>
+              </td>
+            </tr>
+            <tr>
+              <th>우편번호</th>
+              <td>
+                <input type="text" value="12345"/>
+                <button class="post-btn">검색</button>
+              </td>
+            </tr>
+            <tr>
+              <th>기본주소</th>
+              <td>
+                <input
+                    type="text"
+                    value="부산 광역시 부산진구 부전동 123"
+                />
+              </td>
+            </tr>
+            <tr>
+              <th>상세주소</th>
+              <td>
+                <input type="text" value="00 빌딩 3층 301호"/>
+              </td>
+            </tr>
+            <tr>
+              <th>가입일</th>
+              <td>0000-00-00 00:00:00</td>
+            </tr>
+            <tr>
+              <th>최근 로그인 날짜</th>
+              <td>0000-00-00 00:00:00</td>
+            </tr>
+            <tr>
+              <th>기타</th>
+              <td>
+                <textarea name="member-etc-info" id="member-etc"></textarea>
+              </td>
+            </tr>
+          </table>
+          <input
+              type="submit"
+              class="modal-register-btn"
+              value="등록하기"
+          />
+        </form>
+      </div>
+      <div class="pagination">
+        <a class="page move"
+           th:href="@{/admin/member/list(page=${pages.getPageable().first().getPageNumber() + 1})}"
+           th:if="${pages.hasPrevious()}"
+        >
+          <i class="fa-solid fa-angles-left"></i>
+        </a>
+        <a class="page move" th:href="@{/admin/member/list(page=${currentPage - 1})}"
+           th:if="${pages.hasPrevious()}">
+          <i class="fa-solid fa-chevron-left"></i>
+        </a>
+        <span th:each="pageNum : ${#numbers.sequence(1, pages.getTotalPages())}">
+            <a th:class="${currentPage == pageNum ? 'page current-page' : 'page'}"
+               th:href="@{/admin/member/list(page=${pageNum})}"
+               th:text="${pageNum}">1</a>
+        </span>
+        <a class="page move" th:href="@{/admin/member/list(page=${currentPage + 1})}"
+           th:if="${pages.hasNext()}">
+          <i class="fa-solid fa-chevron-right"></i>
+        </a>
+        <a class="page move"
+           th:href="@{/admin/member/list(page=${pages.getTotalPages()})}"
+           th:if="${pages.hasNext()}">
+          <i class="fa-solid fa-angles-right"></i>
+        </a>
+      </div>
+    </section>
+  </main>
+  <th:block th:insert="~{/common/admin/footer}"></th:block>
+</div>
+</body>
 </html>

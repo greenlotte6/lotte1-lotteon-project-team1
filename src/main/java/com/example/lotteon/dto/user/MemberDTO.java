@@ -19,5 +19,7 @@ public class MemberDTO {
   private String gender;
   private LocalDate recentLoginDate;
   private String description;
+  private String status;
+  private String level;
 
 }

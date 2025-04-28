@@ -1,0 +1,35 @@
+package com.example.lotteon.controller.admin.member;
+
+import com.example.lotteon.entity.user.Member;
+import com.example.lotteon.service.user.MemberService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+@Slf4j
+@Controller
+@RequestMapping("/admin/member")
+@RequiredArgsConstructor
+public class MemberManagementController {
+
+  private final MemberService service;
+
+  @GetMapping("/list")
+  public String list(
+      @RequestParam(name = "page", defaultValue = "1") int page,
+      @RequestParam(name = "size", defaultValue = "10") int size,
+      Model model) {
+    Pageable pageable = PageRequest.of(page - 1, size);
+    Page<Member> members = service.getAll(pageable);
+    model.addAttribute("pages", members);
+    model.addAttribute("currentPage", page);
+    return "/admin/member/member";
+  }
+}
