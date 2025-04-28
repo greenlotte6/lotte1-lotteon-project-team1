@@ -31,9 +31,9 @@ public class Product {
   @ManyToOne(fetch = FetchType.LAZY)
   private ProductSubCategory subCategory;
 
-  @JoinColumn(name = "options_id")
-  @ManyToOne(fetch = FetchType.LAZY)
-  private ProductOptions options;
+//  @JoinColumn(name = "options_id")
+//  @ManyToOne(fetch = FetchType.LAZY)
+//  private ProductOptions options;
 
   @Column(name = "name")
   private String name;

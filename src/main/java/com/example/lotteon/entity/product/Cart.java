@@ -14,16 +14,27 @@ import java.time.LocalDate;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@IdClass(CartId.class) // ✅ 복합키 클래스 지정
 public class Cart {
 
     @Id
     @Column(name = "member_id")
     private String memberId;
 
-    @CreationTimestamp
-    private LocalDate register_date;
-
-    @JoinColumn(name = "product_id")
+    @Id
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id")
     private Product product;
+
+    @CreationTimestamp
+    private LocalDate registerDate;
+
+    @Column
+    private int quantity;
+
+    @Column
+    private int price;
+
+    @Column
+    private int totalPrice;
 }
