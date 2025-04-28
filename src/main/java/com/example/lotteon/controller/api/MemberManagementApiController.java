@@ -1,0 +1,45 @@
+package com.example.lotteon.controller.api;
+
+import com.example.lotteon.dto.user.MemberDTO;
+import com.example.lotteon.service.user.MemberService;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import java.util.List;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@Slf4j
+@RestController
+@RequiredArgsConstructor
+@RequestMapping("/api/admin/member")
+public class MemberManagementApiController {
+
+  private final MemberService service;
+  private final Gson gson;
+
+  private ResponseEntity<String> ok() {
+    JsonObject jsonObject = new JsonObject();
+    jsonObject.addProperty("status", "ok");
+    String jsonBody = gson.toJson(jsonObject);
+    return ResponseEntity.ok().body(jsonBody);
+  }
+
+  /*
+   * Member 테이블의 level 수정을 위한 컨트롤러 매핑
+   */
+  @PutMapping("/update")
+  public ResponseEntity<String> updateMemberLevel(@RequestBody List<MemberDTO> updatedMember) {
+    service.updateLevel(updatedMember);
+    return ok();
+  }
+
+  @PutMapping("/edit")
+  public ResponseEntity<String> editMember(@RequestBody MemberDTO member) {
+    return null;
+  }
+}

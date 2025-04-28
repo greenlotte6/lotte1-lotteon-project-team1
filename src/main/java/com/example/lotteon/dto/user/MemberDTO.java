@@ -15,7 +15,7 @@ public class MemberDTO {
 
   private static final String[] GENDERS = {"m", "f"};
 
-  private UserCompositeKeyDTO userCompositeKey;
+  private MemberIdDTO memberId;
   private PointDTO point;
   private String name;
   private String gender;

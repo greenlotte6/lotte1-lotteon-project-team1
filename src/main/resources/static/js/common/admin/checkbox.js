@@ -1,13 +1,13 @@
 $(() => {
   function selectAll() {
-    const checkboxes = $(".seller-checkbox");
+    const checkboxes = $(".item-checkbox");
     for (let checkbox of checkboxes) {
       checkbox.checked = true;
     }
   }
 
   function unselectAll() {
-    const checkboxes = $(".seller-checkbox");
+    const checkboxes = $(".item-checkbox");
     for (let checkbox of checkboxes) {
       checkbox.checked = false;
     }

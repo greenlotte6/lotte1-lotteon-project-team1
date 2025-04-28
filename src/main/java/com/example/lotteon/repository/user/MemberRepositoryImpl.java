@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 @RequiredArgsConstructor
@@ -34,5 +35,55 @@ public class MemberRepositoryImpl implements MemberRepositoryCustom {
   public Page<Member> findAll(Pageable pageable) {
     List<Member> members = query.selectFrom(member).fetch();
     return new PageImpl<>(members, pageable, members.size());
+  }
+
+  @Override
+  public Page<Member> findAllById(Pageable pageable, String id) {
+    List<Member> members = query.selectFrom(member)
+        .join(user)
+        .on(member.userCompositeKey.user.id.eq(user.id))
+        .where(member.userCompositeKey.user.id.eq(id))
+        .fetch();
+    return new PageImpl<>(members, pageable, members.size());
+  }
+
+  @Override
+  public Page<Member> findAllByName(Pageable pageable, String name) {
+    List<Member> members = query.selectFrom(member)
+        .join(user)
+        .on(member.userCompositeKey.user.id.eq(user.id))
+        .where(member.name.eq(name))
+        .fetch();
+    return new PageImpl<>(members, pageable, members.size());
+  }
+
+  @Override
+  public Page<Member> findAllByEmail(Pageable pageable, String email) {
+    List<Member> members = query.selectFrom(member)
+        .join(user)
+        .on(member.userCompositeKey.user.id.eq(user.id))
+        .where(member.name.eq(email))
+        .fetch();
+    return new PageImpl<>(members, pageable, members.size());
+  }
+
+  @Override
+  public Page<Member> findAllByContact(Pageable pageable, String contact) {
+    List<Member> members = query.selectFrom(member)
+        .join(user)
+        .on(member.userCompositeKey.user.id.eq(user.id))
+        .where(member.name.eq(contact))
+        .fetch();
+    return new PageImpl<>(members, pageable, members.size());
+  }
+
+  @Override
+  @Transactional
+  public void updateLevel(Member member) {
+    query.update(this.member)
+        .set(this.member.level, member.getLevel())
+        .where(this.member.userCompositeKey.user.id.eq(
+            member.getUserCompositeKey().getUser().getId()))
+        .execute();
   }
 }

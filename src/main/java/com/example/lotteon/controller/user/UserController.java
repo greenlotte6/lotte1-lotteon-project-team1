@@ -2,7 +2,7 @@ package com.example.lotteon.controller.user;
 
 import com.example.lotteon.dto.TermsDTO;
 import com.example.lotteon.dto.user.MemberDTO;
-import com.example.lotteon.dto.user.UserCompositeKeyDTO;
+import com.example.lotteon.dto.user.MemberIdDTO;
 import com.example.lotteon.dto.user.UserDTO;
 import com.example.lotteon.exception.EntityAlreadyExistsException;
 import com.example.lotteon.service.TermsService;
@@ -39,11 +39,11 @@ public class UserController {
 
   @PostMapping("/general")
   public String general(UserDTO userDTO, MemberDTO memberDTO, HttpServletResponse response) {
-    UserCompositeKeyDTO compositeKeyDTO = UserCompositeKeyDTO.builder()
+    MemberIdDTO compositeKeyDTO = MemberIdDTO.builder()
         .user(userDTO)
         .build();
 
-    memberDTO.setUserCompositeKey(compositeKeyDTO);
+    memberDTO.setMemberId(compositeKeyDTO);
 
     // 서비스 호출
     try {
