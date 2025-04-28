@@ -21,7 +21,7 @@ spring:
 
   application:
     name: lotteon
-    version: 0.0.6
+    version: 0.0.7
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -99,7 +99,7 @@ spring:
 
   application:
     name: lotteon
-    version: 0.0.6
+    version: 0.0.7
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
