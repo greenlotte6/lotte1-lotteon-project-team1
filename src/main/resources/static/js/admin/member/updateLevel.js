@@ -1,3 +1,7 @@
 /*
 TODO: 수정버튼 클릭 시 해당 유저의 id를 이용해 서버에 get 요청하기
 */
+$(() => {
+  const levelBtn = $("select[name='level']")
+  console.log(levelBtn)
+})
