@@ -59,8 +59,9 @@ CREATE TABLE IF NOT EXISTS `lotteon`.`seller` (
   `user_id` VARCHAR(16) NOT NULL,
   `ceo` VARCHAR(20) NOT NULL,
   `company_name` VARCHAR(50) NOT NULL,
-  `seller_number` CHAR(12) NOT NULL,
+  `seller_number` CHAR(15) NOT NULL,
   `fax` VARCHAR(48) NULL,
+  `status` ENUM("run", "stopped", "ready") NOT NULL DEFAULT 'ready',
   PRIMARY KEY (`business_number`, `user_id`),
   INDEX `fk_seller_user1_idx` (`user_id` ASC) VISIBLE,
   UNIQUE INDEX `business_number_UNIQUE` (`business_number` ASC) VISIBLE,
@@ -137,24 +138,12 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `lotteon`.`product_options`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `lotteon`.`product_options` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(10) NOT NULL,
-  `value` VARCHAR(10) NOT NULL,
-  PRIMARY KEY (`id`))
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
 -- Table `lotteon`.`product`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `lotteon`.`product` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `category_id` INT NOT NULL,
   `subcategory_id` INT NOT NULL,
-  `options_id` INT NOT NULL,
   `name` VARCHAR(50) NOT NULL,
   `description` TEXT NOT NULL,
   `company` VARCHAR(45) NOT NULL,
@@ -173,7 +162,6 @@ CREATE TABLE IF NOT EXISTS `lotteon`.`product` (
   INDEX `fk_product_product_image_idx` (`image_id` ASC) VISIBLE,
   INDEX `fk_product_product_category1_idx` (`category_id` ASC) VISIBLE,
   INDEX `fk_product_product_subcategory1_idx` (`subcategory_id` ASC) VISIBLE,
-  INDEX `fk_product_product_options1_idx` (`options_id` ASC) VISIBLE,
   CONSTRAINT `fk_product_product_image`
     FOREIGN KEY (`image_id`)
     REFERENCES `lotteon`.`product_image` (`id`)
@@ -188,12 +176,25 @@ CREATE TABLE IF NOT EXISTS `lotteon`.`product` (
     FOREIGN KEY (`subcategory_id`)
     REFERENCES `lotteon`.`product_subcategory` (`id`)
     ON DELETE NO ACTION
-    ON UPDATE CASCADE,
-  CONSTRAINT `fk_product_product_options1`
-    FOREIGN KEY (`options_id`)
-    REFERENCES `lotteon`.`product_options` (`id`)
-    ON DELETE NO ACTION
     ON UPDATE CASCADE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `lotteon`.`product_options`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `lotteon`.`product_options` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `product_id` INT NOT NULL,
+  `name` VARCHAR(10) NOT NULL,
+  `value` VARCHAR(10) NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_product_options_product1_idx` (`product_id` ASC) VISIBLE,
+  CONSTRAINT `fk_product_options_product1`
+    FOREIGN KEY (`product_id`)
+    REFERENCES `lotteon`.`product` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 

@@ -1,12 +1,15 @@
+INSERT INTO `product_image` VALUES (1, "", "" ,"", "");
+
 INSERT INTO `product_category` VALUES(1, "의류");
 
 INSERT INTO `product_subcategory` VALUES(1, "상의");
 
-INSERT INTO `product_options` VALUES (1, "사이즈", "S, M, L, XL");
+INSERT INTO `product` VALUES(1, 1, 1, "맨투맨", "맨투맨입니다", "무신사", 39000, 39, 10, 200, 2500, 1, "신제품", 1, "통신판매업", 1, "국내산");
 
-INSERT INTO `product_image` VALUES (1, "", "" ,"", "");
-
-INSERT INTO `product` VALUES(1, 1, 1, 1, "맨투맨", "맨투맨입니다", "무신사", 39000, 39, 10, 200, 2500, 1, "신제품", 1, "통신판매업", 1, "국내산");
+INSERT INTO `product_options` VALUES (1, 1, "사이즈", "S");
+INSERT INTO `product_options` VALUES (2, 1, "사이즈", "M");
+INSERT INTO `product_options` VALUES (3, 1, "사이즈", "L");
+INSERT INTO `product_options` VALUES (4, 1, "사이즈", "XL");
 
 -- 쿠폰/혜택/이벤트
 INSERT INTO article_type (id, name, subtype_name) VALUES
@@ -108,4 +111,24 @@ INSERT INTO `faq` VALUES (22, "결제 관련 FAQ입니다.", 14, "결제 관련 
 
 -- 상점(seller)
 INSERT INTO `user` VALUES ("seller1", "$2a$12$7nR.CgoesCyfsETEl74Dtuk0Mu2wEzmJPCljlJddYY14UmIY100uG", "seller1@example.com", "051-123-4567", "12345", "부산광역시 부산진구", "행복로 127-11", "seller", NOW());
-INSERT INTO `seller` VALUES ("112-12-12345", "seller1", "김유신", "(주)행복상점", "2025-부산진구-12345", "0503-1234-5678");
+INSERT INTO `seller` VALUES ("112-12-12345", "seller1", "김유신", "(주)행복상점", "2025-부산진구-12345", "0503-1234-5678", "ready");
+INSERT INTO `user` VALUES ("seller2", "abc123", "seller2@example.com", "051-123-4561", "12345", "부산광역시 부산진구", "행복로 127-11", "seller", NOW());
+INSERT INTO `seller` VALUES ("112-12-12525", "seller2", "김유신", "(주)행복상점", "2025-부산진구-12345", "0503-1234-5678", "ready");
+INSERT INTO `user` VALUES ("seller3", "abc123", "seller3@example.com", "051-111-2222", "12345", "부산광역시", "해운대구", "seller", NOW());
+INSERT INTO `seller` VALUES ("112-12-11111", "seller3", "김유신", "(주)행복상점", "2025-해운대구-12345", "0503-1234-5678", "ready");
+INSERT INTO `user` VALUES ("seller4", "abc123", "seller4@example.com", "051-111-2223", "12345", "부산광역시", "해운대구", "seller", NOW());
+INSERT INTO `seller` VALUES ("112-12-11112", "seller4", "김유신", "(주)행복상점", "2025-해운대구-12345", "0503-1234-5678", "ready");
+INSERT INTO `user` VALUES ("seller5", "abc123", "seller5@example.com", "051-111-2224", "12345", "부산광역시", "해운대구", "seller", NOW());
+INSERT INTO `seller` VALUES ("112-12-11113", "seller5", "김유신", "(주)행복상점", "2025-해운대구-12345", "0503-1234-5678", "ready");
+INSERT INTO `user` VALUES ("seller6", "abc123", "seller6@example.com", "051-111-2225", "12345", "부산광역시", "해운대구", "seller", NOW());
+INSERT INTO `seller` VALUES ("112-12-11114", "seller6", "김유신", "(주)행복상점", "2025-해운대구-12345", "0503-1234-5678", "ready");
+INSERT INTO `user` VALUES ("seller7", "abc123", "seller7@example.com", "051-111-2226", "12345", "부산광역시", "해운대구", "seller", NOW());
+INSERT INTO `seller` VALUES ("112-12-11115", "seller7", "김유신", "(주)행복상점", "2025-해운대구-12345", "0503-1234-5678", "ready");
+INSERT INTO `user` VALUES ("seller8", "abc123", "seller8@example.com", "051-111-2227", "12345", "부산광역시", "해운대구", "seller", NOW());
+INSERT INTO `seller` VALUES ("112-12-11116", "seller8", "김유신", "(주)행복상점", "2025-해운대구-12345", "0503-1234-5678", "ready");
+INSERT INTO `user` VALUES ("seller9", "abc123", "seller9@example.com", "051-111-2228", "12345", "부산광역시", "해운대구", "seller", NOW());
+INSERT INTO `seller` VALUES ("112-12-11117", "seller9", "김유신", "(주)행복상점", "2025-해운대구-12345", "0503-1234-5678", "ready");
+INSERT INTO `user` VALUES ("seller10", "abc123", "seller11@example.com", "051-111-2230", "12345", "부산광역시", "해운대구", "seller", NOW());
+INSERT INTO `seller` VALUES ("112-12-11118", "seller10", "김유신", "(주)행복상점", "2025-해운대구-12345", "0503-1234-5678", "ready");
+INSERT INTO `user` VALUES ("seller11", "abc123", "seller10@example.com", "051-111-2229", "12345", "부산광역시", "해운대구", "seller", NOW());
+INSERT INTO `seller` VALUES ("112-12-11119", "seller11", "김유신", "(주)행복상점", "2025-해운대구-12345", "0503-1234-5678", "ready");
