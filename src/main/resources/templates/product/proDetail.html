@@ -105,84 +105,86 @@
                     </ul>
                 </div>
              </div>
-            
-             <form class="detail">
-                <div>
-                    <img src="/proDetail-img/main.png" alt="이미지" class="main-proimg">
-                </div>
-                
-                <div class="info-list">
-                    <div class="pro-top">
-                        <input type="hidden" name="id"  th:value="${prodtos.id}" />
-                        <span>상품번호 : 10010118412</span>
-                        <span>(주)[[${prodtos.company}]]</span>
-                    </div>
-                    <div class="pro-name">
-                        <span>[[${prodtos.name}]]</span>
-                        <div>
-                            <span>★★★★☆</span>
-                            <a href="">상품평보기</a>
-                        </div>    
-                    </div>
-                    <div class="pro-price">
-                        <del>[[${prodtos.price}]]</del>
-                        <span class="sale">[[${prodtos.discountRate}]]%↓</span>
-                        <button>쿠폰받기</button>
-                        <span><i class="fa-regular fa-square-minus"></i>무이자할부</span>
-                        <span><i class="fa-regular fa-credit-card"></i>카드추가혜택</span>
-                        <p th:text="${prodtos.getPrice - (prodtos.getPrice/100) * prodtos.getDiscountRate + '원'}"></p>
-                    </div>
-                    <div class="delivery">
-                        <p>
-                            <span>무료배송</span> 
-                            모레 (금) 7/8 도착예정
-                        </p>
-                        <p>본상품은 국내배송만 가능합니다.</p>
+
+                <form action="/product/cart/add" method="post" class="detail">
+                    <div>
+                        <img src="/proDetail-img/main.png" alt="이미지" class="main-proimg">
                     </div>
 
-                    <div class="from">
-                        <p>원산지 - 상세설명 참고</p>
-                    </div>
-
-                    <div class="size-option">
-                        <select>
-                            <option value="default" selected>선택하기</option>
-                            <option value="S">S</option>
-                            <option value="M">M</option>
-                            <option value="L">L</option>
-                            <option value="XL">XL</option>
-                        </select>
-                    </div>
-
-                    <div class="count-option">
-                        <p>선택한 상품명</p>
-                        <div class="count-main" >
-                            <div class="count">
-                                <button class="minus">-</button>
-                                <input type="number" value="1" min="1" class="count-input">
-                                <button class="plus">+</button>
-                            </div>
+                    <div class="info-list">
+                        <div class="pro-top">
+                            <input type="hidden" name="id" th:value="${prodtos.id}" />
+                            <span>상품번호 : 10010118412</span>
+                            <span>(주)[[${prodtos.company}]]</span>
+                        </div>
+                        <div class="pro-name">
+                            <span>[[${prodtos.name}]]</span>
                             <div>
-                                <span id="sum_price">[[${prodtos.getPrice - (prodtos.getPrice/100) * prodtos.getDiscountRate}]]</span>
+                                <span>★★★★☆</span>
+                                <a href="#">상품평보기</a>
                             </div>
                         </div>
-                        <div class="sum-price">
-                            <p>총 상품금액</p>
-                            <p></p>
+                        <div class="pro-price">
+                            <del>[[${prodtos.price}]]원</del>
+                            <span class="sale">[[${prodtos.discountRate}]]%↓</span>
+                            <button type="button">쿠폰받기</button>
+                            <span><i class="fa-regular fa-square-minus"></i>무이자할부</span>
+                            <span><i class="fa-regular fa-credit-card"></i>카드추가혜택</span>
+                            <p th:text="${prodtos.getPrice - (prodtos.getPrice/100) * prodtos.getDiscountRate + '원'}"></p>
                         </div>
-                    </div>
-                    <div class="cart-and-purchase">
-                        <input type="submit" value="장바구니" onclick="setAction('/product/cart');"  />
-                        <input type="submit" value="구매하기" onclick="setAction('/product/order');" />
-                    </div>
+                        <div class="delivery">
+                            <p>
+                                <span>무료배송</span>
+                                모레 (금) 7/8 도착예정
+                            </p>
+                            <p>본상품은 국내배송만 가능합니다.</p>
+                        </div>
 
-                    <a href="#" class="advertisement">
-                      <img src="/proDetail-img/advertisement.jpg" alt="광고">
-                    </a>
-                </div>
-            </form>
-            
-            <div class="details-body" id="details-body">
+                        <div class="from">
+                            <p>원산지 - 상세설명 참고</p>
+                        </div>
+
+                        <div class="size-option">
+                            <select>
+                                <option value="default" selected>선택하기</option>
+                                <option value="S">S</option>
+                                <option value="M">M</option>
+                                <option value="L">L</option>
+                                <option value="XL">XL</option>
+                            </select>
+                        </div>
+
+                        <div class="count-option">
+                            <p>선택한 상품명</p>
+                            <div class="count-main">
+                                <div class="count">
+                                    <button type="button" class="minus">-</button>
+                                    <input type="number" value="1" min="1" class="count-input">
+                                    <button type="button" class="plus">+</button>
+                                </div>
+                                <div>
+                                    <span id="sum_price">[[${prodtos.getPrice - (prodtos.getPrice/100) * prodtos.getDiscountRate}]]</span>
+                                </div>
+                            </div>
+                            <div class="sum-price">
+                                <p>총 상품금액</p>
+                                <p></p>
+                            </div>
+                        </div>
+
+                        <div class="cart-and-purchase">
+                            <input type="submit" value="장바구니" />
+                            <button type="submit" formaction="/product/order" formmethod="post">구매하기</button>
+                        </div>
+
+                        <a href="#" class="advertisement">
+                            <img src="/proDetail-img/advertisement.jpg" alt="광고">
+                        </a>
+                    </div>
+                </form>
+
+
+                <div class="details-body" id="details-body">
               <div class="title">
                 <img src="/proDetail-img/title.PNG" alt="title1">
               </div>
@@ -323,7 +325,7 @@
             <div class="detail-btnBox">
               <button id="detail-btn">상세정보  더보기</button>
             </div>
-             
+
             </article>
 
         </div>

@@ -100,18 +100,31 @@
                         <th>배송비</th>
                         <th>총합</th>
                     </tr>
-                    <tr class="table_bd">
+<!--                    <tr class="table_bd" th:each="product : ${cart}">-->
+<!--                        <td><input type="checkbox"></td>-->
+<!--                        <td>-->
+<!--                            <img src="/proDetail-img/img5.png" alt="#">-->
+<!--                        </td>-->
+<!--                        <td>[[${product.name}]]</td>-->
+<!--                        <td>[[${product.stock}]]</td>-->
+<!--                        <td>[[${product.price}]]</td>-->
+<!--                        <td>[[${product.discountRate}]]</td>-->
+<!--                        <td>[[${product.point}]]</td>-->
+<!--                        <td>무료배송</td>-->
+<!--                        <td class="sumprice" th:text="${product.price - (product.price/100) * product.discountRate + '원'}"></td>-->
+<!--                    </tr>-->
+                    <tr class="table_bd" th:each="cart : ${cart}">
                         <td><input type="checkbox"></td>
                         <td>
-                            <img src="/proDetail-img/img5.png" alt="#">
+                            <img src="/proDetail-img/img5.png" alt="#" th:src="@{${cart.product.imageUrl}}"> <!-- 이미지 URL이 Product에 있으면 이렇게 할 수 있습니다 -->
                         </td>
-                        <td>[[${proDTO.name}]]</td>
-                        <td>[[${proDTO.stock}]]</td>
-                        <td>[[${proDTO.price}]]</td>
-                        <td>[[${proDTO.discountRate}]]</td>
-                        <td>[[${proDTO.point}]]</td>
-                        <td>무료배송</td>
-                        <td class="sumprice" th:text="${proDTO.price - (proDTO.price/100) * proDTO.discountRate + '원'}"></td>
+                        <td th:text="${cart.product.name}">상품명</td> <!-- Cart 객체에서 Product 객체로 접근 -->
+                        <td th:text="${cart.number}">수량</td> <!-- 수량은 Cart 객체에서 가져옵니다 -->
+                        <td th:text="${cart.product.price}">판매가</td> <!-- 판매가는 Product 객체에서 가져옵니다 -->
+                        <td th:text="${cart.product.discountRate}">할인율</td> <!-- 할인율은 Product 객체에서 가져옵니다 -->
+                        <td th:text="${cart.product.point}">포인트</td> <!-- 포인트는 Product 객체에서 가져옵니다 -->
+                        <td>무료배송</td> <!-- 고정으로 "무료배송" -->
+                        <td class="sumprice" th:text="${cart.product.price * cart.number - (cart.product.price * cart.number * cart.product.discountRate / 100)}">총합</td> <!-- 총합 계산 -->
                     </tr>
                 </table>
 

@@ -1,13 +1,11 @@
 package com.example.lotteon.service.product;
 
-import com.example.lotteon.dto.product.ProductDTO;
+import com.example.lotteon.dto.product.CartDTO;
+import com.example.lotteon.entity.product.Cart;
 import com.example.lotteon.entity.product.Product;
-import com.example.lotteon.entity.user.User;
-import com.example.lotteon.repository.UserRepository;
+import com.example.lotteon.repository.product.CartRepository;
 import com.example.lotteon.repository.product.ProductRepository;
-import com.example.lotteon.repository.product.ShoppingCartRepository;
 import com.example.lotteon.service.user.LoginUserService;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -22,46 +20,63 @@ import java.util.Optional;
 @Service
 public class ShoppingCartService {
 
-    private final LoginUserService loginUserService;
-    private final ShoppingCartRepository shoppingRepository;
-    private final UserRepository userRepository;
-    private final ModelMapper modelMapper;
+    private final CartRepository cartRepository;
     private final ProductRepository productRepository;
+    private final LoginUserService loginUserService;
+    private final ModelMapper modelMapper;
 
+//    public void addCart(int productId) {
+//
+//        String loginUserId = loginUserService.getLoginUser();
+//        log.info("LoginUserId: {}", loginUserId);
+//
+//        Optional<Product> optProduct = productRepository.findById(productId);
+//        if (optProduct.isEmpty()) {
+//            throw new IllegalArgumentException("상품을 찾을 수 없습니다. id=" + productId);
+//        }
+//
+//        Product product = optProduct.get();
+//
+//        Cart cart = Cart.builder()
+//                .memberId(loginUserId)
+//                .product(product)
+//                .quantity(1)
+//                .price(product.getPrice())
+//                .totalPrice(product.getPrice())
+//                .build();
+//
+//        cartRepository.save(cart);
+//    }
+//
+//    public List<CartDTO> getCartList(String memberId) {
+//        List<Cart> cartList = cartRepository.findByMemberId((memberId));
+//        List<CartDTO> cartDTOList = new ArrayList<>();
+//
+//        for (Cart cart : cartList) {
+//            CartDTO cartDTO = CartDTO.builder()
+//                    .member_id(cart.getMemberId())
+//                    .product_id(cart.getProduct().getId())
+//                    .build();
+//            cartDTOList.add(cartDTO);
+//        }
+//
+//        return cartDTOList;
+//    }
 
-    public void addCart(int id) {
+    public void addCart(int productId) {
+        // 상품 ID로 상품을 찾음
+        Product product = productRepository.findById(productId).orElseThrow(() -> new RuntimeException("상품을 찾을 수 없습니다."));
 
-        // 로그인 사용자 Id 가져오기
-        //String loginUser = loginUserService.getLoginUser();
-        //userRepository.findby
+        // 장바구니 엔티티 생성
+        Cart cart = Cart.builder()
+                .product(product) // 상품 정보
+                .quantity(1) // 기본 수량 1로 설정
+                .price(product.getPrice()) // 상품 가격
+                .totalPrice(product.getPrice()) // 총가격 = 가격 * 수량
+                .build();
 
-      //  Optional<Product> optProduct = shoppingRepository.findById(id);
-
-       // if(optProduct.isPresent()) {
-       //     Product product = optProduct.get();
-
-         //   ProductDTO productDTO = modelMapper.map(product, ProductDTO.class);
-         //   log.info("productDTO: " + productDTO);
-
-
-     //   }
-
-    }
-
-    // 장바구니 조회
-    public ProductDTO getCart(int id) {
-
-        Optional<Product> optPro = productRepository.findById(id);
-
-        if(optPro.isPresent()) {
-            Product product = optPro.get();
-
-            ProductDTO productDTO = modelMapper.map(product, ProductDTO.class);
-            log.info(productDTO.toString());
-            return productDTO;
-        }
-        return null;
-
+        // 장바구니에 추가
+        cartRepository.save(cart);
     }
 
 }
