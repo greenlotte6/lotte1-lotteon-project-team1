@@ -226,5 +226,13 @@ public class AdminCsController {
         return "/admin/cs/qna/view";
     }
 
+    @GetMapping("/qna/delete")
+    public String qnadelete(int id) {
+
+        qnaService.deletefaq(id);
+
+        return "redirect:/admin/cs/qna/list";
+    }
+
 
 }

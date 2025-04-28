@@ -1,0 +1,161 @@
+<!--
+  작성자: 손준오(sjo112777)
+  내용: 고객센터 > 문의하기 보기 view
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>고객센터 >문의하기 보기</title>
+    <link rel="stylesheet" href="/style/init.css" />
+    <link rel="stylesheet" href="/style/index.css" />
+    <link rel="stylesheet" href="/style/common/header.css" />
+    <link rel="stylesheet" href="/style/common/footer.css" />
+    <!--<link rel="stylesheet" href="//style/common/pagination.css" />-->
+    <link rel="stylesheet" href="/style/cs/cscommon.css" />
+    <link rel="stylesheet" href="/style/cs/csqnaview.css" />
+    <link
+      rel="icon"
+      href="https://static.lotteon.com/p/common/assets/favicon/1/favicon-32.png"
+    />
+    <link
+      rel="stylesheet"
+      href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css"
+    />
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
+    <script src="/js/common/header.js"></script>
+    <script src="/js/common/footer.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/all.min.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <div id="wrapper">
+      <header>
+        <th:block th:insert="~{/common/cs/csheader}"></th:block>
+
+        <nav id="quick-menu">
+          <ul>
+            <li>
+              <span>홈 > 문의하기</span>
+            </li>
+          </ul>
+        </nav>
+      </header>
+
+
+      <main>
+        <div class="csmain">
+          <!-- 왼쪽 사이드바 -->
+          <th:block th:insert="~{/common/cs/qnasidebar}"></th:block>
+            <!-- 오른쪽 글 -->
+            <article class="main_content">
+              <div class="main_title">
+
+                <div th:if="${qnaDTO.type_id == 5 or qnaDTO.type_id == 6 or qnaDTO.type_id == 7 or qnaDTO.type_id == 8}">
+                  <p>회원</p>
+                  <span style="color: #808080;">회원관련 문의하기 입니다.</span>
+                </div>
+
+                <div th:if="${qnaDTO.type_id == 9 or qnaDTO.type_id == 10 or qnaDTO.type_id == 11 or qnaDTO.type_id == 12}">
+                  <p>쿠폰/혜택/이벤트</p>
+                  <span style="color: #808080;">쿠폰/혜택/이벤트관련 문의하기 입니다.</span>
+                </div>
+
+                <div th:if="${qnaDTO.type_id == 13 or qnaDTO.type_id == 14 or qnaDTO.type_id == 15 or qnaDTO.type_id == 16}">
+                  <p>주문/결제</p>
+                  <span style="color: #808080;">주문/결제관련 문의하기 입니다.</span>
+                </div>
+
+                <div th:if="${qnaDTO.type_id == 17 or qnaDTO.type_id == 18 or qnaDTO.type_id == 19 or qnaDTO.type_id == 20 or qnaDTO.type_id == 21}">
+                  <p>배송</p>
+                  <span style="color: #808080;">배송관련 문의하기 입니다.</span>
+                </div>
+
+                <div th:if="${qnaDTO.type_id == 22 or qnaDTO.type_id == 23 or qnaDTO.type_id == 24 or qnaDTO.type_id == 25 or qnaDTO.type_id == 26 or qnaDTO.type_id == 27}">
+                  <p>취소/반품/교환</p>
+                  <span style="color: #808080;">취소/반품/교환관련 문의하기 입니다.</span>
+                </div>
+
+                <div th:if="${qnaDTO.type_id == 28 or qnaDTO.type_id == 29}">
+                  <p>여행/숙박/항공</p>
+                  <span style="color: #808080;">여행/숙박/항공관련 문의하기 입니다.</span>
+                </div>
+
+                <div th:if="${qnaDTO.type_id == 30 or qnaDTO.type_id == 31 or qnaDTO.type_id == 32 or qnaDTO.type_id == 33 or qnaDTO.type_id == 34 or qnaDTO.type_id == 35 or qnaDTO.type_id == 36}">
+                  <p>안전거래</p>
+                  <span style="color: #808080;">안전거래관련 문의하기 입니다.</span>
+                </div>
+
+              </div>
+              <div class="main_content_detail">
+                <table>
+                  <tr>
+                      <td><p>([[${qnaDTO.subtype_name}]]) [[${qnaDTO.title}]]</p>
+                        [[${qnaDTO.member_id}]] <span> [[${qnaDTO.register_date}]]</span>
+                      </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      [[${qnaDTO.content}]]
+                    </td>
+                  </tr>
+                  <tr th:if="${replyDTO != null}">
+                    <td>
+                      <p>☞ [답변] [[${qnaDTO.title}]]</p>
+                      [[${replyDTO.content}]]
+                    </td>
+                  </tr>
+                </table>
+                <div class="btn_wrap">
+                  <div th:if="${qnaDTO.type_id == 5 or qnaDTO.type_id == 6 or qnaDTO.type_id == 7 or qnaDTO.type_id == 8}">
+                    <a th:href="@{/cs/qna/csqnamember}" class="btn btnlist">목록</a>
+                  </div>
+
+                  <div th:if="${qnaDTO.type_id == 9 or qnaDTO.type_id == 10 or qnaDTO.type_id == 11 or qnaDTO.type_id == 12}">
+                    <a th:href="@{/cs/qna/csqnacoupon}" class="btn btnlist">목록</a>
+                  </div>
+
+                  <div th:if="${qnaDTO.type_id == 13 or qnaDTO.type_id == 14 or qnaDTO.type_id == 15 or qnaDTO.type_id == 16}">
+                    <a th:href="@{/cs/qna/csqnaorder}" class="btn btnlist">목록</a>
+                  </div>
+
+                  <div th:if="${qnaDTO.type_id == 17 or qnaDTO.type_id == 18 or qnaDTO.type_id == 19 or qnaDTO.type_id == 20 or qnaDTO.type_id == 21}">
+                    <a th:href="@{/cs/qna/csqnadeliver}" class="btn btnlist">목록</a>
+                  </div>
+
+                  <div th:if="${qnaDTO.type_id == 22 or qnaDTO.type_id == 23 or qnaDTO.type_id == 24 or qnaDTO.type_id == 25 or qnaDTO.type_id == 26 or qnaDTO.type_id == 27}">
+                    <a th:href="@{/cs/qna/csqnacancel}" class="btn btnlist">목록</a>
+                  </div>
+
+                  <div th:if="${qnaDTO.type_id == 28 or qnaDTO.type_id == 29}">
+                    <a th:href="@{/cs/qna/csqnatrip}" class="btn btnlist">목록</a>
+                  </div>
+
+                  <div th:if="${qnaDTO.type_id == 30 or qnaDTO.type_id == 31 or qnaDTO.type_id == 32 or qnaDTO.type_id == 33 or qnaDTO.type_id == 34 or qnaDTO.type_id == 35 or qnaDTO.type_id == 36}">
+                    <a th:href="@{/cs/qna/csqnasafe}" class="btn btnlist">목록</a>
+                  </div>
+                </div>
+
+
+              </div>
+              </div>
+
+              
+            </article>
+
+        </div>
+
+
+
+
+      </main>
+
+
+
+      <th:block th:insert="~{/common/footer}"></th:block>
+    </div>
+  </body>
+</html>
