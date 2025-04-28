@@ -2,6 +2,7 @@ package com.example.lotteon.repository.seller;
 
 import com.example.lotteon.entity.seller.QSeller;
 import com.example.lotteon.entity.seller.Seller;
+import com.example.lotteon.entity.user.QUser;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +18,7 @@ public class CustomSellerRepositoryImpl implements CustomSellerRepository {
 
   private final JPAQueryFactory query;
   private final QSeller seller = QSeller.seller;
+  private final QUser user = QUser.user;
 
   @Override
   public boolean existsByBusinessNumber(String businessNumber) {
@@ -60,8 +62,13 @@ public class CustomSellerRepositoryImpl implements CustomSellerRepository {
   @Override
   @Transactional
   public void deleteByBusinessNumbers(List<String> businessNumbers) {
-    query.delete(seller)
+    // 클라이언트에서 선택된 판매자의 사업자등록번호로 user id를 조회
+    List<String> uids = query.select(seller.sellerCompositeKey.user.id).from(seller)
         .where(seller.sellerCompositeKey.businessNumber.in(businessNumbers))
+        .fetch();
+    // user 테이블에서 id가 uids에 있는 row 삭제
+    query.delete(user)
+        .where(user.id.in(uids))
         .execute();
   }
 

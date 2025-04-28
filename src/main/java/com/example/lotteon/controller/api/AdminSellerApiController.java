@@ -1,6 +1,7 @@
 package com.example.lotteon.controller.api;
 
 import com.example.lotteon.service.seller.SellerService;
+import com.example.lotteon.service.user.UserService;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import java.util.List;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/admin/seller")
 public class AdminSellerApiController {
 
+  private final UserService userService;
   private final SellerService service;
   private final Gson gson;
 
