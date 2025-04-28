@@ -96,7 +96,7 @@
           <tr th:each="seller : ${sellers}">
             <td>
               <input type="checkbox"
-                     class="seller-checkbox"
+                     class="item-checkbox"
                      th:value="${seller.getSellerCompositeKey().getBusinessNumber()}"/>
             </td>
             <td th:text="${seller.getCompanyName()}">(주)다나와</td>
