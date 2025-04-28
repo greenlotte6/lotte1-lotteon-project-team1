@@ -7,6 +7,8 @@ import java.time.LocalDate;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -26,6 +28,10 @@ public class MemberService {
 
     Member member = mapper.map(memberDTO, Member.class);
     repo.save(member);
+  }
+
+  public Page<Member> getAll(Pageable pageable) {
+    return repo.findAll(pageable);
   }
 
 }

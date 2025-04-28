@@ -1,6 +1,9 @@
 package com.example.lotteon.repository.user;
 
+import com.example.lotteon.entity.user.Member;
 import java.time.LocalDate;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -13,4 +16,5 @@ public interface MemberRepositoryCustom {
    */
   Long countNewMembersOf(LocalDate date);
 
+  Page<Member> findAll(Pageable pageable);
 }
