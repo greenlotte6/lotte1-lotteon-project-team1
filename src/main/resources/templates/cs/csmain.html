@@ -46,30 +46,10 @@
             </div>
             <div class="noticetable">
                 <table>
-                    <tr>
-                        <td>[안내]</td>
-                        <td><a href="#"><span>해외결제 사칭 문자주의</span></a></td>
-                        <td>22.10.31</td>
-                    </tr>
-                    <tr>
-                        <td>[안내]</td>
-                        <td><a href="#"><span>해외결제 사칭 문자주의</span></a></td>
-                        <td>22.10.31</td>
-                    </tr>
-                    <tr>
-                        <td>[안내]</td>
-                        <td><a href="#"><span>해외결제 사칭 문자주의</span></a></td>
-                        <td>22.10.31</td>
-                    </tr>
-                    <tr>
-                        <td>[안내]</td>
-                        <td><a href="#"><span>해외결제 사칭 문자주의</span></a></td>
-                        <td>22.10.31</td>
-                    </tr>
-                    <tr>
-                        <td>[안내]</td>
-                        <td><a href="#"><span>해외결제 사칭 문자주의</span></a></td>
-                        <td>22.10.31</td>
+                    <tr th:each="notice, i:${pageResponseDTO.dtoList}">
+                        <td>([[${notice.subtype_name}]])</td>
+                        <td><a th:href="@{/cs/notice/csnoticeview(id=${notice.id})}">[[${notice.title}]]</a></td>
+                        <td>[[${notice.register_date}]]</td>
                     </tr>
                 </table>
             </div>
@@ -125,41 +105,19 @@
             </div>
             <div class="contacttable">
                 <table>
-                    <tr>
-                        <td>[회원]</td>
-                        <td><a href="#"><span>개인회원과 법인회원에 차이가 있나요?</span></a></td>
-                        <td>chh**</td>
-                        <td>22.10.31</td>
+                    <tr th:each="qna, i:${qnaPageResponseDTO.dtoList}">
+                        <td>([[${qna.subtype_name}]])</td>
+                        <td><a th:href="@{/cs/qna/csqnaview(id=${qna.id})}">[[${qna.title}]]</a></td>
+                        <td>
+                            <span th:text="${#strings.substring(qna.member_id, 0, 3) + '***'}"></span>
+                        </td>
+                        <td>[[${qna.register_date}]]</td>
                     </tr>
-                    <tr>
-                        <td>[쿠폰/이벤트]</td>
-                        <td><a href="#"><span>스마일포인트는 어디에 사용하나요?</span></a></td>
-                        <td>chh**</td>
-                        <td>22.10.31</td>
-                    </tr>
-                    <tr>
-                        <td>[배송]</td>
-                        <td><a href="#"><span>주문한 상품은 언제 배송되나요?</span></a></td>
-                        <td>chh**</td>
-                        <td>22.10.31</td>
-                    </tr>
-                    <tr>
-                        <td>[주문/결제]</td>
-                        <td><a href="#"><span>신용카드결제 중 오류가 난 경우에 어떻게 하나요?</span></a></td>
-                        <td>chh**</td>
-                        <td>22.10.31</td>
-                    </tr>
-                    <tr>
-                        <td>[취소/반품/교환]</td>
-                        <td><a href="#"><span>주문을 취소하고 싶어요.</span></a></td>
-                        <td>chh**</td>
-                        <td>22.10.31</td>
-                    </tr>
-                    
+
                 </table>
                 
                 <div class="qnawrite">
-                    <a th:href="@{/cs/qna/csqnawrite}">문의글작성 ></a>
+                    <a th:href="@{${#authentication.principal == null} ? '/login' : '/cs/qna/csqnawrite'}">문의글작성</a>
                 </div>
             </div>
 

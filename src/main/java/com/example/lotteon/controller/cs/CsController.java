@@ -36,7 +36,20 @@ public class CsController {
 
 
   @GetMapping("/csmain")
-  public String csmain() {
+  public String csmain(Model model, PageRequestDTO pageRequestDTO) {
+
+    // 메인 페이지에서만 최신 5개 요청
+    pageRequestDTO.setIsMainPage(true);
+
+    int type_id = pageRequestDTO.getType_id();
+    PageResponseDTO pageResponseDTO = csService.findAll(pageRequestDTO, type_id);
+    model.addAttribute("pageResponseDTO", pageResponseDTO);
+
+    // Q&A 리스트 출력
+    PageResponseDTO qnaPageResponseDTO = qnaService.findAll(pageRequestDTO, type_id);
+    model.addAttribute("qnaPageResponseDTO", qnaPageResponseDTO);
+
+
     return "/cs/csmain";
   }
 
@@ -262,6 +275,10 @@ public class CsController {
   /* qna 문의하기 글쓰기*/
   @GetMapping("/qna/csqnawrite")
   public String csqnawrite(Model model, @AuthenticationPrincipal MyUserDetails userDetails) {
+    // 로그인 상태 체크
+    if (userDetails == null) {
+      return "redirect:/login";  // 로그인 페이지로 리디렉션
+    }
 
     String username = userDetails.getUsername();
     model.addAttribute("member_id", username);

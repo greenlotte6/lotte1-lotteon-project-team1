@@ -84,11 +84,12 @@ public class CsService {
         // 페이징 처리를 위한 pageable 객체 생성
         Pageable pageable = pageRequestDTO.getPageable("id");
 
+        // NoticeRepository에서 조회
         Page<Tuple> pageNotice = noticeRepository.selectAllForList(pageable, type_id);
 
+        // DTO로 변환
         List<NoticeDTO> noticeDTOList = pageNotice.getContent().stream().map(tuple -> {
             Notice notice = tuple.get(0, Notice.class);
-
             return NoticeDTO.builder()
                     .id(notice.getId())
                     .title(notice.getTitle())
@@ -100,8 +101,10 @@ public class CsService {
                     .build();
         }).toList();
 
+        // 전체 페이지 개수
         int total = (int) pageNotice.getTotalElements();
 
+        // 결과 반환
         return PageResponseDTO.<NoticeDTO>builder()
                 .pageRequestDTO(pageRequestDTO)
                 .dtoList(noticeDTOList)
