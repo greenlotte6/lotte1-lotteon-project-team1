@@ -70,7 +70,7 @@
   text-decoration: none;
 }
 
-.csmain td a span:hover {
+.csmain td a:hover {
   text-decoration: underline;
 }
 

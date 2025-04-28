@@ -69,7 +69,7 @@
                       </tr>
 
                   </table>
-                  <a th:href="@{/cs/qna/csqnawrite}" class="btn btnWrite">문의하기</a>
+                  <a th:href="@{${#authentication.principal == null} ? '/login' : '/cs/qna/csqnawrite'}" class="btn btnWrite">문의하기</a>
               </div>
 
                 <section class="pagination" style="margin-top: 60px;">
