@@ -31,4 +31,7 @@ public class Seller {
 
   @Column(name = "fax")
   private String fax;
+
+  @Column(name = "status")
+  private String status;
 }

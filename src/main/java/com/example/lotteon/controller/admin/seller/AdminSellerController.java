@@ -7,10 +7,11 @@ import com.example.lotteon.exception.EntityAlreadyExistsException;
 import com.example.lotteon.service.seller.SellerService;
 import com.example.lotteon.service.user.UserService;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,12 +27,15 @@ public class AdminSellerController {
 
   private final UserService userService;
   private final SellerService service;
-  private final PasswordEncoder encoder;
 
   @GetMapping("/list")
-  public String list(Model model) {
-    List<Seller> sellers = service.getAll();
-    model.addAttribute("sellers", sellers);
+  public String list(Model model,
+      @RequestParam(name = "page", defaultValue = "1") int page,
+      @RequestParam(name = "size", defaultValue = "10") int size) {
+    Pageable pageable = PageRequest.of(page - 1, size);
+    Page<Seller> sellerPages = service.getAllPages(pageable);
+    model.addAttribute("sellers", sellerPages);
+    model.addAttribute("currentPage", page);
     return "/admin/shop/shop";
   }
 
@@ -61,5 +65,39 @@ public class AdminSellerController {
       }
     }
     return "redirect:/admin/seller/list";
+  }
+
+  @GetMapping("/search")
+  public String search(String filter,
+      String keyword,
+      @RequestParam(name = "page", defaultValue = "1") int page,
+      @RequestParam(name = "size", defaultValue = "10") int size,
+      Model model) {
+    Pageable pageable = PageRequest.of(page - 1, size);
+    Page<Seller> pages = null;
+    switch (filter) {
+      case "ceo": {
+        pages = service.getAllByCeo(keyword, pageable);
+        break;
+      }
+
+      case "companyName": {
+        pages = service.getAllByCompanyName(keyword, pageable);
+        break;
+      }
+
+      case "businessNumber": {
+        pages = service.getAllByBusinessNumber(keyword, pageable);
+        break;
+      }
+
+      case "contact": {
+        pages = service.getAllByContact(keyword, pageable);
+        break;
+      }
+    }
+    model.addAttribute("currentPage", page);
+    model.addAttribute("sellers", pages);
+    return "/admin/shop/shop";
   }
 }

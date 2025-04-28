@@ -31,6 +31,9 @@
       type="module"
       src="/js/common/admin/registryModal.js"
   ></script>
+  <script src="/js/admin/seller/delete.js"></script>
+  <script src="/js/admin/seller/updateStatus.js"></script>
+  <script src="/js/common/admin/checkbox.js"></script>
 </head>
 <body>
 <div id="wrapper">
@@ -47,17 +50,18 @@
             </span>
       </div>
       <div class="content">
-        <form action="#" method="GET" id="search-area">
+        <form th:action="@{/admin/seller/search}" method="GET" id="search-area">
           <select name="filter" class="search-filter">
-            <option value="tradeName">상호명</option>
-            <option value="representative">대표자</option>
-            <option value="businessId">사업자등록번호</option>
+            <option value="companyName">상호명</option>
+            <option value="ceo">대표자</option>
+            <option value="businessNumber">사업자등록번호</option>
             <option value="contact">연락처</option>
             <option value="keyword">키워드</option>
           </select>
           <input
               type="text"
               class="search-input"
+              name="keyword"
               placeholder="검색어 입력"
           />
           <input type="submit" class="search-submit-btn" value="검색"/>
@@ -70,17 +74,16 @@
           <span class="legend blue"></span>
           <span>운영준비</span>
         </div>
-
         <table>
           <tr>
             <th>
               <input
                   type="checkbox"
+                  class="select-all"
                   name="selected"
                   onclick="return false"
               />
             </th>
-            <th>번호</th>
             <th>상호명</th>
             <th>대표</th>
             <th>사업자등록번호</th>
@@ -92,54 +95,36 @@
 
           <tr th:each="seller : ${sellers}">
             <td>
-              <input type="checkbox"/>
+              <input type="checkbox"
+                     class="seller-checkbox"
+                     th:value="${seller.getSellerCompositeKey().getBusinessNumber()}"/>
             </td>
-            <td>5</td>
             <td th:text="${seller.getCompanyName()}">(주)다나와</td>
             <td th:text="${seller.getCeo()}">정우성</td>
-            <td th:text="${seller.getSellerCompositeKey().getBusinessNumber()}">112-12-12345</td>
+            <td id="business-number"
+                th:text="${seller.getSellerCompositeKey().getBusinessNumber()}">112-12-12345
+            </td>
             <td th:text="${seller.getSellerNumber()}">2024-서울강남-04433</td>
             <td th:text="${seller.getSellerCompositeKey().getUser().getContact()}">010-1234-1001
             </td>
             <td>
-              <span class="legend green"></span>
+              <span class="legend green" th:if="${seller.getStatus().equals('run')}"></span>
+              <span class="legend red" th:if="${seller.getStatus().equals('stopped')}"></span>
+              <span class="legend blue" th:if="${seller.getStatus().equals('ready')}"></span>
             </td>
             <td>
-              <button class="manage-btn shutdown red">중단</button>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <input type="checkbox"/>
-            </td>
-            <td>5</td>
-            <td>dummy</td>
-            <td>정우성</td>
-            <td>112-12-12345</td>
-            <td>2024-서울강남-04433</td>
-            <td>010-1234-1001</td>
-            <td>
-              <span class="legend red"></span>
-            </td>
-            <td>
-              <button class="manage-btn continue blue">재개</button>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <input type="checkbox"/>
-            </td>
-            <td>5</td>
-            <td>dummy</td>
-            <td>정우성</td>
-            <td>112-12-12345</td>
-            <td>2024-서울강남-04433</td>
-            <td>010-1234-1001</td>
-            <td>
-              <span class="legend blue"></span>
-            </td>
-            <td>
-              <button class="manage-btn grant green">승인</button>
+              <button class="manage-btn shutdown red"
+                      th:if="${seller.getStatus().equals('run')}" name="stopped">중단
+              </button>
+              <button class="manage-btn continue blue"
+                      th:if="${seller.getStatus().equals('run') or seller.getStatus().equals('stopped')}"
+                      name="run">
+                개시
+              </button>
+              <button class="manage-btn grant green" th:if="${seller.getStatus().equals('ready')}"
+                      name="run">
+                승인
+              </button>
             </td>
           </tr>
         </table>
@@ -250,20 +235,26 @@
         </form>
       </div>
       <div class="pagination">
-        <a class="page move" href="#">
+        <a class="page move"
+           th:href="@{/admin/seller/list(page=${sellers.getPageable().first().getPageNumber() + 1})}"
+           th:if="${sellers.hasPrevious()}">
           <i class="fa-solid fa-angles-left"></i>
         </a>
-        <a class="page move" href="#">
+        <a class="page move" th:href="@{/admin/seller/list(page=${currentPage - 1})}"
+           th:if="${sellers.hasPrevious()}">
           <i class="fa-solid fa-chevron-left"></i>
         </a>
-        <a class="page" href="">1</a>
-        <a class="page" href="">2</a>
-        <a class="page" href="">3</a>
-        <a class="page" href="">4</a>
-        <a class="page move" href="#">
+        <span th:each="pageNum : ${#numbers.sequence(1, sellers.getTotalPages())}">
+            <a th:class="${currentPage == pageNum ? 'page current-page' : 'page'}"
+               th:href="@{/admin/seller/list(page=${pageNum})}"
+               th:text="${pageNum}">1</a>
+        </span>
+        <a class="page move" th:href="@{/admin/seller/list(page=${currentPage + 1})}"
+           th:if="${sellers.hasNext()}">
           <i class="fa-solid fa-chevron-right"></i>
         </a>
-        <a class="page move" href="#">
+        <a class="page move" th:href="@{/admin/seller/list(page=${sellers.getTotalPages()})}"
+           th:if="${sellers.hasNext()}">
           <i class="fa-solid fa-angles-right"></i>
         </a>
       </div>

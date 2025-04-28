@@ -11,6 +11,8 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -41,11 +43,28 @@ public class SellerService {
         .companyName(dto.getCompanyName())
         .sellerNumber(dto.getSellerNumber())
         .fax(dto.getFax())
+        .status(dto.getStatus())
         .build();
   }
 
-  public List<Seller> getAll() {
-    return repo.findAll();
+  public Page<Seller> getAllPages(Pageable pageable) {
+    return repo.findAll(pageable);
+  }
+
+  public Page<Seller> getAllByCeo(String ceo, Pageable pageable) {
+    return repo.findAllByCeo(ceo, pageable);
+  }
+
+  public Page<Seller> getAllByCompanyName(String companyName, Pageable pageable) {
+    return repo.findAllByCompanyName(companyName, pageable);
+  }
+
+  public Page<Seller> getAllByContact(String contact, Pageable pageable) {
+    return repo.findAllByContact(contact, pageable);
+  }
+
+  public Page<Seller> getAllByBusinessNumber(String businessNumber, Pageable pageable) {
+    return repo.findAllByBusinessNumber(businessNumber, pageable);
   }
 
   public void save(SellerDTO sellerDTO) throws EntityAlreadyExistsException {
@@ -56,7 +75,16 @@ public class SellerService {
       throw new EntityAlreadyExistsException(message);
     }
     encryptPassword(sellerDTO);
+    sellerDTO.setStatus(SellerDTO.STATUS_READY);
     Seller seller = toEntity(sellerDTO);
     repo.save(seller);
+  }
+
+  public void deleteByBusinessNumbers(List<String> businessNumbers) {
+    repo.deleteByBusinessNumbers(businessNumbers);
+  }
+
+  public void updateStatus(String businessNumber, String newStatus) {
+    repo.updateStatus(businessNumber, newStatus);
   }
 }
