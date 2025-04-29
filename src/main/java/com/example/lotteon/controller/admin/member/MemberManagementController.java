@@ -72,4 +72,9 @@ public class MemberManagementController {
     service.edit(member);
     return "redirect:/admin/member/list";
   }
+
+  @GetMapping("/point")
+  public String point() {
+    return "/admin/member/point";
+  }
 }

@@ -4,8 +4,8 @@ import com.example.lotteon.dto.user.MemberDTO;
 import com.example.lotteon.dto.user.MemberIdDTO;
 import com.example.lotteon.dto.user.UserDTO;
 import com.example.lotteon.entity.user.Member;
+import com.example.lotteon.entity.user.MemberId;
 import com.example.lotteon.entity.user.User;
-import com.example.lotteon.entity.user.UserCompositeKey;
 import com.example.lotteon.repository.user.MemberRepository;
 import java.time.LocalDate;
 import java.util.List;
@@ -26,11 +26,11 @@ public class MemberService {
 
   private Member toEntity(MemberDTO dto) {
     User user = mapper.map(dto.getMemberId().getUser(), User.class);
-    UserCompositeKey compositeKey = UserCompositeKey.builder()
+    MemberId compositeKey = MemberId.builder()
         .user(user)
         .build();
     return Member.builder()
-        .userCompositeKey(compositeKey)
+        .memberId(compositeKey)
         .name(dto.getName())
         .gender(dto.getGender())
         .description(dto.getDescription())
@@ -52,7 +52,7 @@ public class MemberService {
 
   public MemberDTO getById(String id) {
     Member member = repo.findById(id);
-    UserDTO userDTO = mapper.map(member.getUserCompositeKey().getUser(), UserDTO.class);
+    UserDTO userDTO = mapper.map(member.getMemberId().getUser(), UserDTO.class);
     MemberIdDTO memberIdDTO = new MemberIdDTO(userDTO);
     return MemberDTO.builder()
         .memberId(memberIdDTO)

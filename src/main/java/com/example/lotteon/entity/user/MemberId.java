@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Embeddable
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserCompositeKey implements Serializable {
+public class MemberId implements Serializable {
 
   @OneToOne
   @JoinColumn(name = "user_id")
