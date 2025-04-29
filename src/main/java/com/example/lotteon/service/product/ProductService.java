@@ -28,7 +28,6 @@ public class ProductService {
       ProductDTO productDTO = modelMapper.map(product, ProductDTO.class);
       productDTOS.add(productDTO);
     }
-
     return productDTOS;
   }
 
@@ -54,6 +53,10 @@ public class ProductService {
 
   public void updateStatusById(int id, String status) {
     repo.updateStatusById(id, status);
+  }
+
+  public void edit(int id, ProductDTO productDTO) {
+    Product product = modelMapper.map(productDTO, Product.class);
   }
 
   public void deleteMultipleIds(List<Integer> ids) {

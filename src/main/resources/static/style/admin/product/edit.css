@@ -14,3 +14,7 @@
   height: 100px;
   display: block;
 }
+
+.fake-input {
+  border: none;
+}
