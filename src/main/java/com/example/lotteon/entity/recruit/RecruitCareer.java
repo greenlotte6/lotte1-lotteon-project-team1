@@ -1,14 +1,23 @@
 package com.example.lotteon.entity.recruit;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "recruit_career")
+@Getter
+@Setter
+@NoArgsConstructor
 public class RecruitCareer {
 
     @Id
     private int id;
-    private String type;
+
+    @Column(name = "career_year")
+    private String careerYear;
 }

@@ -1,10 +1,10 @@
 package com.example.lotteon.service.recruit;
 
-import com.example.lotteon.entity.recruit.Recruit;      // ← 패키지 경로 수정
+import com.example.lotteon.entity.recruit.Recruit;
 import com.example.lotteon.repository.recruit.RecruitRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -12,14 +12,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class RecruitService {
 
-    private final RecruitRepository repo;
+    private final RecruitRepository recruitRepository;
 
-    public List<Recruit> getAll() {
-        return repo.findAll(Sort.by(Sort.Direction.DESC, "id"));
-    }
+    @Transactional(readOnly = true)
+    public List<Recruit> getAllRecruits() {
 
-    public List<Recruit> getActive() {
-        return repo.findByStatus("모집중");
+
+        return recruitRepository.findAll();
     }
 }
-
