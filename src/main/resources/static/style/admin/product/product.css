@@ -10,3 +10,8 @@
 .table-img-area {
   position: relative;
 }
+
+.content table .control-btn {
+  width: auto;
+  height: auto;
+}

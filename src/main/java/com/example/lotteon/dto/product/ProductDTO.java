@@ -1,5 +1,6 @@
 package com.example.lotteon.dto.product;
 
+import com.example.lotteon.dto.seller.SellerDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,7 +17,7 @@ public class ProductDTO {
   private ProductSubCategoryDTO subCategory;
   private String name;
   private String description;
-  private String company;
+  private SellerDTO seller;
   private int price;
   private int point;
   private int discountRate;

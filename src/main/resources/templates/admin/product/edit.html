@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="/style/common/admin/footer.css"/>
   <link rel="stylesheet" href="/style/common/pagination.css"/>
   <link rel="stylesheet" href="/style/admin/product/register.css"/>
+  <link rel="stylesheet" href="/style/admin/product/edit.css"/>
   <link
       rel="icon"
       href="https://static.lotteon.com/p/common/assets/favicon/1/favicon-32.png"
@@ -55,11 +56,13 @@
               <th>1차 분류</th>
               <td>
                 <select
-                    name="first-category"
+                    name="category"
                     class="category-selector"
                     id="first-category"
                 >
-                  <option value="">1차분류 선택</option>
+                  <option th:text="${product.getCategory().getName()}"
+                          th:value="${product.getCategory().getId()}">1차분류 선택
+                  </option>
                 </select>
               </td>
             </tr>
@@ -67,11 +70,13 @@
               <th>2차 분류</th>
               <td>
                 <select
-                    name="second-category"
+                    name="subCategory"
                     class="category-selector"
                     id="second-category"
                 >
-                  <option value="">2차분류 선택</option>
+                  <option th:text="${product.getSubCategory().getName()}"
+                          th:value="${product.getSubCategory().getId()}">2차분류 선택
+                  </option>
                 </select>
               </td>
             </tr>
@@ -87,45 +92,67 @@
             <tbody>
             <tr>
               <th>상품명</th>
-              <td><input type="text"/></td>
+              <td><input type="text" name="name" th:value="${product.getName()}"/></td>
             </tr>
             <tr>
               <th>기본설명</th>
-              <td><input type="text"/></td>
+              <td><input type="text" name="description" th:value="${product.getDescription()}"/>
+              </td>
             </tr>
             <tr>
               <th>상품금액</th>
-              <td><input type="number"/>&nbsp;원</td>
+              <td><input type="number" name="price" th:value="${product.getPrice()}"/>&nbsp;원</td>
             </tr>
             <tr>
               <th>할인율</th>
-              <td><input type="number"/>&nbsp;%</td>
+              <td><input type="number" name="discountRate" th:value="${product.getDiscountRate()}"/>&nbsp;%
+              </td>
             </tr>
             <tr>
               <th>포인트</th>
-              <td><input type="number"/>&nbsp;원</td>
+              <td><input type="number" name="point" th:value="${product.getPoint()}"/>&nbsp;원</td>
             </tr>
             <tr>
               <th>재고수량</th>
-              <td><input type="number"/>&nbsp;개</td>
+              <td><input type="number" name="stock" th:value="${product.getStock()}"/>&nbsp;개</td>
             </tr>
             <tr>
               <th>배송비</th>
-              <td><input type="number"/>&nbsp;원</td>
+              <td>
+                <input type="number" th:value="${product.getDeliveryFee()}"/>&nbsp;원
+              </td>
             </tr>
             <tr>
               <th>상품이미지</th>
               <td>
                 <div>
-                  <input type="file"/>
+                  <img th:src="${product.getImage().getListThumbnailLocation()}"
+                       class="product-image"
+                       alt="list_thumbnail"
+                  />
+                  <input type="file"
+                         accept=".jpg, .jpeg, .png"
+                         name="image.listThumbnailLocation"/>
                   <span> 크기 190 x 190, 상품 목록에 출력될 이미지 </span>
                 </div>
                 <div>
-                  <input type="file"/>
+                  <img th:src="${product.getImage().getMainThumbnailLocation()}"
+                       class="product-image"
+                       alt="main_thumbnail"
+                  >
+                  <input type="file"
+                         accept=".jpg, .jpeg, .png"
+                         name="image.mainThumbnailLocation"/>
                   <span> 크기 230 x 230, 상품 메인에 출력될 이미지 </span>
                 </div>
                 <div>
-                  <input type="file"/>
+                  <img th:src="${product.getImage().getDetailThumbnailLocation()}"
+                       class="product-image"
+                       alt="detail_thumbnail"
+                  />
+                  <input type="file"
+                         accept=".jpg, .jpeg, .png"
+                         name="image.detailThumbnailLocation"/>
                   <span> 크기 456 x 456, 상품 상세에 출력될 이미지 </span>
                 </div>
               </td>
@@ -134,8 +161,13 @@
               <th>상품 상세정보</th>
               <td>
                 <div>
-                  <input type="file"/>
-                  <span> 크기 456 x 456, 상품 상세에 출력될 이미지 </span>
+                  <a th:href="@{${product.getImage().getDetailImageLocation()}}"
+                     target="_blank"
+                     class="in-blank"
+                  >새 탭에서 보기</a>
+                  <input type="file" accept=".jpg, .jpeg, .png"
+                         name="image.detailImageLocation"/>
+                  <span> 크기 940px, 높이 제약 없음, 크기 최대 1MB </span>
                 </div>
               </td>
             </tr>
@@ -150,36 +182,16 @@
             상품별 선택정보(옵션) 입력입니다. <br/>
             예시) 옵션1: 사이즈, 옵션1 항목: XXL, XL, L, M, S(콤마로 구분)
           </p>
-          <table class="post-form-table">
+          <table class="post-form-table options-table">
             <tbody>
-            <tr>
-              <th>옵션1</th>
+            <tr th:each="option, iterStat : ${options}">
+              <th th:text="'옵션'+${iterStat.count}">옵션1</th>
               <td>
-                <input type="text"/>
+                <input type="text" name="name" th:value="${option.getName()}"/>
               </td>
-              <th>옵션1 항목</th>
+              <th th:text="'옵션 '+${iterStat.count} +'항목'">옵션1 항목</th>
               <td>
-                <input type="text"/>
-              </td>
-            </tr>
-            <tr>
-              <th>옵션2</th>
-              <td>
-                <input type="text"/>
-              </td>
-              <th>옵션2 항목</th>
-              <td>
-                <input type="text"/>
-              </td>
-            </tr>
-            <tr>
-              <th>옵션3</th>
-              <td>
-                <input type="text"/>
-              </td>
-              <th>옵션3 항목</th>
-              <td>
-                <input type="text"/>
+                <input type="text" name="value" th:value="${option.getValue()}"/>
               </td>
             </tr>
             </tbody>
@@ -203,32 +215,53 @@
             <tbody>
             <tr>
               <th>상품 상태</th>
-              <td>
-                <input type="text"/>
+              <td th:if="${product.getStatus().equals('on_sale')}">
+                <input type="text" name="status" th:value="판매중"/>
+              </td>
+              <td th:if="${product.getStatus().equals('stop_selling')}">
+                <input type="text" name="status" th:value="판매중지"/>
               </td>
             </tr>
             <tr>
               <th>부가세 면세여부</th>
-              <td>
-                <input type="text"/>
+              <td th:if="${product.isVatFree()}">
+                <input type="text" name="isVatFree" value="비과세상품"/>
+              </td>
+              <td th:if="${!product.isVatFree()}">
+                <input type="text" name="isVatFree" value="과세상품"/>
               </td>
             </tr>
             <tr>
               <th>영수증 발행</th>
-              <td>
-                <input type="text"/>
+              <td th:if="${product.isReceiptIssuable()}">
+                <input type="text" name="isReceiptIssuable" value="발행가능 - 신용카드전표, 온라인현금영수증 등"/>
+              </td>
+              <td th:if="${!product.isReceiptIssuable()}">
+                <input type="text" name="isReceiptIssuable" value="발행 불가능"/>
               </td>
             </tr>
             <tr>
               <th>사업자구분</th>
               <td>
-                <input type="text"/>
+                <input type="text" name="businessClassification"
+                       th:value="${product.getBusinessClassification()}"/>
+              </td>
+            </tr>
+            <tr>
+              <th>사업자등록번호</th>
+              <td class="business-number"
+                  th:text="${product.getSeller().getSellerCompositeKey().getBusinessNumber()}">
+              </td>
+            </tr>
+            <tr>
+              <th>통신판매업번호</th>
+              <td class="seller-number" th:text="${product.getSeller().getSellerNumber()}">
               </td>
             </tr>
             <tr>
               <th>원산지</th>
               <td>
-                <input type="text"/>
+                <input type="text" name="origin" th:value="${product.getOrigin()}"/>
               </td>
             </tr>
             </tbody>
