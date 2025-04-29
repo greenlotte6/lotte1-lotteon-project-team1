@@ -35,6 +35,20 @@
     <tr th:each="post, stat : ${posts}">
       <td th:text="${stat.count}">1</td>
       <td th:text="${post.dept.name}">광고사업</td>
+      <td th:text="${post.career.career_year}+ '년차'">경력 4~15년</td>
+      <td th:text="${post.hireType.type}">정규직</td>
+      <td>
+        <a th:href="@{/recruit/{id}(id=${post.id})}" th:text="${post.title}">제목</a>
+      </td>
+
+
+      <td th:text="${post.status}"
+          th:classappend="${post.status == '모집중'} ? 'status-open' : 'status-closed'">
+        모집중
+      </td>
+
+      <td>
+
       <td th:text="${post.career.type}">경력 4~15년</td>
       <td th:text="${post.hireType.type}">정규직</td>
       <td th:text="${post.title}">광고 플랫폼 기획</td>

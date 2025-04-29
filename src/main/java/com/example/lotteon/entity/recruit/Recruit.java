@@ -1,10 +1,7 @@
 package com.example.lotteon.entity.recruit;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CollectionId;
 
 import java.time.LocalDate;
@@ -14,6 +11,7 @@ import java.time.LocalDate;
 @Table(name = "recruit")
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class Recruit {
@@ -41,5 +39,8 @@ public class Recruit {
     private LocalDate dateFrom;
     private LocalDate dateTo;
 
+    // 채용 상세 내용
+    // getter와 setter 추가
+    private String content;
 
 }

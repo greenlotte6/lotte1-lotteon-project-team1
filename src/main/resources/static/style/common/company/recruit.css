@@ -1,3 +1,14 @@
+.status-open {
+    color: blue; /* 모집중은 파란색 */
+    font-weight: bold;
+}
+
+.status-closed {
+    color: red; /* 모집완료는 빨간색 */
+    font-weight: bold;
+}
+
+
 h2 {
     font-size: 24px;
     font-weight: bold;

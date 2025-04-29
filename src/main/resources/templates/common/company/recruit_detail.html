@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>채용 상세</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      width: 80%;
+      max-width: 900px;
+      background-color: #ffffff;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      border-radius: 8px;
+    }
+
+    h1 {
+      font-size: 2rem;
+      color: #333;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    p {
+      font-size: 1.1rem;
+      color: #555;
+      margin: 10px 0;
+    }
+
+    strong {
+      color: #333;
+    }
+
+    .details {
+      margin-top: 30px;
+    }
+
+    .details p {
+      font-size: 1.1rem;
+      color: #333;
+    }
+
+    .details span {
+      font-weight: bold;
+    }
+
+    .content {
+      background-color: #fafafa;
+      padding: 15px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      margin-top: 20px;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 20px;
+      font-size: 1rem;
+      color: #007bff;
+      text-decoration: none;
+      border: 1px solid #007bff;
+      padding: 10px 20px;
+      border-radius: 5px;
+    }
+
+    .back-link:hover {
+      background-color: #007bff;
+      color: white;
+    }
+
+    .content pre {
+      white-space: pre-wrap; /* 긴 줄을 자동으로 줄 바꿈 */
+      word-wrap: break-word; /* 긴 단어를 적절히 줄 바꿈 */
+      background-color: #f4f4f4; /* 배경색 */
+      padding: 10px; /* 여백 */
+      border-radius: 5px; /* 모서리 둥글게 */
+      font-family: 'Courier New', Courier, monospace; /* 고정폭 글꼴 */
+    }
+
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1 th:text="${recruit.title}">채용 제목</h1>
+  <div class="details">
+    <p><strong>부서:</strong> <span th:text="${recruit.dept.name}">부서명</span></p>
+    <p><strong>경력:</strong> <span th:text="${recruit.career.career_year} + '년차'">4~15년</span></p>
+    <p><strong>형태:</strong> <span th:text="${recruit.hireType.type}">정규직</span></p>
+    <p><strong>모집 기간:</strong>
+      <span th:text="${#temporals.format(recruit.dateFrom, 'yyyy-MM-dd')}"></span>
+      ~
+      <span th:text="${#temporals.format(recruit.dateTo, 'yyyy-MM-dd')}"></span>
+    </p>
+    <p><strong>상태:</strong> <span th:text="${recruit.status}">모집중</span></p>
+  </div>
+  <div class="content">
+    <p><strong>내용:</strong></p>
+    <pre th:utext="${recruit.content}"></pre>
+
+  </div>
+  <a href="/company/recruit" class="back-link">← 목록으로 돌아가기</a>
+</div>
+</body>
+</html>

@@ -18,11 +18,11 @@ public class CompanyController {
     public String blog() {
         return "/common/company/blog";
     }
-    @GetMapping("/company/recruit")
+    @GetMapping("/company/recruit-list")
     public String recruit() {
         return "/common/company/recruit";
     }
-    @GetMapping("/company/media")
+    @GetMapping("/company/media-list")
     public String media() {
         return "/common/company/media";
     }
