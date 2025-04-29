@@ -32,21 +32,10 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `lotteon`.`point`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `lotteon`.`point` (
-  `member_id` VARCHAR(16) NOT NULL,
-  `total` INT NOT NULL DEFAULT 0,
-  PRIMARY KEY (`member_id`))
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
 -- Table `lotteon`.`member`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `lotteon`.`member` (
   `user_id` VARCHAR(16) NOT NULL,
-  `point_id` VARCHAR(45) NOT NULL,
   `name` VARCHAR(20) NOT NULL,
   `gender` ENUM("m", "f") NOT NULL,
   `recent_login_date` DATE NOT NULL,
@@ -56,17 +45,11 @@ CREATE TABLE IF NOT EXISTS `lotteon`.`member` (
   PRIMARY KEY (`user_id`),
   INDEX `fk_member_user1_idx` (`user_id` ASC) VISIBLE,
   UNIQUE INDEX `user_id_UNIQUE` (`user_id` ASC) VISIBLE,
-  INDEX `fk_member_point_state1_idx` (`point_id` ASC) VISIBLE,
   CONSTRAINT `fk_member_user1`
     FOREIGN KEY (`user_id`)
     REFERENCES `lotteon`.`user` (`id`)
     ON DELETE CASCADE
-    ON UPDATE CASCADE,
-  CONSTRAINT `fk_member_point1`
-    FOREIGN KEY (`point_id`)
-    REFERENCES `lotteon`.`point` (`member_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -454,14 +437,15 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `lotteon`.`point_history`
+-- Table `lotteon`.`point`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `lotteon`.`point_history` (
+CREATE TABLE IF NOT EXISTS `lotteon`.`point` (
   `id` INT NOT NULL,
   `member_id` VARCHAR(16) NOT NULL,
   `amount` INT NOT NULL,
   `description` VARCHAR(255) NOT NULL,
   `issued_date` DATE NOT NULL,
+  `total` INT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_point_history_member1_idx` (`member_id` ASC) VISIBLE,
   CONSTRAINT `fk_point_history_member1`

@@ -6,44 +6,57 @@ $(() => {
 
   updateBtn.click((event) => {
     const checkboxes = $(".item-checkbox")
-    const json = [];
-    for (let box of checkboxes) {
-      if (box.checked) {// 체크된 tr만 가져오기
-        // 체크된 tr의 선택된 level <select> 가져오기
-        const memberId = box.parentNode.parentNode
-        .querySelector(".member-id")
-        .getAttribute("data-value")
-        const level = box.parentNode
-        .parentNode
-        .querySelector("select[name='level']")
-
-        const memberIdJson = {};
-        const userJson = {}
-        const memberJson = {};
-        const newLevel = level.options[level.selectedIndex].value;
-        userJson["id"] = memberId;
-        memberIdJson["user"] = userJson;
-        memberJson["memberId"] = memberIdJson;
-        memberJson["level"] = newLevel;
-        json.push(memberJson)
-
+    const checkedBoxes = [];
+    for (let checkBox of checkboxes) {
+      if (checkBox.checked) {
+        console.log("Checked box found")
+        checkedBoxes.push(checkBox);
       }
     }
 
-    console.log(JSON.stringify(json));
+    if (checkedBoxes.length === 0) {
+      alert("회원을 선택해주세요")
+    } else {
+      const json = [];
+      for (let box of checkedBoxes) {
+        if (box.checked) {
+          // 선택된 level <select> 가져오기
+          const memberId = box.parentNode.parentNode
+          .querySelector(".member-id")
+          .getAttribute("data-value")
+          const level = box.parentNode
+          .parentNode
+          .querySelector("select[name='level']")
 
-    $.ajax("/api/admin/member/update", {
-      type: "PUT",
-      dataType: "json",
-      contentType: "application/json;utf-8",
-      data: JSON.stringify(json),
-      success: function (res) {
-        alert("업데이트 완료")
-        location.reload();
-      },
-      error: function (err) {
-        alert("에러 발생")
+          const memberIdJson = {};
+          const userJson = {}
+          const memberJson = {};
+          const newLevel = level.options[level.selectedIndex].value;
+          userJson["id"] = memberId;
+          memberIdJson["user"] = userJson;
+          memberJson["memberId"] = memberIdJson;
+          memberJson["level"] = newLevel;
+          json.push(memberJson)
+
+        }
       }
-    })
+
+      console.log(JSON.stringify(json));
+
+      $.ajax("/api/admin/member/update", {
+        type: "PUT",
+        dataType: "json",
+        contentType: "application/json;utf-8",
+        data: JSON.stringify(json),
+        success: function (res) {
+          alert("업데이트 완료")
+          location.reload();
+        },
+        error: function (err) {
+          alert("에러 발생")
+        }
+      })
+    }
+
   })
 })

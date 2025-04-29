@@ -48,6 +48,12 @@
       </td>
 
       <td>
+
+      <td th:text="${post.career.type}">경력 4~15년</td>
+      <td th:text="${post.hireType.type}">정규직</td>
+      <td th:text="${post.title}">광고 플랫폼 기획</td>
+      <td th:text="${post.status}">모집중</td>
+      <td>
         <span th:text="${#temporals.format(post.dateFrom,'yyyy-MM-dd')}"></span>
         ~
         <span th:text="${#temporals.format(post.dateTo,'yyyy-MM-dd')}"></span>

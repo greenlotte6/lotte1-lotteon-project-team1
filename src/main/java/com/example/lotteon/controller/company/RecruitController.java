@@ -1,8 +1,6 @@
 package com.example.lotteon.controller.company;
 
-
 import com.example.lotteon.entity.recruit.Recruit;
-
 import com.example.lotteon.service.recruit.RecruitService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,7 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-
 import java.util.List;
 
 
@@ -43,4 +40,9 @@ public class RecruitController {
     }
 
 }
-
+    @GetMapping("/company/recruit/list")
+    public String recruitList(Model model) {
+        model.addAttribute("posts", recruitService.getAllRecruits());
+        return "/common/company/recruit";
+    }
+}

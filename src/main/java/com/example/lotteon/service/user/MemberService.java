@@ -1,9 +1,11 @@
 package com.example.lotteon.service.user;
 
 import com.example.lotteon.dto.user.MemberDTO;
+import com.example.lotteon.dto.user.MemberIdDTO;
+import com.example.lotteon.dto.user.UserDTO;
 import com.example.lotteon.entity.user.Member;
+import com.example.lotteon.entity.user.MemberId;
 import com.example.lotteon.entity.user.User;
-import com.example.lotteon.entity.user.UserCompositeKey;
 import com.example.lotteon.repository.user.MemberRepository;
 import java.time.LocalDate;
 import java.util.List;
@@ -24,12 +26,16 @@ public class MemberService {
 
   private Member toEntity(MemberDTO dto) {
     User user = mapper.map(dto.getMemberId().getUser(), User.class);
-    UserCompositeKey compositeKey = UserCompositeKey.builder()
+    MemberId compositeKey = MemberId.builder()
         .user(user)
         .build();
     return Member.builder()
-        .userCompositeKey(compositeKey)
+        .memberId(compositeKey)
+        .name(dto.getName())
+        .gender(dto.getGender())
+        .description(dto.getDescription())
         .level(dto.getLevel())
+        .status(dto.getStatus())
         .build();
   }
 
@@ -42,6 +48,21 @@ public class MemberService {
 
     Member member = mapper.map(memberDTO, Member.class);
     repo.save(member);
+  }
+
+  public MemberDTO getById(String id) {
+    Member member = repo.findById(id);
+    UserDTO userDTO = mapper.map(member.getMemberId().getUser(), UserDTO.class);
+    MemberIdDTO memberIdDTO = new MemberIdDTO(userDTO);
+    return MemberDTO.builder()
+        .memberId(memberIdDTO)
+        .name(member.getName())
+        .gender(member.getGender())
+        .recentLoginDate(member.getRecentLoginDate())
+        .description(member.getDescription())
+        .status(member.getStatus())
+        .level(member.getLevel())
+        .build();
   }
 
   public Page<Member> getAll(Pageable pageable) {
@@ -69,6 +90,16 @@ public class MemberService {
       Member member = toEntity(memberDTO);
       repo.updateLevel(member);
     }
+  }
+
+  public void updateStatus(MemberDTO memberDTO) {
+    Member member = toEntity(memberDTO);
+    repo.updateStatus(member);
+  }
+
+  public void edit(MemberDTO memberDTO) {
+    Member member = toEntity(memberDTO);
+    repo.updateInfo(member);
   }
 
 }

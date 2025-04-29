@@ -16,6 +16,8 @@ public interface MemberRepositoryCustom {
    */
   Long countNewMembersOf(LocalDate date);
 
+  Member findById(String id);
+
   Page<Member> findAll(Pageable pageable);
 
   Page<Member> findAllById(Pageable pageable, String id);
@@ -27,4 +29,8 @@ public interface MemberRepositoryCustom {
   Page<Member> findAllByContact(Pageable pageable, String contact);
 
   void updateLevel(Member member);
+
+  void updateStatus(Member member);
+
+  void updateInfo(Member member);
 }

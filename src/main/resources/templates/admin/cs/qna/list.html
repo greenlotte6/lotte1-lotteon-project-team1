@@ -90,7 +90,9 @@
                     <td>[[${qna.name}]]</td>
                     <td>[[${qna.subtype_name}]]</td>
                     <td><a th:href="@{/admin/cs/qna/view(id=${qna.id})}">[[${qna.title}]]</a></td>
-                    <td>[[${qna.member_id}]]</td>
+                    <td>
+                      <span th:text="${#strings.substring(qna.member_id, 0, 3) + '***'}"></span>
+                    </td>
                     <td>[[${qna.register_date}]]</td>
                     <td>
                       <span style="color: #808080;" th:if="${qna.status == 'open'}">검토중</span>
