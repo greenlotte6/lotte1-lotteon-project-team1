@@ -114,7 +114,7 @@ public class MemberRepositoryImpl implements MemberRepositoryCustom {
         .set(this.member.gender, member.getGender())
         .set(this.member.userCompositeKey.user.email,
             member.getUserCompositeKey().getUser().getEmail())
-        .set(this.member.userCompositeKey.user.zip, member.getUserCompositeKey().getUser().getZip())
+        .set(this.member.userCompositeKey.user.zip, member.getMemberId().getUser().getZip())
         .set(this.member.userCompositeKey.user.address,
             member.getUserCompositeKey().getUser().getAddress())
         .set(this.member.userCompositeKey.user.addressDetail,
