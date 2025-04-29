@@ -1,16 +1,3 @@
-INSERT INTO `product_image` VALUES (1, "", "" ,"", "");
-
-INSERT INTO `product_category` VALUES(1, "의류");
-
-INSERT INTO `product_subcategory` VALUES(1, "상의");
-
-INSERT INTO `product` VALUES(1, 1, 1, "맨투맨", "맨투맨입니다", "무신사", 39000, 39, 10, 200, 2500, 1, "신제품", 1, "통신판매업", 1, "국내산");
-
-INSERT INTO `product_options` VALUES (1, 1, "사이즈", "S");
-INSERT INTO `product_options` VALUES (2, 1, "사이즈", "M");
-INSERT INTO `product_options` VALUES (3, 1, "사이즈", "L");
-INSERT INTO `product_options` VALUES (4, 1, "사이즈", "XL");
-
 -- 쿠폰/혜택/이벤트
 INSERT INTO article_type (id, name, subtype_name) VALUES
 (1, '공지사항', '고객서비스'),
@@ -133,11 +120,25 @@ INSERT INTO `seller` VALUES ("112-12-11118", "seller10", "김유신", "(주)행�
 INSERT INTO `user` VALUES ("seller11", "abc123", "seller10@example.com", "051-111-2229", "12345", "부산광역시", "해운대구", "seller", NOW());
 INSERT INTO `seller` VALUES ("112-12-11119", "seller11", "김유신", "(주)행복상점", "2025-해운대구-12345", "0503-1234-5678", "ready");
 
+-- 상품
+INSERT INTO `product_image` VALUES (1, "/upload/product/t-shirt.jpg", "/upload/product/t-shirt.jpg" ,"/upload/product/t-shirt.jpg", "/upload/product/t-shirt.jpg");
+
+INSERT INTO `product_category` VALUES(1, "의류");
+
+INSERT INTO `product_subcategory` VALUES(1, "상의");
+
+INSERT INTO `product` VALUES(1, 1, 1,"112-12-12345", "seller1", "맨투맨", "맨투맨입니다", 39000, 39, 10, 200, 2500, 1, "on_sale", 1, "통신판매업", 1, "국내산");
+
+INSERT INTO `product_options` VALUES (1, 1, "사이즈", "S");
+INSERT INTO `product_options` VALUES (2, 1, "사이즈", "M");
+INSERT INTO `product_options` VALUES (3, 1, "사이즈", "L");
+INSERT INTO `product_options` VALUES (4, 1, "사이즈", "XL");
+
 -- 회원(member)
 INSERT INTO `user` VALUES ("abc123", "abc@123", "abc123@example.com", "010-1111-2222", "12345", "부산광역시", "부산진구", "member", NOW());
-INSERT INTO `member` (`user_id`, `name`, `gender`, `recent_login_date`) VALUES ("abc123", "장보고", "m", NOW());
+INSERT INTO `member` (`user_id`, `name`, `gender`, `recent_login_date`, `birth_date`) VALUES ("abc123", "장보고", "m", NOW(), "2003-01-01");
 INSERT INTO `user` VALUES ("jas06113", "abc@123", "jas06113@example.com", "010-1211-2222", "12345", "부산광역시", "부산진구", "member", NOW());
-INSERT INTO `member` (`user_id`, `name`, `gender`, `recent_login_date`) VALUES ("jas06113","이현민", "m", NOW());
+INSERT INTO `member` (`user_id`, `name`, `gender`, `recent_login_date`, `birth_date`) VALUES ("jas06113","이현민", "m", NOW(), "2003-01-01");
 
 -- 포인트 내역(point_history)
 INSERT INTO `point` VALUES(1, "abc123", 1000, "회원가입 기념 포인트 1,000원", NOW(), 1000);

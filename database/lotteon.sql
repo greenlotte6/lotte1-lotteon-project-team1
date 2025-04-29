@@ -42,6 +42,7 @@ CREATE TABLE IF NOT EXISTS `lotteon`.`member` (
   `description` TEXT NULL,
   `status` ENUM("normal", "stopped", "dormant", "withdrawed") NULL DEFAULT 'normal',
   `level` ENUM("family", "silver", "gold", "vip", "vvip") NULL DEFAULT 'family',
+  `birth_date` DATE NOT NULL,
   PRIMARY KEY (`user_id`),
   INDEX `fk_member_user1_idx` (`user_id` ASC) VISIBLE,
   UNIQUE INDEX `user_id_UNIQUE` (`user_id` ASC) VISIBLE,
@@ -146,16 +147,17 @@ CREATE TABLE IF NOT EXISTS `lotteon`.`product` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `category_id` INT NOT NULL,
   `subcategory_id` INT NOT NULL,
+  `seller_business_number` CHAR(12) NOT NULL,
+  `seller_user_id` VARCHAR(16) NOT NULL,
   `name` VARCHAR(50) NOT NULL,
   `description` TEXT NOT NULL,
-  `company` VARCHAR(45) NOT NULL,
   `price` INT NOT NULL,
   `point` INT NULL DEFAULT 0,
   `discount_rate` TINYINT NULL DEFAULT 0,
   `stock` INT NOT NULL,
   `delivery_fee` INT NULL DEFAULT 0,
   `image_id` INT NOT NULL,
-  `status` VARCHAR(45) NOT NULL COMMENT 'status = 상품상태',
+  `status` ENUM("on_sale", "stop_selling") NOT NULL DEFAULT 'on_sale' COMMENT 'status = 상품상태',
   `is_vat_free` ENUM("0", "1") NOT NULL COMMENT 'is_vat_free = 부가세 면세 여부',
   `business_class` VARCHAR(30) NOT NULL COMMENT 'business_class = 사업자구분\n',
   `receipt_issuable` ENUM("0", "1") NOT NULL COMMENT 'receipt_issuable = 영수증 발행 가능 여부(\"0\" = false, \"1\"=true)',
@@ -164,6 +166,7 @@ CREATE TABLE IF NOT EXISTS `lotteon`.`product` (
   INDEX `fk_product_product_image_idx` (`image_id` ASC) VISIBLE,
   INDEX `fk_product_product_category1_idx` (`category_id` ASC) VISIBLE,
   INDEX `fk_product_product_subcategory1_idx` (`subcategory_id` ASC) VISIBLE,
+  INDEX `fk_product_seller1_idx` (`seller_business_number` ASC, `seller_user_id` ASC) VISIBLE,
   CONSTRAINT `fk_product_product_image`
     FOREIGN KEY (`image_id`)
     REFERENCES `lotteon`.`product_image` (`id`)
@@ -178,7 +181,12 @@ CREATE TABLE IF NOT EXISTS `lotteon`.`product` (
     FOREIGN KEY (`subcategory_id`)
     REFERENCES `lotteon`.`product_subcategory` (`id`)
     ON DELETE NO ACTION
-    ON UPDATE CASCADE)
+    ON UPDATE CASCADE,
+  CONSTRAINT `fk_product_seller1`
+    FOREIGN KEY (`seller_business_number` , `seller_user_id`)
+    REFERENCES `lotteon`.`seller` (`business_number` , `user_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
@@ -195,8 +203,8 @@ CREATE TABLE IF NOT EXISTS `lotteon`.`product_options` (
   CONSTRAINT `fk_product_options_product1`
     FOREIGN KEY (`product_id`)
     REFERENCES `lotteon`.`product` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -367,7 +375,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `lotteon`.`recruit_career` (
   `id` INT NOT NULL,
-  `career_year` YEAR NOT NULL COMMENT 'career_year = 연차',
+  `career_year` TINYINT NOT NULL COMMENT 'career_year = 연차',
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -480,14 +488,13 @@ ENGINE = InnoDB;
 -- Table `lotteon`.`coupon`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `lotteon`.`coupon` (
-  `id` INT NOT NULL,
-  `member_id` VARCHAR(16) NOT NULL,
+  `id` INT NOT NULL DEFAULT 202500001,
   `type_id` INT NOT NULL,
   `name` VARCHAR(30) NOT NULL,
   `benefit_id` INT NOT NULL,
   `from` DATE NOT NULL,
   `to` DATE NOT NULL,
-  `seller_id` INT NOT NULL,
+  `seller_id` CHAR(12) NOT NULL,
   `issued_amount` INT NOT NULL DEFAULT 0,
   `used_amount` INT NOT NULL DEFAULT 0,
   `status` ENUM("issued", "used") NOT NULL DEFAULT 'issued',
@@ -496,7 +503,6 @@ CREATE TABLE IF NOT EXISTS `lotteon`.`coupon` (
   PRIMARY KEY (`id`),
   INDEX `fk_coupon_coupon_type1_idx` (`type_id` ASC) VISIBLE,
   INDEX `fk_coupon_coupon_benefit1_idx` (`benefit_id` ASC) VISIBLE,
-  INDEX `fk_coupon_member1_idx` (`member_id` ASC) VISIBLE,
   CONSTRAINT `fk_coupon_coupon_type1`
     FOREIGN KEY (`type_id`)
     REFERENCES `lotteon`.`coupon_type` (`id`)
@@ -505,11 +511,6 @@ CREATE TABLE IF NOT EXISTS `lotteon`.`coupon` (
   CONSTRAINT `fk_coupon_coupon_benefit1`
     FOREIGN KEY (`benefit_id`)
     REFERENCES `lotteon`.`coupon_benefit` (`id`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE,
-  CONSTRAINT `fk_coupon_member1`
-    FOREIGN KEY (`member_id`)
-    REFERENCES `lotteon`.`member` (`user_id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
@@ -580,7 +581,7 @@ CREATE TABLE IF NOT EXISTS `lotteon`.`cart` (
   CONSTRAINT `fk_cart_product1`
     FOREIGN KEY (`product_id`)
     REFERENCES `lotteon`.`product` (`id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
