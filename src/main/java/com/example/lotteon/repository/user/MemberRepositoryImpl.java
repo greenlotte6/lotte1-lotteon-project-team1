@@ -32,6 +32,15 @@ public class MemberRepositoryImpl implements MemberRepositoryCustom {
   }
 
   @Override
+  public Member findById(String id) {
+    return query.selectFrom(member)
+        .join(user)
+        .on(member.userCompositeKey.user.id.eq(user.id))
+        .where(user.id.eq(id))
+        .fetchOne();
+  }
+
+  @Override
   public Page<Member> findAll(Pageable pageable) {
     List<Member> members = query.selectFrom(member).fetch();
     return new PageImpl<>(members, pageable, members.size());
@@ -84,6 +93,35 @@ public class MemberRepositoryImpl implements MemberRepositoryCustom {
         .set(this.member.level, member.getLevel())
         .where(this.member.userCompositeKey.user.id.eq(
             member.getUserCompositeKey().getUser().getId()))
+        .execute();
+  }
+
+  @Override
+  @Transactional
+  public void updateStatus(Member member) {
+    query.update(this.member)
+        .set(this.member.status, member.getStatus())
+        .where(
+            this.member.userCompositeKey.user.id.eq(member.getUserCompositeKey().getUser().getId()))
+        .execute();
+  }
+
+  @Override
+  @Transactional
+  public void updateInfo(Member member) {
+    query.update(this.member)
+        .set(this.member.name, member.getName())
+        .set(this.member.gender, member.getGender())
+        .set(this.member.userCompositeKey.user.email,
+            member.getUserCompositeKey().getUser().getEmail())
+        .set(this.member.userCompositeKey.user.zip, member.getUserCompositeKey().getUser().getZip())
+        .set(this.member.userCompositeKey.user.address,
+            member.getUserCompositeKey().getUser().getAddress())
+        .set(this.member.userCompositeKey.user.addressDetail,
+            member.getUserCompositeKey().getUser().getAddressDetail())
+        .set(this.member.description, member.getDescription())
+        .where(
+            this.member.userCompositeKey.user.id.eq(member.getUserCompositeKey().getUser().getId()))
         .execute();
   }
 }

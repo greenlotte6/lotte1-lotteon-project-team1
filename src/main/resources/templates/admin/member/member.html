@@ -29,9 +29,10 @@
   <script type="module" src="/js/common/admin/modal.mjs"></script>
   <script
       type="module"
-      src="/js/common/admin/registryModal.js"
+      src="/js/admin/member/onModalOpen.js"
   ></script>
   <script src="/js/admin/member/updateLevel.js"></script>
+  <script src="/js/admin/member/updateStatus.js"></script>
   <script src="/js/common/admin/checkbox.js"></script>
 </head>
 <body>
@@ -112,27 +113,28 @@
               [[${member.getUserCompositeKey().getUser().getRegisterDate().getYear()}]]
               -[[${#temporals.format(member.getUserCompositeKey().getUser().getRegisterDate(),
               'MM')}]]
-              -[[${member.getUserCompositeKey().getUser().getRegisterDate().getDayOfMonth()}]]
+              <!--              -[[${member.getUserCompositeKey().getUser().getRegisterDate().getDayOfMonth()}]]-->
             </td>
             <td class="text-red" th:if="${member.getStatus().equals('stopped')}">중지</td>
             <td th:if="${member.getStatus().equals('stopped')}">
               <button class="registry-modal-btn">수정</button>
-              <button class="background-green">재개</button>
+              <button data-value="normal" class="status-btn background-green">재개</button>
             </td>
             <td class="text-green" th:if="${member.getStatus().equals('normal')}">정상</td>
             <td th:if="${member.getStatus().equals('normal')}">
               <button class="registry-modal-btn">수정</button>
-              <button class="background-red">중지</button>
+              <button data-value="stopped" class="status-btn background-red">중지</button>
             </td>
             <td class="text-gray" th:if="${member.getStatus().equals('dormant')}">휴면</td>
             <td th:if="${member.getStatus().equals('dormant')}">
               <button class="registry-modal-btn">수정</button>
-              <button class="background-green">재개</button>
+              <button data-value="normal" class="status-btn background-green">재개</button>
             </td>
             <td class="text-gray" th:if="${member.getStatus().equals('withdrawed')}">탈퇴</td>
             <td th:if="${member.getStatus().equals('withdrawed')}">
               <button class="registry-modal-btn">수정</button>
               <button class="background-red destroy-btn">비활성</button>
+              <!--비활성의 경우 DELETE 메서드 사용하기-->
             </td>
           </tr>
         </table>
@@ -143,55 +145,47 @@
         </button>
       </div>
       <div class="registry-modal member-modification" title="회원수정">
-        <form action="#" method="POST">
+        <form th:action="@{/admin/member/register}" method="POST">
           <table>
             <tr>
               <th>아이디</th>
               <td>
-                <input type="text" value="abc1234"/>
+                <input type="text" readonly name="memberId.user.id"/>
               </td>
             </tr>
             <tr>
               <th>이름</th>
               <td>
-                <input type="text" value="홍길동"/>
+                <input type="text" name="name"/>
               </td>
             </tr>
             <tr>
               <th>성별</th>
               <td>
-                <input type="radio" id="male"/>
+                <input type="radio" id="male" value="m" name="gender"/>
                 <label for="male">M</label>
-                <input type="radio" id="female"/>
+                <input type="radio" id="female" value="f" name="gender"/>
                 <label for="female">F</label>
               </td>
             </tr>
             <tr>
-              <th>등급</th>
-              <td>
-                <input type="text" readonly value="FAMILY"/>
-              </td>
-            </tr>
-            <tr>
-              <th>상태</th>
-              <td class="text-green">정상</td>
             </tr>
             <tr>
               <th>EMAIL</th>
               <td>
-                <input type="email" value="abc1234@gmail.com"/>
+                <input type="email" name="memberId.user.email"/>
               </td>
             </tr>
             <tr>
               <th>휴대폰</th>
               <td>
-                <input type="text" value="010-1234-1001"/>
+                <input type="text" name="memberId.user.contact"/>
               </td>
             </tr>
             <tr>
               <th>우편번호</th>
               <td>
-                <input type="text" value="12345"/>
+                <input type="text" name="memberId.user.zip"/>
                 <button class="post-btn">검색</button>
               </td>
             </tr>
@@ -200,28 +194,28 @@
               <td>
                 <input
                     type="text"
-                    value="부산 광역시 부산진구 부전동 123"
+                    name="memberId.user.address"
                 />
               </td>
             </tr>
             <tr>
               <th>상세주소</th>
               <td>
-                <input type="text" value="00 빌딩 3층 301호"/>
+                <input type="text" name="memberId.user.addressDetail"/>
               </td>
             </tr>
             <tr>
               <th>가입일</th>
-              <td>0000-00-00 00:00:00</td>
+              <td class="memberId user registerDate"></td>
             </tr>
             <tr>
               <th>최근 로그인 날짜</th>
-              <td>0000-00-00 00:00:00</td>
+              <td class="recentLoginDate"></td>
             </tr>
             <tr>
               <th>기타</th>
               <td>
-                <textarea name="member-etc-info" id="member-etc"></textarea>
+                <textarea name="description" id="member-etc"></textarea>
               </td>
             </tr>
           </table>

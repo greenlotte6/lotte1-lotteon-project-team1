@@ -1,5 +1,6 @@
 package com.example.lotteon.controller.admin.member;
 
+import com.example.lotteon.dto.user.MemberDTO;
 import com.example.lotteon.entity.user.Member;
 import com.example.lotteon.service.user.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +11,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -61,5 +64,12 @@ public class MemberManagementController {
     }
     model.addAttribute("pages", pages);
     return "/admin/member/member";
+  }
+
+  @PostMapping("/register")
+  public String register(@ModelAttribute MemberDTO member) {
+    log.info("register member: {}", member);
+    service.edit(member);
+    return "redirect:/admin/member/list";
   }
 }
