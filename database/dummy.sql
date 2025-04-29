@@ -152,3 +152,10 @@ INSERT INTO `terms` VALUES (2, "판매자 약관", "판매자 약관 테스트")
 INSERT INTO `terms` VALUES (3, "해외사업자 약관", "해외사업자 약관 테스트");
 INSERT INTO `terms` VALUES (4, "위치기반서비스 약관", "위치기반서비스 약관 테스트");
 INSERT INTO `terms` VALUES (5, "개인정보처리기본약관", "개인정보처리기본 약관 테스트");
+
+SELECT *
+FROM `point`
+JOIN `member`
+ON `member`.user_id = `point`.member_id
+JOIN `user`
+ON `member`.`user_id`=`user`.id;

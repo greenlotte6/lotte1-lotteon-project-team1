@@ -1,10 +1,13 @@
 package com.example.lotteon.entity.point;
 
+import com.example.lotteon.entity.user.Member;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,7 +26,9 @@ public class Point {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
 
-  private String memberId;
+  @ManyToOne
+  @JoinColumn(name = "member_id")
+  private Member member;
 
   @Column(name = "amount")
   private int amount;
