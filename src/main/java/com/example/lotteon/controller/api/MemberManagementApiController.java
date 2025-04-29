@@ -8,9 +8,11 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
@@ -29,6 +31,20 @@ public class MemberManagementApiController {
     return ResponseEntity.ok().body(jsonBody);
   }
 
+  private ResponseEntity<String> ok(String body) {
+    JsonObject jsonObject = new JsonObject();
+    jsonObject.addProperty("status", "ok");
+    jsonObject.addProperty("body", body);
+    String jsonBody = gson.toJson(jsonObject);
+    return ResponseEntity.ok().body(jsonBody);
+  }
+
+  @GetMapping("/search")
+  public ResponseEntity<MemberDTO> search(@RequestParam("id") String id) {
+    MemberDTO member = service.getById(id);
+    return ResponseEntity.ok(member);
+  }
+
   /*
    * Member 테이블의 level 수정을 위한 컨트롤러 매핑
    */
@@ -40,6 +56,7 @@ public class MemberManagementApiController {
 
   @PutMapping("/edit")
   public ResponseEntity<String> editMember(@RequestBody MemberDTO member) {
-    return null;
+    service.updateStatus(member);
+    return ok();
   }
 }
