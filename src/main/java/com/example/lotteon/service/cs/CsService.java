@@ -1,3 +1,7 @@
+/*
+    작성자 : 손준오(sjo112777)
+    내용: 공지사항 서비스
+*/
 package com.example.lotteon.service.cs;
 
 import com.example.lotteon.dto.PageRequestDTO;

@@ -1,8 +1,4 @@
-/*
-    작성자 : 손준오(sjo112777)
-
-*/
-package com.example.lotteon.entity.cs;
+package com.example.lotteon.entity.coupon;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -15,13 +11,12 @@ import lombok.*;
 @ToString
 @Builder
 @Entity
-@Table(name = "article_type")
-public class Article_Type {
+@Table(name = "coupon_type")
+public class Coupon_Type {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String name;
-    private String subtype_name;
 
+    private String name;    // 배송비 무료, 개별상품 할인, 생일 할인 등
 }

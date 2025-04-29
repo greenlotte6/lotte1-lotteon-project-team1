@@ -4,13 +4,13 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>쿠폰관리 > 쿠폰목록</title>
-  <link rel="stylesheet" href="/static/style/init.css"/>
-  <link rel="stylesheet" href="/static/style/common/admin/header.css"/>
-  <link rel="stylesheet" href="/static/style/common/admin/aside.css"/>
-  <link rel="stylesheet" href="/static/style/common/admin/content.css"/>
-  <link rel="stylesheet" href="/static/style/common/admin/footer.css"/>
-  <link rel="stylesheet" href="/static/style/common/pagination.css"/>
-  <link rel="stylesheet" href="/static/style/admin/coupon/coupon.css"/>
+  <link rel="stylesheet" href="/style/init.css"/>
+  <link rel="stylesheet" href="/style/common/admin/header.css"/>
+  <link rel="stylesheet" href="/style/common/admin/aside.css"/>
+  <link rel="stylesheet" href="/style/common/admin/content.css"/>
+  <link rel="stylesheet" href="/style/common/admin/footer.css"/>
+  <link rel="stylesheet" href="/style/common/pagination.css"/>
+  <link rel="stylesheet" href="/style/admin/coupon/coupon.css"/>
   <link
       rel="icon"
       href="https://static.lotteon.com/p/common/assets/favicon/1/favicon-32.png"
@@ -25,143 +25,19 @@
   ></script>
   <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
   <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
-  <script src="/static/js/admin/config/aside-drop.js"></script>
-  <script type="module" src="/static/js/common/admin/modal.mjs"></script>
+  <script src="/js/admin/config/aside-drop.js"></script>
+  <script type="module" src="/js/common/admin/modal.mjs"></script>
   <script
       type="module"
-      src="/static/js/common/admin/registryModal.js"
+      src="/js/common/admin/registryModal.js"
   ></script>
-  <script type="module" src="/static/js/admin/coupon/coupon.js"></script>
+  <script type="module" src="/js/admin/coupon/coupon.js"></script>
 </head>
 <body>
 <div id="wrapper">
-  <header>
-    <div class="header-wrapper">
-      <img
-          src="https://static.lotteon.com/p/common/foCommon/assets/img/logo_lotte-on@2x.png"
-          alt="logo"
-      />
-      <h1>ADMINISTRATOR</h1>
-      <ul>
-        <li>
-              <span class="greeting">
-                안녕하세요, [홍길동]님, 반갑습니다.
-              </span>
-        </li>
-        <li>
-          <a href="#"> 홈 </a>
-        </li>
-        <li>
-          <a href="#"> 로그아웃 </a>
-        </li>
-        <li>
-          <a href="#"> 고객센터 </a>
-        </li>
-      </ul>
-    </div>
-    <nav class="header-padding"></nav>
-  </header>
+  <th:block th:insert="~{/common/admin/header}"></th:block>
   <main>
-    <aside class="side-menu">
-      <ul>
-        <li id="settings-menu">
-          <i class="fa-solid fa-gear"></i>
-          <a href="/admin/config/basic"> 환경설정 </a>
-        </li>
-        <ul class="submenu settings" style="display: none">
-          <li>
-            <a href="/admin/config/basic"> 기본설정 </a>
-          </li>
-          <li>
-            <a href="/admin/config/banner"> 배너관리 </a>
-          </li>
-          <li>
-            <a href="/admin/config/policy"> 약관관리 </a>
-          </li>
-          <li>
-            <a href="/admin/config/category"> 카테고리 </a>
-          </li>
-          <li>
-            <a href="/admin/config/version"> 버전이력 </a>
-          </li>
-        </ul>
-        <li id="store-menu">
-          <i class="fa-solid fa-store"></i>
-          <a href="/admin/shop/list"> 상점관리 </a>
-        </li>
-        <ul class="submenu store" style="display: none">
-          <li>
-            <a href="/admin/shop/list"> 상점목록 </a>
-          </li>
-          <li>
-            <a href="/admin/shop/sales"> 매출현황 </a>
-          </li>
-        </ul>
-        <li id="member-menu">
-          <i class="fa-solid fa-users"></i>
-          <a href="/admin/member/list"> 회원관리 </a>
-        </li>
-        <ul class="submenu member" style="display: none">
-          <li>
-            <a href="/admin/member/list"> 회원목록 </a>
-          </li>
-          <li>
-            <a href="/admin/member/point"> 포인트 관리 </a>
-          </li>
-        </ul>
-        <li id="product-menu">
-          <i class="fa-solid fa-box-open"></i>
-          <a href="/admin/product/list"> 상품관리 </a>
-        </li>
-        <ul class="submenu product" style="display: none">
-          <li>
-            <a href="/admin/product/list"> 상품목록 </a>
-          </li>
-          <li>
-            <a href="/admin/product/register"> 상품등록 </a>
-          </li>
-        </ul>
-        <li id="order-menu">
-          <i class="fa-solid fa-credit-card"></i>
-          <a href="/admin/settings/order/list"> 주문관리 </a>
-        </li>
-        <ul class="submenu order" style="display: none">
-          <li>
-            <a href="/admin/order/list"> 주문현황 </a>
-          </li>
-          <li>
-            <a href="/admin/order/delivery"> 배송현황 </a>
-          </li>
-        </ul>
-        <li id="coupon-menu">
-          <i class="fa-solid fa-ticket"></i>
-          <a href="/admin/settings/coupon/list"> 쿠폰관리 </a>
-        </li>
-        <ul class="submenu coupon" style="display: none">
-          <li>
-            <a href="/admin/coupon/list"> 쿠폰목록 </a>
-          </li>
-          <li>
-            <a href="/admin/coupon/issued"> 쿠폰발급현황 </a>
-          </li>
-        </ul>
-        <li id="cs-menu">
-          <i class="fa-solid fa-headphones"></i>
-          <a href="/admin/cs/notice/list"> 고객센터 </a>
-        </li>
-        <ul class="submenu customer-service" style="display: none">
-          <li>
-            <a href="/admin/cs/notice/list"> 공지사항 </a>
-          </li>
-          <li>
-            <a href="/admin/cs/faq/list"> 자주묻는질문 </a>
-          </li>
-          <li>
-            <a href="/admin/cs/qna/list"> 문의하기 </a>
-          </li>
-        </ul>
-      </ul>
-    </aside>
+    <th:block th:insert="~{/common/admin/aside}"></th:block>
     <section id="content-area">
       <div class="content-area-title">
         <h3>쿠폰목록</h3>
@@ -292,86 +168,86 @@
     </div>
     <div class="registry-modal coupon-registry-modal">
       <div class="content">
-        <form action="#" method="POST" class="post-form">
+        <form th:action="@{/admin/coupon/coupon/register}" method="POST" enctype="multipart/form-data" class="post-form">
           <table class="post-form-table">
             <tbody>
             <tr>
               <th>발급처</th>
               <td>
-                <input type="text" placeholder="(주)다있어"/>
+                <input type="text" name="seller_id" placeholder="(주)다있어"/>
               </td>
             </tr>
             <tr>
               <th>쿠폰종류</th>
               <td>
                 <select
-                    name="couponCategory"
+                    name="type_id"
                     id="coupon-category"
                     class="search-filter"
                 >
-                  <option value="individual">개별상품할인</option>
-                  <option value="order">주문상품할인</option>
-                  <option value="delivery">배송비 무료</option>
+                  <option value="1">개별상품할인</option>
+                  <option value="2">주문상품할인</option>
+                  <option value="3">배송비 무료</option>
                 </select>
               </td>
             </tr>
             <tr>
               <th>쿠폰명</th>
               <td>
-                <input type="text"/>
+                <input type="text" name="name" placeholder="쿠폰명 입력"/>
               </td>
             </tr>
             <tr>
               <th>혜택</th>
               <td>
-                <input type="radio" type="1k"/>
+                <input type="radio" id="1k" name="benefit_id" value="1"/>
                 <label for="1k">1,000원 할인</label>
 
-                <input type="radio" type="2k"/>
+                <input type="radio" id="2k" name="benefit_id" value="2"/>
                 <label for="2k">2,000원 할인</label>
 
-                <input type="radio" type="3k"/>
+                <input type="radio" id="3k" name="benefit_id" value="3"/>
                 <label for="3k">3,000원 할인</label>
 
-                <input type="radio" type="4k"/>
+                <input type="radio" id="4k" name="benefit_id" value="4"/>
                 <label for="4k">4,000원 할인</label>
 
-                <input type="radio" type="5k"/>
+                <input type="radio" id="5k" name="benefit_id" value="5"/>
                 <label for="5k">5,000원 할인</label>
                 <br/>
-                <input type="radio" type="10p"/>
+                <input type="radio" id="10p" name="benefit_id" value="6"/>
                 <label for="10p">10% 할인</label>
 
-                <input type="radio" type="20p"/>
+                <input type="radio" id="20p" name="benefit_id" value="7"/>
                 <label for="20p">20% 할인</label>
 
-                <input type="radio" type="30p"/>
+                <input type="radio" id="30p" name="benefit_id" value="8"/>
                 <label for="30p">30% 할인</label>
 
-                <input type="radio" type="40p"/>
+                <input type="radio" id="40p" name="benefit_id" value="9"/>
                 <label for="40p">40% 할인</label>
 
-                <input type="radio" type="50p"/>
-                <label for="10p">50% 할인</label>
+                <input type="radio" id="50p" name="benefit_id" value="10"/>
+                <label for="50p">50% 할인</label>
                 <br/>
-                <input type="radio" type="free"/>
+                <input type="radio" id="free" name="benefit_id" value="11"/>
                 <label for="free">배송비 무료</label>
               </td>
             </tr>
             <tr>
               <th>사용기간</th>
               <td>
-                <input type="date" name="coupon-from" id="coupon-from"/>
-                <input type="date" name="coupon-to" id="coupon-to"/>
+                <input type="date" name="from" id="coupon-from"/>
+                <input type="date" name="to" id="coupon-to"/>
                 <span>또는 발급일로부터</span>
-                <input type="number" style="width: 30px"/>
+                <input type="number" id="coupon-days" style="width: 50px"/>
                 <span>일 이내</span>
               </td>
             </tr>
             <tr>
               <th>유의사항</th>
               <td>
-                <textarea name="coupon-desc" id="coupon-desc"></textarea>
+                <textarea name="description" id="coupon-desc"></textarea>
               </td>
             </tr>
             </tbody>
@@ -399,14 +275,24 @@
       <i class="fa-solid fa-angles-right"></i>
     </a>
   </section>
-  <footer>
-    <div id="footer-wrapper">
-          <span>
-            Copyright ©LotteON.co.kr All rights reserved. LotteON ADMINISTRATOR
-            Version 0.0.1
-          </span>
-    </div>
-  </footer>
+  <th:block th:insert="~{/common/admin/footer}"></th:block>
 </div>
 </body>
 </html>
+
+<script>
+  document.getElementById("coupon-days").addEventListener("input", function () {
+    const days = parseInt(this.value);
+    if (!isNaN(days)) {
+      const today = new Date();
+      const fromDate = new Date(today);
+      const toDate = new Date(today);
+      toDate.setDate(toDate.getDate() + days);
+
+      const formatDate = (date) => date.toISOString().split("T")[0];
+
+      document.getElementById("coupon-from").value = formatDate(fromDate);
+      document.getElementById("coupon-to").value = formatDate(toDate);
+    }
+  });
+</script>

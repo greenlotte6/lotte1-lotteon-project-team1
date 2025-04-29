@@ -94,7 +94,7 @@
                 <table>
                   <tr>
                       <td><p>([[${qnaDTO.subtype_name}]]) [[${qnaDTO.title}]]</p>
-                        [[${qnaDTO.member_id}]] <span> [[${qnaDTO.register_date}]]</span>
+                        [[${#strings.substring(qnaDTO.member_id, 0, 3) + '***'}]] <span> [[${qnaDTO.register_date}]]</span>
                       </td>
                   </tr>
                   <tr>

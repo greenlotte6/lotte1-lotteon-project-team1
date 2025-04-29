@@ -1,4 +1,8 @@
-package com.example.lotteon.controller.admin;
+/*
+    작성자 : 손준오(sjo112777)
+    내용: 관리자 고객센터 컨트롤러
+*/
+package com.example.lotteon.controller.admin.cs;
 
 import com.example.lotteon.dto.PageRequestDTO;
 import com.example.lotteon.dto.PageResponseDTO;

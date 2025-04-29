@@ -1,3 +1,7 @@
+/*
+    작성자 : 손준오(sjo112777)
+
+*/
 package com.example.lotteon.entity.cs;
 
 import com.example.lotteon.entity.user.Member;
