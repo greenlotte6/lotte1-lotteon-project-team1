@@ -1,7 +1,9 @@
 package com.example.lotteon.controller.admin.member;
 
 import com.example.lotteon.dto.user.MemberDTO;
+import com.example.lotteon.entity.point.Point;
 import com.example.lotteon.entity.user.Member;
+import com.example.lotteon.service.admin.point.PointService;
 import com.example.lotteon.service.user.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequiredArgsConstructor
 public class MemberManagementController {
 
+  private final PointService pointService;
   private final MemberService service;
 
   @GetMapping("/list")
@@ -62,6 +65,7 @@ public class MemberManagementController {
         break;
       }
     }
+    model.addAttribute("currentPage", page);
     model.addAttribute("pages", pages);
     return "/admin/member/member";
   }
@@ -74,7 +78,48 @@ public class MemberManagementController {
   }
 
   @GetMapping("/point")
-  public String point() {
+  public String point(@RequestParam(name = "page", defaultValue = "1") int page,
+      @RequestParam(name = "size", defaultValue = "10") int size,
+      Model model) {
+    Pageable pageable = PageRequest.of(page - 1, size);
+    Page<Point> pages = pointService.findAll(pageable);
+
+    model.addAttribute("currentPage", page);
+    model.addAttribute("pages", pages);
+    return "/admin/member/point";
+  }
+
+  @GetMapping("/point/search")
+  public String searchPoint(@RequestParam("filter") String filter,
+      @RequestParam("keyword") String keyword,
+      @RequestParam(name = "page", defaultValue = "1") int page,
+      @RequestParam(name = "size", defaultValue = "10") int size,
+      Model model) {
+    Pageable pageable = PageRequest.of(page - 1, size);
+
+    Page<Point> pages = null;
+    switch (filter) {
+      case "id": {
+        pages = pointService.findByMemberId(keyword, pageable);
+        break;
+      }
+      case "name": {
+        pages = pointService.findByMemberName(keyword, pageable);
+        break;
+      }
+      case "email": {
+        pages = pointService.findByEmail(keyword, pageable);
+        break;
+      }
+      case "contact": {
+        pages = pointService.findByContact(keyword, pageable);
+        break;
+      }
+    }
+
+    model.addAttribute("currentPage", page);
+    model.addAttribute("pages", pages);
+
     return "/admin/member/point";
   }
 }
