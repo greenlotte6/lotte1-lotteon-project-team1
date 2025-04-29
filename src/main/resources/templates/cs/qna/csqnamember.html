@@ -64,7 +64,9 @@
                               <span style="color: #808080;" th:if="${qna.status == 'open'}">검토중</span>
                               <span style="color: #0070C0;" th:if="${qna.status == 'close'}">답변완료</span>
                           </td>
-                          <td>[[${qna.member_id}]]</td>
+                          <td>
+                              <span th:text="${#strings.substring(qna.member_id, 0, 3) + '***'}"></span>
+                          </td>
                           <td>[[${qna.register_date}]]</td>
                       </tr>
 
