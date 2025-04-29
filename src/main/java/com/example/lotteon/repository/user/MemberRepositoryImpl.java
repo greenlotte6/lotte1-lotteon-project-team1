@@ -26,8 +26,8 @@ public class MemberRepositoryImpl implements MemberRepositoryCustom {
     return query.select(member.count())
         .from(member)
         .join(user)
-        .on(member.userCompositeKey.user.id.eq(user.id))
-        .where(member.userCompositeKey.user.registerDate.eq(date))
+        .on(member.memberId.user.id.eq(user.id))
+        .where(member.memberId.user.registerDate.eq(date))
         .fetchFirst();
   }
 
@@ -35,7 +35,7 @@ public class MemberRepositoryImpl implements MemberRepositoryCustom {
   public Member findById(String id) {
     return query.selectFrom(member)
         .join(user)
-        .on(member.userCompositeKey.user.id.eq(user.id))
+        .on(member.memberId.user.id.eq(user.id))
         .where(user.id.eq(id))
         .fetchOne();
   }
@@ -50,8 +50,8 @@ public class MemberRepositoryImpl implements MemberRepositoryCustom {
   public Page<Member> findAllById(Pageable pageable, String id) {
     List<Member> members = query.selectFrom(member)
         .join(user)
-        .on(member.userCompositeKey.user.id.eq(user.id))
-        .where(member.userCompositeKey.user.id.eq(id))
+        .on(member.memberId.user.id.eq(user.id))
+        .where(member.memberId.user.id.eq(id))
         .fetch();
     return new PageImpl<>(members, pageable, members.size());
   }
@@ -60,7 +60,7 @@ public class MemberRepositoryImpl implements MemberRepositoryCustom {
   public Page<Member> findAllByName(Pageable pageable, String name) {
     List<Member> members = query.selectFrom(member)
         .join(user)
-        .on(member.userCompositeKey.user.id.eq(user.id))
+        .on(member.memberId.user.id.eq(user.id))
         .where(member.name.eq(name))
         .fetch();
     return new PageImpl<>(members, pageable, members.size());
@@ -70,7 +70,7 @@ public class MemberRepositoryImpl implements MemberRepositoryCustom {
   public Page<Member> findAllByEmail(Pageable pageable, String email) {
     List<Member> members = query.selectFrom(member)
         .join(user)
-        .on(member.userCompositeKey.user.id.eq(user.id))
+        .on(member.memberId.user.id.eq(user.id))
         .where(member.name.eq(email))
         .fetch();
     return new PageImpl<>(members, pageable, members.size());
@@ -80,7 +80,7 @@ public class MemberRepositoryImpl implements MemberRepositoryCustom {
   public Page<Member> findAllByContact(Pageable pageable, String contact) {
     List<Member> members = query.selectFrom(member)
         .join(user)
-        .on(member.userCompositeKey.user.id.eq(user.id))
+        .on(member.memberId.user.id.eq(user.id))
         .where(member.name.eq(contact))
         .fetch();
     return new PageImpl<>(members, pageable, members.size());
@@ -91,8 +91,8 @@ public class MemberRepositoryImpl implements MemberRepositoryCustom {
   public void updateLevel(Member member) {
     query.update(this.member)
         .set(this.member.level, member.getLevel())
-        .where(this.member.userCompositeKey.user.id.eq(
-            member.getUserCompositeKey().getUser().getId()))
+        .where(this.member.memberId.user.id.eq(
+            member.getMemberId().getUser().getId()))
         .execute();
   }
 
@@ -102,7 +102,7 @@ public class MemberRepositoryImpl implements MemberRepositoryCustom {
     query.update(this.member)
         .set(this.member.status, member.getStatus())
         .where(
-            this.member.userCompositeKey.user.id.eq(member.getUserCompositeKey().getUser().getId()))
+            this.member.memberId.user.id.eq(member.getMemberId().getUser().getId()))
         .execute();
   }
 
@@ -112,16 +112,16 @@ public class MemberRepositoryImpl implements MemberRepositoryCustom {
     query.update(this.member)
         .set(this.member.name, member.getName())
         .set(this.member.gender, member.getGender())
-        .set(this.member.userCompositeKey.user.email,
-            member.getUserCompositeKey().getUser().getEmail())
-        .set(this.member.userCompositeKey.user.zip, member.getMemberId().getUser().getZip())
-        .set(this.member.userCompositeKey.user.address,
-            member.getUserCompositeKey().getUser().getAddress())
-        .set(this.member.userCompositeKey.user.addressDetail,
-            member.getUserCompositeKey().getUser().getAddressDetail())
+        .set(this.member.memberId.user.email,
+            member.getMemberId().getUser().getEmail())
+        .set(this.member.memberId.user.zip, member.getMemberId().getUser().getZip())
+        .set(this.member.memberId.user.address,
+            member.getMemberId().getUser().getAddress())
+        .set(this.member.memberId.user.addressDetail,
+            member.getMemberId().getUser().getAddressDetail())
         .set(this.member.description, member.getDescription())
         .where(
-            this.member.userCompositeKey.user.id.eq(member.getUserCompositeKey().getUser().getId()))
+            this.member.memberId.user.id.eq(member.getMemberId().getUser().getId()))
         .execute();
   }
 }

@@ -43,7 +43,7 @@ public class QnaService {
 
     // Member 객체 생성
     Member member = Member.builder()
-        .userCompositeKey(key)
+        .memberId(key)
         .build();
 
     // Qna 엔티티 생성
@@ -76,7 +76,7 @@ public class QnaService {
 
       return QnaDTO.builder()
           .id(qna.getId())
-          .member_id(qna.getMember_id().getUserCompositeKey().getUser().getId())
+          .member_id(qna.getMember_id().getMemberId().getUser().getId())
           .title(qna.getTitle())
           .content(qna.getContent())
           .register_date(qna.getRegister_date().toString())

@@ -30,7 +30,7 @@ public class MemberService {
         .user(user)
         .build();
     return Member.builder()
-        .userCompositeKey(compositeKey)
+        .memberId(compositeKey)
         .name(dto.getName())
         .gender(dto.getGender())
         .description(dto.getDescription())
@@ -52,7 +52,7 @@ public class MemberService {
 
   public MemberDTO getById(String id) {
     Member member = repo.findById(id);
-    UserDTO userDTO = mapper.map(member.getUserCompositeKey().getUser(), UserDTO.class);
+    UserDTO userDTO = mapper.map(member.getMemberId().getUser(), UserDTO.class);
     MemberIdDTO memberIdDTO = new MemberIdDTO(userDTO);
     return MemberDTO.builder()
         .memberId(memberIdDTO)
