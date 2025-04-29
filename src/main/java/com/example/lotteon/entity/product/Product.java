@@ -1,10 +1,12 @@
 package com.example.lotteon.entity.product;
 
+import com.example.lotteon.entity.seller.Seller;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinColumns;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
@@ -31,18 +33,18 @@ public class Product {
   @ManyToOne(fetch = FetchType.LAZY)
   private ProductSubCategory subCategory;
 
-//  @JoinColumn(name = "options_id")
-//  @ManyToOne(fetch = FetchType.LAZY)
-//  private ProductOptions options;
-
   @Column(name = "name")
   private String name;
 
   @Column(name = "description")
   private String description;
 
-  @Column(name = "company")
-  private String company;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumns({
+      @JoinColumn(name = "seller_user_id", referencedColumnName = "user_id"),
+      @JoinColumn(name = "seller_business_number", referencedColumnName = "business_number")
+  })
+  private Seller seller;
 
   @Column(name = "price")
   private int price;
