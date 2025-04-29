@@ -1,13 +1,18 @@
 package com.example.lotteon.repository.product;
 
 import com.example.lotteon.entity.product.Cart;
-import com.example.lotteon.entity.product.CartId;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
-@Repository
-public interface CartRepository extends JpaRepository<Cart, CartId> {
+public interface CartRepository extends JpaRepository<Cart, Long> {
+
     List<Cart> findByMemberId(String memberId);
+
+    Optional<Cart> findByProductIdAndMemberId(int productId, String memberId);
+
+    Cart findByMemberIdAndProduct_Id(String memberId, int productId);
+
+
 }

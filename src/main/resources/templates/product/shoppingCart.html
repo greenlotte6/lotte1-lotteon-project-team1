@@ -80,117 +80,101 @@
 
             <article class="article-body">
                 <div class="article-header">
-                  <div class="main-heder">
-                      <p>장바구니</p>
-                      <ul>
-                          <li>HOME > </li>
-                          <li>패션 · 의류 · 뷰티 > </li>
-                          <li>장바구니</li>
-                      </ul>
-                  </div>
-                <table class="list">
-                    <tr class="table_hd">
-                        <th><input type="checkbox"></th>
-                        <th></th>
-                        <th>상품명</th>
-                        <th>수량</th>
-                        <th>판매가</th>
-                        <th>할인</th>
-                        <th>포인트</th>
-                        <th>배송비</th>
-                        <th>총합</th>
-                    </tr>
-<!--                    <tr class="table_bd" th:each="product : ${cart}">-->
-<!--                        <td><input type="checkbox"></td>-->
-<!--                        <td>-->
-<!--                            <img src="/proDetail-img/img5.png" alt="#">-->
-<!--                        </td>-->
-<!--                        <td>[[${product.name}]]</td>-->
-<!--                        <td>[[${product.stock}]]</td>-->
-<!--                        <td>[[${product.price}]]</td>-->
-<!--                        <td>[[${product.discountRate}]]</td>-->
-<!--                        <td>[[${product.point}]]</td>-->
-<!--                        <td>무료배송</td>-->
-<!--                        <td class="sumprice" th:text="${product.price - (product.price/100) * product.discountRate + '원'}"></td>-->
-<!--                    </tr>-->
-                    <tr class="table_bd" th:each="cart : ${cart}">
-                        <td><input type="checkbox"></td>
-                        <td>
-                            <img src="/proDetail-img/img5.png" alt="#" th:src="@{${cart.product.imageUrl}}"> <!-- 이미지 URL이 Product에 있으면 이렇게 할 수 있습니다 -->
-                        </td>
-                        <td th:text="${cart.product.name}">상품명</td> <!-- Cart 객체에서 Product 객체로 접근 -->
-                        <td th:text="${cart.number}">수량</td> <!-- 수량은 Cart 객체에서 가져옵니다 -->
-                        <td th:text="${cart.product.price}">판매가</td> <!-- 판매가는 Product 객체에서 가져옵니다 -->
-                        <td th:text="${cart.product.discountRate}">할인율</td> <!-- 할인율은 Product 객체에서 가져옵니다 -->
-                        <td th:text="${cart.product.point}">포인트</td> <!-- 포인트는 Product 객체에서 가져옵니다 -->
-                        <td>무료배송</td> <!-- 고정으로 "무료배송" -->
-                        <td class="sumprice" th:text="${cart.product.price * cart.number - (cart.product.price * cart.number * cart.product.discountRate / 100)}">총합</td> <!-- 총합 계산 -->
-                    </tr>
-                </table>
-
-                <div class="shopping">
-                    <div class="delete">
-                        <button>선택삭제</button>
+                    <div class="main-heder">
+                        <p>장바구니</p>
+                        <ul>
+                            <li>HOME > </li>
+                            <li>패션 · 의류 · 뷰티 > </li>
+                            <li>장바구니</li>
+                        </ul>
                     </div>
-                    
-    
-                    <form action="#" class="shopping-Box">
 
+                    <!-- ✅ 선택삭제용 form 시작 -->
+                    <form method="post" action="/cart/deleteSelected">
+                        <table class="list">
+                            <thead>
+                            <tr class="table_hd">
+                                <th><input type="checkbox" id="selectAll"></th>
+                                <th></th>
+                                <th>상품명</th>
+                                <th>수량</th>
+                                <th>판매가</th>
+                                <th>할인</th>
+                                <th>포인트</th>
+                                <th>배송비</th>
+                                <th>총합</th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                            <tr class="table_bd" th:each="cart : ${cart}">
+                                <td><input type="checkbox" name="selectedIds" th:value="${cart.productId}" class="selectItem"></td>
+                                <td><img src="/proDetail-img/img5.png" alt="상품 이미지"></td>
+                                <td th:text="${cart.productName}">상품명</td>
+                                <td th:text="${cart.quantity}">수량</td>
+                                <td th:text="${cart.price}">판매가</td>
+                                <td th:text="${cart.discountRate}">할인율</td>
+                                <td th:text="${cart.point}">포인트</td>
+                                <td th:text="${cart.dil}">배송비</td>
+                                <td class="sumprice" th:text="${cart.totalPrice}">총합</td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="shopping">
+                            <div class="delete">
+                                <button type="submit">선택삭제</button>
+                            </div>
+                        </div>
+                    </form> <!-- ✅ form 끝 -->
+
+                    <!-- ✅ 주문하기용 form 별도 시작 -->
+                    <form method="post" action="/order" class="shopping-Box">
                         <div class="sum">
                             <p>전체합계</p>
                         </div>
+
                         <div class="form-box">
                             <div class="form-body">
                                 <span>상품수</span>
-                                <span>1</span>
+                                <span th:text="${productCount}">0</span>
                             </div>
-    
+
                             <div class="form-body">
                                 <span>상품금액</span>
-                                <span>27,000</span>
+                                <span th:text="${#numbers.formatInteger(totalProductPrice, 3, 'COMMA')}">0</span>
                             </div>
-    
+
                             <div class="form-body">
                                 <span>할인금액</span>
-                                <span>-1,350</span>
+                                <span th:text="'-' + ${#numbers.formatInteger(totalDiscount, 3, 'COMMA')}">0</span>
                             </div>
-    
+
                             <div class="form-body">
                                 <span>배송비</span>
-                                <span>0</span>
+                                <span th:text="${#numbers.formatInteger(totalShippingFee, 3, 'COMMA')}">0</span>
                             </div>
-    
+
                             <div class="form-body">
                                 <span>전체주문 금액</span>
-                                <span class="sumprice">25,650</span>
+                                <span class="sumprice" th:text="${#numbers.formatInteger(totalOrderPrice, 3, 'COMMA')}">0</span>
                             </div>
-    
+
                             <div class="form-body">
                                 <span>적립 포인트</span>
-                                <span>270</span>
+                                <span th:text="${totalPoint}">0</span>
                             </div>
                         </div>
 
                         <div class="form-btn">
                             <input type="submit" value="주문하기">
                         </div>
-                    </form>
-    
+                    </form> <!-- ✅ 주문하기 form 끝 -->
+
                 </div>
-                
-                   
-               </div>
-
-               
-
             </article>
 
-
         </div>
-
-
-
-
 
         <section class="pagination">
           <a class="page move" href="#">
