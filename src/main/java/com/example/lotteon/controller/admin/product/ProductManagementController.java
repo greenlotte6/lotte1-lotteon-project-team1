@@ -1,5 +1,6 @@
 package com.example.lotteon.controller.admin.product;
 
+import com.example.lotteon.dto.product.ProductDTO;
 import com.example.lotteon.entity.product.Product;
 import com.example.lotteon.entity.product.ProductOptions;
 import com.example.lotteon.service.product.ProductService;
@@ -80,6 +81,7 @@ public class ProductManagementController {
 
   @GetMapping("/edit")
   public String edit(@RequestParam(name = "id") int id, Model model) {
+    //TODO: Select All categories and subcategories and add them to model(04/30 01:09)
     Product product = service.getById(id);
     List<ProductOptions> options = service.getOptions(id);
     model.addAttribute("product", product);
@@ -88,8 +90,9 @@ public class ProductManagementController {
   }
 
   @PostMapping("/edit")
-  public String edit(@ModelAttribute Product product) {
-    //TODO Use ProductDTO instead of Product
+  public String edit(@RequestParam("id") int id,
+      ProductDTO product) {
+    service.edit(id, product);
     return "redirect:/admin/product/list";
   }
 }

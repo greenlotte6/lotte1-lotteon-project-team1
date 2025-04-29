@@ -56,12 +56,13 @@
               <th>1차 분류</th>
               <td>
                 <select
-                    name="category"
+                    name="category.name"
                     class="category-selector"
                     id="first-category"
                 >
+                  <!--TODO: Select All categories and subcategories and render it using th:each(4/30 01:08)-->
                   <option th:text="${product.getCategory().getName()}"
-                          th:value="${product.getCategory().getId()}">1차분류 선택
+                          th:value="${product.getCategory().getName()}">1차분류 선택
                   </option>
                 </select>
               </td>
@@ -70,12 +71,12 @@
               <th>2차 분류</th>
               <td>
                 <select
-                    name="subCategory"
+                    name="subCategory.name"
                     class="category-selector"
                     id="second-category"
                 >
                   <option th:text="${product.getSubCategory().getName()}"
-                          th:value="${product.getSubCategory().getId()}">2차분류 선택
+                          th:value="${product.getSubCategory().getName()}">2차분류 선택
                   </option>
                 </select>
               </td>
@@ -213,6 +214,16 @@
           </p>
           <table class="post-form-table">
             <tbody>
+            <tr>
+              <th>판매자</th>
+              <td>
+                <input class="fake-input" type="text"
+                       readonly
+                       style="border: none;"
+                       name="seller.companyName"
+                       th:value="${product.getSeller().getCompanyName()}"/>
+              </td>
+            </tr>
             <tr>
               <th>상품 상태</th>
               <td th:if="${product.getStatus().equals('on_sale')}">

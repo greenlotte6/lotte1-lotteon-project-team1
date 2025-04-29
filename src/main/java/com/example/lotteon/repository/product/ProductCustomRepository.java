@@ -22,6 +22,8 @@ public interface ProductCustomRepository {
 
   void updateStatusById(int id, String status);
 
+  void updateById(int id, Product product);
+
   void deleteById(int id);
 
 

@@ -62,6 +62,15 @@ public class ProductCustomRepositoryImpl implements ProductCustomRepository {
 
   @Override
   @Transactional
+  public void updateById(int id, Product product) {
+    //TODO Impl this method(04/30 01:08)
+    query.update(this.product)
+        .where(this.product.id.eq(id))
+        .execute();
+  }
+
+  @Override
+  @Transactional
   public void deleteById(int id) {
     query.delete(product)
         .where(product.id.eq(id))
