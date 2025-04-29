@@ -61,40 +61,45 @@
                 </div>
              </div>
 
-                <div class="grid" th:each="products : ${products}">
-                    <a th:href="@{/product/detail(id=${products.id})}" class="product">
-                        <div class="grid-img">
-                            <img th:src="@{/proDetail-img/img5.png}" alt="이미지">
-                        </div>
+                <div class="grid">
+                    <div class="product" th:each="products : ${products}">
+                        <a th:href="@{/product/detail(id=${products.id})}">
+                            <div class="grid-img">
+                                <img th:src="@{/proDetail-img/img5.png}" alt="이미지">
+                            </div>
 
-                        <div class="icon">
-                            <button><i class="fa-regular fa-heart" id="heart"></i></button>
-                            <button><i class="fa-solid fa-cart-plus"></i></button>
-                        </div>
-                        
-                        <div class="Protitle">
-                            <span>[[${products.getCompany()}]]</span>
-                            <span>[[${products.getName()}]]</span>
-                        </div>
+                            <div class="icon">
+                                <button><i class="fa-regular fa-heart" id="heart"></i></button>
+                                <button><i class="fa-solid fa-cart-plus"></i></button>
+                            </div>
 
-                        <div class="Proprice">
-                            <del>[[${products.getPrice()}]]원</del>
-                        </div>
-                        <div class="sela-price">
-                            <span class="sale">[[${products.getDiscountRate()}]]%</span>
-                            <span th:text="${products.getPrice() - (products.getPrice()/100) * products.getDiscountRate() + '원'}"></span>
-                        </div>
-                        <div class="rank">
-                            <i class="fa-solid fa-star"></i>
-                            <span>5.0 |</span>
-                            <span>리뷰 1</span>
-                        </div>
+                            <div class="Protitle">
+                                <span>[[${products.getCompany()}]]</span>
+                                <span>[[${products.getName()}]]</span>
+                            </div>
 
-                        <div class="free">
-                            <span>무료배송</span>
-                        </div>
-                    </a>
-                </div>
+                            <div class="Proprice">
+                                <del>[[${products.getPrice()}]]원</del>
+                            </div>
+
+                            <div class="sela-price">
+                                <span class="sale">[[${products.getDiscountRate()}]]%</span>
+                                <span th:text="${products.getPrice() - (products.getPrice()/100) * products.getDiscountRate() + '원'}"></span>
+                            </div>
+
+                            <div class="rank">
+                                <i class="fa-solid fa-star"></i>
+                                <span>5.0 |</span>
+                                <span>리뷰 1</span>
+                            </div>
+
+                            <div class="free">
+                                <span>무료배송</span>
+                            </div>
+                        </a>
+                    </div> <!-- .product 끝 -->
+                </div> <!-- .grid 끝 -->
+
 
             </article>
 

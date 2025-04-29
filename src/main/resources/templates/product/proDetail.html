@@ -113,10 +113,11 @@
 
                     <div class="info-list">
                         <div class="pro-top">
-                            <input type="hidden" name="id" th:value="${prodtos.id}" />
-                            <span>상품번호 : 10010118412</span>
+                            <input type="hidden" name="id" th:value="${prodtos.id}" /> <!-- 상품 ID -->
+                            <span>상품번호 : [[${prodtos.id}]]</span>
                             <span>(주)[[${prodtos.company}]]</span>
                         </div>
+
                         <div class="pro-name">
                             <span>[[${prodtos.name}]]</span>
                             <div>
@@ -124,14 +125,13 @@
                                 <a href="#">상품평보기</a>
                             </div>
                         </div>
+
                         <div class="pro-price">
                             <del>[[${prodtos.price}]]원</del>
                             <span class="sale">[[${prodtos.discountRate}]]%↓</span>
-                            <button type="button">쿠폰받기</button>
-                            <span><i class="fa-regular fa-square-minus"></i>무이자할부</span>
-                            <span><i class="fa-regular fa-credit-card"></i>카드추가혜택</span>
-                            <p th:text="${prodtos.getPrice - (prodtos.getPrice/100) * prodtos.getDiscountRate + '원'}"></p>
+                            <p th:text="${prodtos.getPrice - (prodtos.getPrice/100) * prodtos.getDiscountRate + '원'}"></p> <!-- 할인된 가격 -->
                         </div>
+
                         <div class="delivery">
                             <p>
                                 <span>무료배송</span>
@@ -144,8 +144,9 @@
                             <p>원산지 - 상세설명 참고</p>
                         </div>
 
+                        <!-- 사이즈 선택 -->
                         <div class="size-option">
-                            <select>
+                            <select name="size"> <!-- 사이즈 선택 추가 -->
                                 <option value="default" selected>선택하기</option>
                                 <option value="S">S</option>
                                 <option value="M">M</option>
@@ -154,12 +155,13 @@
                             </select>
                         </div>
 
+                        <!-- 수량 조정 -->
                         <div class="count-option">
                             <p>선택한 상품명</p>
                             <div class="count-main">
                                 <div class="count">
                                     <button type="button" class="minus">-</button>
-                                    <input type="number" value="1" min="1" class="count-input">
+                                    <input type="number" name="quantity" value="1" min="1" class="count-input" id="quantity"> <!-- 수량을 input 태그로 입력 -->
                                     <button type="button" class="plus">+</button>
                                 </div>
                                 <div>
@@ -168,10 +170,11 @@
                             </div>
                             <div class="sum-price">
                                 <p>총 상품금액</p>
-                                <p></p>
+                                <p id="total-price"></p>
                             </div>
                         </div>
 
+                        <!-- 장바구니와 구매하기 버튼 -->
                         <div class="cart-and-purchase">
                             <input type="submit" value="장바구니" />
                             <button type="submit" formaction="/product/order" formmethod="post">구매하기</button>
@@ -182,6 +185,7 @@
                         </a>
                     </div>
                 </form>
+
 
 
                 <div class="details-body" id="details-body">

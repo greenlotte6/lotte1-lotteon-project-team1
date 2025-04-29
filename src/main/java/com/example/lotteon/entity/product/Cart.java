@@ -1,12 +1,8 @@
 package com.example.lotteon.entity.product;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
-
 import java.time.LocalDate;
 
 @Entity
@@ -14,7 +10,7 @@ import java.time.LocalDate;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@IdClass(CartId.class) // ✅ 복합키 클래스 지정
+@IdClass(CartId.class) // ✅ 복합키 설정
 public class Cart {
 
     @Id
@@ -29,12 +25,13 @@ public class Cart {
     @CreationTimestamp
     private LocalDate registerDate;
 
-    @Column
     private int quantity;
-
-    @Column
     private int price;
-
-    @Column
     private int totalPrice;
+    private int dil;
+
+    public void updateQuantity(int newQuantity, int pricePerItem) {
+        this.quantity = newQuantity;
+        this.totalPrice = newQuantity * pricePerItem;
+    }
 }
