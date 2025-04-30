@@ -32,8 +32,33 @@
   <div class="terms-wrapper">
     <h1>LotteON 서비스 이용약관</h1>
 
-    <th:block th:insert="~{/common/policy/_termsMenu}"></th:block>
-
+    <ul class="terms-tabs">
+      <li >
+        <a th:href="@{/policy/buyer}">
+          <i class="fa-solid fa-cart-shopping"></i> 구매회원 약관
+        </a>
+      </li>
+      <li>
+        <a th:href="@{/policy/seller}">
+          <i class="fa-solid fa-store"></i> 판매회원 약관
+        </a>
+      </li>
+      <li>
+        <a th:href="@{/policy/finance}">
+          <i class="fa-solid fa-credit-card"></i> 전자금융거래
+        </a>
+      </li>
+      <li>
+        <a th:href="@{/policy/location}">
+          <i class="fa-solid fa-location-dot"></i> 위치정보 약관
+        </a>
+      </li>
+      <li class="active">
+        <a th:href="@{/policy/privacy}">
+          <i class="fa-solid fa-user-shield"></i> 개인정보처리
+        </a>
+      </li>
+    </ul>
     <!-- 약관 제목 -->
     <div>
       <div class="terms-title" th:text="${terms.get(0).getTitle()}"></div>

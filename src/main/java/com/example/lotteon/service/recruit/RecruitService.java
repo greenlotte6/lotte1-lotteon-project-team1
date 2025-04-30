@@ -2,8 +2,13 @@ package com.example.lotteon.service.recruit;
 
 import com.example.lotteon.entity.recruit.Recruit;
 import com.example.lotteon.repository.recruit.RecruitRepository;
+
+
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,4 +37,7 @@ public class RecruitService {
 
     return recruitRepository.findAll();
   }
+
+
+
 }
