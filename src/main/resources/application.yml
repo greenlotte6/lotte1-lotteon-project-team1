@@ -21,7 +21,7 @@ spring:
 
   application:
     name: lotteon
-    version: 0.0.7
+    version: 0.0.9
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -75,6 +75,8 @@ lotteon:
           copyright: basic_config::copyright;
   upload:
     path: /var/www/upload
+    product:
+      path: /var/www/upload/product
 ---
 # 개발용 설정
 spring:
@@ -99,7 +101,7 @@ spring:
 
   application:
     name: lotteon
-    version: 0.0.7
+    version: 0.0.9
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -158,6 +160,8 @@ lotteon:
           copyright: basic_config::copyright;
   upload:
     path: C:\var\www\upload
+    product:
+      path: C:\var\www\upload\product
 
 
 ---

@@ -162,6 +162,7 @@ CREATE TABLE IF NOT EXISTS `lotteon`.`product` (
   `business_class` VARCHAR(30) NOT NULL COMMENT 'business_class = 사업자구분\n',
   `receipt_issuable` ENUM("0", "1") NOT NULL COMMENT 'receipt_issuable = 영수증 발행 가능 여부(\"0\" = false, \"1\"=true)',
   `origin` VARCHAR(20) NOT NULL COMMENT 'origin = 원산지',
+  `quality` ENUM("new", "used") NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_product_product_image_idx` (`image_id` ASC) VISIBLE,
   INDEX `fk_product_product_category1_idx` (`category_id` ASC) VISIBLE,
@@ -224,7 +225,6 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `lotteon`.`order` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `member_id` VARCHAR(16) NOT NULL,
-  `delivery_number` VARCHAR(45) NULL,
   `product_id` INT NOT NULL,
   `count` INT NOT NULL,
   `price_total` INT NOT NULL,
@@ -277,6 +277,7 @@ ENGINE = InnoDB;
 -- Table `lotteon`.`delivery`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `lotteon`.`delivery` (
+  `id` INT NOT NULL AUTO_INCREMENT,
   `order_id` INT NOT NULL,
   `member_id` VARCHAR(16) NOT NULL,
   `delivery_number` VARCHAR(16) NOT NULL COMMENT '운송장번호',
@@ -288,7 +289,7 @@ CREATE TABLE IF NOT EXISTS `lotteon`.`delivery` (
   `description` TEXT NULL,
   `delivery_company_id` INT NOT NULL,
   `status_id` INT NOT NULL,
-  PRIMARY KEY (`order_id`),
+  PRIMARY KEY (`id`),
   INDEX `fk_delivery_order1_idx` (`order_id` ASC) VISIBLE,
   INDEX `fk_delivery_member1_idx` (`member_id` ASC) VISIBLE,
   INDEX `fk_delivery_delivery_state1_idx` (`status_id` ASC) VISIBLE,
@@ -402,6 +403,7 @@ CREATE TABLE IF NOT EXISTS `lotteon`.`recruit` (
   `date_from` DATE NOT NULL,
   `date_to` DATE NOT NULL,
   `content` TEXT NOT NULL,
+  `description` ENUM("모집중", "모집완료") NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_recruit_recruit_department1_idx` (`department_id` ASC) VISIBLE,
   INDEX `fk_recruit_recruit_career1_idx` (`career_id` ASC) VISIBLE,
@@ -488,7 +490,7 @@ ENGINE = InnoDB;
 -- Table `lotteon`.`coupon`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `lotteon`.`coupon` (
-  `id` INT NOT NULL DEFAULT 202500001,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `type_id` INT NOT NULL,
   `name` VARCHAR(30) NOT NULL,
   `benefit_id` INT NOT NULL,
@@ -499,7 +501,7 @@ CREATE TABLE IF NOT EXISTS `lotteon`.`coupon` (
   `used_amount` INT NOT NULL DEFAULT 0,
   `status` ENUM("issued", "used") NOT NULL DEFAULT 'issued',
   `description` TEXT NULL,
-  `issued_date` DATE NOT NULL,
+  `issued_date` DATETIME NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_coupon_coupon_type1_idx` (`type_id` ASC) VISIBLE,
   INDEX `fk_coupon_coupon_benefit1_idx` (`benefit_id` ASC) VISIBLE,

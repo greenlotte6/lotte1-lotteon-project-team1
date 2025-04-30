@@ -57,6 +57,7 @@ public class ProductService {
 
   public void edit(int id, ProductDTO productDTO) {
     Product product = modelMapper.map(productDTO, Product.class);
+    repo.updateById(id, product);
   }
 
   public void deleteMultipleIds(List<Integer> ids) {

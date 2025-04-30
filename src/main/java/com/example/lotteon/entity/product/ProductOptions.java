@@ -26,7 +26,7 @@ public class ProductOptions {
   private Product product;
 
   @Column(name = "name")
-  private String name;
+  private String option;
 
   @Column(name = "value")
   private String value;

@@ -124,10 +124,17 @@ INSERT INTO `seller` VALUES ("112-12-11119", "seller11", "김유신", "(주)행�
 INSERT INTO `product_image` VALUES (1, "/upload/product/t-shirt.jpg", "/upload/product/t-shirt.jpg" ,"/upload/product/t-shirt.jpg", "/upload/product/t-shirt.jpg");
 
 INSERT INTO `product_category` VALUES(1, "의류");
+INSERT INTO `product_category` VALUES(2, "화장품");
+
 
 INSERT INTO `product_subcategory` VALUES(1, "상의");
+INSERT INTO `product_subcategory` VALUES(2, "하의");
+INSERT INTO `product_subcategory` VALUES(3, "악세서리");
+INSERT INTO `product_subcategory` VALUES(4, "폼클렌징");
+INSERT INTO `product_subcategory` VALUES(5, "파운데이션");
+INSERT INTO `product_subcategory` VALUES(6, "마스크팩");
 
-INSERT INTO `product` VALUES(1, 1, 1,"112-12-12345", "seller1", "맨투맨", "맨투맨입니다", 39000, 39, 10, 200, 2500, 1, "on_sale", 1, "통신판매업", 1, "국내산");
+INSERT INTO `product` VALUES(1, 1, 1,"112-12-12345", "seller1", "맨투맨", "맨투맨입니다", 39000, 39, 10, 200, 2500, 1, "on_sale", 1, "통신판매업", 1, "국내산", "new");
 
 INSERT INTO `product_options` VALUES (1, 1, "사이즈", "S");
 INSERT INTO `product_options` VALUES (2, 1, "사이즈", "M");
@@ -154,9 +161,29 @@ INSERT INTO `terms` VALUES (3, "해외사업자 약관", "해외사업자 약관
 INSERT INTO `terms` VALUES (4, "위치기반서비스 약관", "위치기반서비스 약관 테스트");
 INSERT INTO `terms` VALUES (5, "개인정보처리기본약관", "개인정보처리기본 약관 테스트");
 
-SELECT *
-FROM `point`
-JOIN `member`
-ON `member`.user_id = `point`.member_id
-JOIN `user`
-ON `member`.`user_id`=`user`.id;
+#비디오
+INSERT INTO video (youtube_url, thumbnail_url, title, description)
+VALUES 
+('https://www.youtube.com/watch?v=9ZtsI8Hn1rg', 'https://img.youtube.com/vi/9ZtsI8Hn1rg/0.jpg', '[롯데ON] 4월9일 롯데를 가지세요! 4,300만의 브랜드 대축제!', '4.9 당신은 여기로 옵니다. 롯데 온라인 쇼핑 페스타');
+
+#쿠폰 타입
+INSERT INTO coupon_type (id, name) VALUES
+(1, '개별상품할인'),
+(2, '주문상품할인'),
+(3, '배송비 무료');
+
+#쿠폰혜택
+INSERT INTO coupon_benefit(id, benefit) VALUES
+(1, '1,000원 할인'),
+(2, '2,000원 할인'),
+(3, '3,000원 할인'),
+(4, '4,000원 할인'),
+(5, '5,000원 할인'),
+(6, '10% 할인'),
+(7, '20% 할인'),
+(8, '30% 할인'),
+(9, '40% 할인'),
+(10, '50% 할인'),
+(11, '배송비 무료');
+
+SELECT `id` FROM `product_options` order BY `id` DESC LIMIT 1;

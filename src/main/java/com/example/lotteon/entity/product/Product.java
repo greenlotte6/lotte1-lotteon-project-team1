@@ -1,7 +1,9 @@
 package com.example.lotteon.entity.product;
 
+import com.example.lotteon.converter.BooleanToEnumStringConverter;
 import com.example.lotteon.entity.seller.Seller;
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
@@ -69,12 +71,14 @@ public class Product {
   private String status;
 
   @Column(name = "is_vat_free")
+  @Convert(converter = BooleanToEnumStringConverter.class)
   private boolean isVatFree;
 
   @Column(name = "business_class")
   private String businessClassification;
 
   @Column(name = "receipt_issuable")
+  @Convert(converter = BooleanToEnumStringConverter.class)
   private boolean receiptIssuable;
 
   @Column(name = "origin")
