@@ -6,6 +6,7 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -44,5 +45,6 @@ public class Coupon {
     private String description;
 
     @CreationTimestamp
-    private LocalDate issued_date;
+    private LocalDateTime issued_date;
+
 }

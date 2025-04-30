@@ -14,6 +14,9 @@ import org.springframework.data.domain.Sort;
 @Builder
 public class PageRequestDTO {
 
+    private int id;
+    private String seller_id;
+
     @Builder.Default
     private int no = 1;
 
