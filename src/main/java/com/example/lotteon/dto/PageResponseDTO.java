@@ -15,6 +15,8 @@ public class PageResponseDTO<T> {
 
     private List<T> dtoList; // 제네릭 타입으로 변경
 
+    private int id;
+    private int seller_id;
     private int type_id;
     private int pg;
     private int size;

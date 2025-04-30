@@ -11,7 +11,7 @@ import lombok.*;
 @ToString
 @Builder
 @Entity
-@Table(name = "coupon_benfit")
+@Table(name = "coupon_benefit")
 public class Coupon_Benefit {
 
     @Id
