@@ -3,6 +3,8 @@ package com.example.lotteon.controller.policy;
 import com.example.lotteon.dto.TermsDTO;
 import com.example.lotteon.service.TermsService;
 import java.util.List;
+
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -32,6 +34,7 @@ public class PolicyTermsController {
     return "/common/policy/seller";
   }
 
+
   // 전자금융거래 약관
   @GetMapping("/policy/finance")
   public String finance(Model model) {
@@ -55,6 +58,8 @@ public class PolicyTermsController {
     model.addAttribute("terms", termsDTO);
     return "/common/policy/privacy";
   }
+
+
 
 
 }

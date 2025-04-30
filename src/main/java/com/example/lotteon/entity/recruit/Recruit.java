@@ -43,4 +43,6 @@ public class Recruit {
     // getter와 setter 추가
     private String content;
 
+
+
 }

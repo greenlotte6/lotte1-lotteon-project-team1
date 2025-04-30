@@ -22,7 +22,7 @@ public class RecruitCareer {
   @Id
   private int id;
 
-  @Column(name = "career_year")
-  private String careerYear;
+  //@Column(name = "career_year")
+  private String career_year;
 
 }

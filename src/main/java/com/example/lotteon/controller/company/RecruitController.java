@@ -5,6 +5,7 @@ import com.example.lotteon.service.recruit.RecruitService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -44,4 +45,9 @@ public class RecruitController {
     model.addAttribute("posts", recruitService.getAllRecruits());
     return "/common/company/recruit";
   }
+
+
+
+
+
 }
