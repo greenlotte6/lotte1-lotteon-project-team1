@@ -41,26 +41,29 @@
 
         <div class="main_content_detail">
 
-          <form name="formRegister" th:action="@{/general}" method="post">
+          <form class="formRegister" name="formRegister" th:action="@{/general}" method="post">
             <table style="border-collapse: collapse;">
               <tr>
                 <th>아이디<span style="color: red;">*</span></th>
                 <td>
-                  <input type="text" name="id" placeholder="아이디 입력" maxlength="10">
+                  <input type="text" name="memberId.user.id" placeholder="아이디 입력" maxlength="10">
                   <button id="btnCheckId" type="button">중복체크</button>
                   <span class="IdResult" style="margin-left: 10px; color: #333333;">영문·숫자 조합 4~10자 이내</span>
                 </td>
               </tr>
               <tr>
                 <th>비밀번호<span style="color: red;">*</span></th>
-                <td><input type="password" name="password" placeholder="비밀번호 입력" maxlength="16">
+                <td><input type="password" name="memberId.user.password"
+                           placeholder="비밀번호 입력"
+                           maxlength="16">
                   <span class="passResult" style="margin-left: 10px; color: #333333;">비밀번호는 8-16자리 이내, 영문ㆍ숫자ㆍ특수문자 조합</span>
                 </td>
 
               </tr>
               <tr>
                 <th>비밀번호 확인<span style="color: red;">*</span></th>
-                <td><input type="password" name="password2" placeholder="비밀번호 확인입력" maxlength="16">
+                <td><input type="password" name="passwordConfirm" placeholder="비밀번호 확인입력"
+                           maxlength="16">
                 </td>
               </tr>
               <tr>
@@ -74,22 +77,32 @@
                 <th style="padding: 20px;">성별<span style="color: red;">*</span></th>
                 <td>
                   <label><input type="radio" name="gender" value="M" checked> 남</label>
-                  <label style="margin-left: 20px;"><input type="radio" name="gender" value="F">
+                  <label style="margin-left: 20px;"><input type="radio" name="memberId.user.gender"
+                                                           value="F">
                     여</label>
                 </td>
               </tr>
               <tr>
                 <th>휴대폰<span style="color: red;">*</span></th>
                 <td>
-                  <input type="text" name="contact" placeholder="휴대폰 입력" maxlength="13">
+                  <input type="text" name="memberId.user.contact" placeholder="휴대폰 입력"
+                         maxlength="13">
                   <button id="btnSendHp" type="button">휴대폰 인증</button>
                   <span class="hpResult"></span>
                 </td>
               </tr>
               <tr>
+                <th>
+                  생년월일
+                </th>
+                <td style="border: 1px solid #a6a6a6">
+                  <input type="date" name="birthDate"/>
+                </td>
+              </tr>
+              <tr>
                 <th>이메일<span style="color: red;">*</span></th>
                 <td>
-                  <input type="email" name="email" placeholder="이메일 입력"/>
+                  <input type="email" name="memberId.user.email" placeholder="이메일 입력"/>
                   <button id="btnSendEmail" type="button">인증코드 전송</button>
                   <span class="emailResult"></span>
                   <div class="auth" style="display: none">
@@ -101,18 +114,20 @@
               <tr>
                 <th>주소</th>
                 <td>
-                  <input type="text" id="zip" name="zip" placeholder="우편번호"/>
+                  <input type="text" id="zip" name="memberId.user.zip" placeholder="우편번호"/>
                   <button type="button" onclick="postcode()">우편번호 찾기</button>
                   <br>
-                  <input type="text" id="addr1" name="address" placeholder="주소 검색"/><br>
-                  <input type="text" id="addr2" name="addressDetail" placeholder="상세주소 입력"/>
+                  <input type="text" id="addr1" name="memberId.user.address"
+                         placeholder="주소 검색"/><br>
+                  <input type="text" id="addr2" name="memberId.user.addressDetail"
+                         placeholder="상세주소 입력"/>
                 </td>
               </tr>
 
             </table>
             <p style="margin-top: 10px; color: #666666;"><span style="color: red;">*</span>필수입력</p>
 
-            <button class="agree-button">회원가입</button>
+            <button type="submit" class="agree-button">회원가입</button>
           </form>
 
 
