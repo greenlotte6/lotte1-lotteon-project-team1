@@ -1,6 +1,7 @@
 package com.example.lotteon.service.product;
 
 import com.example.lotteon.entity.product.Cart;
+import com.example.lotteon.entity.product.CartId;
 import com.example.lotteon.entity.product.Product;
 import com.example.lotteon.repository.product.CartRepository;
 import com.example.lotteon.repository.product.ProductRepository;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -24,21 +26,23 @@ public class ShoppingCartService {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new RuntimeException("상품을 찾을 수 없습니다."));
 
-        Cart existingCart = cartRepository.findByMemberIdAndProduct_Id(memberId, productId);
+        // 복합키 기준으로 기존 Cart 찾기
+        Optional<Cart> optionalCart = cartRepository.findByMemberIdAndProductId(memberId, productId);
 
-        if (existingCart != null) {
-            // 이미 장바구니에 존재하면 수량만 업데이트
+        if (optionalCart.isPresent()) {
+            Cart existingCart = optionalCart.get();
             int newQuantity = existingCart.getQuantity() + quantity;
             existingCart.updateQuantity(newQuantity, product.getPrice());
             cartRepository.save(existingCart);
         } else {
             Cart newCart = Cart.builder()
                     .memberId(memberId)
+                    .productId(product.getId())
                     .product(product)
                     .quantity(quantity)
                     .price(product.getPrice())
                     .totalPrice(product.getPrice() * quantity)
-                    .dil(3000) // 배송비는 최초 1회만 부가
+                    .dil(3000)
                     .build();
             cartRepository.save(newCart);
         }
@@ -49,8 +53,9 @@ public class ShoppingCartService {
         return cartRepository.findByMemberId(memberId);
     }
 
-    public void deleteByIds(List<Long> ids) {
-        cartRepository.deleteAllByIdInBatch(ids);
+    @Transactional
+    public void deleteByCompositeIds(List<CartId> cartIds) {
+        cartRepository.deleteAllByIdInBatch(cartIds);
     }
 }
 

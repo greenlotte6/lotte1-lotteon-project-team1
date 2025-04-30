@@ -4,6 +4,7 @@ import com.example.lotteon.dto.user.UserDTO;
 import com.example.lotteon.entity.user.User;
 import com.example.lotteon.exception.EntityAlreadyExistsException;
 import com.example.lotteon.repository.UserRepository;
+import com.example.lotteon.repository.user.MemberRepository;
 import jakarta.mail.Message;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
@@ -24,10 +25,12 @@ import org.springframework.stereotype.Service;
 public class UserService {
 
   private final UserRepository userRepository;
+  private final MemberRepository memberRepository;
   private final PasswordEncoder passwordEncoder;
   private final ModelMapper mapper;
   private final JavaMailSender mailSender;
   private final HttpServletRequest request;
+
 
   public void register(UserDTO userDTO, String role) throws EntityAlreadyExistsException {
     log.info("Registry requested for userDTO: {}", userDTO);
@@ -99,4 +102,11 @@ public class UserService {
     }
     return String.valueOf(code);
   }
+
+  public UserDTO getUserInfo(String userId) {
+    return userRepository.findById(userId)
+            .map(user -> mapper.map(user, UserDTO.class))
+            .orElseThrow(() -> new RuntimeException("사용자 정보를 찾을 수 없습니다."));
+  }
+
 }

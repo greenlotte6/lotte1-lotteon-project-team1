@@ -102,18 +102,16 @@
                         <th>배송비</th>
                         <th>총합</th>
                     </tr>
-                    <tr class="table_bd">
-                        <td><input type="checkbox"></td>
-                        <td>
-                            <img src="/proDetail-img/img5.png" alt="#">
-                        </td>
-                        <td>상품소개입니다.</td>
-                        <td>1</td>
-                        <td>27,000원</td>
-                        <td>5%</td>
-                        <td>270</td>
-                        <td>무료배송</td>
-                        <td class="sumprice">25,650</td>
+                    <tr class="table_bd" th:each="cart : ${cart}">
+                        <td><input type="checkbox" name="productIds" th:value="${cart.productId}" class="selectItem"></td>
+                        <td><img src="/proDetail-img/img5.png" alt="상품 이미지"></td>
+                        <td th:text="${cart.productName}">상품명</td>
+                        <td th:text="${cart.quantity}">수량</td>
+                        <td th:text="${cart.price}">판매가</td>
+                        <td th:text="${cart.discountRate}">할인율</td>
+                        <td th:text="${cart.point}">포인트</td>
+                        <td th:text="${cart.dil}">배송비</td>
+                        <td class="sumprice" th:text="${cart.totalPrice}">총합</td>
                     </tr>
                 </table>
 
@@ -124,42 +122,41 @@
                                 <div class="delivery-title">
                                     <p>배송정보</p>
                                 </div>
-                                
+
                                 <div class="delivery-info">
                                     <div>
                                         <span class="a">수령자</span>
-                                        <input type="text"/>
+                                        <input type="text" name="receiverName" placeholder="수령자 이름 입력" required />
                                     </div>
-            
+
                                     <div>
                                         <span class="a">휴대폰</span>
-                                        <input type="text"/>
+                                        <input type="text" name="contact" th:value="${user.contact}" />
                                     </div>
-            
+
                                     <div>
                                         <span class="a-1">우편번호</span>
-                                        <input type="text"/>
-                                        <button class="Addrsearch-btn">검색</button>
+                                        <input type="text" name="zip" th:value="${user.zip}" />
+                                        <button type="button" class="Addrsearch-btn">검색</button>
                                     </div>
-            
+
                                     <div>
                                         <span class="addr-info">기본주소</span>
-                                        <input type="text"/>
+                                        <input type="text" name="address" th:value="${user.address}" />
                                     </div>
-            
+
                                     <div>
                                         <span class="addr-info">상세주소</span>
-                                        <input type="text"/>
+                                        <input type="text" name="addressDetail" th:value="${user.addressDetail}" />
                                     </div>
-            
+
                                     <div>
                                         <span class="etc">기타</span>
-                                        <input type="text"/>
+                                        <input type="text" name="extra" placeholder="배송 요청사항 등" />
                                     </div>
                                 </div>
-                            </div>
-                            
-                            <div class="info">
+
+                                <div class="info">
                                     <div class="sale-title">
                                         <p>할인정보</p>
                                     </div>
@@ -218,40 +215,40 @@
                         </div>
                     </div>
 
-
                     <form th:action="@{/product/orderRs}" class="shopping-Box">
                         <div class="sum">
                             <p>전체합계</p>
                         </div>
+
                         <div class="form-box">
                             <div class="form-body">
                                 <span>상품수</span>
-                                <span>1</span>
+                                <span th:text="${productCount}">0</span>
                             </div>
-    
+
                             <div class="form-body">
                                 <span>상품금액</span>
-                                <span>27,000</span>
+                                <span th:text="${#numbers.formatInteger(totalProductPrice, 3, 'COMMA')}">0</span>
                             </div>
-    
+
                             <div class="form-body">
                                 <span>할인금액</span>
-                                <span>-1,350</span>
+                                <span th:text="'-' + ${#numbers.formatInteger(totalDiscount, 3, 'COMMA')}">0</span>
                             </div>
-    
+
                             <div class="form-body">
                                 <span>배송비</span>
-                                <span>0</span>
+                                <span th:text="${#numbers.formatInteger(totalShippingFee, 3, 'COMMA')}">0</span>
                             </div>
-    
+
                             <div class="form-body">
                                 <span>전체주문 금액</span>
-                                <span class="sumprice">25,650</span>
+                                <span class="sumprice" th:text="${#numbers.formatInteger(totalOrderPrice, 3, 'COMMA')}">0</span>
                             </div>
-    
+
                             <div class="form-body">
                                 <span>적립 포인트</span>
-                                <span>270</span>
+                                <span th:text="${totalPoint}">0</span>
                             </div>
                         </div>
 
@@ -265,31 +262,7 @@
             </article>
 
         </div>
-
-        <section class="pagination">
-          <a class="page move" href="#">
-            <i class="fa-solid fa-angles-left"></i>
-          </a>
-          <a class="page move" href="#">
-            <i class="fa-solid fa-chevron-left"></i>
-          </a>
-          <a class="page" href="">1</a>
-          <a class="page" href="">2</a>
-          <a class="page" href="">3</a>
-          <a class="page" href="">4</a>
-          <a class="page move" href="#">
-            <i class="fa-solid fa-chevron-right"></i>
-          </a>
-          <a class="page move" href="#">
-            <i class="fa-solid fa-angles-right"></i>
-          </a>
-        </section>
       </main>
-
-
-
-
-
       
       <footer>
         <div id="footer-shortcut-wrapper">

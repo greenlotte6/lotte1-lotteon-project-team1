@@ -6,12 +6,13 @@ import java.util.Objects;
 public class CartId implements Serializable {
 
     private String memberId;
-    private int product;
+    private int productId; // 👈 엔티티가 아닌 기본타입
+
     public CartId() {}
 
-    public CartId(String memberId, int product) {
+    public CartId(String memberId, int productId) {
         this.memberId = memberId;
-        this.product = product;
+        this.productId = productId;
     }
 
     @Override
@@ -19,12 +20,14 @@ public class CartId implements Serializable {
         if (this == o) return true;
         if (!(o instanceof CartId)) return false;
         CartId cartId = (CartId) o;
-        return product == cartId.product &&
+        return productId == cartId.productId &&
                 Objects.equals(memberId, cartId.memberId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(memberId, product);
+        return Objects.hash(memberId, productId);
     }
 }
+
+
