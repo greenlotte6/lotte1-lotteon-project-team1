@@ -31,7 +31,7 @@ public class ProductManagementApiController {
   }
 
   @PutMapping(value = {"", "/"})
-  public ResponseEntity<String> update(@RequestBody(required = false) List<Integer> ids,
+  public ResponseEntity<String> updateStatus(@RequestBody(required = false) List<Integer> ids,
       @RequestParam(name = "id", required = false) Integer id,
       @RequestParam(name = "status") String status) {
     if (ids != null && !ids.isEmpty()) {
