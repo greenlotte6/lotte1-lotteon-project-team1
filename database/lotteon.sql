@@ -401,7 +401,7 @@ CREATE TABLE IF NOT EXISTS `lotteon`.`recruit` (
   `employment_type_id` INT NOT NULL,
   `date_from` DATE NOT NULL,
   `date_to` DATE NOT NULL,
-  `description` TEXT NOT NULL,
+  `content` TEXT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_recruit_recruit_department1_idx` (`department_id` ASC) VISIBLE,
   INDEX `fk_recruit_recruit_career1_idx` (`career_id` ASC) VISIBLE,
@@ -696,6 +696,19 @@ CREATE TABLE IF NOT EXISTS `lotteon`.`terms` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(45) NOT NULL,
   `content` TEXT NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `lotteon`.`video`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `lotteon`.`video` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `youtube_url` VARCHAR(255) NULL,
+  `thumbnail_url` VARCHAR(255) NULL,
+  `title` VARCHAR(255) NULL,
+  `description` TEXT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
