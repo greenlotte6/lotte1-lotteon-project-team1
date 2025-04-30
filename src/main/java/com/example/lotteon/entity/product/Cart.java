@@ -10,7 +10,7 @@ import java.time.LocalDate;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@IdClass(CartId.class) // ✅ 복합키 설정
+@IdClass(CartId.class)
 public class Cart {
 
     @Id
@@ -18,8 +18,11 @@ public class Cart {
     private String memberId;
 
     @Id
+    @Column(name = "product_id")
+    private int productId;
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_id")
+    @JoinColumn(name = "product_id", insertable = false, updatable = false)
     private Product product;
 
     @CreationTimestamp
@@ -35,3 +38,4 @@ public class Cart {
         this.totalPrice = newQuantity * pricePerItem;
     }
 }
+

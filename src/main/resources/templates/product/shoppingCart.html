@@ -108,7 +108,7 @@
 
                             <tbody>
                             <tr class="table_bd" th:each="cart : ${cart}">
-                                <td><input type="checkbox" name="selectedIds" th:value="${cart.productId}" class="selectItem"></td>
+                                <td><input type="checkbox" name="productIds" th:value="${cart.productId}" class="selectItem"></td>
                                 <td><img src="/proDetail-img/img5.png" alt="상품 이미지"></td>
                                 <td th:text="${cart.productName}">상품명</td>
                                 <td th:text="${cart.quantity}">수량</td>
@@ -126,10 +126,9 @@
                                 <button type="submit">선택삭제</button>
                             </div>
                         </div>
-                    </form> <!-- ✅ form 끝 -->
+                    </form>
 
-                    <!-- ✅ 주문하기용 form 별도 시작 -->
-                    <form method="post" action="/order" class="shopping-Box">
+                    <form method="get" action="/product/order" class="shopping-Box">
                         <div class="sum">
                             <p>전체합계</p>
                         </div>
@@ -169,7 +168,7 @@
                         <div class="form-btn">
                             <input type="submit" value="주문하기">
                         </div>
-                    </form> <!-- ✅ 주문하기 form 끝 -->
+                    </form>
 
                 </div>
             </article>

@@ -113,9 +113,9 @@
 
                     <div class="info-list">
                         <div class="pro-top">
-                            <input type="hidden" name="id" th:value="${prodtos.id}" /> <!-- 상품 ID -->
+                            <input type="hidden" name="id" th:value="${prodtos.id}" />
                             <span>상품번호 : [[${prodtos.id}]]</span>
-                            <span>(주)[[${prodtos.company}]]</span>
+                            <span th:text="'(주)' + ${prodtos.seller.companyName}"></span>
                         </div>
 
                         <div class="pro-name">
@@ -127,9 +127,9 @@
                         </div>
 
                         <div class="pro-price">
-                            <del>[[${prodtos.price}]]원</del>
-                            <span class="sale">[[${prodtos.discountRate}]]%↓</span>
-                            <p th:text="${prodtos.getPrice - (prodtos.getPrice/100) * prodtos.getDiscountRate + '원'}"></p> <!-- 할인된 가격 -->
+                            <del th:text="${prodtos.price + '원'}"></del>
+                            <span class="sale" th:text="${prodtos.discountRate + '%↓'}"></span>
+                            <p th:text="${prodtos.price - (prodtos.price / 100.0) * prodtos.discountRate + '원'}"></p>
                         </div>
 
                         <div class="delivery">
@@ -165,7 +165,7 @@
                                     <button type="button" class="plus">+</button>
                                 </div>
                                 <div>
-                                    <span id="sum_price">[[${prodtos.getPrice - (prodtos.getPrice/100) * prodtos.getDiscountRate}]]</span>
+                                    <span id="sum_price" th:text="${prodtos.price - (prodtos.price / 100.0) * prodtos.discountRate}"></span>
                                 </div>
                             </div>
                             <div class="sum-price">
