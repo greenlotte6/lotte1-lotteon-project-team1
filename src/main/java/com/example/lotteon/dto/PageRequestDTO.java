@@ -33,6 +33,9 @@ public class PageRequestDTO {
 
     private String name;
 
+    private String searchType;
+    private String keyword;
+
     @Builder.Default
     private boolean isMainPage = false;  // 메인 페이지 여부 (기본값 false)
 

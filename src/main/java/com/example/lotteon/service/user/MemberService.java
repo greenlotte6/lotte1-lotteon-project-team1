@@ -9,6 +9,8 @@ import com.example.lotteon.entity.user.User;
 import com.example.lotteon.repository.user.MemberRepository;
 import java.time.LocalDate;
 import java.util.List;
+
+import com.example.lotteon.service.coupon.CouponHistoryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -23,6 +25,7 @@ public class MemberService {
 
   private final MemberRepository repo;
   private final ModelMapper mapper;
+  private final CouponHistoryService couponHistoryService; // 쿠폰 발급 서비스
 
   private Member toEntity(MemberDTO dto) {
     User user = mapper.map(dto.getMemberId().getUser(), User.class);
@@ -48,6 +51,13 @@ public class MemberService {
 
     Member member = mapper.map(memberDTO, Member.class);
     repo.save(member);
+
+    // 사용자 등록 후 쿠폰 발급 (실패해도 회원가입은 유지)
+    try {
+      couponHistoryService.couponHistoryRegister(member);
+    } catch (Exception e) {   //쿠폰중에 회원가입 관련 쿠폰이 없어서 실패하더라도 로그인은 진행
+      log.warn("회원가입 쿠폰 발급 실패: {}", e.getMessage());
+    }
   }
 
   public MemberDTO getById(String id) {

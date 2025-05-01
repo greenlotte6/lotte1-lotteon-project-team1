@@ -1,5 +1,6 @@
 package com.example.lotteon.repository.coupon.impl;
 
+import com.example.lotteon.dto.PageRequestDTO;
 import com.example.lotteon.entity.coupon.QCoupon;
 import com.example.lotteon.entity.cs.QArticle_Type;
 import com.example.lotteon.repository.coupon.custom.CouponRepositoryCustom;
@@ -48,5 +49,54 @@ public class CouponRepositoryImpl implements CouponRepositoryCustom {
 
         return new PageImpl<>(tupleList, pageable, total);
     }
+
+
+    @Override
+    public Page<Tuple> selectAllForSearch(PageRequestDTO pageRequestDTO, Pageable pageable, int id, String name, String seller_id) {
+
+        String searchType = pageRequestDTO.getSearchType();
+        String keyword = pageRequestDTO.getKeyword();
+
+        BooleanExpression expression = qCoupon.id.isNotNull(); // 기본 조건
+
+        if (keyword != null && !keyword.trim().isEmpty()) {
+            switch (searchType) {
+                case "id":
+                    try {
+                        int keywordId = Integer.parseInt(keyword);
+                        expression = expression.and(qCoupon.id.eq(keywordId));
+                    } catch (NumberFormatException e) {
+                        expression = expression.and(qCoupon.id.eq(-1)); // 존재할 수 없는 값
+                    }
+                    break;
+                case "name":
+                    expression = expression.and(qCoupon.name.containsIgnoreCase(keyword));
+                    break;
+                case "seller_id":
+                    expression = expression.and(qCoupon.seller_id.containsIgnoreCase(keyword));
+                    break;
+            }
+        }
+
+        long total = queryFactory
+                .select(qCoupon.count())
+                .from(qCoupon)
+                .where(expression)
+                .fetchOne();
+
+        List<Tuple> tupleList = queryFactory
+                .select(qCoupon, qCoupon.status)
+                .from(qCoupon)
+                .where(expression)
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .orderBy(qCoupon.id.desc())
+                .fetch();
+
+        return new PageImpl<>(tupleList, pageable, total);
+    }
+
+
+
 
 }

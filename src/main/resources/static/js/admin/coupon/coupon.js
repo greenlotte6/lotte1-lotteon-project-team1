@@ -18,6 +18,7 @@ function request(id) {
         $(".coupon-id").text(coupon.id);
         $(".coupon-seller-id").text(coupon.seller_id);
         $(".coupon-type-id").text(coupon.coupon_type.name); // type_id 대신 name 사용
+        $(".coupon-name-id").text(coupon.name);
         $(".coupon-benefit-id").text(coupon.coupon_benefit.benefit);
         $(".coupon-period").text(`${coupon.from} ~ ${coupon.to}`);
         $(".coupon-description").text(coupon.description);

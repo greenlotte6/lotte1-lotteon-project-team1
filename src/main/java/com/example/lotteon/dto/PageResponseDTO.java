@@ -32,6 +32,9 @@ public class PageResponseDTO<T> {
 
     private String name;
 
+    private String searchType;
+    private String keyword;
+
     @Builder
     public PageResponseDTO(PageRequestDTO pageRequestDTO, List<T> dtoList, int total) {
         this.name = pageRequestDTO.getName();
@@ -42,6 +45,9 @@ public class PageResponseDTO<T> {
         this.dtoList = dtoList;
 
         this.filter = pageRequestDTO.getFilter();
+
+        this.searchType = pageRequestDTO.getSearchType();
+        this.keyword = pageRequestDTO.getKeyword();
 
         this.startNo = total - ((pg - 1) * size);
         this.end = (int) (Math.ceil(this.pg / 10.0)) * 10;
