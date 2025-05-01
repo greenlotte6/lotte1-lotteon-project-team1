@@ -134,7 +134,7 @@ INSERT INTO `product_subcategory` VALUES(4, "폼클렌징");
 INSERT INTO `product_subcategory` VALUES(5, "파운데이션");
 INSERT INTO `product_subcategory` VALUES(6, "마스크팩");
 
-INSERT INTO `product` VALUES(1, 1, 1,"112-12-12345", "seller1", "맨투맨", "맨투맨입니다", 39000, 39, 10, 200, 2500, 1, "on_sale", 1, "통신판매업", 1, "국내산", "new");
+INSERT INTO `product` VALUES(2025010001, 1, 1,"112-12-12345", "seller1", "맨투맨", "맨투맨입니다", 39000, 39, 10, 200, 2500, 1, "on_sale", 1, "통신판매업", 1, "국내산", "new");
 
 INSERT INTO `product_options` VALUES (1, 1, "사이즈", "S");
 INSERT INTO `product_options` VALUES (2, 1, "사이즈", "M");
@@ -186,4 +186,5 @@ INSERT INTO coupon_benefit(id, benefit) VALUES
 (10, '50% 할인'),
 (11, '배송비 무료');
 
-SELECT `id` FROM `product_options` order BY `id` DESC LIMIT 1;
+# 주문
+INSERT INTO `order` VALUES(202500001, "jas06113", 20250100
