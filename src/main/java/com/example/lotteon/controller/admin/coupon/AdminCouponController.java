@@ -3,8 +3,11 @@ package com.example.lotteon.controller.admin.coupon;
 import com.example.lotteon.dto.PageRequestDTO;
 import com.example.lotteon.dto.PageResponseDTO;
 import com.example.lotteon.dto.coupon.CouponDTO;
+import com.example.lotteon.dto.coupon.Coupon_HistoryDTO;
 import com.example.lotteon.dto.cs.QnaDTO;
 import com.example.lotteon.dto.cs.ReplyDTO;
+import com.example.lotteon.entity.user.Member;
+import com.example.lotteon.service.coupon.CouponHistoryService;
 import com.example.lotteon.service.coupon.CouponService;
 import com.google.gson.Gson;
 import jakarta.servlet.http.HttpServletRequest;
@@ -28,7 +31,22 @@ public class AdminCouponController {
 
     private final HttpServletRequest request;
     private final CouponService couponService;
+    private final CouponHistoryService couponHistoryService;
     private final Gson gson;
+
+    @GetMapping("/search")
+    public String searchcoupon(Model model, PageRequestDTO pageRequestDTO) {
+
+        //리스트 출력
+        int id = pageRequestDTO.getId();
+        PageResponseDTO pageResponseDTO = couponService.searchAll(pageRequestDTO, id);
+
+        model.addAttribute(pageResponseDTO);
+
+
+        return "/admin/coupon/searchcoupon";
+    }
+
 
     @GetMapping("/coupon")
     public String coupon(Model model, PageRequestDTO pageRequestDTO) {
@@ -92,11 +110,17 @@ public class AdminCouponController {
 
 
 
-
-
     @GetMapping("/issued")
     public String issued() {
         return "/admin/coupon/issued";
+    }
+
+    @PostMapping("/couponHistory/register")
+    public String couponHistoryRegister(Member member) {
+
+        int id = couponHistoryService.couponHistoryRegister(member);
+
+        return "redirect:/admin/coupon/issued";
     }
 
 }

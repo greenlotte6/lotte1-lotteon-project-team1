@@ -1,5 +1,8 @@
 package com.example.lotteon.dto.coupon;
 
+import com.example.lotteon.dto.user.MemberDTO;
+import com.example.lotteon.entity.coupon.Coupon;
+import com.example.lotteon.entity.user.Member;
 import lombok.*;
 
 @Data
@@ -16,4 +19,7 @@ public class Coupon_HistoryDTO {
     private String user_id;
     private String status;
     private String used_date;
+
+    private CouponDTO couponDTO;
+    private MemberDTO memberDTO;
 }

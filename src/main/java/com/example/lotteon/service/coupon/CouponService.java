@@ -167,4 +167,65 @@ public class CouponService {
                 })
                 .orElseThrow(() -> new RuntimeException("쿠폰을 찾을 수 없습니다."));
     }
+
+    public PageResponseDTO searchAll(PageRequestDTO pageRequestDTO, int id) {
+        Pageable pageable = pageRequestDTO.getPageable("id");
+        String name = pageRequestDTO.getName();
+        String seller_id = pageRequestDTO.getSeller_id();
+
+        Page<Tuple> pageCoupon = couponRepository.selectAllForSearch(pageRequestDTO ,pageable, id, name, seller_id);
+
+        LocalDateTime now = LocalDateTime.now();
+
+        List<CouponDTO> couponDTOList = pageCoupon.getContent().stream().map(tuple -> {
+            Coupon coupon = tuple.get(0, Coupon.class);
+
+            // 날짜 비교하여 상태 자동 변경
+            if (coupon.getTo() != null) {
+                // 만약 coupon.getTo()가 String이라면 LocalDateTime으로 변환
+                LocalDate couponToDate = LocalDate.parse(coupon.getTo(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                if (couponToDate.isBefore(now.toLocalDate()) && coupon.getStatus().equals("issued")) {
+                    coupon.setStatus("used");
+                    couponRepository.save(coupon);
+                }
+            }
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            String formattedIssuedDate = coupon.getIssued_date() != null ? coupon.getIssued_date().format(formatter) : null;
+            Coupon_BenefitDTO benefitDTO = Coupon_BenefitDTO.builder()
+                    .id(coupon.getCoupon_benefit().getId())
+                    .benefit(coupon.getCoupon_benefit().getBenefit())
+                    .build();
+            Coupon_TypeDTO typeDTO = Coupon_TypeDTO.builder()
+                    .id(coupon.getCoupon_type().getId())
+                    .name(coupon.getCoupon_type().getName())
+                    .build();
+            CouponDTO couponDTO = CouponDTO.builder()
+                    .id(coupon.getId())
+                    .type_id(coupon.getCoupon_type().getId())
+                    .name(coupon.getName())
+                    .benefit_id(coupon.getCoupon_benefit().getId())
+                    .from(coupon.getFrom())
+                    .to(coupon.getTo())
+                    .seller_id(coupon.getSeller_id())
+                    .issued_amount(coupon.getIssued_amount())
+                    .used_amount(coupon.getUsed_amount())
+                    .status(coupon.getStatus())
+                    .description(coupon.getDescription())
+                    .issued_date(formattedIssuedDate) // LocalDateTime을 String으로 변환하여 설정
+                    .coupon_benefit(benefitDTO)
+                    .coupon_type(typeDTO)
+                    .build();
+
+            return couponDTO;
+        }).toList();
+
+        int total = (int) pageCoupon.getTotalElements();
+
+        return PageResponseDTO.<CouponDTO>builder()
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(couponDTOList)
+                .total(total)
+                .build();
+    }
 }
