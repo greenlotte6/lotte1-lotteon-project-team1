@@ -105,6 +105,9 @@
                     </ul>
                 </div>
              </div>
+                <form th:action="@{/product/detail/give-coupon(id=${prodtos.id})}" method="POST">
+                    <button type="submit">쿠폰받기</button>
+                </form>
 
                 <form action="/product/cart/add" method="post" class="detail">
                     <div>

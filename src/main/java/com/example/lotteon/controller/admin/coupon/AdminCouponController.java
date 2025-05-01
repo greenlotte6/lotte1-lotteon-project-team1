@@ -6,9 +6,13 @@ import com.example.lotteon.dto.coupon.CouponDTO;
 import com.example.lotteon.dto.coupon.Coupon_HistoryDTO;
 import com.example.lotteon.dto.cs.QnaDTO;
 import com.example.lotteon.dto.cs.ReplyDTO;
+import com.example.lotteon.entity.coupon.Coupon;
 import com.example.lotteon.entity.user.Member;
+import com.example.lotteon.repository.coupon.CouponHistoryRepository;
+import com.example.lotteon.repository.coupon.CouponRepository;
 import com.example.lotteon.service.coupon.CouponHistoryService;
 import com.example.lotteon.service.coupon.CouponService;
+import com.example.lotteon.service.user.MemberService;
 import com.google.gson.Gson;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -16,9 +20,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Map;
 import java.util.HashMap; //
@@ -33,6 +39,9 @@ public class AdminCouponController {
     private final CouponService couponService;
     private final CouponHistoryService couponHistoryService;
     private final Gson gson;
+    private final MemberService memberService;
+    private final CouponHistoryRepository couponHistoryRepository;
+    private final CouponRepository couponRepository;
 
     @GetMapping("/search")
     public String searchcoupon(Model model, PageRequestDTO pageRequestDTO) {
@@ -106,21 +115,32 @@ public class AdminCouponController {
 
 
 
-
-
-
-
     @GetMapping("/issued")
     public String issued() {
         return "/admin/coupon/issued";
     }
 
+
+    //회원가입 시 쿠폰 증정  >> 쿠폰 받기 클릭시 증정은 productController에 있음.
     @PostMapping("/couponHistory/register")
     public String couponHistoryRegister(Member member) {
 
-        int id = couponHistoryService.couponHistoryRegister(member);
+        try {
+            // 회원가입 쿠폰(101번) 지급
+            Coupon coupon = couponRepository.findById(101)
+                    .orElseThrow(() -> new IllegalStateException("회원가입 쿠폰을 찾을 수 없습니다."));
+
+            // 쿠폰 발급 내역 생성
+            couponHistoryService.couponHistoryRegister(member, coupon); // 101번 쿠폰 지급
+        } catch (Exception e) {
+            return "redirect:/error"; // 쿠폰 지급 오류 처리
+        }
 
         return "redirect:/admin/coupon/issued";
     }
+
+
+
+
 
 }
