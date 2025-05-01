@@ -4,6 +4,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import java.time.LocalDate;
+import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -49,4 +50,7 @@ public class Member {
 
   @Column(name = "level")
   private String level;
+
+  @Column(name = "birth_date")
+  private Date birthDate;
 }

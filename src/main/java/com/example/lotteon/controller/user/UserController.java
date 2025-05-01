@@ -2,7 +2,6 @@ package com.example.lotteon.controller.user;
 
 import com.example.lotteon.dto.TermsDTO;
 import com.example.lotteon.dto.user.MemberDTO;
-import com.example.lotteon.dto.user.MemberIdDTO;
 import com.example.lotteon.dto.user.UserDTO;
 import com.example.lotteon.exception.EntityAlreadyExistsException;
 import com.example.lotteon.service.TermsService;
@@ -38,21 +37,18 @@ public class UserController {
   }
 
   @PostMapping("/general")
-  public String general(UserDTO userDTO, MemberDTO memberDTO, HttpServletResponse response) {
-    MemberIdDTO compositeKeyDTO = MemberIdDTO.builder()
-        .user(userDTO)
-        .build();
-
-    memberDTO.setMemberId(compositeKeyDTO);
-
+  public String general(MemberDTO memberDTO, String passwordConfirm, HttpServletResponse response) {
     // 서비스 호출
     try {
+      memberDTO.setStatus("normal");
+      memberDTO.setLevel("family");
+      UserDTO userDTO = memberDTO.getMemberId().getUser();
       userService.register(userDTO, UserDTO.ROLE_MEMBER);
+      memberService.memberRegister(memberDTO);
     } catch (EntityAlreadyExistsException e) { // 같은 id의 유저가 이미 존재할 경우
       response.setStatus(HttpServletResponse.SC_CONFLICT); // 409 에러 응답 전송
       return null;
     }
-    memberService.memberRegister(memberDTO);
 
     // 리다이렉트
     return "redirect:/login";

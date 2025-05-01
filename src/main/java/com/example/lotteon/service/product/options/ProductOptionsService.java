@@ -1,0 +1,34 @@
+package com.example.lotteon.service.product.options;
+
+import com.example.lotteon.dto.product.ProductOptionsDTO;
+import com.example.lotteon.entity.product.ProductOptions;
+import com.example.lotteon.repository.product.options.ProductOptionsRepository;
+import java.util.List;
+import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Service;
+
+@Service
+@RequiredArgsConstructor
+public class ProductOptionsService {
+
+  private final ProductOptionsRepository repo;
+  private final ModelMapper mapper;
+
+  public void update(List<ProductOptionsDTO> options) {
+    for (ProductOptionsDTO option : options) {
+      ProductOptions entity = mapper.map(option, ProductOptions.class);
+      repo.update(entity);
+    }
+  }
+
+  public int getLatestId() {
+    return repo.findLatestId();
+  }
+
+  public void save(List<ProductOptionsDTO> options) {
+    for (ProductOptionsDTO option : options) {
+      repo.save(mapper.map(option, ProductOptions.class));
+    }
+  }
+}

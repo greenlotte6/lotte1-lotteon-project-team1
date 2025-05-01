@@ -1,10 +1,12 @@
 package com.example.lotteon.dto.user;
 
 import java.time.LocalDate;
+import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Data
 @Builder
@@ -22,4 +24,6 @@ public class MemberDTO {
   private String status;
   private String level;
 
+  @DateTimeFormat(pattern = "yyyy-MM-dd")
+  private Date birthDate;
 }
