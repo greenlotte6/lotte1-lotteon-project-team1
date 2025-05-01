@@ -207,16 +207,17 @@
               <th th:text="'옵션'+${iterStat.count}">옵션1</th>
               <td>
                 <input type="text" class="option-input"
-                       th:name="|options[${iterStat.index}].option|"
+                       th:name="|options[${iterStat.count - 1}].option|"
                        th:value="${option.getOption()}"/>
-                <input type="hidden" th:name="|options[${iterStat.index}].id|"
+                <input type="hidden" th:name="|options[${iterStat.count - 1}].id|"
                        th:value="${option.getId()}"/>
               </td>
               <th th:text="'옵션'+${iterStat.count} +' 항목'">옵션1 항목</th>
               <td>
-                <input type="text" class="option-value" th:name="|options[${iterStat.index}].value|"
+                <input type="text" class="option-value"
+                       th:name="|options[${iterStat.count - 1}].value|"
                        th:value="${option.getValue()}"/>
-                <input type="hidden" th:name="|options[${iterStat.index}].id|"
+                <input type="hidden" th:name="|options[${iterStat.count - 1}].id|"
                        th:value="${option.getId()}"/>
               </td>
             </tr>

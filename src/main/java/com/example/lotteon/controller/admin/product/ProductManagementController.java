@@ -158,7 +158,7 @@ public class ProductManagementController {
 
     //업로드된 새로운 상품 이미지 저장
     try {
-      optionsService.save(wrapper.getOptions()); // 상품 옵션 업데이트
+      optionsService.save(id, wrapper.getOptions()); // 상품 옵션 업데이트
       int imageId = wrapper.getProduct().getImage().getId();
       doUpload(imageId, imageMap);
       service.edit(id, wrapper.getProduct());

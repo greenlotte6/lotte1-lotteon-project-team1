@@ -9,4 +9,5 @@ public interface ProductOptionsCustomRepository {
   void update(ProductOptions options);
 
   int findLatestId();
+
 }

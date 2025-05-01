@@ -26,9 +26,9 @@ public class ProductOptionsService {
     return repo.findLatestId();
   }
 
-  public void save(List<ProductOptionsDTO> options) {
+  public void save(int productId, List<ProductOptionsDTO> options) {
     for (ProductOptionsDTO option : options) {
-      repo.save(mapper.map(option, ProductOptions.class));
+      repo.upsert(productId, mapper.map(option, ProductOptions.class));
     }
   }
 }
