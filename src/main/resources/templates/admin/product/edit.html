@@ -242,9 +242,9 @@
             <tbody>
             <tr>
               <th>상품 상태</th>
-              <td th:if="${product.getStatus().equals('on_sale')}" th:text="판매중">
+              <td th:if="${product.getQuality().equals('new')}" th:text="새상품">
               </td>
-              <td th:if="${product.getStatus().equals('stop_selling')}" th:text="판매중지">
+              <td th:if="${product.getQuality().equals('used')}" th:text="중고품">
               </td>
             </tr>
             <tr>
@@ -277,17 +277,6 @@
               <td>
                 <input type="text" name="product.businessClassification"
                        th:value="${product.getBusinessClassification()}"/>
-              </td>
-            </tr>
-            <tr>
-              <th>사업자등록번호</th>
-              <td class="business-number"
-                  th:text="${product.getSeller().getSellerCompositeKey().getBusinessNumber()}">
-              </td>
-            </tr>
-            <tr>
-              <th>통신판매업번호</th>
-              <td class="seller-number" th:text="${product.getSeller().getSellerNumber()}">
               </td>
             </tr>
             <tr>

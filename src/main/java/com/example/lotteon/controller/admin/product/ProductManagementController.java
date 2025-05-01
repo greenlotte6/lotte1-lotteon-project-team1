@@ -1,5 +1,8 @@
 package com.example.lotteon.controller.admin.product;
 
+import com.example.lotteon.dto.product.ProductDTO;
+import com.example.lotteon.dto.product.ProductImageDTO;
+import com.example.lotteon.dto.product.ProductOptionsDTO;
 import com.example.lotteon.dto.product.ProductWrapperDTO;
 import com.example.lotteon.entity.product.Product;
 import com.example.lotteon.entity.product.ProductCategory;
@@ -8,13 +11,13 @@ import com.example.lotteon.entity.product.ProductSubCategory;
 import com.example.lotteon.service.product.ProductService;
 import com.example.lotteon.service.product.category.ProductCategoryService;
 import com.example.lotteon.service.product.category.ProductSubCategoryService;
-import com.example.lotteon.service.product.image.ProductImageService;
+import com.example.lotteon.service.product.image.ImagePersistenceService;
 import com.example.lotteon.service.product.options.ProductOptionsService;
-import java.io.File;
+import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -40,49 +43,16 @@ public class ProductManagementController {
   private String uploadPath;
 
   private final ProductService service;
-  private final ProductImageService imageService;
+  private final ImagePersistenceService uploader;
   private final ProductOptionsService optionsService;
   private final ProductCategoryService categoryService;
   private final ProductSubCategoryService subCategoryService;
 
-  private void updateImage(int imageId, String filename, String entryKey) {
-    switch (entryKey) {
-      case "listThumbnail": {
-        imageService.updateListThumbnail(imageId, filename);
-        break;
-      }
-      case "mainThumbnail": {
-        imageService.updateMainThumbnail(imageId, filename);
-        break;
-      }
-      case "detailThumbnail": {
-        imageService.updateDetailThumbnail(imageId, filename);
-        break;
-      }
-      case "detailImage": {
-        imageService.updateDetailImage(imageId, filename);
-        break;
-      }
-    }
-  }
-
-  private void doUpload(int imageId, Map<String, MultipartFile> imageMap) throws IOException {
-    for (Map.Entry<String, MultipartFile> entry : imageMap.entrySet()) {
-      String key = entry.getKey();
-      MultipartFile image = entry.getValue();
-
-      if (!image.isEmpty()) {//업로드된 이미지 파일이 있을 때에만 저장 및 UPDATE 수행
-        String originalName = image.getOriginalFilename();
-        int extensionIndex = originalName.lastIndexOf(".");
-        String extension = originalName.substring(extensionIndex);
-        String uuidName = UUID.randomUUID().toString();
-        String destinationPath = uploadPath + "/" + uuidName + extension;
-        File dest = new File(destinationPath);
-        image.transferTo(dest);
-
-        updateImage(imageId, "/upload/product/" + uuidName + extension, key);
-      }
-    }
+  private int createNewId(int categoryId) {
+    String latestIdField = String.valueOf(service.getLatestIdAndIncrement() % 10000);
+    String registeredYear = String.valueOf(LocalDate.now().getYear());
+    String categoryIdStr = String.valueOf(categoryId);
+    return Integer.parseInt(registeredYear + categoryIdStr + latestIdField);
   }
 
   @GetMapping("/list")
@@ -129,12 +99,34 @@ public class ProductManagementController {
   }
 
   @GetMapping("/register")
-  public String enroll() {
+  public String register(Model model) {
+    List<ProductCategory> categories = categoryService.getAll();
+    List<ProductSubCategory> subCategories = subCategoryService.getAll();
+    model.addAttribute("categories", categories);
+    model.addAttribute("subCategories", subCategories);
     return "/admin/product/register";
   }
 
   @PostMapping("/register")
-  public String enroll(@ModelAttribute Product product) {
+  public String register(@ModelAttribute ProductWrapperDTO wrapper,
+      @RequestParam Map<String, MultipartFile> imageMap,
+      HttpServletResponse response) {
+    ProductDTO incomingProduct = wrapper.getProduct();
+    List<ProductOptionsDTO> incomingOptions = wrapper.getOptions();
+    int createdId = createNewId(incomingProduct.getCategory().getId());//최신 product id 생성
+    try {
+      ProductImageDTO insertedImage = uploader.uploadAndInsert(imageMap);
+      incomingProduct.setImage(insertedImage);
+      incomingProduct.setId(createdId); // POST 요청의 product에 생성된 id 초기화
+      incomingProduct.setStatus("on_sale"); // 상품 상태 == 판매중
+      service.register(incomingProduct); // POST 요청된 product INSERT
+      optionsService.save(wrapper.getProduct().getId(),
+          incomingOptions); // POSt 요청된 product options INSERT
+    } catch (IOException e) {
+      log.error(e.getMessage());
+      response.setStatus(500);
+      return "";
+    }
     return "redirect:/admin/product/list";
   }
 
@@ -154,16 +146,18 @@ public class ProductManagementController {
   @PostMapping(value = "/edit")
   public String edit(@RequestParam("id") int id,
       @ModelAttribute ProductWrapperDTO wrapper,
-      @RequestParam Map<String, MultipartFile> imageMap) {
+      @RequestParam Map<String, MultipartFile> imageMap,
+      HttpServletResponse response) {
 
     //업로드된 새로운 상품 이미지 저장
     try {
       optionsService.save(id, wrapper.getOptions()); // 상품 옵션 업데이트
       int imageId = wrapper.getProduct().getImage().getId();
-      doUpload(imageId, imageMap);
+      uploader.uploadAndUpdate(imageId, imageMap);
       service.edit(id, wrapper.getProduct());
     } catch (IOException e) {
       log.error(e.getMessage());
+      response.setStatus(500);
       return "";
     }
     return "redirect:/admin/product/list";

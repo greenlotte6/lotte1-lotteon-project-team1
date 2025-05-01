@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Embeddable
 @NoArgsConstructor
 @AllArgsConstructor
-public class SellerCompositeKey {
+public class SellerId {
 
   @Column(name = "business_number")
   private String businessNumber;

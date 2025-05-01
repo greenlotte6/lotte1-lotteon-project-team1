@@ -11,6 +11,8 @@ public interface CustomSellerRepository {
 
   boolean existsByBusinessNumber(String businessNumber);
 
+  Seller findByBusinessNumber(String businessNumber);
+
   Page<Seller> findAllByCeo(String ceo, Pageable pageable);
 
   Page<Seller> findAllByCompanyName(String companyName, Pageable pageable);

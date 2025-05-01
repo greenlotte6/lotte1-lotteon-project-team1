@@ -3,7 +3,7 @@ package com.example.lotteon.service.seller;
 import com.example.lotteon.dto.seller.SellerDTO;
 import com.example.lotteon.dto.user.UserDTO;
 import com.example.lotteon.entity.seller.Seller;
-import com.example.lotteon.entity.seller.SellerCompositeKey;
+import com.example.lotteon.entity.seller.SellerId;
 import com.example.lotteon.entity.user.User;
 import com.example.lotteon.exception.EntityAlreadyExistsException;
 import com.example.lotteon.repository.seller.SellerRepository;
@@ -33,18 +33,23 @@ public class SellerService {
 
   private Seller toEntity(SellerDTO dto) {
     User user = mapper.map(dto.getSellerId().getUser(), User.class);
-    SellerCompositeKey compositeKey = SellerCompositeKey.builder()
+    SellerId compositeKey = SellerId.builder()
         .businessNumber(dto.getSellerId().getBusinessNumber())
         .user(user)
         .build();
     return Seller.builder()
-        .sellerCompositeKey(compositeKey)
+        .sellerId(compositeKey)
         .ceo(dto.getCeo())
         .companyName(dto.getCompanyName())
         .sellerNumber(dto.getSellerNumber())
         .fax(dto.getFax())
         .status(dto.getStatus())
         .build();
+  }
+
+  public SellerDTO getSellerBy(String businessNumber) {
+    Seller seller = repo.findByBusinessNumber(businessNumber);
+    return mapper.map(seller, SellerDTO.class);
   }
 
   public Page<Seller> getAllPages(Pageable pageable) {

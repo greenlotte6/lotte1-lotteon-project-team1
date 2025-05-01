@@ -1,9 +1,13 @@
 package com.example.lotteon.service.product;
 
 import com.example.lotteon.dto.product.ProductDTO;
+import com.example.lotteon.dto.seller.SellerDTO;
+import com.example.lotteon.dto.seller.SellerIdDTO;
+import com.example.lotteon.dto.user.UserDTO;
 import com.example.lotteon.entity.product.Product;
 import com.example.lotteon.entity.product.ProductOptions;
 import com.example.lotteon.repository.product.ProductRepository;
+import com.example.lotteon.repository.seller.SellerRepository;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +22,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class ProductService {
 
+  private final SellerRepository sellerRepository;
   private final ProductRepository repo;
   private final ModelMapper modelMapper;
 
@@ -60,16 +65,25 @@ public class ProductService {
     repo.updateById(id, product);
   }
 
-  public void deleteMultipleIds(List<Integer> ids) {
-    //TODO: Check if there are product_id to be deleted is contained inside of order table
-    for (int id : ids) {
-      repo.deleteById(id);
-    }
+  public int getLatestIdAndIncrement() {
+    return repo.getLatestIdAndIncrement();
   }
 
-  public void deleteById(int id) {
-    //TODO: Check if there are product_id to be deleted is contained inside of order table
-    repo.deleteById(id);
+  public void register(ProductDTO product) {
+    UserDTO user = UserDTO.builder()
+        .id("seller1")
+        .build();
+    SellerIdDTO sellerId = SellerIdDTO.builder()
+        .businessNumber("112-12-12345")
+        .user(user)
+        .build();
+    SellerDTO sellerDTO = SellerDTO.builder()
+        .sellerId(sellerId)
+        .build();
+
+    product.setSeller(sellerDTO);
+    Product entity = modelMapper.map(product, Product.class);
+    repo.save(entity);
   }
 
   public List<ProductOptions> getOptions(int productId) {

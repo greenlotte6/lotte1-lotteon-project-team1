@@ -21,9 +21,16 @@ public class CustomSellerRepositoryImpl implements CustomSellerRepository {
   private final QUser user = QUser.user;
 
   @Override
+  public Seller findByBusinessNumber(String businessNumber) {
+    return query.selectFrom(seller)
+        .where(seller.sellerId.businessNumber.eq(businessNumber))
+        .fetchOne();
+  }
+
+  @Override
   public boolean existsByBusinessNumber(String businessNumber) {
     return query.selectFrom(seller)
-        .where(seller.sellerCompositeKey.businessNumber.eq(businessNumber)).fetchOne() != null;
+        .where(seller.sellerId.businessNumber.eq(businessNumber)).fetchOne() != null;
   }
 
   @Override
@@ -46,7 +53,7 @@ public class CustomSellerRepositoryImpl implements CustomSellerRepository {
   @Override
   public Page<Seller> findAllByContact(String contact, Pageable pageable) {
     List<Seller> sellers = query.selectFrom(seller)
-        .where(seller.sellerCompositeKey.user.contact.eq(contact))
+        .where(seller.sellerId.user.contact.eq(contact))
         .fetch();
     return new PageImpl<>(sellers, pageable, sellers.size());
   }
@@ -54,7 +61,7 @@ public class CustomSellerRepositoryImpl implements CustomSellerRepository {
   @Override
   public Page<Seller> findAllByBusinessNumber(String businessNumber, Pageable pageable) {
     List<Seller> sellers = query.selectFrom(seller)
-        .where(seller.sellerCompositeKey.businessNumber.eq(businessNumber))
+        .where(seller.sellerId.businessNumber.eq(businessNumber))
         .fetch();
     return new PageImpl<>(sellers, pageable, sellers.size());
   }
@@ -63,8 +70,8 @@ public class CustomSellerRepositoryImpl implements CustomSellerRepository {
   @Transactional
   public void deleteByBusinessNumbers(List<String> businessNumbers) {
     // 클라이언트에서 선택된 판매자의 사업자등록번호로 user id를 조회
-    List<String> uids = query.select(seller.sellerCompositeKey.user.id).from(seller)
-        .where(seller.sellerCompositeKey.businessNumber.in(businessNumbers))
+    List<String> uids = query.select(seller.sellerId.user.id).from(seller)
+        .where(seller.sellerId.businessNumber.in(businessNumbers))
         .fetch();
     // user 테이블에서 id가 uids에 있는 row 삭제
     query.delete(user)
@@ -76,7 +83,7 @@ public class CustomSellerRepositoryImpl implements CustomSellerRepository {
   @Transactional
   public void updateStatus(String businessNumber, String newStatus) {
     query.update(seller)
-        .where(seller.sellerCompositeKey.businessNumber.eq(businessNumber))
+        .where(seller.sellerId.businessNumber.eq(businessNumber))
         .set(seller.status, newStatus)
         .execute();
   }

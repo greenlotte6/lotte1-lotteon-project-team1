@@ -22,6 +22,16 @@ public class ProductCustomRepositoryImpl implements ProductCustomRepository {
   private final QProductOptions options = QProductOptions.productOptions;
 
   @Override
+  public int getLatestIdAndIncrement() {
+    Integer latestId = query.select(product.id)
+        .from(product)
+        .orderBy(product.id.desc())
+        .limit(1)
+        .fetchOne();
+    return latestId + 1;
+  }
+
+  @Override
   public Page<Product> findAll(Pageable pageable) {
     List<Product> products = query.selectFrom(product).fetch();
     return new PageImpl<>(products, pageable, products.size());

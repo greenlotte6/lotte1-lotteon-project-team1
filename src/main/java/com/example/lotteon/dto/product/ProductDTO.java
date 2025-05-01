@@ -29,4 +29,5 @@ public class ProductDTO {
   private String businessClassification;
   private boolean receiptIssuable;
   private String origin;
+  private String quality;
 }
