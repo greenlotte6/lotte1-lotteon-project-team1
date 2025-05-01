@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 public class Seller {
 
   @EmbeddedId
-  private SellerCompositeKey sellerCompositeKey;
+  private SellerId sellerId;
 
   @Column(name = "ceo")
   private String ceo;

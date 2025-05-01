@@ -207,16 +207,17 @@
               <th th:text="'옵션'+${iterStat.count}">옵션1</th>
               <td>
                 <input type="text" class="option-input"
-                       th:name="|options[${iterStat.index}].option|"
+                       th:name="|options[${iterStat.count - 1}].option|"
                        th:value="${option.getOption()}"/>
-                <input type="hidden" th:name="|options[${iterStat.index}].id|"
+                <input type="hidden" th:name="|options[${iterStat.count - 1}].id|"
                        th:value="${option.getId()}"/>
               </td>
               <th th:text="'옵션'+${iterStat.count} +' 항목'">옵션1 항목</th>
               <td>
-                <input type="text" class="option-value" th:name="|options[${iterStat.index}].value|"
+                <input type="text" class="option-value"
+                       th:name="|options[${iterStat.count - 1}].value|"
                        th:value="${option.getValue()}"/>
-                <input type="hidden" th:name="|options[${iterStat.index}].id|"
+                <input type="hidden" th:name="|options[${iterStat.count - 1}].id|"
                        th:value="${option.getId()}"/>
               </td>
             </tr>
@@ -241,9 +242,9 @@
             <tbody>
             <tr>
               <th>상품 상태</th>
-              <td th:if="${product.getStatus().equals('on_sale')}" th:text="판매중">
+              <td th:if="${product.getQuality().equals('new')}" th:text="새상품">
               </td>
-              <td th:if="${product.getStatus().equals('stop_selling')}" th:text="판매중지">
+              <td th:if="${product.getQuality().equals('used')}" th:text="중고품">
               </td>
             </tr>
             <tr>
@@ -276,17 +277,6 @@
               <td>
                 <input type="text" name="product.businessClassification"
                        th:value="${product.getBusinessClassification()}"/>
-              </td>
-            </tr>
-            <tr>
-              <th>사업자등록번호</th>
-              <td class="business-number"
-                  th:text="${product.getSeller().getSellerCompositeKey().getBusinessNumber()}">
-              </td>
-            </tr>
-            <tr>
-              <th>통신판매업번호</th>
-              <td class="seller-number" th:text="${product.getSeller().getSellerNumber()}">
               </td>
             </tr>
             <tr>

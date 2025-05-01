@@ -22,6 +22,16 @@ public class ProductCustomRepositoryImpl implements ProductCustomRepository {
   private final QProductOptions options = QProductOptions.productOptions;
 
   @Override
+  public int getLatestIdAndIncrement() {
+    Integer latestId = query.select(product.id)
+        .from(product)
+        .orderBy(product.id.desc())
+        .limit(1)
+        .fetchOne();
+    return latestId + 1;
+  }
+
+  @Override
   public Page<Product> findAll(Pageable pageable) {
     List<Product> products = query.selectFrom(product).fetch();
     return new PageImpl<>(products, pageable, products.size());
@@ -63,7 +73,6 @@ public class ProductCustomRepositoryImpl implements ProductCustomRepository {
   @Override
   @Transactional
   public void updateById(int id, Product product) {
-    // TODO: Update product Image's locations
     query.update(this.product)
         .set(this.product.category.id, product.getCategory().getId())
         .set(this.product.subCategory.id, product.getSubCategory().getId())

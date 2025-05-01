@@ -10,6 +10,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ProductCustomRepository {
 
+  int getLatestIdAndIncrement();
+
   Page<Product> findAll(Pageable pageable);
 
   Page<Product> findById(int id, Pageable pageable);

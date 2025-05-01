@@ -83,4 +83,7 @@ public class Product {
 
   @Column(name = "origin")
   private String origin;
+
+  @Column(name = "quality")
+  private String quality;
 }
