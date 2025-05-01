@@ -4,6 +4,8 @@ import com.example.lotteon.entity.product.Product;
 import com.example.lotteon.entity.user.Member;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -26,7 +28,11 @@ import lombok.ToString;
 public class Order {
 
   @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
+
+  @Column(name = "order_number")
+  private int orderNumber;
 
   @JoinColumn(name = "member_id")
   @ManyToOne
