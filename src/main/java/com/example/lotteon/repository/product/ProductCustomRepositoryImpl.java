@@ -63,7 +63,6 @@ public class ProductCustomRepositoryImpl implements ProductCustomRepository {
   @Override
   @Transactional
   public void updateById(int id, Product product) {
-    // TODO: Update product Image's locations
     query.update(this.product)
         .set(this.product.category.id, product.getCategory().getId())
         .set(this.product.subCategory.id, product.getSubCategory().getId())
