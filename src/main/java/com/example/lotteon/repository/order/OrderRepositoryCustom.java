@@ -1,8 +1,11 @@
 package com.example.lotteon.repository.order;
 
+import com.example.lotteon.dto.order.OrderWrapper;
 import com.example.lotteon.entity.order.Order;
 import java.time.LocalDate;
 import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -31,5 +34,13 @@ public interface OrderRepositoryCustom {
   Long countByStatusAt(String status, LocalDate date);
 
   Long countByDeliveryStatusAt(String status, LocalDate date);
+
+  Page<OrderWrapper> getAllOrdersAndCount(Pageable pageable);
+
+  Page<OrderWrapper> findByOrderNumber(Pageable pageable, String orderNumber);
+
+  Page<OrderWrapper> findByMemberName(Pageable pageable, String memberName);
+
+  Page<OrderWrapper> findByMemberId(Pageable pageable, String memberId);
 
 }

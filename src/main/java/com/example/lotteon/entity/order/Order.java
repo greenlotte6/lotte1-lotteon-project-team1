@@ -32,7 +32,7 @@ public class Order {
   private int id;
 
   @Column(name = "order_number")
-  private int orderNumber;
+  private String orderNumber;
 
   @JoinColumn(name = "member_id")
   @ManyToOne
@@ -46,8 +46,8 @@ public class Order {
   @ManyToOne
   private Product product;
 
-  @Column(name = "count")
-  private int count;
+  @Column(name = "amount")
+  private int amount; //주문하는 상품의 개수(ex. 맨투맨 6개 => amount = 6)
 
   @Column(name = "price_total")
   private int priceTotal;

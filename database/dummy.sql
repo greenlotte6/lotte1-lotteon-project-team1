@@ -186,5 +186,80 @@ INSERT INTO coupon_benefit(id, benefit) VALUES
 (10, '50% 할인'),
 (11, '배송비 무료');
 
+INSERT INTO `order_status` VALUES (1, "payment_waiting") 
+INSERT INTO `order_status` (`name`) VALUES ("paid");
+INSERT INTO `order_status` (`name`) VALUES ("on_delivery"),
+("delivered"), 
+("purchase_confirmed"), 
+("cancel_requested"),
+("canceled"), 
+("refund_requetsed"), 
+("refunded"), 
+("exchange_requested"), 
+("exchange");
+
 # 주문
-INSERT INTO `order` VALUES(202500001, "jas06113", 20250100
+INSERT INTO `order` VALUES(1, 202500001, "jas06113", 2025010001, 1, 39000, "신용카드", 1, NOW(), NULL);
+INSERT INTO `order` VALUES(2, 202500001, "jas06113", 2025010002, 2, 39000, "신용카드", 1, NOW(), NULL);
+INSERT INTO `order` VALUES(4, 202500002, "abc123", 2025010002, 10, 39000, "신용카드", 1, NOW(), NULL);
+
+SELECT @@GLOBAL.sql_mode;
+SELECT @@SESSION.sql_mode;
+SET SESSION sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));
+
+SELECT 
+id,
+member_id,
+product_id,
+COUNT(*) AS `orders` 
+FROM `order` GROUP BY `order_number`;
+
+
+-- 주문 건수 조회(member_id 가 jas06113이고 주문번호가 202500001인 주문 데이터에서 서로 다른 product_id를 가진 데이터의 개수를 반환)
+SELECT
+*,
+COUNT(DISTINCT `product_id`) AS `numberOfOrderedProducts`
+FROM `order`
+WHERE `order_number` = 202500001 AND `member_id`="jas06113"
+GROUP BY `order_number`;
+
+-- 주문 건수 조회(모든 주문 데이터를 order_number 중복 없이  조회)
+SELECT
+`order`.*,
+COUNT(DISTINCT `product_id`) AS `numberOfOrderedProducts`
+FROM `order`
+JOIN `product`
+ON `product`.id = `order`.product_id
+WHERE `order`.member_id = "jas06113"
+GROUP BY `order_number`;
+-- #####
+SELECT * FROM `order` 
+JOIN (
+	SELECT 
+	`o`.order_number
+	FROM `order` AS `o`
+	GROUP BY `o`.order_number
+) `a` ON `order`.order_number = a.order_number
+JOIN `product`
+ON `product`.id = `order`.product_id;
+
+-- #####
+SELECT 
+  o.*,
+  p.price,
+  p.discount_rate,
+  p.delivery_fee,
+  op.numberOfOrderedProducts
+  ((p.price - (p.price * p.discount_rate) / 100) * o.amount + (p.delivery_fee)) AS price_total
+FROM `order` o
+JOIN product p ON p.id = o.product_id
+JOIN (
+    SELECT order_number, COUNT(DISTINCT product_id) AS numberOfOrderedProducts
+    FROM `order`
+    JOIN `product`
+    ON `product`.id = `order`.product_id
+    WHERE member_id = 'jas06113'
+    GROUP BY order_number
+) op ON op.order_number = o.order_number
+WHERE o.member_id = 'jas06113';
+GROUP BY `order_number`;
