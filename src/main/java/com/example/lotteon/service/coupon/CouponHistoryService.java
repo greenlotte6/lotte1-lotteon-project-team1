@@ -22,12 +22,11 @@ public class CouponHistoryService {
     private final CouponRepository couponRepository;
     private final ModelMapper modelMapper;
 
-    public int couponHistoryRegister(Member member) {
-        // "회원" 쿠폰 조회
-        Coupon coupon = couponRepository.findFirstByNameContaining("가입");
-
-        if (coupon == null) {
-            throw new IllegalStateException("No coupon found for user registration.");
+    public int couponHistoryRegister(Member member, Coupon coupon) {
+        // 이미 쿠폰이 지급된 이력이 있는지 확인
+        boolean couponAlreadyGiven = couponHistoryRepository.existsByMemberAndCoupon(member, coupon);
+        if (couponAlreadyGiven) {
+            throw new IllegalStateException("이미 쿠폰을 받으셨습니다.");
         }
 
         // 쿠폰 발급 내역 생성

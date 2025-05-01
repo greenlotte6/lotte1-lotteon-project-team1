@@ -3,9 +3,11 @@ package com.example.lotteon.service.user;
 import com.example.lotteon.dto.user.MemberDTO;
 import com.example.lotteon.dto.user.MemberIdDTO;
 import com.example.lotteon.dto.user.UserDTO;
+import com.example.lotteon.entity.coupon.Coupon;
 import com.example.lotteon.entity.user.Member;
 import com.example.lotteon.entity.user.MemberId;
 import com.example.lotteon.entity.user.User;
+import com.example.lotteon.repository.coupon.CouponRepository;
 import com.example.lotteon.repository.user.MemberRepository;
 import java.time.LocalDate;
 import java.util.List;
@@ -26,6 +28,7 @@ public class MemberService {
   private final MemberRepository repo;
   private final ModelMapper mapper;
   private final CouponHistoryService couponHistoryService; // 쿠폰 발급 서비스
+  private final CouponRepository couponRepository;
 
   private Member toEntity(MemberDTO dto) {
     User user = mapper.map(dto.getMemberId().getUser(), User.class);
@@ -52,10 +55,15 @@ public class MemberService {
     Member member = mapper.map(memberDTO, Member.class);
     repo.save(member);
 
-    // 사용자 등록 후 쿠폰 발급 (실패해도 회원가입은 유지)
+    // 회원가입 후 쿠폰 발급 (쿠폰이 없으면 실패 처리)
     try {
-      couponHistoryService.couponHistoryRegister(member);
-    } catch (Exception e) {   //쿠폰중에 회원가입 관련 쿠폰이 없어서 실패하더라도 로그인은 진행
+      // 101번 쿠폰(회원가입 관련 쿠폰) 조회
+      Coupon coupon = couponRepository.findById(101)
+              .orElseThrow(() -> new IllegalStateException("회원가입 쿠폰을 찾을 수 없습니다."));
+
+      // 쿠폰 발급
+      couponHistoryService.couponHistoryRegister(member, coupon);
+    } catch (Exception e) {   // 쿠폰 발급이 실패하더라도 회원가입은 진행
       log.warn("회원가입 쿠폰 발급 실패: {}", e.getMessage());
     }
   }
@@ -110,6 +118,11 @@ public class MemberService {
   public void edit(MemberDTO memberDTO) {
     Member member = toEntity(memberDTO);
     repo.updateInfo(member);
+  }
+
+  // 쿠폰 받기 눌렸을때, 필요한 user_id 가져오는 메서드
+  public Member findByUserId(String userId) {
+    return repo.findByUserId(userId);  // userId로 Member 조회
   }
 
 }
