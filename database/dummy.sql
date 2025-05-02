@@ -134,16 +134,20 @@ INSERT INTO `product_subcategory` VALUES(4, "폼클렌징");
 INSERT INTO `product_subcategory` VALUES(5, "파운데이션");
 INSERT INTO `product_subcategory` VALUES(6, "마스크팩");
 
-INSERT INTO `product` VALUES(2025010001, 1, 1,"112-12-12345", "seller1", "맨투맨", "맨투맨입니다", 39000, 39, 10, 200, 2500, 1, "on_sale", 1, "통신판매업", 1, "국내산", "new");
-INSERT INTO `product` VALUES(2025010002, 1, 1,"112-12-12345", "seller1", "후드티", "후드티입니다", 49000, 100, 10, 200, 2500, 1, "on_sale", 1, "통신판매업", 1, "국내산", "new");
-INSERT INTO `product_options` VALUES (1, 2025010001, "사이즈", "S");
-INSERT INTO `product_options` VALUES (2, 2025010001, "사이즈", "M");
-INSERT INTO `product_options` VALUES (3, 2025010001, "사이즈", "L");
-INSERT INTO `product_options` VALUES (4, 2025010001, "사이즈", "XL");
+INSERT INTO `product` VALUES("2025010001", 1, 1,"112-12-12345", "seller1", "맨투맨", "맨투맨입니다", 39000, 39, 10, 200, 2500, 1, "on_sale", 1, "통신판매업", 1, "국내산", "new");
+INSERT INTO `product` VALUES("2025010002", 1, 1,"112-12-12525", "seller2", "후드티", "후드티입니다", 49000, 100, 10, 200, 2500, 1, "on_sale", 1, "통신판매업", 1, "국내산", "new");
+INSERT INTO `product` VALUES("2025010003", 1, 1,"112-12-12525", "seller2", "카고팬츠", "카고팬츠입니다", 49000, 100, 10, 200, 2500, 1, "on_sale", 1, "통신판매업", 1, "국내산", "new");
+INSERT INTO `product_options` VALUES (1, "2025010001", "사이즈", "S");
+INSERT INTO `product_options` VALUES (2, "2025010001", "사이즈", "M");
+INSERT INTO `product_options` VALUES (3, "2025010001", "사이즈", "L");
+INSERT INTO `product_options` VALUES (4, "2025010001", "사이즈", "XL");
+INSERT INTO `product_options` VALUES (5, "2025010002", "사이즈", "FREE");
 
 -- 회원(member)
 INSERT INTO `user` VALUES ("abc123", "abc@123", "abc123@example.com", "010-1111-2222", "12345", "부산광역시", "부산진구", "member", NOW());
 INSERT INTO `member` (`user_id`, `name`, `gender`, `recent_login_date`, `birth_date`) VALUES ("abc123", "장보고", "m", NOW(), "2003-01-01");
+INSERT INTO `user` VALUES ("xyz123", "abc@123", "xyz123@example.com", "010-1111-2223", "12345", "부산광역시", "부산진구", "member", NOW());
+INSERT INTO `member` (`user_id`, `name`, `gender`, `recent_login_date`, `birth_date`) VALUES ("xyz123", "이성계", "m", NOW(), "2003-01-01");
 INSERT INTO `user` VALUES ("jas06113", "abc@123", "jas06113@example.com", "010-1211-2222", "12345", "부산광역시", "부산진구", "member", NOW());
 INSERT INTO `member` (`user_id`, `name`, `gender`, `recent_login_date`, `birth_date`) VALUES ("jas06113","이현민", "m", NOW(), "2003-01-01");
 
@@ -199,68 +203,47 @@ INSERT INTO `order_status` (`name`) VALUES ("on_delivery"),
 ("exchange");
 
 # 주문
-INSERT INTO `order` VALUES(1, 202500001, "jas06113", 2025010001, 1, "신용카드", 1, NOW());
-INSERT INTO `order` VALUES(2, 202500001, "jas06113", 2025010002, 2, "신용카드", 1, NOW());
-INSERT INTO `order` VALUES(4, 202500002, "abc123", 2025010002, 10, "신용카드", 1, NOW());
+INSERT INTO `order` VALUES("202500001", "jas06113", "신용카드", 1, NOW());
+INSERT INTO `order` VALUES("202500002", "abc123", "신용카드", 1, NOW());
+INSERT INTO `order` VALUES("202500003", "xyz123", "신용카드", 1, NOW());
 
+INSERT INTO `order_item` VALUES(1, "202500001", "2025010001", 1);
+INSERT INTO `order_item` VALUES(2, "202500001", "2025010002", 1);
+INSERT INTO `order_item` VALUES(3, "202500001", "2025010003", 1);
+
+INSERT INTO `order_item` VALUES(4, "202500002", "2025010001", 2);
+
+INSERT INTO `order_item` VALUES(5, "202500003", "2025010002", 2);
+
+########################################################################################################
 SELECT @@GLOBAL.sql_mode;
 SELECT @@SESSION.sql_mode;
 SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));
 
-SELECT 
-id,
-member_id,
-product_id,
-COUNT(*) AS `orders` 
-FROM `order` GROUP BY `order_number`;
-
-
--- 주문 건수 조회(member_id 가 jas06113이고 주문번호가 202500001인 주문 데이터에서 서로 다른 product_id를 가진 데이터의 개수를 반환)
-SELECT
-*,
-COUNT(DISTINCT `product_id`) AS `numberOfOrderedProducts`
-FROM `order`
-WHERE `order_number` = 202500001 AND `member_id`="jas06113"
-GROUP BY `order_number`;
-
--- 주문 건수 조회(모든 주문 데이터를 order_number 중복 없이  조회)
+# 전체 주문 데이터에서 현재 접속중인 판매자(이 경우, seller2)가 판매하는 제품을 포함하는 데이터,
+# 그리고 해당 주문에 포함된 전체 상품 중 현재 접속한 판매자가 판매하는 상품의 종류의 수(= 주문 건수)
 SELECT
 `order`.*,
-COUNT(DISTINCT `product_id`) AS `numberOfOrderedProducts`
+COUNT(`order_item`.product_id)
 FROM `order`
+JOIN `order_item`
+ON `order_item`.order_number = `order`.order_number
+JOIN `member`
+ON `order`.member_id = `member`.user_id
 JOIN `product`
-ON `product`.id = `order`.product_id
-WHERE `order`.member_id = "jas06113"
-GROUP BY `order_number`;
--- #####
-SELECT * FROM `order` 
-JOIN (
-	SELECT 
-	`o`.order_number
-	FROM `order` AS `o`
-	GROUP BY `o`.order_number
-) `a` ON `order`.order_number = a.order_number
-JOIN `product`
-ON `product`.id = `order`.product_id;
+ON `order_item`.product_id = `product`.id
+WHERE `product`.seller_user_id="seller2"
+GROUP BY `order`.order_number;
 
--- #####
+# 최고 관리자가 주문현황에 접속했을 경우, 주문건수는 해당 주문에 포함된 전체 상품의 종류의 수를 의미함.
 SELECT
-  o.order_number,
-  o.amount,
-  p.price,
-  p.discount_rate,
-  p.delivery_fee,
-  p.total_price
-FROM `order` o
-JOIN (
-  SELECT `order`.order_number, 
-  `price`, 
-  discount_rate, 
-  delivery_fee, 
-  seller_business_number, 
-  (product.price - (product.price * product.discount_rate / 100)) * `order`.amount + product.delivery_fee AS total_price 
-  FROM product 
-  JOIN `order`
-  ON `order`.product_id = product.id
-) p ON p.id = `o`.product_id
-GROUP BY p.seller_business_number, `o`.order_number;
+`order`.*,
+COUNT(`order_item`.product_id)
+FROM `order`
+JOIN `order_item`
+ON `order_item`.order_number = `order`.order_number
+JOIN `member`
+ON `order`.member_id = `member`.user_id
+JOIN `product`
+ON `order_item`.product_id = `product`.id
+GROUP BY `order`.order_number;
