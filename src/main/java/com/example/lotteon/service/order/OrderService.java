@@ -56,7 +56,7 @@ public class OrderService {
     return price;
   }
 
-  public Page<OrderWrapper> getAllOrders(Pageable pageable) {
+  public Page<OrderWrapper> listOrders(Pageable pageable) {
     return repo.getAllOrdersAndCount(pageable);
   }
 

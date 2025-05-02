@@ -25,7 +25,7 @@ public class OrderManagementController {
       @RequestParam(name = "size", defaultValue = "10") int size,
       Model model) {
     Pageable pageable = PageRequest.of(page - 1, size);
-    Page<OrderWrapper> pages = orderService.getAllOrders(pageable);
+    Page<OrderWrapper> pages = orderService.listOrders(pageable);
 
     model.addAttribute("currentPage", page);
     model.addAttribute("pages", pages);
