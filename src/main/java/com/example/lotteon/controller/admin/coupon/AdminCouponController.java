@@ -115,10 +115,34 @@ public class AdminCouponController {
 
 
 
+    //쿠폰 발급 현황
     @GetMapping("/issued")
-    public String issued() {
+    public String issued(Model model, PageRequestDTO pageRequestDTO) {
+
+        //리스트 출력
+        int id = pageRequestDTO.getId();
+        PageResponseDTO pageResponseDTO = couponHistoryService.findAll(pageRequestDTO, id);
+
+        model.addAttribute(pageResponseDTO);
+
+
         return "/admin/coupon/issued";
     }
+
+
+    @GetMapping("/issued/search")
+    public String searchCouponHistory(Model model, PageRequestDTO pageRequestDTO) {
+
+        //리스트 출력
+        int id = pageRequestDTO.getId();
+        PageResponseDTO pageResponseDTO = couponHistoryService.searchAll(pageRequestDTO, id);
+
+        model.addAttribute(pageResponseDTO);
+
+
+        return "/admin/coupon/searchissued";
+    }
+
 
 
     //회원가입 시 쿠폰 증정  >> 쿠폰 받기 클릭시 증정은 productController에 있음.

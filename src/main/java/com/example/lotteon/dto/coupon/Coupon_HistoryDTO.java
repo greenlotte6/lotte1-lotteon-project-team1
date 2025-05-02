@@ -20,6 +20,6 @@ public class Coupon_HistoryDTO {
     private String status;
     private String used_date;
 
-    private CouponDTO couponDTO;
-    private MemberDTO memberDTO;
+    private CouponDTO coupon;
+    private MemberDTO member;
 }
