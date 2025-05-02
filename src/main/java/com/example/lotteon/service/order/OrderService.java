@@ -50,7 +50,7 @@ public class OrderService {
         OrderStatusDTO.STATUS_EXCHANGE_REQUESTED, date);
     long price = 0;
     for (Order order : orders) {
-      price += order.getPriceTotal();
+      price += order.getProduct().getPrice();
     }
 
     return price;

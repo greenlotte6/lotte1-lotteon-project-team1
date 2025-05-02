@@ -135,11 +135,11 @@ INSERT INTO `product_subcategory` VALUES(5, "파운데이션");
 INSERT INTO `product_subcategory` VALUES(6, "마스크팩");
 
 INSERT INTO `product` VALUES(2025010001, 1, 1,"112-12-12345", "seller1", "맨투맨", "맨투맨입니다", 39000, 39, 10, 200, 2500, 1, "on_sale", 1, "통신판매업", 1, "국내산", "new");
-
-INSERT INTO `product_options` VALUES (1, 1, "사이즈", "S");
-INSERT INTO `product_options` VALUES (2, 1, "사이즈", "M");
-INSERT INTO `product_options` VALUES (3, 1, "사이즈", "L");
-INSERT INTO `product_options` VALUES (4, 1, "사이즈", "XL");
+INSERT INTO `product` VALUES(2025010002, 1, 1,"112-12-12345", "seller1", "후드티", "후드티입니다", 49000, 100, 10, 200, 2500, 1, "on_sale", 1, "통신판매업", 1, "국내산", "new");
+INSERT INTO `product_options` VALUES (1, 2025010001, "사이즈", "S");
+INSERT INTO `product_options` VALUES (2, 2025010001, "사이즈", "M");
+INSERT INTO `product_options` VALUES (3, 2025010001, "사이즈", "L");
+INSERT INTO `product_options` VALUES (4, 2025010001, "사이즈", "XL");
 
 -- 회원(member)
 INSERT INTO `user` VALUES ("abc123", "abc@123", "abc123@example.com", "010-1111-2222", "12345", "부산광역시", "부산진구", "member", NOW());
@@ -186,7 +186,7 @@ INSERT INTO coupon_benefit(id, benefit) VALUES
 (10, '50% 할인'),
 (11, '배송비 무료');
 
-INSERT INTO `order_status` VALUES (1, "payment_waiting") 
+INSERT INTO `order_status` VALUES (1, "payment_waiting") ;
 INSERT INTO `order_status` (`name`) VALUES ("paid");
 INSERT INTO `order_status` (`name`) VALUES ("on_delivery"),
 ("delivered"), 
@@ -199,13 +199,13 @@ INSERT INTO `order_status` (`name`) VALUES ("on_delivery"),
 ("exchange");
 
 # 주문
-INSERT INTO `order` VALUES(1, 202500001, "jas06113", 2025010001, 1, 39000, "신용카드", 1, NOW(), NULL);
-INSERT INTO `order` VALUES(2, 202500001, "jas06113", 2025010002, 2, 39000, "신용카드", 1, NOW(), NULL);
-INSERT INTO `order` VALUES(4, 202500002, "abc123", 2025010002, 10, 39000, "신용카드", 1, NOW(), NULL);
+INSERT INTO `order` VALUES(1, 202500001, "jas06113", 2025010001, 1, "신용카드", 1, NOW());
+INSERT INTO `order` VALUES(2, 202500001, "jas06113", 2025010002, 2, "신용카드", 1, NOW());
+INSERT INTO `order` VALUES(4, 202500002, "abc123", 2025010002, 10, "신용카드", 1, NOW());
 
 SELECT @@GLOBAL.sql_mode;
 SELECT @@SESSION.sql_mode;
-SET SESSION sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));
+SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));
 
 SELECT 
 id,

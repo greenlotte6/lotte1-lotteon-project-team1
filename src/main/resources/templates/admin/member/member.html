@@ -91,8 +91,8 @@
                   type="checkbox"/>
             </td>
             <td class="member-id"
-                th:data-value="${member.getUserCompositeKey().getUser().getId()}"
-                th:text="${member.getUserCompositeKey().getUser().getId()}"></td>
+                th:data-value="${member.getMemberId().getUser().getId()}"
+                th:text="${member.getMemberId().getUser().getId()}"></td>
             <td th:text="${member.getName()}">정우성</td>
             <td th:text="${member.getGender().toUpperCase()}">M</td>
             <td>
@@ -104,16 +104,16 @@
                 <option value="vvip">VVIP</option>
               </select>
             </td>
-            <td th:text="${member.getPoint().getTotal()}">15,000</td>
-            <td th:text="${member.getUserCompositeKey().getUser().getEmail()}">
+            <!--td th:text="${member.getPoint().getTotal()}">15,000</td-->
+            <td>15,000</td>
+            <td th:text="${member.getMemberId().getUser().getEmail()}">
               loremIpsum@example.com
             </td>
-            <td th:text="${member.getUserCompositeKey().getUser().getContact()}">010-3338-2313</td>
+            <td th:text="${member.getMemberId().getUser().getContact()}">010-3338-2313</td>
             <td>
-              [[${member.getUserCompositeKey().getUser().getRegisterDate().getYear()}]]
-              -[[${#temporals.format(member.getUserCompositeKey().getUser().getRegisterDate(),
+              [[${member.getMemberId().getUser().getRegisterDate().getYear()}]]
+              -[[${#temporals.format(member.getMemberId().getUser().getRegisterDate(),
               'MM')}]]
-              <!--              -[[${member.getUserCompositeKey().getUser().getRegisterDate().getDayOfMonth()}]]-->
             </td>
             <td class="text-red" th:if="${member.getStatus().equals('stopped')}">중지</td>
             <td th:if="${member.getStatus().equals('stopped')}">

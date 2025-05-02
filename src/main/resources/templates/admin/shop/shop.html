@@ -97,15 +97,15 @@
             <td>
               <input type="checkbox"
                      class="item-checkbox"
-                     th:value="${seller.getSellerCompositeKey().getBusinessNumber()}"/>
+                     th:value="${seller.getSellerId().getBusinessNumber()}"/>
             </td>
             <td th:text="${seller.getCompanyName()}">(주)다나와</td>
             <td th:text="${seller.getCeo()}">정우성</td>
             <td id="business-number"
-                th:text="${seller.getSellerCompositeKey().getBusinessNumber()}">112-12-12345
+                th:text="${seller.getSellerId().getBusinessNumber()}">112-12-12345
             </td>
             <td th:text="${seller.getSellerNumber()}">2024-서울강남-04433</td>
-            <td th:text="${seller.getSellerCompositeKey().getUser().getContact()}">010-1234-1001
+            <td th:text="${seller.getSellerId().getUser().getContact()}">010-1234-1001
             </td>
             <td>
               <span class="legend green" th:if="${seller.getStatus().equals('run')}"></span>

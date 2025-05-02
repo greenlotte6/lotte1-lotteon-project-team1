@@ -49,9 +49,10 @@ public class ProductManagementController {
   private final ProductSubCategoryService subCategoryService;
 
   private int createNewId(int categoryId) {
-    String latestIdField = String.valueOf(service.getLatestIdAndIncrement() % 10000);
-    String registeredYear = String.valueOf(LocalDate.now().getYear());
-    String categoryIdStr = String.valueOf(categoryId);
+    String latestIdField =
+        "000" + String.valueOf(service.getLatestIdAndIncrement() % 10000);//ex)0001;
+    String registeredYear = String.valueOf(LocalDate.now().getYear());//ex) 2025
+    String categoryIdStr = "0" + String.valueOf(categoryId);//ex) 01
     return Integer.parseInt(registeredYear + categoryIdStr + latestIdField);
   }
 
