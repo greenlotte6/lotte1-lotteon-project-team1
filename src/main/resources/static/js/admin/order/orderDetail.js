@@ -1,5 +1,7 @@
-import { defaultOptions } from "/static/js/common/admin/modal.mjs";
-import { initDialogWithOptions } from "/static/js/common/admin/modal.mjs";
+import {
+  defaultOptions,
+  initDialogWithOptions
+} from "../../common/admin/modal.mjs";
 
 function request(url) {
   //TODO 주문 상세 정보 불러오기

@@ -2,8 +2,7 @@
 작성자: 이현민(id3ntity99)
 내용: 주문목록 페이지의 "배송하기" 버튼 클릭시 jQuery UI Dialog를 보여주는 스크립트
 */
-import { defaultOptions } from "/static/js/common/admin/modal.mjs";
-import { initDialog } from "/static/js/common/admin/modal.mjs";
+import {initDialog} from "../../common/admin/modal.mjs";
 
 function request(url) {
   //TODO 주문 상세 정보 불러오기

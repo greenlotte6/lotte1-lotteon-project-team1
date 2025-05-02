@@ -1,6 +1,7 @@
 package com.example.lotteon.service.order;
 
 import com.example.lotteon.dto.order.OrderStatusDTO;
+import com.example.lotteon.dto.order.OrderWrapper;
 import com.example.lotteon.entity.order.DeliveryStatus;
 import com.example.lotteon.entity.order.Order;
 import com.example.lotteon.repository.order.OrderRepository;
@@ -8,6 +9,8 @@ import java.time.LocalDate;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -47,9 +50,25 @@ public class OrderService {
         OrderStatusDTO.STATUS_EXCHANGE_REQUESTED, date);
     long price = 0;
     for (Order order : orders) {
-      price += order.getPriceTotal();
+      price += order.getProduct().getPrice();
     }
 
     return price;
+  }
+
+  public Page<OrderWrapper> getAllOrders(Pageable pageable) {
+    return repo.getAllOrdersAndCount(pageable);
+  }
+
+  public Page<OrderWrapper> searchByOrderNumber(Pageable pageable, String orderNumber) {
+    return repo.findByOrderNumber(pageable, orderNumber);
+  }
+
+  public Page<OrderWrapper> searchByMemberName(Pageable pageable, String memberName) {
+    return repo.findByMemberName(pageable, memberName);
+  }
+
+  public Page<OrderWrapper> searchByMemberId(Pageable pageable, String memberId) {
+    return repo.findByMemberId(pageable, memberId);
   }
 }

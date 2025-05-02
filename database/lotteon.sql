@@ -4,6 +4,7 @@ SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 SET @@session.restrict_fk_on_non_standard_key=OFF;
+SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));
 -- -----------------------------------------------------
 -- Schema lotteon
 -- -----------------------------------------------------
@@ -145,6 +146,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `lotteon`.`product` (
   `id` INT NOT NULL AUTO_INCREMENT,
+  `receipt_issuable` ENUM("0", "1") NOT NULL COMMENT 'receipt_issuable = 영수증 발행 가능 여부(\"0\" = false, \"1\"=true)',
   `category_id` INT NOT NULL,
   `subcategory_id` INT NOT NULL,
   `seller_business_number` CHAR(12) NOT NULL,
@@ -160,7 +162,6 @@ CREATE TABLE IF NOT EXISTS `lotteon`.`product` (
   `status` ENUM("on_sale", "stop_selling") NOT NULL DEFAULT 'on_sale' COMMENT 'status = 상품상태',
   `is_vat_free` ENUM("0", "1") NOT NULL COMMENT 'is_vat_free = 부가세 면세 여부',
   `business_class` VARCHAR(30) NOT NULL COMMENT 'business_class = 사업자구분\n',
-  `receipt_issuable` ENUM("0", "1") NOT NULL COMMENT 'receipt_issuable = 영수증 발행 가능 여부(\"0\" = false, \"1\"=true)',
   `origin` VARCHAR(20) NOT NULL COMMENT 'origin = 원산지',
   `quality` ENUM("new", "used") NULL,
   PRIMARY KEY (`id`),
@@ -214,7 +215,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `lotteon`.`order_status` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(45) NOT NULL COMMENT 'possible values = [\"payment_waiting\", \"paid\", \"on_delivery\", \"delivered\", \"purchase_confirmed\", \"cancel_requested\", \"canceled\", \"refund_requetsed\", \"refunded\", \"exchange_requested\", \"exchange\"]',
+  `name` ENUM("payment_waiting", "paid", "on_delivery", "delivered", "purchase_confirmed", "cancel_requested", "canceled", "refund_requetsed", "refunded", "exchange_requested", "exchange") NOT NULL COMMENT 'possible values = [\"payment_waiting\", \"paid\", \"on_delivery\", \"delivered\", \"purchase_confirmed\", \"cancel_requested\", \"canceled\", \"refund_requetsed\", \"refunded\", \"exchange_requested\", \"exchange\"]',
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -224,10 +225,10 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `lotteon`.`order` (
   `id` INT NOT NULL AUTO_INCREMENT,
+  `order_number` VARCHAR(45) NOT NULL,
   `member_id` VARCHAR(16) NOT NULL,
   `product_id` INT NOT NULL,
-  `count` INT NOT NULL,
-  `price_total` INT NOT NULL,
+  `amount` INT NOT NULL,
   `payment` VARCHAR(45) NOT NULL,
   `status_id` INT NOT NULL,
   `order_date` DATE NOT NULL,
@@ -544,7 +545,7 @@ ENGINE = InnoDB;
 -- Table `lotteon`.`coupon_history`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `lotteon`.`coupon_history` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `coupon_id` INT NOT NULL,
   `user_id` VARCHAR(16) NOT NULL,
   `status` ENUM("used", "unused") NULL DEFAULT 'unused',
@@ -569,10 +570,11 @@ ENGINE = InnoDB;
 -- Table `lotteon`.`cart`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `lotteon`.`cart` (
+  `id` INT NOT NULL AUTO_INCREMENT,
   `member_id` VARCHAR(16) NOT NULL,
   `product_id` INT NOT NULL,
   `register_date` DATE NULL,
-  PRIMARY KEY (`member_id`),
+  PRIMARY KEY (`id`),
   INDEX `fk_cart_member1_idx` (`member_id` ASC) VISIBLE,
   INDEX `fk_cart_product1_idx` (`product_id` ASC) VISIBLE,
   CONSTRAINT `fk_cart_member1`
