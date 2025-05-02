@@ -16,6 +16,8 @@ public class PageRequestDTO {
 
     private int id;
     private String seller_id;
+    private int coupon_id;
+    private String user_id;
 
     @Builder.Default
     private int no = 1;
