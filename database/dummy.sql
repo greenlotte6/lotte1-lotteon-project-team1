@@ -244,22 +244,23 @@ JOIN `product`
 ON `product`.id = `order`.product_id;
 
 -- #####
-SELECT 
-  o.*,
+SELECT
+  o.order_number,
+  o.amount,
   p.price,
   p.discount_rate,
   p.delivery_fee,
-  op.numberOfOrderedProducts
-  ((p.price - (p.price * p.discount_rate) / 100) * o.amount + (p.delivery_fee)) AS price_total
+  p.total_price
 FROM `order` o
-JOIN product p ON p.id = o.product_id
 JOIN (
-    SELECT order_number, COUNT(DISTINCT product_id) AS numberOfOrderedProducts
-    FROM `order`
-    JOIN `product`
-    ON `product`.id = `order`.product_id
-    WHERE member_id = 'jas06113'
-    GROUP BY order_number
-) op ON op.order_number = o.order_number
-WHERE o.member_id = 'jas06113';
-GROUP BY `order_number`;
+  SELECT `order`.order_number, 
+  `price`, 
+  discount_rate, 
+  delivery_fee, 
+  seller_business_number, 
+  (product.price - (product.price * product.discount_rate / 100)) * `order`.amount + product.delivery_fee AS total_price 
+  FROM product 
+  JOIN `order`
+  ON `order`.product_id = product.id
+) p ON p.id = `o`.product_id
+GROUP BY p.seller_business_number, `o`.order_number;

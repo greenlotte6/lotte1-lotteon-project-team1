@@ -10,7 +10,6 @@ import com.querydsl.core.Tuple;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -29,19 +28,7 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
   private final QDelivery delivery = QDelivery.delivery;
 
   private List<OrderWrapper> toList(List<Tuple> tuples) {
-    List<OrderWrapper> wrappers = new ArrayList<>();
-    for (Tuple tuple : tuples) {
-      Order order = tuple.get(0, Order.class);
-      Long numberOfOrderedProducts = tuple.get(1, long.class);
-      int totalPrice = tuple.get(2, int.class);
-      OrderWrapper wrapper = OrderWrapper.builder()
-          .order(order)
-          .numberOfOrderedProducts(numberOfOrderedProducts)
-          .totalPrice(totalPrice)
-          .build();
-      wrappers.add(wrapper);
-    }
-    return wrappers;
+    return OrderWrapper.builder().build();
   }
 
   private JPAQuery<Tuple> selectFromJoin() {
@@ -90,24 +77,18 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
     return query.select(order.count())
         .from(order)
         .join(delivery)
-        .on(order.delivery.deliveryNumber.eq(delivery.deliveryNumber))
+        .on(delivery.order.id.eq(order.id))
         .where(order.orderDate.eq(date))
         .fetchFirst();
   }
 
   @Override
   public Page<OrderWrapper> getAllOrdersAndCount(Pageable pageable) {
-    //List<Tuple> tuples = selectFromJoin()
-    //    .groupBy(order.orderNumber)
-    //    .fetch();
-    //List<OrderWrapper> wrappers = toList(tuples);
-    List<Order> orders = query.selectFrom(order).fetch();
-    List<OrderWrapper> wrappers = new ArrayList<>();
-    int numberOfOrderedProducts = 1;
-    for (int i = 1; i < orders.size(); i++) {
-      String prevOrderNumber = orders.get(i - 1).getOrderNumber();
-      String currOrderNumber = orders.get(i).getOrderNumber();
-    }
+    List<Order> results = query
+        .selectFrom(order)
+        .join(order.product, product)  // 연관관계 존재해야 함
+        .fetch();
+    List<OrderWrapper> wrappers = OrderWrapper.builder().build();
     return new PageImpl<>(wrappers, pageable, wrappers.size());
   }
 
