@@ -210,6 +210,7 @@ INSERT INTO `order` VALUES("202500003", "xyz123", "신용카드", 1, NOW());
 INSERT INTO `order_item` VALUES(1, "202500001", "2025010001", 1);
 INSERT INTO `order_item` VALUES(2, "202500001", "2025010002", 1);
 INSERT INTO `order_item` VALUES(3, "202500001", "2025010003", 1);
+INSERT INTO `order_item` VALUES(6, "202500001", "2025010001", 1);
 
 INSERT INTO `order_item` VALUES(4, "202500002", "2025010001", 2);
 
@@ -247,3 +248,42 @@ ON `order`.member_id = `member`.user_id
 JOIN `product`
 ON `order_item`.product_id = `product`.id
 GROUP BY `order`.order_number;
+
+SELECT
+`order`.*,
+COUNT(`order_item`.product_id)
+FROM `order`
+JOIN `order_item`
+ON `order_item`.order_number = `order`.order_number
+JOIN `member`
+ON `order`.member_id = `member`.user_id
+JOIN `product`
+ON `order_item`.product_id = `product`.id
+WHERE `product`.seller_user_id="seller2"
+GROUP BY `order`.order_number;
+
+SELECT * FROM `order_item`
+JOIN `product`
+ON `order_item`.product_id = `product`.id
+JOIN `seller`
+ON `product`.seller_user_id=`seller`.user_id;
+
+SELECT 
+  `o`.order_number,
+  m.user_id,
+  m.`name`,
+  o.payment,
+  o.status_id,
+  o.order_date,
+  SUM(
+    ((p.price - (p.price * p.discount_rate / 100))) * oi.amount + p.delivery_fee
+  ) AS total_price,
+  COUNT(`oi`.product_id) AS `order_item_count`
+FROM `order` o
+JOIN `order_item` oi ON oi.order_number = o.order_number
+JOIN `product` p ON oi.product_id = p.id
+JOIN `seller` s ON p.seller_user_id = s.user_id
+JOIN `member` m ON m.user_id=o.member_id
+JOIN `order_status` os ON o.status_id=os.id
+WHERE p.seller_user_id = 'seller1' AND m.user_id="jas06113"
+GROUP BY o.order_number;

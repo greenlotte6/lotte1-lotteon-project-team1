@@ -28,11 +28,11 @@ public class Product {
   private int id;
 
   @JoinColumn(name = "category_id")
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne(fetch = FetchType.LAZY, optional = false)
   private ProductCategory category;
 
   @JoinColumn(name = "subcategory_id")
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne(fetch = FetchType.LAZY, optional = false)
   private ProductSubCategory subCategory;
 
   @Column(name = "name")
@@ -41,7 +41,7 @@ public class Product {
   @Column(name = "description")
   private String description;
 
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne(fetch = FetchType.LAZY, optional = false)
   @JoinColumns({
       @JoinColumn(name = "seller_user_id", referencedColumnName = "user_id"),
       @JoinColumn(name = "seller_business_number", referencedColumnName = "business_number")
@@ -64,7 +64,7 @@ public class Product {
   private int deliveryFee;
 
   @JoinColumn(name = "image_id")
-  @OneToOne(fetch = FetchType.LAZY)
+  @OneToOne(fetch = FetchType.LAZY, optional = false)
   private ProductImage image;
 
   @Column(name = "status")

@@ -35,12 +35,13 @@ public interface OrderRepositoryCustom {
 
   Long countByDeliveryStatusAt(String status, LocalDate date);
 
-  Page<OrderWrapper> getAllOrdersAndCount(Pageable pageable);
+  Page<OrderWrapper> findAllBySellerId(String currentSellerId, Pageable pageable);
 
-  Page<OrderWrapper> findByOrderNumber(Pageable pageable, String orderNumber);
+  Page<OrderWrapper> findByOrderNumber(String currentSellerId, String orderNumber,
+      Pageable pageable);
 
-  Page<OrderWrapper> findByMemberName(Pageable pageable, String memberName);
+  Page<OrderWrapper> findByMemberName(String currentSellerId, String memberName, Pageable pageable);
 
-  Page<OrderWrapper> findByMemberId(Pageable pageable, String memberId);
+  Page<OrderWrapper> findByMemberId(String currentSellerId, String memberId, Pageable pageable);
 
 }

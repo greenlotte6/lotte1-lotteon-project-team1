@@ -4,12 +4,17 @@ import com.example.lotteon.dto.order.OrderWrapper;
 import com.example.lotteon.entity.order.Order;
 import com.example.lotteon.entity.order.QDelivery;
 import com.example.lotteon.entity.order.QOrder;
+import com.example.lotteon.entity.order.QOrderItem;
+import com.example.lotteon.entity.order.QOrderStatus;
 import com.example.lotteon.entity.product.QProduct;
+import com.example.lotteon.entity.seller.QSeller;
 import com.example.lotteon.entity.user.QMember;
+import com.example.lotteon.entity.user.QUser;
 import com.querydsl.core.Tuple;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -22,30 +27,47 @@ import org.springframework.stereotype.Repository;
 public class OrderRepositoryImpl implements OrderRepositoryCustom {
 
   private final JPAQueryFactory query;
-  private final QMember member = QMember.member;
   private final QOrder order = QOrder.order;
+  private final QOrderStatus status = QOrderStatus.orderStatus;
+  private final QOrderItem orderItem = QOrderItem.orderItem;
   private final QProduct product = QProduct.product;
   private final QDelivery delivery = QDelivery.delivery;
+  private final QMember member = QMember.member;
+  private final QSeller seller = QSeller.seller;
+  private final QUser user = QUser.user;
 
   private List<OrderWrapper> toList(List<Tuple> tuples) {
-    return OrderWrapper.builder().build();
+    List<OrderWrapper> wrappers = new ArrayList<>();
+    for (Tuple tuple : tuples) {
+      OrderWrapper wrapper = OrderWrapper.builder().tuples(tuple).build();
+      wrappers.add(wrapper);
+    }
+    return wrappers;
   }
 
   private JPAQuery<Tuple> selectFromJoin() {
-    //return query.select(order,
-    //        order.product.id.countDistinct().as("numberOfOrderedProducts"),//하나의 주문번호 당 주문 건수 조회
-    //        product.price.subtract(
-    //                (product.price.multiply(product.discountRate))
-    //                    .divide(100)
-    //            )
-    //            .add(product.deliveryFee)
-    //            .multiply(order.amount)
-    //            .as("totalPrice")
-    //    )
-    //    .from(order)
-    //    .join(product)
-    //    .on(order.product.id.eq(product.id));
-    return null;
+    return query
+        .select(
+            order.orderNumber,
+            member.memberId.user.id,
+            member.name,
+            order.payment,
+            order.status.id,
+            order.orderDate,
+            product.price
+                .subtract(product.price.multiply(product.discountRate.divide(100)))
+                .multiply(orderItem.amount)
+                .add(product.deliveryFee)
+                .sum(),
+            orderItem.product.id.count()
+        )
+        .from(order)
+        .join(orderItem).on(order.orderNumber.eq(orderItem.order.orderNumber))
+        .join(product).on(orderItem.product.id.eq(product.id))
+        .join(product.seller, seller)
+        .join(seller.sellerId.user, user)
+        .join(order.member, member)
+        .join(order.status, status);
   }
 
   @Override
@@ -77,26 +99,28 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
     return query.select(order.count())
         .from(order)
         .join(delivery)
-        .on(delivery.order.id.eq(order.id))
+        .on(delivery.order.orderNumber.eq(order.orderNumber))
         .where(order.orderDate.eq(date))
         .fetchFirst();
   }
 
   @Override
-  public Page<OrderWrapper> getAllOrdersAndCount(Pageable pageable) {
-    List<Order> results = query
-        .selectFrom(order)
-        .join(order.product, product)  // 연관관계 존재해야 함
+  public Page<OrderWrapper> findAllBySellerId(String currentSellerId, Pageable pageable) {
+    List<Tuple> tuples = selectFromJoin()
+        .where(user.id.eq(currentSellerId))
+        .groupBy(order.orderNumber)
         .fetch();
-    List<OrderWrapper> wrappers = OrderWrapper.builder().build();
+
+    List<OrderWrapper> wrappers = toList(tuples);
+
     return new PageImpl<>(wrappers, pageable, wrappers.size());
   }
 
   @Override
-  public Page<OrderWrapper> findByOrderNumber(Pageable pageable, String orderNumber) {
+  public Page<OrderWrapper> findByOrderNumber(String currentSellerId, String orderNumber,
+      Pageable pageable) {
     List<Tuple> tuples = selectFromJoin()
-        .on(order.product.id.eq(product.id))
-        .where(order.orderNumber.eq(orderNumber))
+        .where(user.id.eq(currentSellerId).and(order.orderNumber.eq(orderNumber)))
         .groupBy(order.orderNumber)
         .fetch();
     List<OrderWrapper> wrappers = toList(tuples);
@@ -104,9 +128,10 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
   }
 
   @Override
-  public Page<OrderWrapper> findByMemberName(Pageable pageable, String memberName) {
+  public Page<OrderWrapper> findByMemberName(String currentSellerId, String memberName,
+      Pageable pageable) {
     List<Tuple> tuples = selectFromJoin()
-        .where(order.member.name.eq(memberName))
+        .where(user.id.eq(currentSellerId).and(member.name.eq(memberName)))
         .groupBy(order.orderNumber)
         .fetch();
     List<OrderWrapper> wrappers = toList(tuples);
@@ -114,9 +139,10 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
   }
 
   @Override
-  public Page<OrderWrapper> findByMemberId(Pageable pageable, String memberId) {
+  public Page<OrderWrapper> findByMemberId(String currentSellerId, String memberId,
+      Pageable pageable) {
     List<Tuple> tuples = selectFromJoin()
-        .where(order.member.memberId.user.id.eq(memberId))
+        .where(user.id.eq(currentSellerId).and(member.memberId.user.id.eq(memberId)))
         .groupBy(order.orderNumber)
         .fetch();
     List<OrderWrapper> wrappers = toList(tuples);

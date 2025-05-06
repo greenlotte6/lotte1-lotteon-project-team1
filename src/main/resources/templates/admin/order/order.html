@@ -65,9 +65,8 @@
             <th>주문번호</th>
             <th>주문자</th>
             <th>주문자명</th>
-            <th>상품명</th>
-            <th>주문건수</th>
             <th>주문합계</th>
+            <th>주문건수</th>
             <th>결제수단</th>
             <th>주문상태</th>
             <th>주문일</th>
@@ -82,8 +81,7 @@
             </td>
             <td th:text="${wrapper.order.getMember().getMemberId().getUser().getId()}">abc123</td>
             <td th:text="${wrapper.order.getMember().getName()}">김유신</td>
-            <td th:text="${wrapper.order.getProduct().getName()}">상품명 #1</td>
-            <td th:text="${wrapper.getNumberOfOrderedProducts()}">2</td>
+            <td th:text="${wrapper.getItemCount()}">2</td>
             <td th:text="${wrapper.getTotalPrice()}">102,900</td>
             <td th:text="${wrapper.getOrder().getPayment()}">신용카드</td>
             <td class="text-green" th:if="${wrapper.getOrder().getStatus().getId() == 1}">결제완료</td>
@@ -96,7 +94,10 @@
             <td class="text-gray" th:if="${wrapper.getOrder().getStatus().getId() == 8}">환불완료</td>
             <td class="text-red" th:if="${wrapper.getOrder().getStatus().getId() == 9}">교환요청</td>
             <td class="text-gray" th:if="${wrapper.getOrder().getStatus().getId() == 10}">교환완료</td>
-            <td th:if="${wrapper.getOrder().getOrderDate()}">0000-00-00 00:00:00</td>
+            <td th:text="${#temporals.format(wrapper.getOrder().getOrderDate(), 'yy-mm-dd HH:mm:ss')}">
+              0000-00-00
+              00:00:00
+            </td>
             <td>
               <button class="control-btn default ship-btn">
                 배송하기
