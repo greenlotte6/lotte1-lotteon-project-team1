@@ -187,4 +187,53 @@ public class CouponHistoryService {
                 .build();
 
     }
+
+    public Coupon_HistoryDTO findById(int id) {
+        return couponHistoryRepository.findById(id)
+                .map(couponHistory -> {
+                    UserDTO userDTO = UserDTO.builder()
+                            .id(couponHistory.getMember().getMemberId().getUser().getId())
+                            .build();
+
+                    MemberIdDTO memberIdDTO = MemberIdDTO.builder()
+                            .user(userDTO)
+                            .build();
+
+                    MemberDTO memberDTO = MemberDTO.builder()
+                            .memberId(memberIdDTO)
+                            .build();
+
+                    Coupon_BenefitDTO benefitDTO = Coupon_BenefitDTO.builder()
+                            .id(couponHistory.getCoupon().getCoupon_benefit().getId())
+                            .benefit(couponHistory.getCoupon().getCoupon_benefit().getBenefit())
+                            .build();
+
+                    Coupon_TypeDTO typeDTO = Coupon_TypeDTO.builder()
+                            .id(couponHistory.getCoupon().getCoupon_type().getId())
+                            .name(couponHistory.getCoupon().getCoupon_type().getName())
+                            .build();
+
+                    CouponDTO couponDTO = CouponDTO.builder()
+                            .id(couponHistory.getCoupon().getId())
+                            .type_id(couponHistory.getCoupon().getCoupon_type().getId())
+                            .name(couponHistory.getCoupon().getName())
+                            .coupon_benefit(benefitDTO)
+                            .coupon_type(typeDTO)
+                            .from(couponHistory.getCoupon().getFrom())
+                            .to(couponHistory.getCoupon().getTo())
+                            .seller_id(couponHistory.getCoupon().getSeller_id())
+                            .description(couponHistory.getCoupon().getDescription())
+                            .build();
+                    return Coupon_HistoryDTO.builder()
+                            .id(couponHistory.getId())
+                            .coupon_id(couponHistory.getCoupon().getId())
+                            .user_id(couponHistory.getMember().getMemberId().getUser().getId())
+                            .status(couponHistory.getStatus())
+                            .used_date(couponHistory.getUsed_date())
+                            .coupon(couponDTO)
+                            .member(memberDTO)
+                            .build();
+                })
+                .orElseThrow(() -> new RuntimeException("쿠폰을 찾을 수 없습니다."));
+    }
 }
