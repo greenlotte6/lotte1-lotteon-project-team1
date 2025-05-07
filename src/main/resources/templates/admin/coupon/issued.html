@@ -31,7 +31,7 @@
       type="module"
       src="/js/common/admin/registryModal.js"
   ></script>
-  <script type="module" src="/js/admin/coupon/coupon.js"></script>
+  <script type="module" src="/js/admin/coupon/couponHistory.js"></script>
 </head>
 <body>
 <div id="wrapper">
@@ -80,7 +80,7 @@
           </tr>
           <tr th:each="couponHistory, i:${pageResponseDTO.dtoList}">
             <td>
-              <a href="#" class="coupon-detail anchor-with-underline">
+              <a href="#" class="coupon-detail anchor-with-underline" th:data-id="${couponHistory.id}">
                 [[${couponHistory.id}]]
               </a>
             </td>
@@ -93,7 +93,7 @@
               <span th:case="'used'" class="text-green">사용</span>
               <span th:case="*">알 수 없음</span> <!-- 예외 처리용 -->
             </td>
-            <td>0000-00-00 00:00:00</td>
+            <td>[[${couponHistory.used_date}]]</td>
             <td>
               <button class="control-btn default">중단</button>
             </td>
@@ -108,32 +108,37 @@
           <tbody>
           <tr>
             <th>쿠폰번호</th>
-            <td>1012121341</td>
+            <td class="coupon-id"></td>
             <th>발급처</th>
-            <td>(주)다있어</td>
+            <td class="coupon-seller-id"></td>
+          </tr>
+          <tr>
+            <th>발급번호</th>
+            <td class="coupon-publish-id"></td>
+            <th>사용여부</th>
+            <td class="coupon-used-id"></td>
           </tr>
           <tr>
             <th>쿠폰종류</th>
-            <td>개별상품 할인</td>
+            <td class="coupon-type-id"></td>
+            <th>발급대상</th>
+            <td class="coupon-user-id"></td>
+          </tr>
+          <tr>
+            <th>쿠폰명</th>
+            <td class="coupon-name-id"></td>
           </tr>
           <tr>
             <th>혜택</th>
-            <td>2,000원 할인</td>
+            <td class="coupon-benefit-id"></td>
           </tr>
           <tr>
             <th>사용기간</th>
-            <td>0000-00-00 ~ 0000-00-00</td>
+            <td class="coupon-period"></td>
           </tr>
           <tr>
             <th>유의사항</th>
-            <td>
-              <ul class="with-list-style">
-                <li>상품 중복 할인 쿠폰</li>
-                <li>상품 1개에 대해 사용가능</li>
-                <li>판매자 즉시할인/상품할인 쿠폰과 중복 사용 가능</li>
-                <li>사용처: (주)다있어</li>
-              </ul>
-            </td>
+            <td class="coupon-description"></td>
           </tr>
           </tbody>
         </table>
@@ -173,3 +178,50 @@
 </div>
 </body>
 </html>
+
+<script>
+  $(".control-btn.default").click(function (event) {
+    event.preventDefault();
+
+    const $row = $(this).closest("tr");
+    const couponId = $row.find(".coupon-detail").data("id");
+    const couponStatus = $row.find("td:nth-child(6)").text().trim(); // 상태 정보 추출
+
+    if (!couponId) {
+      alert("쿠폰 ID를 찾을 수 없습니다.");
+      return;
+    }
+
+    if (couponStatus === "사용") { // 이미 사용된 쿠폰인 경우
+      alert("이미 중단된 쿠폰입니다.");
+      $(this).css("background-color", "gray"); // 버튼 색을 회색으로 변경
+      $(this).prop("disabled", true); // 버튼을 비활성화
+      return;
+    }
+
+    if (!confirm("이 쿠폰을 사용 처리하시겠습니까?")) {
+      return;
+    }
+
+    fetch(`/admin/coupon/issued/${couponId}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+            .then(response => {
+              if (!response.ok) throw new Error("상태 변경 실패");
+              return response.json();
+            })
+            .then(result => {
+              alert("쿠폰이 사용 처리되었습니다.");
+              $(this).css("background-color", "gray"); // 버튼 색을 회색으로 변경
+              $(this).prop("disabled", true); // 버튼을 비활성화
+              location.reload(); // 갱신
+            })
+            .catch(error => {
+              alert("쿠폰 처리 중 오류 발생");
+              console.error(error);
+            });
+  });
+</script>

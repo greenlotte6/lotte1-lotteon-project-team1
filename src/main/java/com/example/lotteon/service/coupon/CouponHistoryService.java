@@ -23,7 +23,10 @@ import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import static com.example.lotteon.entity.coupon.QCoupon.coupon;
@@ -186,5 +189,74 @@ public class CouponHistoryService {
                 .total(total)
                 .build();
 
+    }
+
+    public Coupon_HistoryDTO findById(int id) {
+        return couponHistoryRepository.findById(id)
+                .map(couponHistory -> {
+                    UserDTO userDTO = UserDTO.builder()
+                            .id(couponHistory.getMember().getMemberId().getUser().getId())
+                            .build();
+
+                    MemberIdDTO memberIdDTO = MemberIdDTO.builder()
+                            .user(userDTO)
+                            .build();
+
+                    MemberDTO memberDTO = MemberDTO.builder()
+                            .memberId(memberIdDTO)
+                            .build();
+
+                    Coupon_BenefitDTO benefitDTO = Coupon_BenefitDTO.builder()
+                            .id(couponHistory.getCoupon().getCoupon_benefit().getId())
+                            .benefit(couponHistory.getCoupon().getCoupon_benefit().getBenefit())
+                            .build();
+
+                    Coupon_TypeDTO typeDTO = Coupon_TypeDTO.builder()
+                            .id(couponHistory.getCoupon().getCoupon_type().getId())
+                            .name(couponHistory.getCoupon().getCoupon_type().getName())
+                            .build();
+
+                    CouponDTO couponDTO = CouponDTO.builder()
+                            .id(couponHistory.getCoupon().getId())
+                            .type_id(couponHistory.getCoupon().getCoupon_type().getId())
+                            .name(couponHistory.getCoupon().getName())
+                            .coupon_benefit(benefitDTO)
+                            .coupon_type(typeDTO)
+                            .from(couponHistory.getCoupon().getFrom())
+                            .to(couponHistory.getCoupon().getTo())
+                            .seller_id(couponHistory.getCoupon().getSeller_id())
+                            .description(couponHistory.getCoupon().getDescription())
+                            .build();
+                    return Coupon_HistoryDTO.builder()
+                            .id(couponHistory.getId())
+                            .coupon_id(couponHistory.getCoupon().getId())
+                            .user_id(couponHistory.getMember().getMemberId().getUser().getId())
+                            .status(couponHistory.getStatus())
+                            .used_date(couponHistory.getUsed_date())
+                            .coupon(couponDTO)
+                            .member(memberDTO)
+                            .build();
+                })
+                .orElseThrow(() -> new RuntimeException("쿠폰을 찾을 수 없습니다."));
+    }
+
+    @Transactional
+    public void markAsUsed(int couponHistoryId) {
+        Coupon_History history = couponHistoryRepository.findById(couponHistoryId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 쿠폰 내역이 존재하지 않습니다."));
+
+        if (!"unused".equals(history.getStatus())) {
+            throw new IllegalStateException("이미 사용된 쿠폰입니다.");
+        }
+
+        // 상태 변경
+        history.setStatus("used");
+
+        // 현재 날짜 및 시간 문자열로 저장 (형식: yyyy-MM-dd HH:mm:ss)
+        String now = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        history.setUsed_date(now);
+
+        // save 생략 가능하지만 명시적으로 작성 가능
+        couponHistoryRepository.save(history);
     }
 }

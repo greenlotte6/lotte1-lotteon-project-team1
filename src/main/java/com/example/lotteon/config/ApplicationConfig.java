@@ -18,6 +18,10 @@ import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.lang.reflect.Type;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 @Configuration
 public class ApplicationConfig {
 
@@ -40,22 +44,25 @@ public class ApplicationConfig {
 
   @Bean
   public Gson gson() {
+    // LocalDate를 처리할 TypeAdapter 정의
     return new GsonBuilder()
-        .registerTypeAdapter(LocalDate.class, new JsonDeserializer<LocalDate>() {
-          @Override
-          public LocalDate deserialize(JsonElement json, Type typeOfT,
-              JsonDeserializationContext context)
-              throws JsonParseException {
-            return LocalDate.parse(json.getAsString());
-          }
-        })
-        .registerTypeAdapter(LocalDate.class, new JsonSerializer<LocalDate>() {
-          @Override
-          public JsonElement serialize(LocalDate src, Type typeOfSrc,
-              JsonSerializationContext context) {
-            return new JsonPrimitive(src.toString()); // ISO-8601 format (e.g., "2024-05-07")
-          }
-        })
-        .create();
+            .registerTypeAdapter(LocalDate.class, new JsonSerializer<LocalDate>() {
+              private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+              @Override
+              public JsonElement serialize(LocalDate localDate, Type typeOfSrc, JsonSerializationContext context) {
+                return new JsonPrimitive(localDate.format(formatter));
+              }
+            })
+            .registerTypeAdapter(LocalDate.class, new JsonDeserializer<LocalDate>() {
+              private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+              @Override
+              public LocalDate deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) {
+                return LocalDate.parse(json.getAsString(), formatter);
+              }
+            })
+            .setDateFormat("yyyy-MM-dd'T'HH:mm:ssX") // 다른 날짜 형식이 필요한 경우
+            .create();
   }
 }
