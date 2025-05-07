@@ -1,0 +1,25 @@
+<header>
+  <div class="header-wrapper">
+    <!--img
+        src="https://static.lotteon.com/p/common/foCommon/assets/img/logo_lotte-on@2x.png"
+        alt="logo"
+    -->
+    <img th:src="${config.getLogo().getHeaderLogoLocation()}">
+    <h1>SELLER</h1>
+    <ul>
+      <li>
+        <span class="greeting"> 안녕하세요, [홍길동]님, 반갑습니다. </span>
+      </li>
+      <li>
+        <a href="#"> 홈 </a>
+      </li>
+      <li>
+        <a href="#"> 로그아웃 </a>
+      </li>
+      <li>
+        <a href="#"> 고객센터 </a>
+      </li>
+    </ul>
+  </div>
+  <nav class="header-padding"></nav>
+</header>

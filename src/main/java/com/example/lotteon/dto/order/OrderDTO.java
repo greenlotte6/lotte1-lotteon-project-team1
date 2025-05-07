@@ -1,6 +1,5 @@
 package com.example.lotteon.dto.order;
 
-import com.example.lotteon.dto.product.ProductDTO;
 import com.example.lotteon.dto.user.MemberDTO;
 import java.time.LocalDate;
 import lombok.AllArgsConstructor;
@@ -14,13 +13,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class OrderDTO {
 
-  private int id;
+  private String orderNumber;
   private MemberDTO member;
-  private DeliveryDTO delivery;
-  private ProductDTO product;
-  private int count;
-  private int priceTotal;
   private String payment;
+  private String recipientName;
+  private String recipientContact;
+  private String recipientZip;
+  private String recipientAddress;
+  private String recipientAddressDetail;
   private OrderStatusDTO status;
   private LocalDate orderDate;
 

@@ -58,8 +58,20 @@ public class OrderService {
     return 0L;
   }
 
+  public Page<OrderWrapper> getAllOrders(Pageable pageable) {
+    return repo.findAllOrders(pageable);
+  }
+
   public Page<OrderWrapper> getAllOrdersBySellerId(String currentSellerId, Pageable pageable) {
     return repo.findAllBySellerId(currentSellerId, pageable);
+  }
+
+  public Order searchByOrderNumber(String orderNumber) {
+    return repo.findByOrderNumber(orderNumber);
+  }
+
+  public Page<OrderWrapper> searchByOrderNumber(String orderNumber, Pageable pageable) {
+    return repo.findByOrderNumber(orderNumber, pageable);
   }
 
   public Page<OrderWrapper> searchByOrderNumber(String currentSellerId, String orderNumber,
@@ -67,9 +79,17 @@ public class OrderService {
     return repo.findByOrderNumber(currentSellerId, orderNumber, pageable);
   }
 
+  public Page<OrderWrapper> searchByMemberName(String memberName, Pageable pageable) {
+    return repo.findByMemberName(memberName, pageable);
+  }
+
   public Page<OrderWrapper> searchByMemberName(String currentSellerId, String memberName,
       Pageable pageable) {
     return repo.findByMemberName(currentSellerId, memberName, pageable);
+  }
+
+  public Page<OrderWrapper> searchByMemberId(String memberId, Pageable pageable) {
+    return repo.findByMemberId(memberId, pageable);
   }
 
   public Page<OrderWrapper> searchByMemberId(String currentSellerId, String memberId,

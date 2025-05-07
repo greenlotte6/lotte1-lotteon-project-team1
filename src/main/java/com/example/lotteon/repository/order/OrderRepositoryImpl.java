@@ -105,9 +105,37 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
   }
 
   @Override
+  public Page<OrderWrapper> findAllOrders(Pageable pageable) {
+    List<Tuple> tuples = selectFromJoin()
+        .groupBy(order.orderNumber)
+        .fetch();
+
+    List<OrderWrapper> wrappers = toList(tuples);
+
+    return new PageImpl<>(wrappers, pageable, wrappers.size());
+  }
+
+  @Override
   public Page<OrderWrapper> findAllBySellerId(String currentSellerId, Pageable pageable) {
     List<Tuple> tuples = selectFromJoin()
         .where(user.id.eq(currentSellerId))
+        .groupBy(order.orderNumber)
+        .fetch();
+
+    List<OrderWrapper> wrappers = toList(tuples);
+
+    return new PageImpl<>(wrappers, pageable, wrappers.size());
+  }
+
+  @Override
+  public Order findByOrderNumber(String orderNumber) {
+    return query.selectFrom(order).where(order.orderNumber.eq(orderNumber)).fetchOne();
+  }
+
+  @Override
+  public Page<OrderWrapper> findByOrderNumber(String orderNumber, Pageable pageable) {
+    List<Tuple> tuples = selectFromJoin()
+        .where(order.orderNumber.eq(orderNumber))
         .groupBy(order.orderNumber)
         .fetch();
 
@@ -128,6 +156,18 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
   }
 
   @Override
+  public Page<OrderWrapper> findByMemberName(String memberName, Pageable pageable) {
+    List<Tuple> tuples = selectFromJoin()
+        .where(member.name.eq(memberName))
+        .groupBy(order.orderNumber)
+        .fetch();
+
+    List<OrderWrapper> wrappers = toList(tuples);
+
+    return new PageImpl<>(wrappers, pageable, wrappers.size());
+  }
+
+  @Override
   public Page<OrderWrapper> findByMemberName(String currentSellerId, String memberName,
       Pageable pageable) {
     List<Tuple> tuples = selectFromJoin()
@@ -135,6 +175,18 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
         .groupBy(order.orderNumber)
         .fetch();
     List<OrderWrapper> wrappers = toList(tuples);
+    return new PageImpl<>(wrappers, pageable, wrappers.size());
+  }
+
+  @Override
+  public Page<OrderWrapper> findByMemberId(String memberId, Pageable pageable) {
+    List<Tuple> tuples = selectFromJoin()
+        .where(member.memberId.user.id.eq(memberId))
+        .groupBy(order.orderNumber)
+        .fetch();
+
+    List<OrderWrapper> wrappers = toList(tuples);
+
     return new PageImpl<>(wrappers, pageable, wrappers.size());
   }
 

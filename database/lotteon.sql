@@ -2,7 +2,6 @@
 
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
-SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 SET @@session.restrict_fk_on_non_standard_key=OFF;
 SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));
 -- -----------------------------------------------------
@@ -271,7 +270,6 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `lotteon`.`delivery` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `order_number` VARCHAR(45) NOT NULL,
-  `member_id` VARCHAR(16) NOT NULL,
   `delivery_number` VARCHAR(16) NOT NULL COMMENT '운송장번호',
   `recipient_name` VARCHAR(20) NOT NULL,
   `recipient_contact` VARCHAR(14) NOT NULL,
@@ -282,15 +280,9 @@ CREATE TABLE IF NOT EXISTS `lotteon`.`delivery` (
   `delivery_company_id` INT NOT NULL,
   `status_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_delivery_member1_idx` (`member_id` ASC) VISIBLE,
   INDEX `fk_delivery_delivery_state1_idx` (`status_id` ASC) VISIBLE,
   INDEX `fk_delivery_delivery_company1_idx` (`delivery_company_id` ASC) VISIBLE,
   INDEX `fk_delivery_order1_idx` (`order_number` ASC) VISIBLE,
-  CONSTRAINT `fk_delivery_member1`
-    FOREIGN KEY (`member_id`)
-    REFERENCES `lotteon`.`member` (`user_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
   CONSTRAINT `fk_delivery_delivery_state1`
     FOREIGN KEY (`status_id`)
     REFERENCES `lotteon`.`delivery_status` (`id`)

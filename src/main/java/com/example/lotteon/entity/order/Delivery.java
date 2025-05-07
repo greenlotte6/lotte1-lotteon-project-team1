@@ -1,6 +1,6 @@
 package com.example.lotteon.entity.order;
 
-import com.example.lotteon.entity.user.Member;
+import com.google.gson.annotations.SerializedName;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -20,40 +20,29 @@ import lombok.NoArgsConstructor;
 public class Delivery {
 
   @Id
-  @JoinColumn(name = "order_id")
+  @SerializedName("id")
+  private int id;
+
+  @JoinColumn(name = "order_number")
   @OneToOne
+  @SerializedName("order")
   private Order order;
 
-  @JoinColumn(name = "member_id")
-  @ManyToOne
-  private Member member;
-
   @Column(name = "delivery_number")
+  @SerializedName("delivery_number")
   private String deliveryNumber;
 
-  @Column(name = "recipient_name")
-  private String recipientName;
-
-  @Column(name = "recipient_contact")
-  private String recipientContact;
-
-  @Column(name = "recipient_zip")
-  private String recipientZip;
-
-  @Column(name = "recipient_address")
-  private String recipientAddress;
-
-  @Column(name = "recipient_address_detail")
-  private String recipientAddressDetail;
-
   @Column(name = "description")
+  @SerializedName("description")
   private String description;
 
   @JoinColumn(name = "delivery_company_id")
   @ManyToOne
+  @SerializedName("delivery_company")
   private DeliveryCompany deliveryCompany;
 
   @JoinColumn(name = "status_id")
   @ManyToOne
+  @SerializedName("status")
   private DeliveryStatus status;
 }

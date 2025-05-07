@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class OrderManagementController {
 
   private final OrderService orderService;
-  private final Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
   @GetMapping("/list")
   public String list(
@@ -30,10 +29,27 @@ public class OrderManagementController {
       Model model) {
     Pageable pageable = PageRequest.of(page - 1, size);
 
+    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
     UserDetails details = (UserDetails) auth.getPrincipal();
 
-    Page<OrderWrapper> pages = orderService.getAllOrdersBySellerId(details.getUsername(), pageable);
+    Page<OrderWrapper> pages = null;
 
+    boolean isAdmin = details.getAuthorities().stream()
+        .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+    boolean isSeller = details.getAuthorities().stream()
+        .anyMatch(a -> a.getAuthority().equals("ROLE_SELLER"));
+
+    String role = null;
+    if (isSeller) {
+      role = "ROLE_SELLER";
+      pages = orderService.getAllOrdersBySellerId(details.getUsername(), pageable);
+    } else if (isAdmin) {
+      //TODO: Get all orders regardless of seller id
+      pages = orderService.getAllOrders(pageable);
+      role = "ROLE_ADMIN";
+    }
+
+    model.addAttribute("role", role);
     model.addAttribute("currentPage", page);
     model.addAttribute("pages", pages);
 
@@ -48,32 +64,43 @@ public class OrderManagementController {
       Model model
   ) {
     Pageable pageable = PageRequest.of(page - 1, size);
+    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
     UserDetails details = (UserDetails) auth.getPrincipal();
+
     boolean isSeller = details.getAuthorities().stream()
         .anyMatch(a -> a.getAuthority().equals("ROLE_SELLER"));
+
+    String role = null;
     Page<OrderWrapper> pages = null;
+
     switch (filter) {
       case "orderNumber": {
         if (isSeller) {
           pages = orderService.searchByOrderNumber(details.getUsername(), keyword, pageable);
+          role = "ROLE_SELLER";
         } else {
-          //TODO: Get all orders regardless of seller id
+          pages = orderService.searchByOrderNumber(keyword, pageable);
+          role = "ROLE_ADMIN";
         }
         break;
       }
       case "memberId": {
         if (isSeller) {
           pages = orderService.searchByMemberId(details.getUsername(), keyword, pageable);
+          role = "ROLE_SELLER";
         } else {
-          //TODO: Get all orders regardless of seller id
+          pages = orderService.searchByMemberId(keyword, pageable);
+          role = "ROLE_ADMIN";
         }
         break;
       }
       case "memberName": {
         if (isSeller) {
           pages = orderService.searchByMemberName(details.getUsername(), keyword, pageable);
+          role = "ROLE_SELLER";
         } else {
-          //TODO: Get all orders regardless of seller id
+          pages = orderService.searchByMemberName(keyword, pageable);
+          role = "ROLE_ADMIN";
         }
         break;
       }
@@ -81,6 +108,7 @@ public class OrderManagementController {
         break;
     }
 
+    model.addAttribute("role", role);
     model.addAttribute("currentPage", page);
     model.addAttribute("pages", pages);
 

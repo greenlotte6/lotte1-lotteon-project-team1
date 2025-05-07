@@ -13,7 +13,29 @@ $(() => {
   initDialog(".shipment-modal");
 
   $(".ship-btn").click((event) => {
-    //TODO: 클릭된 "배송하기" 버튼이 속한 <tr>에서 주문번호 가져오기 & 가져온 주문번호로 서버에서 배송정보 가져오기
-    $(".shipment-modal").dialog("open");
+    const orderNumber = event.target.parentNode.parentNode.querySelector(
+        ".order-detail").innerText;
+
+    $.ajax(`/api/admin/order/deliver?id=${orderNumber}`, {
+      type: "GET",
+      dataType: "json",
+      success: function (response) {
+        $(".shipment-modal table tr input[name='order.orderNumber']").val(
+            response["order_number"]);
+        $(".shipment-modal table tr input[name='recipientContact']").val(
+            response["recipient_contact"]);
+        $(".shipment-modal table tr input[name='recipientName']").val(
+            response["recipient_name"]);
+        $(".shipment-modal table tr input[name='recipientZip']").val(
+            response["recipient_zip"]);
+        $(".shipment-modal table tr input[name='recipientAddress']").val(
+            response["recipient_address"]);
+        $(".shipment-modal table tr input[name='recipientAddressDetail']").val(
+            response["recipient_address_detail"]);
+
+        $(".shipment-modal").dialog("open");
+      }
+    })
+
   });
 });

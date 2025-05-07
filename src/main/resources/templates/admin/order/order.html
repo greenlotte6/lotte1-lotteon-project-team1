@@ -32,9 +32,13 @@
 </head>
 <body>
 <div id="wrapper">
-  <th:block th:insert="~{/common/admin/header}"></th:block>
+  <th:block th:if="${role.equals('ROLE_ADMIN')}" th:insert="~{/common/admin/header}"></th:block>
+  <th:block th:if="${role.equals('ROLE_SELLER')}"
+            th:insert="~{/common/admin/sellerHeader}"></th:block>
   <main>
-    <th:block th:insert="~{/common/admin/aside}"></th:block>
+    <th:block th:if="${role.equals('ROLE_ADMIN')}" th:insert="~{/common/admin/aside}"></th:block>
+    <th:block th:if="${role.equals('ROLE_SELLER')}"
+              th:insert="~{/common/admin/sellerAside}"></th:block>
     <section id="content-area">
       <div class="content-area-title">
         <h3>주문현황</h3>
@@ -84,22 +88,24 @@
             <td th:text="${wrapper.getItemCount()}">2</td>
             <td th:text="${wrapper.getTotalPrice()}">102,900</td>
             <td th:text="${wrapper.getOrder().getPayment()}">신용카드</td>
-            <td class="text-green" th:if="${wrapper.getOrder().getStatus().getId() == 1}">결제완료</td>
-            <td class="text-green" th:if="${wrapper.getOrder().getStatus().getId() == 2}">배송중</td>
-            <td class="text-green" th:if="${wrapper.getOrder().getStatus().getId() == 3}">배송완료</td>
-            <td class="text-green" th:if="${wrapper.getOrder().getStatus().getId() == 4}">구매확정</td>
-            <td class="text-red" th:if="${wrapper.getOrder().getStatus().getId() == 5}">취소요청</td>
-            <td class="text-gray" th:if="${wrapper.getOrder().getStatus().getId() == 6}">취소완료</td>
-            <td class="text-red" th:if="${wrapper.getOrder().getStatus().getId() == 7}">환불요청</td>
-            <td class="text-gray" th:if="${wrapper.getOrder().getStatus().getId() == 8}">환불완료</td>
-            <td class="text-red" th:if="${wrapper.getOrder().getStatus().getId() == 9}">교환요청</td>
-            <td class="text-gray" th:if="${wrapper.getOrder().getStatus().getId() == 10}">교환완료</td>
-            <td th:text="${#temporals.format(wrapper.getOrder().getOrderDate(), 'yy-mm-dd HH:mm:ss')}">
+            <td class="text-green" th:if="${wrapper.getOrder().getStatus().getId() == 1}">결제대기</td>
+            <td class="text-green" th:if="${wrapper.getOrder().getStatus().getId() == 2}">결제완료</td>
+            <td class="text-green" th:if="${wrapper.getOrder().getStatus().getId() == 3}">배송중</td>
+            <td class="text-green" th:if="${wrapper.getOrder().getStatus().getId() == 4}">배송완료</td>
+            <td class="text-green" th:if="${wrapper.getOrder().getStatus().getId() == 5}">구매확정</td>
+            <td class="text-red" th:if="${wrapper.getOrder().getStatus().getId() == 6}">취소요청</td>
+            <td class="text-gray" th:if="${wrapper.getOrder().getStatus().getId() == 7}">취소완료</td>
+            <td class="text-red" th:if="${wrapper.getOrder().getStatus().getId() == 8}">환불요청</td>
+            <td class="text-gray" th:if="${wrapper.getOrder().getStatus().getId() == 9}">환불완료</td>
+            <td class="text-red" th:if="${wrapper.getOrder().getStatus().getId() == 10}">교환요청</td>
+            <td class="text-gray" th:if="${wrapper.getOrder().getStatus().getId() == 11}">교환완료</td>
+            <td th:text="${#temporals.format(wrapper.getOrder().getOrderDate(), 'yyyy-mm-dd HH:mm:ss')}">
               0000-00-00
               00:00:00
             </td>
             <td>
-              <button class="control-btn default ship-btn">
+              <button class="control-btn default ship-btn"
+                      th:if="${wrapper.getOrder().getStatus().getId() == 2}">
                 배송하기
               </button>
             </td>
@@ -110,25 +116,31 @@
     </section>
     <div class="shipment-modal" title="배송입력">
       <div class="content">
-        <form action="#" class="post-form">
+        <form th:action="@{/admin/delivery/register}" method="POST" class="post-form">
           <table class="post-form-table">
             <tbody>
             <tr>
               <th>주문번호</th>
               <td>
-                <input type="text" placeholder="10121211341"/>
+                <input type="text" name="orderNumber"/>
               </td>
             </tr>
             <tr>
               <th>수령인</th>
               <td>
-                <input type="text" placeholder="홍길동"/>
+                <input type="text" name="recipientName"/>
+              </td>
+            </tr>
+            <tr>
+              <th>수령인 연락처</th>
+              <td>
+                <input type="text" name="recipientContact"/>
               </td>
             </tr>
             <tr>
               <th>우편번호</th>
               <td>
-                <input type="text" placeholder="12345"/>
+                <input type="text" name="recipientZip"/>
               </td>
             </tr>
             <tr>
@@ -136,35 +148,36 @@
               <td>
                 <input
                     type="text"
-                    placeholder="부산광역시 부산진구 123-12"
+                    name="recipientAddress"
                 />
               </td>
             </tr>
             <tr>
               <th>상세주소</th>
               <td>
-                <input type="text" placeholder="행복아파트 103동 404호"/>
+                <input type="text"
+                       name="recipientAddressDetail"/>
               </td>
             </tr>
             <tr>
               <th>택배사</th>
               <td>
                 <select
-                    name="company"
+                    name="deliveryCompany.id"
                     class="category-selector"
                     id="shipment-company"
                 >
-                  <option value="cj">CJ 대한통운</option>
-                  <option value="lotte">롯데택배</option>
-                  <option value="postOffice">우체국택배</option>
-                  <option value="hanjin">한진택배</option>
+                  <option value="1">롯데택배</option>
+                  <option value="2">한진택배</option>
+                  <option value="3">cj 대한통운</option>
+                  <option value="4">우체국택배</option>
                 </select>
               </td>
             </tr>
             <tr>
               <th>운송장번호</th>
               <td>
-                <input type="text" placeholder="송장번호 입력"/>
+                <input type="text" name="deliveryNumber" placeholder="송장번호 입력"/>
               </td>
             </tr>
             <tr>

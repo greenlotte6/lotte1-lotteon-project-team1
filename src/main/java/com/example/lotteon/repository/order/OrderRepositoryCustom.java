@@ -37,10 +37,20 @@ public interface OrderRepositoryCustom {
 
   Page<OrderWrapper> findAllBySellerId(String currentSellerId, Pageable pageable);
 
+  Page<OrderWrapper> findAllOrders(Pageable pageable);
+
+  Order findByOrderNumber(String orderNumber);
+
+  Page<OrderWrapper> findByOrderNumber(String orderNumber, Pageable pageable);
+
   Page<OrderWrapper> findByOrderNumber(String currentSellerId, String orderNumber,
       Pageable pageable);
 
+  Page<OrderWrapper> findByMemberName(String memberName, Pageable pageable);
+
   Page<OrderWrapper> findByMemberName(String currentSellerId, String memberName, Pageable pageable);
+
+  Page<OrderWrapper> findByMemberId(String memberId, Pageable pageable);
 
   Page<OrderWrapper> findByMemberId(String currentSellerId, String memberId, Pageable pageable);
 

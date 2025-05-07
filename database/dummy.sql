@@ -191,21 +191,23 @@ INSERT INTO coupon_benefit(id, benefit) VALUES
 (11, '배송비 무료');
 
 INSERT INTO `order_status` VALUES (1, "payment_waiting") ;
-INSERT INTO `order_status` (`name`) VALUES ("paid");
-INSERT INTO `order_status` (`name`) VALUES ("on_delivery"),
-("delivered"), 
-("purchase_confirmed"), 
-("cancel_requested"),
-("canceled"), 
-("refund_requetsed"), 
-("refunded"), 
-("exchange_requested"), 
-("exchange");
+INSERT INTO `order_status`  VALUES (2, "paid");
+INSERT INTO `order_status`  VALUES (3, "prepare_delivery");
+INSERT INTO `order_status`  VALUES (4, "on_delivery"),
+(5, "delivered"), 
+(6, "purchase_confirmed"), 
+(7, "cancel_requested"),
+(8, "canceled"), 
+(9, "refund_requetsed"), 
+(10, "refunded"), 
+(11, "exchange_requested"), 
+(12, "exchange");
 
 # 주문
-INSERT INTO `order` VALUES("202500001", "jas06113", "신용카드", 1, NOW());
-INSERT INTO `order` VALUES("202500002", "abc123", "신용카드", 1, NOW());
-INSERT INTO `order` VALUES("202500003", "xyz123", "신용카드", 1, NOW());
+INSERT INTO `order` VALUES("202500001", "jas06113", "신용카드", "이현민", "010-2351-2341", "12345", "부산광역시", "남구", 1, NOW());
+INSERT INTO `order` VALUES("202500002", "abc123", "신용카드", "장보고", "010-2311-3511", "12345", "부산광역시", "남구", 1, NOW());
+INSERT INTO `order` VALUES("202500003", "xyz123", "신용카드", "이성계", "010-2451-1230", "12345", "부산광역시", "남구", 1, NOW());
+INSERT INTO `order` VALUES("202500004", "jas06113", "신용카드","이현민", "010-2351-2341", "12345", "부산광역시", "남구", 3, NOW());
 
 INSERT INTO `order_item` VALUES(1, "202500001", "2025010001", 1);
 INSERT INTO `order_item` VALUES(2, "202500001", "2025010002", 1);
@@ -215,6 +217,25 @@ INSERT INTO `order_item` VALUES(6, "202500001", "2025010001", 1);
 INSERT INTO `order_item` VALUES(4, "202500002", "2025010001", 2);
 
 INSERT INTO `order_item` VALUES(5, "202500003", "2025010002", 2);
+INSERT INTO `order_item` VALUES(7, "202500004", "2025010001", 4);
+
+
+# 배송 상태
+INSERT INTO delivery_status VALUES(1, "ready");
+INSERT INTO delivery_status VALUES(2, "on_delivery");
+INSERT INTO delivery_status VALUES(3, "delivered");
+INSERT INTO delivery_status VALUES(4, "cancel_requested");
+INSERT INTO delivery_status VALUES(5, "cancelled");
+
+# 배송 회사
+INSERT INTO delivery_company VALUES(1, "롯데택배");
+INSERT INTO delivery_company VALUES(2, "한진택배");
+INSERT INTO delivery_company VALUES(3, "CJ 대한통운");
+INSERT INTO delivery_company VALUES(4, "우체국 택배");
+
+#배송
+INSERT INTO delivery VALUES(1, "202500004", "D20250100001", "이현민", "010-2342-1243", "12345", "대전광역시 행복로 101-1", "행복아파트 101-1001", "빠른 배송 부탁드립니다", 1, 2);
+INSERT INTO delivery VALUES(2, "202500001", NULL, "이현민", "010-2342-1243", "12345", "대전광역시 행복로 101-1", "행복아파트 101-1001", "빠른 배송 부탁드립니다", NULL, 1);
 
 ########################################################################################################
 SELECT @@GLOBAL.sql_mode;
@@ -237,37 +258,6 @@ WHERE `product`.seller_user_id="seller2"
 GROUP BY `order`.order_number;
 
 # 최고 관리자가 주문현황에 접속했을 경우, 주문건수는 해당 주문에 포함된 전체 상품의 종류의 수를 의미함.
-SELECT
-`order`.*,
-COUNT(`order_item`.product_id)
-FROM `order`
-JOIN `order_item`
-ON `order_item`.order_number = `order`.order_number
-JOIN `member`
-ON `order`.member_id = `member`.user_id
-JOIN `product`
-ON `order_item`.product_id = `product`.id
-GROUP BY `order`.order_number;
-
-SELECT
-`order`.*,
-COUNT(`order_item`.product_id)
-FROM `order`
-JOIN `order_item`
-ON `order_item`.order_number = `order`.order_number
-JOIN `member`
-ON `order`.member_id = `member`.user_id
-JOIN `product`
-ON `order_item`.product_id = `product`.id
-WHERE `product`.seller_user_id="seller2"
-GROUP BY `order`.order_number;
-
-SELECT * FROM `order_item`
-JOIN `product`
-ON `order_item`.product_id = `product`.id
-JOIN `seller`
-ON `product`.seller_user_id=`seller`.user_id;
-
 SELECT 
   `o`.order_number,
   m.user_id,
@@ -285,5 +275,5 @@ JOIN `product` p ON oi.product_id = p.id
 JOIN `seller` s ON p.seller_user_id = s.user_id
 JOIN `member` m ON m.user_id=o.member_id
 JOIN `order_status` os ON o.status_id=os.id
-WHERE p.seller_user_id = 'seller1' AND m.user_id="jas06113"
+# WHERE p.seller_user_id = 'seller1' AND m.user_id="jas06113"
 GROUP BY o.order_number;

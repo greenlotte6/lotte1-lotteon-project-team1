@@ -1,0 +1,39 @@
+<!--<main>-->
+<aside class="side-menu">
+  <ul>
+    <li id="store-menu">
+      <i class="fa-solid fa-store"></i>
+      <a th:href="@{/admin/shop/list}"> 상점관리 </a>
+    </li>
+    <ul class="submenu store" style="display: none">
+      <li>
+        <a th:href="@{/admin/shop/sales}"> 매출현황 </a>
+      </li>
+    </ul>
+    <li id="product-menu">
+      <i class="fa-solid fa-box-open"></i>
+      <a th:href="@{/admin/product/list}"> 상품관리 </a>
+    </li>
+    <ul class="submenu product" style="display: none">
+      <li>
+        <a th:href="@{/admin/product/list}"> 상품목록 </a>
+      </li>
+      <li>
+        <a th:href="@{/admin/product/register}"> 상품등록 </a>
+      </li>
+    </ul>
+    <li id="order-menu">
+      <i class="fa-solid fa-credit-card"></i>
+      <a th:href="@{/admin/settings/order/list}"> 주문관리 </a>
+    </li>
+    <ul class="submenu order" style="display: none">
+      <li>
+        <a th:href="@{/admin/order/list}"> 주문현황 </a>
+      </li>
+      <li>
+        <a th:href="@{/admin/order/delivery}"> 배송현황 </a>
+      </li>
+    </ul>
+  </ul>
+</aside>
+<!--</main>-->
