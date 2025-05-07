@@ -42,7 +42,7 @@ public class ShoppingCartService {
                     .quantity(quantity)
                     .price(product.getPrice())
                     .totalPrice(product.getPrice() * quantity)
-                    .dil(3000)
+                    .dil(product.getDeliveryFee())
                     .build();
             cartRepository.save(newCart);
         }
