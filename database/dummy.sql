@@ -220,13 +220,6 @@ INSERT INTO `order_item` VALUES(5, "202500003", "2025010002", 2);
 INSERT INTO `order_item` VALUES(7, "202500004", "2025010001", 4);
 
 
-# 배송 상태
-INSERT INTO delivery_status VALUES(1, "ready");
-INSERT INTO delivery_status VALUES(2, "on_delivery");
-INSERT INTO delivery_status VALUES(3, "delivered");
-INSERT INTO delivery_status VALUES(4, "cancel_requested");
-INSERT INTO delivery_status VALUES(5, "cancelled");
-
 # 배송 회사
 INSERT INTO delivery_company VALUES(1, "롯데택배");
 INSERT INTO delivery_company VALUES(2, "한진택배");
@@ -234,8 +227,7 @@ INSERT INTO delivery_company VALUES(3, "CJ 대한통운");
 INSERT INTO delivery_company VALUES(4, "우체국 택배");
 
 #배송
-INSERT INTO delivery VALUES(1, "202500004", "D20250100001", "이현민", "010-2342-1243", "12345", "대전광역시 행복로 101-1", "행복아파트 101-1001", "빠른 배송 부탁드립니다", 1, 2);
-INSERT INTO delivery VALUES(2, "202500001", NULL, "이현민", "010-2342-1243", "12345", "대전광역시 행복로 101-1", "행복아파트 101-1001", "빠른 배송 부탁드립니다", NULL, 1);
+INSERT INTO delivery VALUES(1, "D20250100001", "202500004", "빠른 배송 부탁드립니다", 1);
 
 ########################################################################################################
 SELECT @@GLOBAL.sql_mode;
