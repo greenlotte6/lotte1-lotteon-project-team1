@@ -1,11 +1,9 @@
 package com.example.lotteon.entity.order;
 
-import com.example.lotteon.entity.product.Product;
 import com.example.lotteon.entity.user.Member;
+import com.google.gson.annotations.SerializedName;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -27,30 +25,46 @@ import lombok.ToString;
 public class Order {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private int id;
-
   @Column(name = "order_number")
+  @SerializedName("order_number")
   private String orderNumber;
 
   @JoinColumn(name = "member_id")
-  @ManyToOne
+  @ManyToOne(optional = false)
+  @SerializedName("member")
   private Member member;
 
-  @JoinColumn(name = "product_id")
-  @ManyToOne
-  private Product product;
-
-  @Column(name = "amount")
-  private int amount; //주문하는 상품의 개수(ex. 맨투맨 6개 => amount = 6)
-
   @Column(name = "payment")
+  @SerializedName("payment")
   private String payment;
 
+  @Column(name = "recipient_name")
+  @SerializedName("recipient_name")
+  private String recipientName;
+
+  @Column(name = "recipient_contact")
+  @SerializedName("recipient_contact")
+  private String recipientContact;
+
+  @Column(name = "recipient_zip")
+  @SerializedName("recipient_zip")
+  private String recipientZip;
+
+  @Column(name = "recipient_address")
+  @SerializedName("recipient_address")
+  private String recipientAddress;
+
+  @Column(name = "recipient_address_detail")
+  @SerializedName("recipient_address_detail")
+  private String recipientAddressDetail;
+
+
   @JoinColumn(name = "status_id")
-  @ManyToOne
+  @ManyToOne(optional = false)
+  @SerializedName("status")
   private OrderStatus status;
 
   @Column(name = "order_date")
+  @SerializedName("order_date")
   private LocalDate orderDate;
 }

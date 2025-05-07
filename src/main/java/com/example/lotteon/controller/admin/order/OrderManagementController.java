@@ -6,6 +6,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,8 +28,28 @@ public class OrderManagementController {
       @RequestParam(name = "size", defaultValue = "10") int size,
       Model model) {
     Pageable pageable = PageRequest.of(page - 1, size);
-    Page<OrderWrapper> pages = orderService.listOrders(pageable);
 
+    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    UserDetails details = (UserDetails) auth.getPrincipal();
+
+    Page<OrderWrapper> pages = null;
+
+    boolean isAdmin = details.getAuthorities().stream()
+        .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+    boolean isSeller = details.getAuthorities().stream()
+        .anyMatch(a -> a.getAuthority().equals("ROLE_SELLER"));
+
+    String role = null;
+    if (isSeller) {
+      role = "ROLE_SELLER";
+      pages = orderService.getAllOrdersBySellerId(details.getUsername(), pageable);
+    } else if (isAdmin) {
+      //TODO: Get all orders regardless of seller id
+      pages = orderService.getAllOrders(pageable);
+      role = "ROLE_ADMIN";
+    }
+
+    model.addAttribute("role", role);
     model.addAttribute("currentPage", page);
     model.addAttribute("pages", pages);
 
@@ -41,22 +64,51 @@ public class OrderManagementController {
       Model model
   ) {
     Pageable pageable = PageRequest.of(page - 1, size);
+    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    UserDetails details = (UserDetails) auth.getPrincipal();
+
+    boolean isSeller = details.getAuthorities().stream()
+        .anyMatch(a -> a.getAuthority().equals("ROLE_SELLER"));
+
+    String role = null;
     Page<OrderWrapper> pages = null;
+
     switch (filter) {
       case "orderNumber": {
-        pages = orderService.searchByOrderNumber(pageable, keyword);
+        if (isSeller) {
+          pages = orderService.searchByOrderNumber(details.getUsername(), keyword, pageable);
+          role = "ROLE_SELLER";
+        } else {
+          pages = orderService.searchByOrderNumber(keyword, pageable);
+          role = "ROLE_ADMIN";
+        }
         break;
       }
       case "memberId": {
-        pages = orderService.searchByMemberId(pageable, keyword);
+        if (isSeller) {
+          pages = orderService.searchByMemberId(details.getUsername(), keyword, pageable);
+          role = "ROLE_SELLER";
+        } else {
+          pages = orderService.searchByMemberId(keyword, pageable);
+          role = "ROLE_ADMIN";
+        }
         break;
       }
       case "memberName": {
-        pages = orderService.searchByMemberName(pageable, keyword);
+        if (isSeller) {
+          pages = orderService.searchByMemberName(details.getUsername(), keyword, pageable);
+          role = "ROLE_SELLER";
+        } else {
+          pages = orderService.searchByMemberName(keyword, pageable);
+          role = "ROLE_ADMIN";
+        }
         break;
       }
+      default:
+        break;
     }
 
+    model.addAttribute("role", role);
     model.addAttribute("currentPage", page);
     model.addAttribute("pages", pages);
 

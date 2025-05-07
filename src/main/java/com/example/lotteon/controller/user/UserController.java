@@ -84,7 +84,7 @@ public class UserController {
 
   // 유효성 검사
   @GetMapping("check/{type}/{value}")
-  public ResponseEntity user(@PathVariable("type") String type,
+  public ResponseEntity<Map<String, Long>> user(@PathVariable("type") String type,
       @PathVariable("value") String value) {
     log.info("type : " + type + ", value : " + value);
     // 서비스 호출

@@ -48,27 +48,52 @@ public class OrderService {
   public long calculatePriceOfValidOrdersAt(LocalDate date) {
     List<Order> orders = repo.findByStatuesWithOrAt(OrderStatusDTO.STATUS_PAID,
         OrderStatusDTO.STATUS_EXCHANGE_REQUESTED, date);
-    long price = 0;
-    for (Order order : orders) {
-      price += order.getProduct().getPrice();
-    }
+    //TODO: Fix this method
+    //long price = 0;
+    //for (Order order : orders) {
+    //  price += order.getProduct().getPrice();
+    //}
 
-    return price;
+    //return price;
+    return 0L;
   }
 
-  public Page<OrderWrapper> listOrders(Pageable pageable) {
-    return repo.getAllOrdersAndCount(pageable);
+  public Page<OrderWrapper> getAllOrders(Pageable pageable) {
+    return repo.findAllOrders(pageable);
   }
 
-  public Page<OrderWrapper> searchByOrderNumber(Pageable pageable, String orderNumber) {
-    return repo.findByOrderNumber(pageable, orderNumber);
+  public Page<OrderWrapper> getAllOrdersBySellerId(String currentSellerId, Pageable pageable) {
+    return repo.findAllBySellerId(currentSellerId, pageable);
   }
 
-  public Page<OrderWrapper> searchByMemberName(Pageable pageable, String memberName) {
-    return repo.findByMemberName(pageable, memberName);
+  public Order searchByOrderNumber(String orderNumber) {
+    return repo.findByOrderNumber(orderNumber);
   }
 
-  public Page<OrderWrapper> searchByMemberId(Pageable pageable, String memberId) {
-    return repo.findByMemberId(pageable, memberId);
+  public Page<OrderWrapper> searchByOrderNumber(String orderNumber, Pageable pageable) {
+    return repo.findByOrderNumber(orderNumber, pageable);
+  }
+
+  public Page<OrderWrapper> searchByOrderNumber(String currentSellerId, String orderNumber,
+      Pageable pageable) {
+    return repo.findByOrderNumber(currentSellerId, orderNumber, pageable);
+  }
+
+  public Page<OrderWrapper> searchByMemberName(String memberName, Pageable pageable) {
+    return repo.findByMemberName(memberName, pageable);
+  }
+
+  public Page<OrderWrapper> searchByMemberName(String currentSellerId, String memberName,
+      Pageable pageable) {
+    return repo.findByMemberName(currentSellerId, memberName, pageable);
+  }
+
+  public Page<OrderWrapper> searchByMemberId(String memberId, Pageable pageable) {
+    return repo.findByMemberId(memberId, pageable);
+  }
+
+  public Page<OrderWrapper> searchByMemberId(String currentSellerId, String memberId,
+      Pageable pageable) {
+    return repo.findByMemberId(currentSellerId, memberId, pageable);
   }
 }

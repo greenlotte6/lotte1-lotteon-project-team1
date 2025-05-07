@@ -1,9 +1,12 @@
 package com.example.lotteon.dto.order;
 
 import com.example.lotteon.entity.order.Order;
-import com.example.lotteon.entity.product.Product;
-import java.util.ArrayList;
-import java.util.List;
+import com.example.lotteon.entity.order.OrderStatus;
+import com.example.lotteon.entity.user.Member;
+import com.example.lotteon.entity.user.MemberId;
+import com.example.lotteon.entity.user.User;
+import com.querydsl.core.Tuple;
+import java.time.LocalDate;
 import lombok.Getter;
 import lombok.ToString;
 
@@ -11,77 +14,52 @@ import lombok.ToString;
 @ToString
 public class OrderWrapper {
 
-  private OrderWrapper(Order order, long numberOfOrderedProducts, int totalPrice) {
+  private final Order order;
+  private final int itemCount;
+  private final long totalPrice;
+
+  private OrderWrapper(Order order, int itemCount, long totalPrice) {
     this.order = order;
-    this.numberOfOrderedProducts = numberOfOrderedProducts;
+    this.itemCount = itemCount;
     this.totalPrice = totalPrice;
   }
-
-  private final Order order;
-  private final long numberOfOrderedProducts;
-  private final int totalPrice;
 
   public static Builder builder() {
     return new Builder();
   }
 
-  //Builder for OrderWrapper
   public static class Builder {
 
-    private List<Order> orders;
+    private Tuple tuple;
 
-    private int calculatePrice(Product product, int amount) {
-      int costToDiscount = product.getPrice() * (product.getDiscountRate() / 100);
-      int discountedPrice = product.getPrice() - costToDiscount;
-      return discountedPrice * amount + product.getDeliveryFee();
-    }
-
-    private List<OrderWrapper> buildMultipleOrders() {
-      List<OrderWrapper> wrappers = new ArrayList<>();
-      for (int i = 1; i < orders.size(); i++) {
-        int totalPrice = 0;
-        int count = 1;
-        Order curr = orders.get(i);
-        Order prev = orders.get(i - 1);
-        totalPrice = calculatePrice(curr.getProduct(), curr.getAmount());
-
-        //TODO:if(curr.getId() == prev.getId() && currentSellerDetail.getBusinessNumber().equals(curr.getSeller.getSellerId.getBusinessNumber)
-        if (curr.getId() == prev.getId()) {
-          int prevTotalPrice = calculatePrice(prev.getProduct(), prev.getAmount());
-          totalPrice += prevTotalPrice;
-        }
-
-        Order aggregatedOrder = Order.builder()
-            .id(curr.getId())
-            .orderNumber(curr.getOrderNumber())
-            .amount(curr.getAmount())
-            .orderDate(curr.getOrderDate())
-            .member(curr.getMember())
-
-            .build();
-        OrderWrapper wrapper = new OrderWrapper(curr, count, totalPrice);
-      }
-      return wrappers;
-    }
-
-    private List<OrderWrapper> buildOneOrZeroOrder() {
-      List<OrderWrapper> wrappers = new ArrayList<>();
-      return wrappers;
-    }
-
-    public Builder order(Order order) {
-      orders.add(order);
+    public Builder tuples(Tuple tuple) {
+      this.tuple = tuple;
       return this;
     }
 
-    public List<OrderWrapper> build() {
-      List<OrderWrapper> wrappers;
-      if (orders.size() > 1) {
-        wrappers = buildMultipleOrders();
-      } else {
-        wrappers = buildOneOrZeroOrder();
-      }
-      return wrappers;
+    public OrderWrapper build() {
+      String orderNumber = tuple.get(0, String.class);
+      String userId = tuple.get(1, String.class);
+      String memberName = tuple.get(2, String.class);
+      String payment = tuple.get(3, String.class);
+      int statusId = tuple.get(4, int.class);
+      LocalDate orderDate = tuple.get(5, LocalDate.class);
+      int itemCount = tuple.get(6, int.class);
+      long totalPrice = tuple.get(7, Long.class);
+
+      User user = User.builder().id(userId).build();
+      MemberId memberId = MemberId.builder().user(user).build();
+      Member member = Member.builder().memberId(memberId).name(memberName).build();
+      OrderStatus status = OrderStatus.builder().id(statusId).build();
+      Order order = Order.builder()
+          .orderNumber(orderNumber)
+          .member(member)
+          .payment(payment)
+          .status(status)
+          .orderDate(orderDate)
+          .build();
+
+      return new OrderWrapper(order, itemCount, totalPrice);
     }
   }
 }
