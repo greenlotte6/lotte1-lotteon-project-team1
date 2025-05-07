@@ -214,7 +214,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `lotteon`.`order_status` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `name` ENUM("payment_waiting", "paid", "on_delivery", "delivered", "purchase_confirmed", "cancel_requested", "canceled", "refund_requetsed", "refunded", "exchange_requested", "exchange") NOT NULL COMMENT 'possible values = [\"payment_waiting\", \"paid\", \"on_delivery\", \"delivered\", \"purchase_confirmed\", \"cancel_requested\", \"canceled\", \"refund_requetsed\", \"refunded\", \"exchange_requested\", \"exchange\"]',
+  `name` ENUM("payment_waiting", "paid", "prepare_delivery", "on_delivery", "delivered", "purchase_confirmed", "cancel_requested", "canceled", "refund_requetsed", "refunded", "exchange_requested", "exchange") NOT NULL COMMENT 'possible values = [\"payment_waiting\", \"paid\", \"on_delivery\", \"delivered\", \"purchase_confirmed\", \"cancel_requested\", \"canceled\", \"refund_requetsed\", \"refunded\", \"exchange_requested\", \"exchange\"]',
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -226,6 +226,11 @@ CREATE TABLE IF NOT EXISTS `lotteon`.`order` (
   `order_number` VARCHAR(45) NOT NULL,
   `member_id` VARCHAR(16) NOT NULL,
   `payment` VARCHAR(45) NOT NULL,
+  `recipient_name` VARCHAR(20) NOT NULL,
+  `recipient_contact` VARCHAR(14) NOT NULL,
+  `recipient_zip` CHAR(5) NOT NULL,
+  `recipient_address` VARCHAR(255) NOT NULL,
+  `recipient_address_detail` VARCHAR(255) NOT NULL,
   `status_id` INT NOT NULL,
   `order_date` DATE NOT NULL,
   PRIMARY KEY (`order_number`),
@@ -245,16 +250,6 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `lotteon`.`delivery_status`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `lotteon`.`delivery_status` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `status` VARCHAR(20) NOT NULL COMMENT '\"배송준비\": \"ready\", \n\"배송 중\": \"on_delivery\", \n\"배송 완료\": \"delivered\", \n\"취소신청\": \"cancel_requested\", \n\"취소완료\": \"canceled\"',
-  PRIMARY KEY (`id`))
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
 -- Table `lotteon`.`delivery_company`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `lotteon`.`delivery_company` (
@@ -269,25 +264,14 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `lotteon`.`delivery` (
   `id` INT NOT NULL AUTO_INCREMENT,
+  `delivery_number` VARCHAR(50) NOT NULL,
   `order_number` VARCHAR(45) NOT NULL,
-  `delivery_number` VARCHAR(16) NOT NULL COMMENT '운송장번호',
-  `recipient_name` VARCHAR(20) NOT NULL,
-  `recipient_contact` VARCHAR(14) NOT NULL,
-  `recipient_zip` CHAR(5) NOT NULL,
-  `recipient_address` VARCHAR(255) NOT NULL,
-  `recipient_address_detail` VARCHAR(255) NOT NULL,
   `description` TEXT NULL,
-  `delivery_company_id` INT NOT NULL,
-  `status_id` INT NOT NULL,
+  `delivery_company_id` INT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_delivery_delivery_state1_idx` (`status_id` ASC) VISIBLE,
   INDEX `fk_delivery_delivery_company1_idx` (`delivery_company_id` ASC) VISIBLE,
   INDEX `fk_delivery_order1_idx` (`order_number` ASC) VISIBLE,
-  CONSTRAINT `fk_delivery_delivery_state1`
-    FOREIGN KEY (`status_id`)
-    REFERENCES `lotteon`.`delivery_status` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+  UNIQUE INDEX `delivery_number_UNIQUE` (`delivery_number` ASC) VISIBLE,
   CONSTRAINT `fk_delivery_delivery_company1`
     FOREIGN KEY (`delivery_company_id`)
     REFERENCES `lotteon`.`delivery_company` (`id`)
