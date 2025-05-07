@@ -163,7 +163,7 @@ public class AdminCouponController {
         return "redirect:/admin/coupon/issued";
     }
 
-    //쿠폰 발급내역 보기
+    //쿠폰 발급내역 상세보기
     @GetMapping(value = "/issued/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> getCouponHistoryDetail(@PathVariable("id") int id) {
         Coupon_HistoryDTO couponHistory = couponHistoryService.findById(id);
@@ -177,6 +177,14 @@ public class AdminCouponController {
         result.put("couponHistory", couponHistory);
         String json = gson.toJson(couponHistory);
         return ResponseEntity.ok(json);
+    }
+
+    //쿠폰 발급현황 중지 버튼 활성화
+    @PostMapping("/issued/{id}")
+    @ResponseBody
+    public ResponseEntity<?> useCoupon(@PathVariable("id") int id) {
+        couponHistoryService.markAsUsed(id);
+        return ResponseEntity.ok(Map.of("status", "success"));
     }
 
 
