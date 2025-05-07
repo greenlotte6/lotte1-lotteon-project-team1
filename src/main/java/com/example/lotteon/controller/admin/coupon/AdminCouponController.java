@@ -163,6 +163,22 @@ public class AdminCouponController {
         return "redirect:/admin/coupon/issued";
     }
 
+    //쿠폰 발급내역 보기
+    @GetMapping(value = "/issued/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> getCouponHistoryDetail(@PathVariable("id") int id) {
+        Coupon_HistoryDTO couponHistory = couponHistoryService.findById(id);
+        Map<String, Object> result = new HashMap<>();
+        if (couponHistory == null) {
+            result.put("success", false);
+            result.put("message", "쿠폰을 찾을 수 없습니다.");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Failed to find couponHistory");
+        }
+        result.put("success", true);
+        result.put("couponHistory", couponHistory);
+        String json = gson.toJson(couponHistory);
+        return ResponseEntity.ok(json);
+    }
+
 
 
 
