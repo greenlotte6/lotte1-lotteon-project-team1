@@ -214,7 +214,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `lotteon`.`order_status` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `name` ENUM("payment_waiting", "paid", "prepare_delivery", "on_delivery", "delivered", "purchase_confirmed", "cancel_requested", "canceled", "refund_requetsed", "refunded", "exchange_requested", "exchange") NOT NULL COMMENT 'possible values = [\"payment_waiting\", \"paid\", \"on_delivery\", \"delivered\", \"purchase_confirmed\", \"cancel_requested\", \"canceled\", \"refund_requetsed\", \"refunded\", \"exchange_requested\", \"exchange\"]',
+  `name` ENUM("payment_waiting", "paid", "prepare_delivery", "on_delivery", "delivered", "purchase_confirmed", "cancel_requested", "cancelled", "refund_requetsed", "refunded", "exchange_requested", "exchanged") NOT NULL COMMENT 'possible values = [\"payment_waiting\", \"paid\", \"on_delivery\", \"delivered\", \"purchase_confirmed\", \"cancel_requested\", \"canceled\", \"refund_requetsed\", \"refunded\", \"exchange_requested\", \"exchange\"]',
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -231,6 +231,7 @@ CREATE TABLE IF NOT EXISTS `lotteon`.`order` (
   `recipient_zip` CHAR(5) NOT NULL,
   `recipient_address` VARCHAR(255) NOT NULL,
   `recipient_address_detail` VARCHAR(255) NOT NULL,
+  `description` TEXT NULL,
   `status_id` INT NOT NULL,
   `order_date` DATE NOT NULL,
   PRIMARY KEY (`order_number`),
@@ -266,8 +267,8 @@ CREATE TABLE IF NOT EXISTS `lotteon`.`delivery` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `delivery_number` VARCHAR(50) NOT NULL,
   `order_number` VARCHAR(45) NOT NULL,
-  `description` TEXT NULL,
   `delivery_company_id` INT NULL,
+  `receipt_date` DATETIME NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_delivery_delivery_company1_idx` (`delivery_company_id` ASC) VISIBLE,
   INDEX `fk_delivery_order1_idx` (`order_number` ASC) VISIBLE,
@@ -275,13 +276,13 @@ CREATE TABLE IF NOT EXISTS `lotteon`.`delivery` (
   CONSTRAINT `fk_delivery_delivery_company1`
     FOREIGN KEY (`delivery_company_id`)
     REFERENCES `lotteon`.`delivery_company` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_delivery_order1`
     FOREIGN KEY (`order_number`)
     REFERENCES `lotteon`.`order` (`order_number`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -490,9 +491,10 @@ ENGINE = InnoDB;
 -- Table `lotteon`.`sales`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `lotteon`.`sales` (
+  `id` INT NOT NULL,
   `seller_business_number` CHAR(12) NOT NULL,
   `order_number` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`seller_business_number`),
+  PRIMARY KEY (`id`),
   INDEX `fk_sales_seller1_idx` (`seller_business_number` ASC) VISIBLE,
   INDEX `fk_sales_order1_idx` (`order_number` ASC) VISIBLE,
   CONSTRAINT `fk_sales_seller1`
