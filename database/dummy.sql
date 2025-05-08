@@ -190,6 +190,7 @@ INSERT INTO coupon_benefit(id, benefit) VALUES
 (10, '50% 할인'),
 (11, '배송비 무료');
 
+#주문상태
 INSERT INTO `order_status` VALUES (1, "payment_waiting") ;
 INSERT INTO `order_status`  VALUES (2, "paid");
 INSERT INTO `order_status`  VALUES (3, "prepare_delivery");
@@ -205,9 +206,9 @@ INSERT INTO `order_status`  VALUES (4, "on_delivery"),
 
 # 주문
 INSERT INTO `order` VALUES("202500001", "jas06113", "신용카드", "이현민", "010-2351-2341", "12345", "부산광역시", "남구", "빠른 배송 부탁드립니다", 2, NOW());
-INSERT INTO `order` VALUES("202500002", "abc123", "신용카드", "장보고", "010-2311-3511", "12345", "부산광역시", "남구", 1,  "빠른 배송 부탁드립니다", NOW());
-INSERT INTO `order` VALUES("202500003", "xyz123", "신용카드", "이성계", "010-2451-1230", "12345", "부산광역시", "남구", 1,  "빠른 배송 부탁드립니다", NOW());
-INSERT INTO `order` VALUES("202500004", "jas06113", "신용카드","이현민", "010-2351-2341", "12345", "부산광역시", "남구", 3,  "빠른 배송 부탁드립니다", NOW());
+INSERT INTO `order` VALUES("202500002", "abc123", "신용카드", "장보고", "010-2311-3511", "12345", "부산광역시", "남구", "빠른 배송 부탁드립니다", 1, NOW());
+INSERT INTO `order` VALUES("202500003", "xyz123", "신용카드", "이성계", "010-2451-1230", "12345", "부산광역시", "남구", "빠른 배송 부탁드립니다", 1, NOW());
+INSERT INTO `order` VALUES("202500004", "jas06113", "신용카드","이현민", "010-2351-2341", "12345", "부산광역시", "남구", "빠른 배송 부탁드립니다", 3, NOW());
 
 INSERT INTO `order_item` VALUES(1, "202500001", "2025010001", 1);
 INSERT INTO `order_item` VALUES(2, "202500001", "2025010002", 1);
@@ -219,6 +220,13 @@ INSERT INTO `order_item` VALUES(4, "202500002", "2025010001", 2);
 INSERT INTO `order_item` VALUES(5, "202500003", "2025010002", 2);
 INSERT INTO `order_item` VALUES(7, "202500004", "2025010001", 4);
 
+# 매출
+INSERT INTO `sales` VALUES(1, "112-12-12345", "202500001");
+INSERT INTO `sales` VALUES(2, "112-12-12345", "202500002");
+INSERT INTO `sales` VALUES(3, "112-12-12345", "202500004");
+INSERT INTO `sales` VALUES(4, "112-12-12525", "202500001");
+INSERT INTO `sales` VALUES(5, "112-12-12525", "202500003");
+
 
 # 배송 회사
 INSERT INTO delivery_company VALUES(1, "롯데택배");
@@ -227,7 +235,7 @@ INSERT INTO delivery_company VALUES(3, "CJ 대한통운");
 INSERT INTO delivery_company VALUES(4, "우체국 택배");
 
 #배송
-INSERT INTO delivery VALUES(1, "D20250100001", "202500004", "빠른 배송 부탁드립니다", 1, "2025-04-08 12:28:03");
+INSERT INTO delivery VALUES(1, "D20250100001", "202500004", 1, "2025-04-08 12:28:03");
 
 ########################################################################################################
 SELECT @@GLOBAL.sql_mode;
@@ -257,6 +265,8 @@ SELECT
   o.payment,
   o.status_id,
   o.order_date,
+  p.id,
+  s.business_number,
   SUM(
     ((p.price - (p.price * p.discount_rate / 100))) * oi.amount + p.delivery_fee
   ) AS total_price,
@@ -267,7 +277,7 @@ JOIN `product` p ON oi.product_id = p.id
 JOIN `seller` s ON p.seller_user_id = s.user_id
 JOIN `member` m ON m.user_id=o.member_id
 JOIN `order_status` os ON o.status_id=os.id
-# WHERE p.seller_user_id = 'seller1' AND m.user_id="jas06113"
+WHERE p.seller_user_id = 'seller1'
 GROUP BY o.order_number;
 
 SELECT
@@ -315,3 +325,34 @@ JOIN `product` AS p
 ON oi.product_id = p.id
 WHERE p.seller_user_id = "seller1"
 GROUP BY o.order_number;
+
+#각 상점(seller) 별 매출
+SELECT
+s.seller_business_number,
+SUM(((p.price - (p.price * p.discount_rate / 100))) * oi.amount) AS total_price
+FROM `sales` s
+JOIN `seller`
+ON `s`.seller_business_number = seller.business_number
+JOIN `order` o
+ON s.order_number=o.order_number
+JOIN `order_item` oi
+ON o.order_number=oi.order_number
+JOIN `product` p
+ON oi.product_id = p.id AND p.seller_business_number = s.seller_business_number
+GROUP BY s.seller_business_number;
+
+# 특정 상점 매출
+SELECT
+s.seller_business_number,
+SUM(((p.price - (p.price * p.discount_rate / 100))) * oi.amount) AS total_price
+FROM `sales` s
+JOIN `seller`
+ON `s`.seller_business_number = seller.business_number
+JOIN `order` o
+ON s.order_number=o.order_number
+JOIN `order_item` oi
+ON o.order_number=oi.order_number
+JOIN `product` p
+ON oi.product_id = p.id AND p.seller_business_number = s.seller_business_number
+WHERE s.seller_business_number = "112-12-12345"
+GROUP BY s.seller_business_number;
