@@ -1,9 +1,9 @@
 package com.example.lotteon.entity.order;
 
 import com.example.lotteon.entity.product.Product;
+import com.google.gson.annotations.SerializedName;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -25,17 +25,21 @@ import lombok.ToString;
 public class OrderItem {
 
   @Id
+  @SerializedName("id")
   private int id;
 
   @JoinColumn(name = "order_number")
-  @OneToOne(fetch = FetchType.LAZY, optional = false)
+  @OneToOne(optional = false)
+  @SerializedName("order")
   private Order order;
 
   @JoinColumn(name = "product_id")
-  @ManyToOne(fetch = FetchType.LAZY, optional = false)
+  @ManyToOne(optional = false)
+  @SerializedName("product")
   private Product product;
 
   @Column(name = "amount")
+  @SerializedName("amount")
   private int amount;
 
 }

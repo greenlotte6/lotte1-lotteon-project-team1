@@ -2,6 +2,8 @@ package com.example.lotteon.repository.order;
 
 import com.example.lotteon.dto.order.OrderWrapper;
 import com.example.lotteon.entity.order.Order;
+import com.example.lotteon.entity.order.OrderItem;
+import com.example.lotteon.entity.order.OrderStatus;
 import com.example.lotteon.entity.order.QDelivery;
 import com.example.lotteon.entity.order.QOrder;
 import com.example.lotteon.entity.order.QOrderItem;
@@ -21,6 +23,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 @RequiredArgsConstructor
@@ -128,6 +131,21 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
   }
 
   @Override
+  public List<OrderItem> findWithProductInfoByOrderNumberAndSellerId(String currentSellerId,
+      String orderNumber) {
+    return query
+        .selectFrom(orderItem)
+        .join(orderItem.order, order).fetchJoin()
+        .join(orderItem.product, product).fetchJoin()
+        .join(product.seller, seller)
+        .where(
+            order.orderNumber.eq(orderNumber),
+            seller.sellerId.user.id.eq(currentSellerId) // 중첩된 @Embeddable 구조
+        )
+        .fetch();
+  }
+
+  @Override
   public Order findByOrderNumber(String orderNumber) {
     return query.selectFrom(order).where(order.orderNumber.eq(orderNumber)).fetchOne();
   }
@@ -199,5 +217,14 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
         .fetch();
     List<OrderWrapper> wrappers = toList(tuples);
     return new PageImpl<>(wrappers, pageable, wrappers.size());
+  }
+
+  @Override
+  @Transactional
+  public void updateStatusByOrderNumber(String orderNumber, OrderStatus status) {
+    query.update(order)
+        .set(order.status, status)
+        .where(order.orderNumber.eq(orderNumber))
+        .execute();
   }
 }

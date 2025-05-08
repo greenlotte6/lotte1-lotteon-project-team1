@@ -16,21 +16,22 @@ $(() => {
     const orderNumber = event.target.parentNode.parentNode.querySelector(
         ".order-detail").innerText;
 
-    $.ajax(`/api/admin/order/deliver?id=${orderNumber}`, {
+    $.ajax(`/api/admin/order/ship?id=${orderNumber}`, {
       type: "GET",
       dataType: "json",
       success: function (response) {
+        console.log(response)
         $(".shipment-modal table tr input[name='order.orderNumber']").val(
             response["order_number"]);
-        $(".shipment-modal table tr input[name='recipientContact']").val(
+        $(".shipment-modal table tr input[name='order.recipientContact']").val(
             response["recipient_contact"]);
-        $(".shipment-modal table tr input[name='recipientName']").val(
+        $(".shipment-modal table tr input[name='order.recipientName']").val(
             response["recipient_name"]);
-        $(".shipment-modal table tr input[name='recipientZip']").val(
+        $(".shipment-modal table tr input[name='order.recipientZip']").val(
             response["recipient_zip"]);
-        $(".shipment-modal table tr input[name='recipientAddress']").val(
+        $(".shipment-modal table tr input[name='order.recipientAddress']").val(
             response["recipient_address"]);
-        $(".shipment-modal table tr input[name='recipientAddressDetail']").val(
+        $(".shipment-modal table tr input[name='order.recipientAddressDetail']").val(
             response["recipient_address_detail"]);
 
         $(".shipment-modal").dialog("open");

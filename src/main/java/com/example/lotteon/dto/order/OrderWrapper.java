@@ -5,6 +5,7 @@ import com.example.lotteon.entity.order.OrderStatus;
 import com.example.lotteon.entity.user.Member;
 import com.example.lotteon.entity.user.MemberId;
 import com.example.lotteon.entity.user.User;
+import com.google.gson.annotations.SerializedName;
 import com.querydsl.core.Tuple;
 import java.time.LocalDate;
 import lombok.Getter;
@@ -14,8 +15,13 @@ import lombok.ToString;
 @ToString
 public class OrderWrapper {
 
+  @SerializedName("order")
   private final Order order;
+
+  @SerializedName("itemCount")
   private final int itemCount;
+
+  @SerializedName("total_price")
   private final long totalPrice;
 
   private OrderWrapper(Order order, int itemCount, long totalPrice) {
