@@ -13,6 +13,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import com.example.lotteon.service.coupon.CouponHistoryService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -120,9 +121,19 @@ public class MemberService {
     repo.updateInfo(member);
   }
 
-  // 쿠폰 받기 눌렸을때, 필요한 user_id 가져오는 메서드
-  public Member findByUserId(String userId) {
-    return repo.findByUserId(userId);  // userId로 Member 조회
+  // 쿠폰 받기 눌렸을때, 마이페이지 설정에 필요한 user_id 가져오는 메서드
+  public MemberDTO findByUserId(String userId) {
+    Member member = repo.findByUserId(userId);
+    return mapper.map(member, MemberDTO.class);
+  }
+
+  // 엔티티 반환 메서드
+  public Member getMemberEntityByUserId(String userId) {
+    Member member = repo.findByUserId(userId);
+    if (member == null) {
+      throw new EntityNotFoundException("회원을 찾을 수 없습니다.");
+    }
+    return member;
   }
 
 }

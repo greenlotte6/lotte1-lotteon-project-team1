@@ -2,6 +2,7 @@ package com.example.lotteon.service.admin;
 
 import com.example.lotteon.entity.admin.config.ConfigDocument;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
