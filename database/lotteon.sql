@@ -492,19 +492,20 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `lotteon`.`sales` (
   `id` INT NOT NULL,
-  `seller_business_number` CHAR(12) NOT NULL,
   `order_number` VARCHAR(45) NOT NULL,
+  `seller_business_number` CHAR(12) NOT NULL,
+  `seller_id` VARCHAR(16) NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_sales_seller1_idx` (`seller_business_number` ASC) VISIBLE,
   INDEX `fk_sales_order1_idx` (`order_number` ASC) VISIBLE,
-  CONSTRAINT `fk_sales_seller1`
-    FOREIGN KEY (`seller_business_number`)
-    REFERENCES `lotteon`.`seller` (`business_number`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE,
+  INDEX `fk_sales_seller1_idx` (`seller_business_number` ASC, `seller_id` ASC) VISIBLE,
   CONSTRAINT `fk_sales_order1`
     FOREIGN KEY (`order_number`)
     REFERENCES `lotteon`.`order` (`order_number`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_sales_seller1`
+    FOREIGN KEY (`seller_business_number` , `seller_id`)
+    REFERENCES `lotteon`.`seller` (`business_number` , `user_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
