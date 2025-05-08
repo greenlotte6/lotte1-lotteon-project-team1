@@ -197,11 +197,11 @@ INSERT INTO `order_status`  VALUES (4, "on_delivery"),
 (5, "delivered"), 
 (6, "purchase_confirmed"), 
 (7, "cancel_requested"),
-(8, "canceled"), 
+(8, "cancelled"), 
 (9, "refund_requetsed"), 
 (10, "refunded"), 
 (11, "exchange_requested"), 
-(12, "exchange");
+(12, "exchanged");
 
 # 주문
 INSERT INTO `order` VALUES("202500001", "jas06113", "신용카드", "이현민", "010-2351-2341", "12345", "부산광역시", "남구", 2, NOW());
@@ -269,3 +269,12 @@ JOIN `member` m ON m.user_id=o.member_id
 JOIN `order_status` os ON o.status_id=os.id
 # WHERE p.seller_user_id = 'seller1' AND m.user_id="jas06113"
 GROUP BY o.order_number;
+
+SELECT
+o.*,
+oi.*
+FROM `order` o
+JOIN `order_item` oi ON oi.order_number = o.order_number
+JOIN product p ON oi.product_id = p.id
+JOIN seller s ON p.seller_user_id = s.user_id
+WHERE o.order_number = "202500001" AND s.user_id="seller1";
