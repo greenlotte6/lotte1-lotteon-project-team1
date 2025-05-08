@@ -65,12 +65,12 @@ public class UserController {
     return "/user/seller";
   }
 
-  @GetMapping("/sort")
+  @GetMapping("/user/sort")
   public String sort() {
     return "/user/sort";
   }
 
-  @GetMapping("/terms")
+  @GetMapping("/user/terms")
   public String terms(Model model) {
     List<TermsDTO> termsDTO = termsService.terms();
     model.addAttribute("terms", termsDTO);

@@ -2,12 +2,12 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>롯데ON</title>
+    <title>나의 설정</title>
     <link rel="stylesheet" href="/style/init.css" />
     <link rel="stylesheet" href="/style/index.css" />
     <link rel="stylesheet" href="/style/common/header.css" />
     <link rel="stylesheet" href="/style/common/footer.css" />
-    <link rel="stylesheet" href="/static//style/common/pagination.css" />
+    <link rel="stylesheet" href="/style/common/pagination.css" />
     <link rel="stylesheet" href="/style/common/myPage/setting.css">
     <link rel="stylesheet" href="/style/common/myPage/myPagehead.css">
     <link rel="stylesheet" href="/style/common/myPage/myPageSide.css">
@@ -25,8 +25,10 @@
     <script src="/js/common/footer.js"></script>
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/all.min.js"
-      crossorigin="anonymous"
-    ></script>
+      crossorigin="anonymous"></script>
+    <script src="/js/user/postcode.js"></script>
+    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script src="/js/mypage/mypagevalidation.js"></script>
   </head>
   <body>
     <div id="wrapper">
@@ -77,41 +79,56 @@
                     </div>
 
 
-                    <form name="formRegister" action="" method="post">
+                    <form th:action="@{/mypage/setting/modify}" method="post" enctype="multipart/form-data" class="formRegister" name="formRegister">
+                        <input type="hidden" name="id" th:value="${userDTO.id}"/>
                         <table style="border-collapse: collapse;">
                             <tr>
                                 <th>사용자 ID</th>
                                 <td>
-                                    <input type="text" name="uid" value="chh***" readonly maxlength="10" style="border: none;">
+                                    <input type="text" name="id"
+                                           th:value="${#strings.length(userDTO.id) > 3} ? ${#strings.substring(userDTO.id, 0, #strings.length(userDTO.id) - 3)} + '***' : ${userDTO.id}"
+                                           readonly maxlength="10" style="border: none;">
                                     <span class="uidResult"></span>
                                 </td>
                             </tr>
                             <tr>
                                 <th>비밀번호</th>
                                 <td>
-                                    <button id="btnChangepass" type="button">비밀번호 수정</button>
-                                    
+                                    <!-- 비밀번호 수정 버튼 숨기기 -->
+                                    <button id="btnChangepass" type="button" th:if="${not passwordModified}" onclick="location.href='/mypage/confirmPassword'">비밀번호 수정</button>
+
+                                    <!-- 비밀번호 수정 후 입력란 표시 -->
+                                    <input type="password" name="password" th:if="${passwordModified}" placeholder="새 비밀번호 입력" maxlength="20"/>
                                     <span class="passResult"></span>
                                 </td>
+                                <td><!-- 비밀번호 수정 후 입력란 표시 -->
+                                    <input type="password" name="passwordConfirm" th:if="${passwordModified}" placeholder="새 비밀번호 확인입력" maxlength="20"/>
+                                    <span class="passResult"></span></td>
                             </tr>
                             <tr>
                                 <th>이름</th>
                                 <td>
-                                    <input type="text" name="name" value="김*학" readonly style="border: none;">
+                                    <input type="text" name="name"
+                                           th:value="${#strings.length(memberDTO.name) == 3} ?
+                                            ${#strings.substring(memberDTO.name, 0, 1)} + '*' + ${#strings.substring(memberDTO.name, 2)} :
+                                            ${memberDTO.name}"
+                                           readonly style="border: none;">
                                     <span class="nameResult"></span>
                                 </td>
                             </tr>
                             <tr>
                                 <th>생년월일</th>
                                 <td>
-                                    <input type="text" name="birth" value="1983년 05월 03일" readonly style="border: none;">
+                                    <input type="text" name="birth_date"
+                                           th:value="${memberDTO.birthDate != null} ? ${#dates.format(memberDTO.birthDate, 'yyyy년 MM월 dd일')} : ''"
+                                           readonly style="border: none;">
                                     <span class="birthResult"></span>
                                 </td>
                             </tr>
                             <tr>
                                 <th>휴대폰</th>
                                 <td>
-                                    <input type="text" name="hp" value="010-1234-5678"  maxlength="13">
+                                    <input type="text" name="contact" th:value="${userDTO.contact}"  maxlength="13">
                                     <button id="btnSendHp" type="button">수정하기</button>
                                     <span class="hpResult"></span>
                                 </td>
@@ -119,7 +136,7 @@
                             <tr>
                                 <th>이메일</th>
                                 <td>
-                                    <input type="email" name="email" value="chhak0503@naver.com"/>
+                                    <input type="email" name="email" th:value="${userDTO.email}"/>
                                     <button id="btnSendEmail" type="button">수정하기</button>
                                     <span class="emailResult"></span>
                                     <div class="auth" style="display: none">
@@ -131,16 +148,22 @@
                             <tr>
                                 <th>주소</th>
                                 <td>
-                                    <input type="text" id="zip" name="zip" placeholder="우편번호"/>
+                                    <input type="text" id="zip" name="zip" th:value="${userDTO.zip}" placeholder="우편번호"/>
                                     <button type="button" onclick="postcode()">우편번호 찾기</button><br>
-                                    <input type="text" id="addr1" name="addr1" placeholder="주소 검색"/><br>
-                                    <input type="text" id="addr2" name="addr2" placeholder="상세주소 입력"/>
+                                    <input type="text" id="addr1" name="address" th:value="${userDTO.address}" placeholder="주소 검색"/><br>
+                                    <input type="text" id="addr2" name="addressDetail" th:value="${userDTO.addressDetail}" placeholder="상세주소 입력"/>
                                 </td>
                             </tr>
                             <tr>
                                 <th>탈퇴</th>
                                 <td>
-                                    <button id="btnWithdraw" type="button" class="withdraw">탈퇴하기</button>
+                                    <!-- 탈퇴하기 버튼 숨기기 -->
+                                    <button id="btnWithdraw" type="button" class="withdraw" th:if="${not passwordModified}" onclick="location.href='/mypage/confirmPassword'">탈퇴하기</button>
+
+                                    <!-- 탈퇴하기 후 입력란 표시 -->
+                                    <input style="border: none; color: red" type="text" th:if="${passwordModified}" placeholder="정말 탈퇴를 원하십니까?" />
+                                    <button id="btnConfirm" type="button" class="withdraw" th:if="${passwordModified}">탈퇴하기</button>
+                                    <span class="passResult"></span>
                                     
                                     <span class="WithdrawResult"></span>
                                 </td>
@@ -148,7 +171,7 @@
                             
                         </table>
     
-                        <button class="agree-button"">수정하기</button>
+                        <button type="submit" class="agree-button">수정하기</button>
                     </form>
                     
                    

@@ -2,6 +2,7 @@ package com.example.lotteon.controller.product;
 
 import com.example.lotteon.dto.coupon.Coupon_HistoryDTO;
 import com.example.lotteon.dto.product.ProductDTO;
+import com.example.lotteon.dto.user.MemberDTO;
 import com.example.lotteon.entity.coupon.Coupon;
 import com.example.lotteon.entity.user.Member;
 import com.example.lotteon.repository.coupon.CouponHistoryRepository;
@@ -45,13 +46,13 @@ public class ProductDetail {
     @PostMapping("/product/detail/give-coupon")
     public String giveCoupon(@RequestParam("id") int id, Authentication authentication, RedirectAttributes redirectAttributes) {
         String username = authentication.getName();
-        Member member = memberService.findByUserId(username);
+        Member member = memberService.getMemberEntityByUserId(username);  // 이걸로 수정
 
         try {
             Coupon coupon = couponRepository.findById(201)
                     .orElseThrow(() -> new IllegalStateException("쿠폰을 찾을 수 없습니다."));
 
-            boolean couponAlreadyGiven = couponHistoryRepository.existsByMemberAndCoupon(member, coupon);
+            boolean couponAlreadyGiven = couponHistoryRepository.existsByMemberAndCoupon(member, coupon);  // OK
             if (couponAlreadyGiven) {
                 redirectAttributes.addFlashAttribute("error", "이미 쿠폰을 받으셨습니다.");
             } else {
@@ -62,7 +63,6 @@ public class ProductDetail {
             redirectAttributes.addFlashAttribute("error", "쿠폰 지급에 실패했습니다: " + e.getMessage());
         }
 
-        // id 값을 붙여서 리다이렉트
         return "redirect:/product/detail?id=" + id;
     }
 
