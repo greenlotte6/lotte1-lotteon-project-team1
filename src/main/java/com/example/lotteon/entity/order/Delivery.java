@@ -7,6 +7,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -32,17 +33,11 @@ public class Delivery {
   @SerializedName("delivery_number")
   private String deliveryNumber;
 
-  @Column(name = "description")
-  @SerializedName("description")
-  private String description;
-
   @JoinColumn(name = "delivery_company_id")
   @ManyToOne
   @SerializedName("delivery_company")
   private DeliveryCompany deliveryCompany;
 
-  @JoinColumn(name = "status_id")
-  @ManyToOne
-  @SerializedName("status")
-  private DeliveryStatus status;
+  @Column(name = "receipt_date")
+  private LocalDateTime receiptDate;
 }

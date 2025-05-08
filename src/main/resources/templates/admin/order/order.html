@@ -79,7 +79,7 @@
           <tr th:each="wrapper : ${pages}">
             <td>
               <a class="order-detail"
-                 th:href="@{/api/admin/order(id=${wrapper.order.getOrderNumber()})}"
+                 th:href="@{/api/admin/order/detail(id=${wrapper.order.getOrderNumber()})}"
                  th:text="${wrapper.order.getOrderNumber()}">
                 10121211341</a>
             </td>
@@ -90,15 +90,16 @@
             <td th:text="${wrapper.getOrder().getPayment()}">신용카드</td>
             <td class="text-green" th:if="${wrapper.getOrder().getStatus().getId() == 1}">결제대기</td>
             <td class="text-green" th:if="${wrapper.getOrder().getStatus().getId() == 2}">결제완료</td>
-            <td class="text-green" th:if="${wrapper.getOrder().getStatus().getId() == 3}">배송중</td>
-            <td class="text-green" th:if="${wrapper.getOrder().getStatus().getId() == 4}">배송완료</td>
-            <td class="text-green" th:if="${wrapper.getOrder().getStatus().getId() == 5}">구매확정</td>
-            <td class="text-red" th:if="${wrapper.getOrder().getStatus().getId() == 6}">취소요청</td>
-            <td class="text-gray" th:if="${wrapper.getOrder().getStatus().getId() == 7}">취소완료</td>
-            <td class="text-red" th:if="${wrapper.getOrder().getStatus().getId() == 8}">환불요청</td>
-            <td class="text-gray" th:if="${wrapper.getOrder().getStatus().getId() == 9}">환불완료</td>
-            <td class="text-red" th:if="${wrapper.getOrder().getStatus().getId() == 10}">교환요청</td>
-            <td class="text-gray" th:if="${wrapper.getOrder().getStatus().getId() == 11}">교환완료</td>
+            <td class="text-green" th:if="${wrapper.getOrder().getStatus().getId() == 3}">배송준비</td>
+            <td class="text-green" th:if="${wrapper.getOrder().getStatus().getId() == 4}">배송중</td>
+            <td class="text-green" th:if="${wrapper.getOrder().getStatus().getId() == 5}">배송완료</td>
+            <td class="text-green" th:if="${wrapper.getOrder().getStatus().getId() == 6}">구매확정</td>
+            <td class="text-red" th:if="${wrapper.getOrder().getStatus().getId() == 7}">취소요청</td>
+            <td class="text-gray" th:if="${wrapper.getOrder().getStatus().getId() == 8}">취소완료</td>
+            <td class="text-red" th:if="${wrapper.getOrder().getStatus().getId() == 9}">환불요청</td>
+            <td class="text-gray" th:if="${wrapper.getOrder().getStatus().getId() == 10}">환불완료</td>
+            <td class="text-red" th:if="${wrapper.getOrder().getStatus().getId() == 11}">교환요청</td>
+            <td class="text-gray" th:if="${wrapper.getOrder().getStatus().getId() == 12}">교환완료</td>
             <td th:text="${#temporals.format(wrapper.getOrder().getOrderDate(), 'yyyy-mm-dd HH:mm:ss')}">
               0000-00-00
               00:00:00
@@ -122,25 +123,25 @@
             <tr>
               <th>주문번호</th>
               <td>
-                <input type="text" name="orderNumber"/>
+                <input type="text" name="order.orderNumber"/>
               </td>
             </tr>
             <tr>
               <th>수령인</th>
               <td>
-                <input type="text" name="recipientName"/>
+                <input type="text" name="order.recipientName"/>
               </td>
             </tr>
             <tr>
               <th>수령인 연락처</th>
               <td>
-                <input type="text" name="recipientContact"/>
+                <input type="text" name="order.recipientContact"/>
               </td>
             </tr>
             <tr>
               <th>우편번호</th>
               <td>
-                <input type="text" name="recipientZip"/>
+                <input type="text" name="order.recipientZip"/>
               </td>
             </tr>
             <tr>
@@ -148,7 +149,7 @@
               <td>
                 <input
                     type="text"
-                    name="recipientAddress"
+                    name="order.recipientAddress"
                 />
               </td>
             </tr>
@@ -156,7 +157,7 @@
               <th>상세주소</th>
               <td>
                 <input type="text"
-                       name="recipientAddressDetail"/>
+                       name="order.recipientAddressDetail"/>
               </td>
             </tr>
             <tr>
@@ -184,7 +185,7 @@
               <th>기타</th>
               <td>
                       <textarea
-                          name="description"
+                          name="order.description"
                           id="shipment-desc"
                       ></textarea>
               </td>
@@ -201,7 +202,7 @@
           <h3>상품정보</h3>
         </div>
         <table>
-          <tbody>
+          <tbody id="iteration-point">
           <tr>
             <th>상품 이미지</th>
             <th>상품번호</th>
@@ -213,38 +214,25 @@
             <th>배송비</th>
             <th>결제금액</th>
           </tr>
-          <tr>
-            <td>
-              <img src="/static/images/img-symbol.jpg" alt=""/>
-            </td>
-            <td>12010021</td>
-            <td>상품명 #1</td>
-            <td>(주) 상호명</td>
-            <td>24,000</td>
-            <td>-1,200</td>
-            <td>3</td>
-            <td>0</td>
-            <td>68,400</td>
-          </tr>
           </tbody>
         </table>
         <div class="total-price">
           <ul>
             <li>
               <span>총 상품금액</span>
-              <span>107,000원</span>
+              <span id="total-product-price">107,000원</span>
             </li>
             <li>
               <span>총 할인금액</span>
-              <span>-7,100원</span>
+              <span id="total-discounted-price">-7,100원</span>
             </li>
             <li>
               <span>배송비</span>
-              <span>3,000원</span>
+              <span id="total-delivery-fee">3,000원</span>
             </li>
             <li>
               <span class="total">총 결제금액</span>
-              <span>102,900원</span>
+              <span id="total-price">102,900원</span>
             </li>
           </ul>
         </div>
@@ -257,24 +245,24 @@
           <tbody>
           <tr>
             <th>주문번호</th>
-            <td>10121211341</td>
+            <td class="order-number">10121211341</td>
           </tr>
           <tr>
             <th>결제방법</th>
-            <td>신용카드 / 1234 **** **** 4432</td>
+            <td class="order-payment">신용카드 / 1234 **** **** 4432</td>
           </tr>
           <tr>
             <th>주문자/연락처</th>
-            <td>김유신 / 010-1234-1234</td>
+            <td class="order-member-name-contact">김유신 / 010-1234-1234</td>
           </tr>
           <tr>
             <th>결제상태</th>
-            <td class="text-green">결제완료</td>
+            <td class="text-green order-status">결제완료</td>
           </tr>
           <tr>
             <th>총 결제금액</th>
             <td>
-              <span class="text-red"> 102,900 </span>
+              <span class="text-red order-info-total-price"> 102,900 </span>
               <span>원</span>
             </td>
           </tr>
@@ -285,23 +273,25 @@
         <div class="content-title">
           <h3>배송정보</h3>
         </div>
-        <table>
-          <table>
-            <tbody>
-            <tr>
-              <th>수취인</th>
-              <td>김유신</td>
-            </tr>
-            <tr>
-              <th>연락처</th>
-              <td>010-1234-1234</td>
-            </tr>
-            <tr>
-              <th>배송지 주소</th>
-              <td>부산광역시 부산진구 123-11 행복아파트 103동 404호</td>
-            </tr>
-            </tbody>
-          </table>
+        <table id="delivery-info">
+          <tbody>
+          <tr>
+            <th>수취인</th>
+            <td class="recipient-name"></td>
+          </tr>
+          <tr>
+            <th>연락처</th>
+            <td class="recipient-contact"></td>
+          </tr>
+          <tr>
+            <th>배송지 주소</th>
+            <td class="recipient-address"></td>
+          </tr>
+          <tr>
+            <th>배송지 상세주소</th>
+            <td class="recipient-address-detail"></td>
+          </tr>
+          </tbody>
         </table>
       </div>
     </div>

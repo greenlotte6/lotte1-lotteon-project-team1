@@ -2,6 +2,8 @@ package com.example.lotteon.repository.order;
 
 import com.example.lotteon.dto.order.OrderWrapper;
 import com.example.lotteon.entity.order.Order;
+import com.example.lotteon.entity.order.OrderItem;
+import com.example.lotteon.entity.order.OrderStatus;
 import java.time.LocalDate;
 import java.util.List;
 import org.springframework.data.domain.Page;
@@ -39,6 +41,11 @@ public interface OrderRepositoryCustom {
 
   Page<OrderWrapper> findAllOrders(Pageable pageable);
 
+  List<OrderItem> findWithProductInfoByOrderNumberAndSellerId(String orderNumber);
+
+  List<OrderItem> findWithProductInfoByOrderNumberAndSellerId(String currentSellerId,
+      String orderNumber);
+
   Order findByOrderNumber(String orderNumber);
 
   Page<OrderWrapper> findByOrderNumber(String orderNumber, Pageable pageable);
@@ -53,5 +60,7 @@ public interface OrderRepositoryCustom {
   Page<OrderWrapper> findByMemberId(String memberId, Pageable pageable);
 
   Page<OrderWrapper> findByMemberId(String currentSellerId, String memberId, Pageable pageable);
+
+  void updateStatusByOrderNumber(String orderNumber, OrderStatus status);
 
 }

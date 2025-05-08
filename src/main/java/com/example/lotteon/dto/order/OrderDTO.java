@@ -21,6 +21,7 @@ public class OrderDTO {
   private String recipientZip;
   private String recipientAddress;
   private String recipientAddressDetail;
+  private String description;
   private OrderStatusDTO status;
   private LocalDate orderDate;
 

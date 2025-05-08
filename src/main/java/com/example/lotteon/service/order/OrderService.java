@@ -1,14 +1,19 @@
 package com.example.lotteon.service.order;
 
+import com.example.lotteon.dto.order.OrderItemDTO;
 import com.example.lotteon.dto.order.OrderStatusDTO;
 import com.example.lotteon.dto.order.OrderWrapper;
 import com.example.lotteon.entity.order.DeliveryStatus;
 import com.example.lotteon.entity.order.Order;
+import com.example.lotteon.entity.order.OrderItem;
+import com.example.lotteon.entity.order.OrderStatus;
 import com.example.lotteon.repository.order.OrderRepository;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -19,6 +24,7 @@ import org.springframework.stereotype.Service;
 public class OrderService {
 
   private final OrderRepository repo;
+  private final ModelMapper mapper;
 
   public long countPaymentWaitingOrdersAt(LocalDate date) {
     return repo.countByStatusAt(OrderStatusDTO.STATUS_PAYMENT_WAITING, date);
@@ -66,6 +72,20 @@ public class OrderService {
     return repo.findAllBySellerId(currentSellerId, pageable);
   }
 
+  public List<OrderItemDTO> getOrderDetail(String currentSellerId, String orderNumber) {
+    List<OrderItem> entities = repo.findWithProductInfoByOrderNumberAndSellerId(currentSellerId,
+        orderNumber);
+
+    List<OrderItemDTO> items = new ArrayList<>();
+
+    for (OrderItem entity : entities) {
+      OrderItemDTO item = mapper.map(entity, OrderItemDTO.class);
+      items.add(item);
+    }
+
+    return items;
+  }
+
   public Order searchByOrderNumber(String orderNumber) {
     return repo.findByOrderNumber(orderNumber);
   }
@@ -95,5 +115,10 @@ public class OrderService {
   public Page<OrderWrapper> searchByMemberId(String currentSellerId, String memberId,
       Pageable pageable) {
     return repo.findByMemberId(currentSellerId, memberId, pageable);
+  }
+
+  public void updateStatusByOrderNumber(String orderNumber, OrderStatusDTO status) {
+    OrderStatus entity = mapper.map(status, OrderStatus.class);
+    repo.updateStatusByOrderNumber(orderNumber, entity);
   }
 }

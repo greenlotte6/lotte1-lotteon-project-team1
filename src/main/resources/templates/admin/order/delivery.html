@@ -1,380 +1,155 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>주문관리 > 배송현황</title>
-    <link rel="stylesheet" href="/static/style/init.css" />
-    <link rel="stylesheet" href="/static/style/common/admin/header.css" />
-    <link rel="stylesheet" href="/static/style/common/admin/aside.css" />
-    <link rel="stylesheet" href="/static/style/common/admin/content.css" />
-    <link rel="stylesheet" href="/static/style/common/admin/footer.css" />
-    <link rel="stylesheet" href="/static/style/common/pagination.css" />
-    <link
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>주문관리 > 배송현황</title>
+  <link rel="stylesheet" href="/style/init.css"/>
+  <link rel="stylesheet" href="/style/common/admin/header.css"/>
+  <link rel="stylesheet" href="/style/common/admin/aside.css"/>
+  <link rel="stylesheet" href="/style/common/admin/content.css"/>
+  <link rel="stylesheet" href="/style/common/admin/footer.css"/>
+  <link rel="stylesheet" href="/style/common/pagination.css"/>
+  <link
       rel="icon"
       href="https://static.lotteon.com/p/common/assets/favicon/1/favicon-32.png"
-    />
-    <link
+  />
+  <link
       rel="stylesheet"
       href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css"
-    />
-    <script
+  />
+  <script
       src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/all.min.js"
       crossorigin="anonymous"
-    ></script>
-    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-    <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
-    <script src="/static/js/admin/config/aside-drop.js"></script>
-    <script type="module" src="/static/js/common/admin/modal.mjs"></script>
-    <script type="module" src="/static/js/admin/order/delivery.js"></script>
-  </head>
-  <body>
-    <div id="wrapper">
-      <header>
-        <div class="header-wrapper">
-          <img
-            src="https://static.lotteon.com/p/common/foCommon/assets/img/logo_lotte-on@2x.png"
-            alt="logo"
-          />
-          <h1>ADMINISTRATOR</h1>
-          <ul>
-            <li>
-              <span class="greeting">
-                안녕하세요, [홍길동]님, 반갑습니다.
-              </span>
-            </li>
-            <li>
-              <a href="#"> 홈 </a>
-            </li>
-            <li>
-              <a href="#"> 로그아웃 </a>
-            </li>
-            <li>
-              <a href="#"> 고객센터 </a>
-            </li>
-          </ul>
-        </div>
-        <nav class="header-padding"></nav>
-      </header>
-      <main>
-        <aside class="side-menu">
-          <ul>
-            <li id="settings-menu">
-              <i class="fa-solid fa-gear"></i>
-              <a href="/admin/config/basic"> 환경설정 </a>
-            </li>
-            <ul class="submenu settings" style="display: none">
-              <li>
-                <a href="/admin/config/basic"> 기본설정 </a>
-              </li>
-              <li>
-                <a href="/admin/config/banner"> 배너관리 </a>
-              </li>
-              <li>
-                <a href="/admin/config/policy"> 약관관리 </a>
-              </li>
-              <li>
-                <a href="/admin/config/category"> 카테고리 </a>
-              </li>
-              <li>
-                <a href="/admin/config/version"> 버전이력 </a>
-              </li>
-            </ul>
-            <li id="store-menu">
-              <i class="fa-solid fa-store"></i>
-              <a href="/admin/shop/list"> 상점관리 </a>
-            </li>
-            <ul class="submenu store" style="display: none">
-              <li>
-                <a href="/admin/shop/list"> 상점목록 </a>
-              </li>
-              <li>
-                <a href="/admin/shop/sales"> 매출현황 </a>
-              </li>
-            </ul>
-            <li id="member-menu">
-              <i class="fa-solid fa-users"></i>
-              <a href="/admin/member/list"> 회원관리 </a>
-            </li>
-            <ul class="submenu member" style="display: none">
-              <li>
-                <a href="/admin/member/list"> 회원목록 </a>
-              </li>
-              <li>
-                <a href="/admin/member/point"> 포인트 관리 </a>
-              </li>
-            </ul>
-            <li id="product-menu">
-              <i class="fa-solid fa-box-open"></i>
-              <a href="/admin/product/list"> 상품관리 </a>
-            </li>
-            <ul class="submenu product" style="display: none">
-              <li>
-                <a href="/admin/product/list"> 상품목록 </a>
-              </li>
-              <li>
-                <a href="/admin/product/register"> 상품등록 </a>
-              </li>
-            </ul>
-            <li id="order-menu">
-              <i class="fa-solid fa-credit-card"></i>
-              <a href="/admin/settings/order/list"> 주문관리 </a>
-            </li>
-            <ul class="submenu order" style="display: none">
-              <li>
-                <a href="/admin/order/list"> 주문현황 </a>
-              </li>
-              <li>
-                <a href="/admin/order/delivery"> 배송현황 </a>
-              </li>
-            </ul>
-            <li id="coupon-menu">
-              <i class="fa-solid fa-ticket"></i>
-              <a href="/admin/settings/coupon/list"> 쿠폰관리 </a>
-            </li>
-            <ul class="submenu coupon" style="display: none">
-              <li>
-                <a href="/admin/coupon/list"> 쿠폰목록 </a>
-              </li>
-              <li>
-                <a href="/admin/coupon/issued"> 쿠폰발급현황 </a>
-              </li>
-            </ul>
-            <li id="cs-menu">
-              <i class="fa-solid fa-headphones"></i>
-              <a href="/admin/cs/notice/list"> 고객센터 </a>
-            </li>
-            <ul class="submenu customer-service" style="display: none">
-              <li>
-                <a href="/admin/cs/notice/list"> 공지사항 </a>
-              </li>
-              <li>
-                <a href="/admin/cs/faq/list"> 자주묻는질문 </a>
-              </li>
-              <li>
-                <a href="/admin/cs/qna/list"> 문의하기 </a>
-              </li>
-            </ul>
-          </ul>
-        </aside>
-        <section id="content-area">
-          <div class="content-area-title">
-            <h3>배송현황</h3>
-            <span>
+  ></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+  <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
+  <script src="/js/admin/config/aside-drop.js"></script>
+  <script type="module" src="/js/common/admin/modal.mjs"></script>
+  <script type="module" src="/js/admin/order/delivery.js"></script>
+</head>
+<body>
+<div id="wrapper">
+  <th:block th:if="${role.equals('ROLE_ADMIN')}" th:insert="~{/common/admin/header}"></th:block>
+  <th:block th:if="${role.equals('ROLE_SELLER')}"
+            th:insert="~{/common/admin/sellerHeader}"></th:block>
+  <main>
+    <th:block th:if="${role.equals('ROLE_ADMIN')}" th:insert="~{/common/admin/aside}"></th:block>
+    <th:block th:if="${role.equals('ROLE_SELLER')}"
+              th:insert="~{/common/admin/sellerAside}"></th:block>
+    <section id="content-area">
+      <div class="content-area-title">
+        <h3>배송현황</h3>
+        <span>
               <a href="#">HOME&nbsp;>&nbsp; </a>
               <a href="#">주문관리&nbsp;>&nbsp; </a>
               <a href="#">배송현황</a>
             </span>
-          </div>
-          <div class="content">
-            <form action="#" method="GET" id="search-area">
-              <select name="filter" class="search-filter">
-                <option value="invoiceNumber">송장번호</option>
-                <option value="deliveryCompany">택배사</option>
-                <option value="orderId">주문건수</option>
-                <option value="recipient">수령인</option>
-              </select>
-              <input
-                type="text"
-                class="search-input"
-                placeholder="검색어 입력"
-              />
-            </form>
-            <table>
-              <tbody>
-                <tr>
-                  <th>송장번호</th>
-                  <th>택배사</th>
-                  <th>주문번호</th>
-                  <th>수령인</th>
-                  <th>상품명</th>
-                  <th>건수</th>
-                  <th>물품합계</th>
-                  <th>배송비</th>
-                  <th>배송상태</th>
-                  <th>접수일</th>
-                </tr>
-                <tr>
-                  <td>
-                    <a href="#" class="delivery-detail anchor-with-underline">
-                      10122102315
-                    </a>
-                  </td>
-                  <td>롯데택배</td>
-                  <td>10121211341</td>
-                  <td>김유신</td>
-                  <td>상품명 #1</td>
-                  <td>3</td>
-                  <td>68,400</td>
-                  <td>무료</td>
-                  <td class="text-blue">배송준비</td>
-                  <td>0000-00-00 00:00:00</td>
-                </tr>
-                <tr>
-                  <td>
-                    <a href="#" class="delivery-detail anchor-with-underline">
-                      10122102315
-                    </a>
-                  </td>
-                  <td>롯데택배</td>
-                  <td>10121211341</td>
-                  <td>김유신</td>
-                  <td>상품명 #1</td>
-                  <td>3</td>
-                  <td>68,400</td>
-                  <td>무료</td>
-                  <td class="text-blue">배송준비</td>
-                  <td>0000-00-00 00:00:00</td>
-                </tr>
-                <tr>
-                  <td>
-                    <a href="#" class="delivery-detail anchor-with-underline">
-                      10122102315
-                    </a>
-                  </td>
-                  <td>CJ 대한통운</td>
-                  <td>10121211341</td>
-                  <td>김유신</td>
-                  <td>상품명 #1</td>
-                  <td>3</td>
-                  <td>68,400</td>
-                  <td>무료</td>
-                  <td class="text-blue">배송중</td>
-                  <td>0000-00-00 00:00:00</td>
-                </tr>
-                <tr>
-                  <td>
-                    <a href="#" class="delivery-detail anchor-with-underline">
-                      10122102315
-                    </a>
-                  </td>
-                  <td>한진택배</td>
-                  <td>10121211341</td>
-                  <td>김유신</td>
-                  <td>상품명 #1</td>
-                  <td>3</td>
-                  <td>68,400</td>
-                  <td>무료</td>
-                  <td class="text-red">반품요청</td>
-                  <td>0000-00-00 00:00:00</td>
-                </tr>
-                <tr>
-                  <td>
-                    <a href="#" class="delivery-detail anchor-with-underline">
-                      10122102315
-                    </a>
-                  </td>
-                  <td>한진택배</td>
-                  <td>10121211341</td>
-                  <td>김유신</td>
-                  <td>상품명 #1</td>
-                  <td>3</td>
-                  <td>68,400</td>
-                  <td>무료</td>
-                  <td class="text-green">배송완료</td>
-                  <td>0000-00-00 00:00:00</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </section>
-        <div class="modal delivery-detail-modal">
-          <div class="content">
-            <div class="content-title">
-              <h3>상품정보</h3>
-            </div>
-            <table>
-              <tbody>
-                <tr>
-                  <th></th>
-                  <th>상품번호</th>
-                  <th>상품명</th>
-                  <th>판매자</th>
-                  <th>가격</th>
-                  <th>수량</th>
-                  <th>배송비</th>
-                  <th>결제금액</th>
-                </tr>
-                <tr>
-                  <td>
-                    <img src="/static/images/img-symbol.jpg" alt="" />
-                  </td>
-                  <td>120120021</td>
-                  <td>상품명 #1</td>
-                  <td>(주)상호명</td>
-                  <td>24,000</td>
-                  <td>3</td>
-                  <td>0</td>
-                  <td>68,400</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <div class="content">
-            <div class="content-title">
-              <h3>배송정보</h3>
-            </div>
-            <table>
-              <tbody>
-                <tr>
-                  <th>주문번호</th>
-                  <td>10121211341</td>
-                </tr>
-                <tr>
-                  <th>수령인</th>
-                  <td>김유신</td>
-                </tr>
-                <tr>
-                  <th>연락처</th>
-                  <td>010-1234-1234</td>
-                </tr>
-                <tr>
-                  <th>배송지 주소</th>
-                  <td>부산 부산진구 123-11 10층</td>
-                </tr>
-                <tr>
-                  <th>택배사</th>
-                  <td>한진택배</td>
-                </tr>
-                <tr>
-                  <th>송장번호</th>
-                  <td>10122102315</td>
-                </tr>
-                <tr>
-                  <th>기타</th>
-                  <td>빠른 배송 부탁드립니다.</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+      </div>
+      <div class="content">
+        <form action="/admin/delivery/search" method="GET" id="search-area">
+          <select name="filter" class="search-filter">
+            <option value="deliveryNumber">송장번호</option>
+            <option value="orderNumber">주문번호</option>
+            <option value="recipientName">수령인</option>
+          </select>
+          <input
+              type="text"
+              name="keyword"
+              class="search-input"
+              placeholder="검색어 입력"
+          />
+        </form>
+        <table>
+          <tbody>
+          <tr>
+            <th>송장번호</th>
+            <th>택배사</th>
+            <th>주문번호</th>
+            <th>수령인</th>
+            <th>건수</th>
+            <th>물품합계</th>
+            <th>배송비</th>
+            <th>배송상태</th>
+            <th>접수일</th>
+          </tr>
+          <tr th:each="wrapper : ${pages}">
+            <td>
+              <a th:href="@{/api/admin/delivery/search(id=${wrapper.getDelivery().getDeliveryNumber()})}"
+                 th:text="${wrapper.getDelivery().getDeliveryNumber()}"
+                 class="delivery-detail anchor-with-underline">
+                10122102315
+              </a>
+            </td>
+            <td th:text="${wrapper.getDelivery().getDeliveryCompany().getCompanyName()}">롯데택배</td>
+            <td th:text="${wrapper.getDelivery().getOrder().getOrderNumber()}">10121211341</td>
+            <td th:text="${wrapper.getDelivery().getOrder().getRecipientName()}">김유신</td>
+            <td th:text="${wrapper.getItemCount()}">3</td>
+            <td th:text="${wrapper.getTotalPrice()}">68,400</td>
+            <td th:text="${wrapper.getTotalDeliveryFee()}"
+                th:if="${wrapper.getTotalDeliveryFee() != 0}">무료
+            </td>
+            <td class="text-blue" th:if="${wrapper.getStatus() == 3}">배송준비</td>
+            <td class="text-green" th:if="${wrapper.getStatus() == 4}">배송중</td>
+            <td class="text-green" th:if="${wrapper.getStatus() == 5}">배송완료</td>
+            <td th:if="${wrapper.getTotalDeliveryFee() == 0}" th:text="무료"></td>
+            <td th:text="${#dates.format(wrapper.getDelivery().getReceiptDate(), 'yyyy-MM-dd HH:mm:ss')}">
+              0000-00-00
+              00:00:00
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+    <div class="modal delivery-detail-modal">
+      <div class="content">
+        <div class="content-title">
+          <h3>상품정보</h3>
         </div>
-      </main>
-      <section class="pagination">
-        <a class="page move" href="#">
-          <i class="fa-solid fa-angles-left"></i>
-        </a>
-        <a class="page move" href="#">
-          <i class="fa-solid fa-chevron-left"></i>
-        </a>
-        <a class="page" href="">1</a>
-        <a class="page" href="">2</a>
-        <a class="page" href="">3</a>
-        <a class="page" href="">4</a>
-        <a class="page move" href="#">
-          <i class="fa-solid fa-chevron-right"></i>
-        </a>
-        <a class="page move" href="#">
-          <i class="fa-solid fa-angles-right"></i>
-        </a>
-      </section>
-      <footer>
-        <div id="footer-wrapper">
-          <span>
-            Copyright ©LotteON.co.kr All rights reserved. LotteON ADMINISTRATOR
-            Version 0.0.1
-          </span>
+        <table>
+          <tbody id="product-iter-point">
+          </tbody>
+        </table>
+      </div>
+      <div class="content">
+        <div class="content-title">
+          <h3>배송정보</h3>
         </div>
-      </footer>
+        <table>
+          <tbody id="delivery-iter-point">
+          </tbody>
+        </table>
+      </div>
     </div>
-  </body>
+  </main>
+  <section class="pagination">
+    <a class="page move"
+       th:href="@{/admin/delivery/list(page=${pages.getPageable().first().getPageNumber() + 1})}"
+       th:if="${pages.hasPrevious()}"
+    >
+      <i class="fa-solid fa-angles-left"></i>
+    </a>
+    <a class="page move" th:href="@{/admin/delivery/list(page=${currentPage - 1})}"
+       th:if="${pages.hasPrevious()}">
+      <i class="fa-solid fa-chevron-left"></i>
+    </a>
+    <span th:each="pageNum : ${#numbers.sequence(1, pages.getTotalPages())}">
+            <a th:class="${currentPage == pageNum ? 'page current-page' : 'page'}"
+               th:href="@{/admin/delivery/list(page=${pageNum})}"
+               th:text="${pageNum}">1</a>
+        </span>
+    <a class="page move" th:href="@{/admin/delivery/list(page=${currentPage + 1})}"
+       th:if="${pages.hasNext()}">
+      <i class="fa-solid fa-chevron-right"></i>
+    </a>
+    <a class="page move"
+       th:href="@{/admin/delivery/list(page=${pages.getTotalPages()})}"
+       th:if="${pages.hasNext()}">
+      <i class="fa-solid fa-angles-right"></i>
+    </a>
+  </section>
+  <th:block th:insert="~{/common/admin/footer}"></th:block>
+</div>
+</body>
 </html>

@@ -7,20 +7,21 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonParseException;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import java.lang.reflect.Type;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
+import org.modelmapper.spi.MappingContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import java.lang.reflect.Type;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 @Configuration
 public class ApplicationConfig {
@@ -34,6 +35,20 @@ public class ApplicationConfig {
         .setMatchingStrategy(MatchingStrategies.STRICT)
         .setFieldMatchingEnabled(true);
 
+    // Date → LocalDateTime 커스텀 컨버터
+    Converter<Date, LocalDateTime> dateToLocalDateTimeConverter = new Converter<>() {
+      @Override
+      public LocalDateTime convert(MappingContext<Date, LocalDateTime> context) {
+        Date source = context.getSource();
+        return source == null ? null : source.toInstant()
+            .atZone(ZoneId.systemDefault())
+            .toLocalDateTime();
+      }
+    };
+
+    // 전역 매핑 설정
+    modelMapper.addConverter(dateToLocalDateTimeConverter, Date.class, LocalDateTime.class);
+
     return modelMapper;
   }
 
@@ -46,23 +61,27 @@ public class ApplicationConfig {
   public Gson gson() {
     // LocalDate를 처리할 TypeAdapter 정의
     return new GsonBuilder()
-            .registerTypeAdapter(LocalDate.class, new JsonSerializer<LocalDate>() {
-              private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        .registerTypeAdapter(LocalDate.class, new JsonSerializer<LocalDate>() {
+          private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern(
+              "yyyy-MM-dd");
 
-              @Override
-              public JsonElement serialize(LocalDate localDate, Type typeOfSrc, JsonSerializationContext context) {
-                return new JsonPrimitive(localDate.format(formatter));
-              }
-            })
-            .registerTypeAdapter(LocalDate.class, new JsonDeserializer<LocalDate>() {
-              private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+          @Override
+          public JsonElement serialize(LocalDate localDate, Type typeOfSrc,
+              JsonSerializationContext context) {
+            return new JsonPrimitive(localDate.format(formatter));
+          }
+        })
+        .registerTypeAdapter(LocalDate.class, new JsonDeserializer<LocalDate>() {
+          private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern(
+              "yyyy-MM-dd");
 
-              @Override
-              public LocalDate deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) {
-                return LocalDate.parse(json.getAsString(), formatter);
-              }
-            })
-            .setDateFormat("yyyy-MM-dd'T'HH:mm:ssX") // 다른 날짜 형식이 필요한 경우
-            .create();
+          @Override
+          public LocalDate deserialize(JsonElement json, Type typeOfT,
+              JsonDeserializationContext context) {
+            return LocalDate.parse(json.getAsString(), formatter);
+          }
+        })
+        .setDateFormat("yyyy-MM-dd'T'HH:mm:ssX") // 다른 날짜 형식이 필요한 경우
+        .create();
   }
 }
