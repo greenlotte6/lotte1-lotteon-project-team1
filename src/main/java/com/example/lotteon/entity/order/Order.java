@@ -58,6 +58,9 @@ public class Order {
   @SerializedName("recipient_address_detail")
   private String recipientAddressDetail;
 
+  @Column(name = "description")
+  @SerializedName("description")
+  private String description;
 
   @JoinColumn(name = "status_id")
   @ManyToOne(optional = false)

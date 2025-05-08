@@ -41,6 +41,8 @@ public interface OrderRepositoryCustom {
 
   Page<OrderWrapper> findAllOrders(Pageable pageable);
 
+  List<OrderItem> findWithProductInfoByOrderNumberAndSellerId(String orderNumber);
+
   List<OrderItem> findWithProductInfoByOrderNumberAndSellerId(String currentSellerId,
       String orderNumber);
 

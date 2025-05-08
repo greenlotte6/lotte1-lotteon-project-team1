@@ -131,6 +131,17 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
   }
 
   @Override
+  public List<OrderItem> findWithProductInfoByOrderNumberAndSellerId(String orderNumber) {
+    return query
+        .selectFrom(orderItem)
+        .join(orderItem.order, order).fetchJoin()
+        .join(orderItem.product, product).fetchJoin()
+        .join(product.seller, seller)
+        .where(order.orderNumber.eq(orderNumber))
+        .fetch();
+  }
+
+  @Override
   public List<OrderItem> findWithProductInfoByOrderNumberAndSellerId(String currentSellerId,
       String orderNumber) {
     return query
