@@ -204,10 +204,10 @@ INSERT INTO `order_status`  VALUES (4, "on_delivery"),
 (12, "exchanged");
 
 # 주문
-INSERT INTO `order` VALUES("202500001", "jas06113", "신용카드", "이현민", "010-2351-2341", "12345", "부산광역시", "남구", 2, NOW());
-INSERT INTO `order` VALUES("202500002", "abc123", "신용카드", "장보고", "010-2311-3511", "12345", "부산광역시", "남구", 1, NOW());
-INSERT INTO `order` VALUES("202500003", "xyz123", "신용카드", "이성계", "010-2451-1230", "12345", "부산광역시", "남구", 1, NOW());
-INSERT INTO `order` VALUES("202500004", "jas06113", "신용카드","이현민", "010-2351-2341", "12345", "부산광역시", "남구", 3, NOW());
+INSERT INTO `order` VALUES("202500001", "jas06113", "신용카드", "이현민", "010-2351-2341", "12345", "부산광역시", "남구", "빠른 배송 부탁드립니다", 2, NOW());
+INSERT INTO `order` VALUES("202500002", "abc123", "신용카드", "장보고", "010-2311-3511", "12345", "부산광역시", "남구", 1,  "빠른 배송 부탁드립니다", NOW());
+INSERT INTO `order` VALUES("202500003", "xyz123", "신용카드", "이성계", "010-2451-1230", "12345", "부산광역시", "남구", 1,  "빠른 배송 부탁드립니다", NOW());
+INSERT INTO `order` VALUES("202500004", "jas06113", "신용카드","이현민", "010-2351-2341", "12345", "부산광역시", "남구", 3,  "빠른 배송 부탁드립니다", NOW());
 
 INSERT INTO `order_item` VALUES(1, "202500001", "2025010001", 1);
 INSERT INTO `order_item` VALUES(2, "202500001", "2025010002", 1);
@@ -227,7 +227,7 @@ INSERT INTO delivery_company VALUES(3, "CJ 대한통운");
 INSERT INTO delivery_company VALUES(4, "우체국 택배");
 
 #배송
-INSERT INTO delivery VALUES(1, "D20250100001", "202500004", "빠른 배송 부탁드립니다", 1);
+INSERT INTO delivery VALUES(1, "D20250100001", "202500004", "빠른 배송 부탁드립니다", 1, "2025-04-08 12:28:03");
 
 ########################################################################################################
 SELECT @@GLOBAL.sql_mode;
@@ -278,3 +278,40 @@ JOIN `order_item` oi ON oi.order_number = o.order_number
 JOIN product p ON oi.product_id = p.id
 JOIN seller s ON p.seller_user_id = s.user_id
 WHERE o.order_number = "202500001" AND s.user_id="seller1";
+
+# 송장번호, 택배사, 주문번호, 수령인, 상품명, 건수, 물품합계, 배송비, 배송상태, 접수일
+SELECT 
+d.delivery_number,
+dc.company_name,
+d.order_number,
+o.recipient_name,
+SUM(
+ ((p.price - (p.price * p.discount_rate / 100))) * oi.amount + p.delivery_fee) AS total_price,
+COUNT(`oi`.product_id) AS `order_item_count`,
+SUM(p.delivery_fee) AS `total_delivery_fee`,
+d.receipt_date
+FROM `delivery` d
+JOIN `delivery_company` dc
+ON d.delivery_company_id=dc.id
+JOIN `order` o
+ON d.order_number = o.order_number
+JOIN `order_item` oi
+ON o.order_number = oi.order_number
+JOIN `product` p
+ON oi.product_id = p.id
+WHERE p.seller_user_id = "seller1"
+GROUP BY o.order_number;
+
+# 배송 상세
+SELECT
+d.*,
+oi.*
+FROM `delivery` AS d
+JOIN `order` AS `o`
+ON o.order_number = d.order_number
+JOIN `order_item` AS `oi`
+ON o.order_number = oi.order_number
+JOIN `product` AS p
+ON oi.product_id = p.id
+WHERE p.seller_user_id = "seller1"
+GROUP BY o.order_number;
