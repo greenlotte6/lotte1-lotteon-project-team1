@@ -39,9 +39,17 @@ public class OrderManagementApiController {
   public ResponseEntity<String> detail(@RequestParam(name = "id") String orderNumber) {
     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
     UserDetails details = (UserDetails) auth.getPrincipal();
-    String currentUserId = details.getUsername();
 
-    List<OrderItemDTO> items = service.getOrderDetail(currentUserId, orderNumber);
+    boolean isSeller = details.getAuthorities().stream()
+        .anyMatch(authority -> authority.getAuthority().equals("ROLE_SELLER"));
+    List<OrderItemDTO> items = null;
+
+    if (isSeller) {
+      String currentUserId = details.getUsername();
+      items = service.getOrderDetail(currentUserId, orderNumber);
+    } else {
+      items = service.getOrderDetail(orderNumber);
+    }
 
     if (items.isEmpty()) {
       return ResponseEntity.notFound().build();

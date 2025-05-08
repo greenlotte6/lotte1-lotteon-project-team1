@@ -72,6 +72,19 @@ public class OrderService {
     return repo.findAllBySellerId(currentSellerId, pageable);
   }
 
+  public List<OrderItemDTO> getOrderDetail(String orderNumber) {
+    List<OrderItem> entities = repo.findWithProductInfoByOrderNumberAndSellerId(orderNumber);
+
+    List<OrderItemDTO> items = new ArrayList<>();
+
+    for (OrderItem entity : entities) {
+      OrderItemDTO item = mapper.map(entity, OrderItemDTO.class);
+      items.add(item);
+    }
+
+    return items;
+  }
+
   public List<OrderItemDTO> getOrderDetail(String currentSellerId, String orderNumber) {
     List<OrderItem> entities = repo.findWithProductInfoByOrderNumberAndSellerId(currentSellerId,
         orderNumber);
