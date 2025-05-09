@@ -4,14 +4,14 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>환경설정 > 버전관리</title>
-  <link rel="stylesheet" th:href="@{/style/init.css}"/>
-  <link rel="stylesheet" th:href="@{/style/admin/index.css}"/>
-  <link rel="stylesheet" th:href="@{/style/common/admin/header.css}"/>
-  <link rel="stylesheet" th:href="@{/style/common/admin/footer.css}"/>
-  <link rel="stylesheet" th:href="@{/style/common/admin/aside.css}"/>
-  <link rel="stylesheet" th:href="@{/style/common/admin/content.css}"/>
-  <link rel="stylesheet" th:href="@{/style/common/pagination.css}"/>
-  <link rel="stylesheet" th:href="@{/style/admin/config/version.css}"/>
+  <link rel="stylesheet" href="/style/init.css"/>
+  <link rel="stylesheet" href="/style/admin/index.css"/>
+  <link rel="stylesheet" href="/style/common/admin/header.css"/>
+  <link rel="stylesheet" href="/style/common/admin/footer.css"/>
+  <link rel="stylesheet" href="/style/common/admin/aside.css"/>
+  <link rel="stylesheet" href="/style/common/admin/content.css"/>
+  <link rel="stylesheet" href="/style/common/pagination.css"/>
+  <link rel="stylesheet" href="/style/admin/config/version.css"/>
   <link
       rel="icon"
       href="https://static.lotteon.com/p/common/assets/favicon/1/favicon-32.png"
@@ -63,18 +63,18 @@
             <td>
               <input type="checkbox"/>
             </td>
-            <td th:text="${config.getVersion().getVersion()}">0.0.1-SNAPSHOT</td>
-            <td th:text="${config.getVersion().getAuthor()}">chhak0503</td>
-            <td th:with="year=${#dates.format(config.getVersion().getCreatedAt(), 'yyyy')},
-            month=${#dates.format(config.getVersion().getCreatedAt(), 'MM')},
-            day=${#dates.format(config.getVersion().getCreatedAt(), 'dd')},
-            hour=${#dates.format(config.getVersion().getCreatedAt(), 'HH')},
-            minute=${#dates.format(config.getVersion().getCreatedAt(), 'mm')},
-            second=${#dates.format(config.getVersion().getCreatedAt(), 'ss')}">
+            <td th:text="${version.getVersion()}">0.0.1-SNAPSHOT</td>
+            <td th:text="${version.getAuthor()}">chhak0503</td>
+            <td th:with="year=${#dates.format(version.getCreatedAt(), 'yyyy')},
+            month=${#dates.format(version.getCreatedAt(), 'MM')},
+            day=${#dates.format(version.getCreatedAt(), 'dd')},
+            hour=${#dates.format(version.getCreatedAt(), 'HH')},
+            minute=${#dates.format(version.getCreatedAt(), 'mm')},
+            second=${#dates.format(version.getCreatedAt(), 'ss')}">
               [[${year}]]-[[${month}]]-[[${day}]] [[${hour}]]:[[${minute}]]:[[${second}]]
             </td>
             <td>
-              <button class="version-detail-btn" th:name="${config.getVersion().getVersion()}">상세
+              <button class="version-detail-btn" th:name="${version.getVersion()}">상세
               </button>
             </td>
           </tr>
@@ -107,27 +107,35 @@
             title="버전확인"
             style="display: none"
         >
-          <table>
-            <tbody>
-            <tr>
-              <th>버전</th>
-              <td>
-                <input type="text" placeholder="버전을 입력하세요"/>
-              </td>
-            </tr>
-            <tr>
-              <th>변경내역</th>
-              <td>
+          <form th:action="@{/admin/config/version/register}" method="POST" class="post-form">
+            <table class="post-form-table">
+              <tbody>
+              <tr>
+                <th>버전</th>
+                <td>
+                  <input type="text" name="version" placeholder="버전을 입력하세요"/>
+                </td>
+              </tr>
+              <tr>
+                <th>작성자</th>
+                <td>
+                  <input type="text" name="author" placeholder="버전을 입력하세요"/>
+                </td>
+              </tr>
+              <tr>
+                <th>변경내역</th>
+                <td>
                       <textarea
-                          name="change-detail"
+                          name="description"
                           id="version-change-detail"
                           placeholder="변경내역을 입력하세요"
                       ></textarea>
-              </td>
-            </tr>
-            </tbody>
-          </table>
-          <button class="green-btn submit-btn">등록하기</button>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+            <button type="submit" class="green-btn submit-btn">등록하기</button>
+          </form>
         </div>
       </div>
     </section>
