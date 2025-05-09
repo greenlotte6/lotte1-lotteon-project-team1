@@ -56,7 +56,6 @@ public class UserController {
 
   @GetMapping("/login")
   public String login() {
-
     return "/user/login";
   }
 
@@ -77,7 +76,14 @@ public class UserController {
     return "/user/terms";
   }
 
-  @GetMapping("/tax")
+  @GetMapping("/user/terms2")
+  public String terms2(Model model) {
+    List<TermsDTO> termsDTO = termsService.terms();
+    model.addAttribute("terms", termsDTO);
+    return "/user/terms2";
+  }
+
+  @GetMapping("/user/tax")
   public String tax() {
     return "/user/tax";
   }
