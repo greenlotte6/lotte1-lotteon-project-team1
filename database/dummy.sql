@@ -350,7 +350,12 @@ JOIN `order_item` oi
 ON o.order_number=oi.order_number
 JOIN `product` p
 ON oi.product_id = p.id AND p.seller_business_number = s.seller_business_number
-GROUP BY s.seller_business_number;
+#WHERE o.order_date BETWEEN
+#  DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 MONTH), '%Y-%m-01') AND
+#  LAST_DAY(DATE_SUB(CURDATE(), INTERVAL 1 MONTH))
+WHERE o.order_date = CURDATE()
+GROUP BY s.seller_business_number
+order BY total_price asc;
 
 # 특정 상점 매출
 SELECT
