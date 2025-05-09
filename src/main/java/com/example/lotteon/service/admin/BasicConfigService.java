@@ -10,6 +10,7 @@ import com.example.lotteon.exception.NoDocumentFoundException;
 import com.example.lotteon.repository.admin.config.BasicConfigRepository;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -39,6 +40,12 @@ public class BasicConfigService {
   public void updateLatestVersion(VersionConfig config) {
     repo.updateLatestVersion(config);//latest_version 컬렉션 업데이트
     repo.save(config); //version 컬렉션에 최신 버전 문서 추가
+  }
+
+  public void deleteById(List<String> ids) {
+    for (String id : ids) {
+      repo.deleteById(id);
+    }
   }
 
   public void updateSite(Site config) {
