@@ -5,14 +5,12 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import java.time.LocalDate;
 import java.util.Date;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+
+import lombok.*;
 
 @Entity
 @Getter
+@Setter
 @ToString
 @Builder
 @NoArgsConstructor

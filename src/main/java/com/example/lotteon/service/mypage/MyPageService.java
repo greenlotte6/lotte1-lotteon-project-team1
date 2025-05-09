@@ -1,6 +1,7 @@
 package com.example.lotteon.service.mypage;
 
 import com.example.lotteon.dto.user.UserDTO;
+import com.example.lotteon.entity.user.Member;
 import com.example.lotteon.entity.user.User;
 import com.example.lotteon.repository.UserRepository;
 import com.example.lotteon.repository.user.MemberRepository;
@@ -66,6 +67,17 @@ public class MyPageService {
 
     @Transactional
     public void deleteUser(String id) {
-        userRepository.deleteById(id);
+        Optional<User> optionalUser = userRepository.findById(id);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+
+            // userId로 Member 조회 (Optional 사용)
+            Optional<Member> optionalMember = memberRepository.findOptionalByUserId(user.getId());
+            if (optionalMember.isPresent()) {
+                Member member = optionalMember.get();
+                member.setStatus("withdrawed");  // 상태 변경
+                memberRepository.save(member);   // 변경사항 저장
+            }
+        }
     }
 }

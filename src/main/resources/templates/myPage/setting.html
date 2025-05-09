@@ -162,7 +162,8 @@
 
                                     <!-- 탈퇴하기 후 입력란 표시 -->
                                     <input style="border: none; color: red" type="text" th:if="${passwordModified}" placeholder="정말 탈퇴를 원하십니까?" />
-                                    <button id="btnConfirm" type="button" class="withdraw" th:if="${passwordModified}">탈퇴하기</button>
+
+                                    <a th:href="@{/mypage/setting/delete(id=${userDTO.id})}" id="btnConfirm" class="withdraw" th:if="${passwordModified}">탈퇴하기</a>
                                     <span class="passResult"></span>
                                     
                                     <span class="WithdrawResult"></span>
