@@ -59,22 +59,23 @@
             <th>등록일시</th>
             <th>변경내역</th>
           </tr>
-          <tr th:each="version : ${versions}">
+          <tr th:each="version : ${config.getVersions()}">
             <td>
               <input type="checkbox"/>
             </td>
-            <td th:text="${version.getVersion()}">0.0.1-SNAPSHOT</td>
-            <td th:text="${version.getAuthor()}">chhak0503</td>
-            <td th:with="year=${#dates.format(version.getCreatedAt(), 'yyyy')},
-            month=${#dates.format(version.getCreatedAt(), 'MM')},
-            day=${#dates.format(version.getCreatedAt(), 'dd')},
-            hour=${#dates.format(version.getCreatedAt(), 'HH')},
-            minute=${#dates.format(version.getCreatedAt(), 'mm')},
-            second=${#dates.format(version.getCreatedAt(), 'ss')}">
+            <td th:text="${config.getVersion().getVersion()}">0.0.1-SNAPSHOT</td>
+            <td th:text="${config.getVersion().getAuthor()}">chhak0503</td>
+            <td th:with="year=${#dates.format(config.getVersion().getCreatedAt(), 'yyyy')},
+            month=${#dates.format(config.getVersion().getCreatedAt(), 'MM')},
+            day=${#dates.format(config.getVersion().getCreatedAt(), 'dd')},
+            hour=${#dates.format(config.getVersion().getCreatedAt(), 'HH')},
+            minute=${#dates.format(config.getVersion().getCreatedAt(), 'mm')},
+            second=${#dates.format(config.getVersion().getCreatedAt(), 'ss')}">
               [[${year}]]-[[${month}]]-[[${day}]] [[${hour}]]:[[${minute}]]:[[${second}]]
             </td>
             <td>
-              <button class="version-detail-btn" th:name="${version.getVersion()}">상세</button>
+              <button class="version-detail-btn" th:name="${config.getVersion().getVersion()}">상세
+              </button>
             </td>
           </tr>
         </table>

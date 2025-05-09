@@ -10,7 +10,6 @@ import com.example.lotteon.exception.NoDocumentFoundException;
 import com.example.lotteon.repository.admin.config.BasicConfigRepository;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -31,10 +30,6 @@ public class BasicConfigService {
     String serializedConfig = gson.toJson(config);
     cacheService.cache(serializedConfig);
     return config;
-  }
-
-  public List<VersionConfig> getAllVersions() {
-    return repo.findAllVersion();
   }
 
   public VersionConfig getVersionByName(String name) throws NoDocumentFoundException {

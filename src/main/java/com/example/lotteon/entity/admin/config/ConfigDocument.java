@@ -1,6 +1,7 @@
 package com.example.lotteon.entity.admin.config;
 
 import com.google.gson.annotations.SerializedName;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,9 +14,13 @@ import org.springframework.data.mongodb.core.mapping.Field;
 @AllArgsConstructor
 public class ConfigDocument {
 
+  @Field(name = "latest_version")
+  @SerializedName("latest_version")
+  private VersionConfig latestVersion;
+
   @Field(name = "version")
   @SerializedName("version")
-  private VersionConfig version;
+  private List<VersionConfig> versions;
 
   @Field(name = "site")
   @SerializedName("site")
