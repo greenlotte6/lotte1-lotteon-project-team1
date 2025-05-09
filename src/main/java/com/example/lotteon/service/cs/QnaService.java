@@ -162,4 +162,24 @@ public class QnaService {
   public void deletefaq(int id) {
     qnaRepository.deleteById(id);
   }
+
+  // 마이페이지 문의하기에서 유저별 문의하기 리스트 출력
+  public List<QnaDTO> findByUserId(String userId) {
+    // 여기서 qnaRepository 호출
+    List<Qna> qnaList = qnaRepository.findByUserIdOrderByRegisterDateDesc(userId);
+
+    // QnaDTO로 변환
+    return qnaList.stream().map(qna -> QnaDTO.builder()
+            .id(qna.getId())
+            .member_id(qna.getMember_id().getMemberId().getUser().getId())
+            .title(qna.getTitle())
+            .content(qna.getContent())
+            .register_date(qna.getRegister_date().toString())
+            .type_id(qna.getType_id().getId())
+            .name(qna.getType_id().getName())
+            .subtype_name(qna.getType_id().getSubtype_name())
+            .status(qna.getStatus())
+            .build()
+    ).toList();
+  }
 }
