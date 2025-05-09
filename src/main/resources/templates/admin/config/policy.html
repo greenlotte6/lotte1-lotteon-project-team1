@@ -33,251 +33,33 @@
 </head>
 <body>
 <div id="wrapper">
-  <header>
-    <div class="header-wrapper">
-      <img
-          src="https://static.lotteon.com/p/common/foCommon/assets/img/logo_lotte-on@2x.png"
-          alt="logo"
-      />
-      <h1>ADMINISTRATOR</h1>
-      <ul>
-        <li>
-              <span class="greeting">
-                안녕하세요, [홍길동]님, 반갑습니다.
-              </span>
-        </li>
-        <li>
-          <a href="#"> 홈 </a>
-        </li>
-        <li>
-          <a href="#"> 로그아웃 </a>
-        </li>
-        <li>
-          <a href="#"> 고객센터 </a>
-        </li>
-      </ul>
-    </div>
-    <nav class="header-padding"></nav>
-  </header>
+  <th:block th:insert="~{/common/admin/header}"></th:block>
   <main>
-    <aside class="side-menu">
-      <ul>
-        <li id="settings-menu">
-          <i class="fa-solid fa-gear"></i>
-          <a href="/admin/config/basic"> 환경설정 </a>
-        </li>
-        <ul class="submenu settings" style="display: none">
-          <li>
-            <a href="/admin/config/basic"> 기본설정 </a>
-          </li>
-          <li>
-            <a href="/admin/config/banner"> 배너관리 </a>
-          </li>
-          <li>
-            <a href="/admin/config/policy"> 약관관리 </a>
-          </li>
-          <li>
-            <a href="/admin/config/category"> 카테고리 </a>
-          </li>
-          <li>
-            <a href="/admin/config/version"> 버전이력 </a>
-          </li>
-        </ul>
-        <li id="store-menu">
-          <i class="fa-solid fa-store"></i>
-          <a href="/admin/shop/list"> 상점관리 </a>
-        </li>
-        <ul class="submenu store" style="display: none">
-          <li>
-            <a href="/admin/shop/list"> 상점목록 </a>
-          </li>
-          <li>
-            <a href="/admin/shop/sales"> 매출현황 </a>
-          </li>
-        </ul>
-        <li id="member-menu">
-          <i class="fa-solid fa-users"></i>
-          <a href="/admin/member/list"> 회원관리 </a>
-        </li>
-        <ul class="submenu member" style="display: none">
-          <li>
-            <a href="/admin/member/list"> 회원목록 </a>
-          </li>
-          <li>
-            <a href="/admin/member/point"> 포인트 관리 </a>
-          </li>
-        </ul>
-        <li id="product-menu">
-          <i class="fa-solid fa-box-open"></i>
-          <a href="/admin/product/list"> 상품관리 </a>
-        </li>
-        <ul class="submenu product" style="display: none">
-          <li>
-            <a href="/admin/product/list"> 상품목록 </a>
-          </li>
-          <li>
-            <a href="/admin/product/register"> 상품등록 </a>
-          </li>
-        </ul>
-        <li id="order-menu">
-          <i class="fa-solid fa-credit-card"></i>
-          <a href="/admin/settings/order/list"> 주문관리 </a>
-        </li>
-        <ul class="submenu order" style="display: none">
-          <li>
-            <a href="/admin/order/list"> 주문현황 </a>
-          </li>
-          <li>
-            <a href="/admin/order/delivery"> 배송현황 </a>
-          </li>
-        </ul>
-        <li id="coupon-menu">
-          <i class="fa-solid fa-ticket"></i>
-          <a href="/admin/settings/coupon/list"> 쿠폰관리 </a>
-        </li>
-        <ul class="submenu coupon" style="display: none">
-          <li>
-            <a href="/admin/coupon/list"> 쿠폰목록 </a>
-          </li>
-          <li>
-            <a href="/admin/coupon/issued"> 쿠폰발급현황 </a>
-          </li>
-        </ul>
-        <li id="cs-menu">
-          <i class="fa-solid fa-headphones"></i>
-          <a href="/admin/cs/notice/list"> 고객센터 </a>
-        </li>
-        <ul class="submenu customer-service" style="display: none">
-          <li>
-            <a href="/admin/cs/notice/list"> 공지사항 </a>
-          </li>
-          <li>
-            <a href="/admin/cs/faq/list"> 자주묻는질문 </a>
-          </li>
-          <li>
-            <a href="/admin/cs/qna/list"> 문의하기 </a>
-          </li>
-        </ul>
-      </ul>
-    </aside>
+    <th:block th:insert="~{/common/admin/aside}"></th:block>
     <section id="content-area">
       <div class="content-area-title">
         <h3>약관관리</h3>
         <span>
-              <a href="#">HOME&nbsp;>&nbsp; </a>
-              <a href="#">환경설정&nbsp;>&nbsp;</a>
-              <a href="#">약관관리</a>
+              <a th:href="@{/admin}">HOME&nbsp;>&nbsp; </a>
+              <a th:href="@{/admin/config/basic}">환경설정&nbsp;>&nbsp;</a>
+              <a th:href="@{/admin/config/policy}">약관관리</a>
             </span>
       </div>
-      <div class="content graph-area">
+      <div class="content" th:each="policy : ${policies}">
         <div class="content-title">
-          <h3>구매회원약관</h3>
+          <h3 th:text="${policy.getTitle()}">구매회원약관</h3>
         </div>
         <p class="desc">회원가입 및 정책 페이지에 노출되는 약관입니다</p>
-        <form action="#" method="post" class="post-form">
+        <form th:action="@{/admin/config/policy/edit(id=${policy.getId()})}" method="post"
+              class="post-form">
+          <input type="hidden" name="title" th:value="${policy.getTitle()}"/>
           <table class="post-form-table">
             <tbody>
             <tr>
               <th>약관내용</th>
               <td>
-                    <textarea name="policy-content" class="policy-content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem, nam! Numquam eius error totam repudiandae saepe eum alias officiis! Adipisci aut vero explicabo. Est possimus molestias commodi, nesciunt blanditiis nisi.</textarea
-                    >
-              </td>
-            </tr>
-            </tbody>
-          </table>
-        </form>
-        <div class="crud-btn-area">
-          <span></span>
-          <input type="submit" class="post-submit-btn" value="수정하기"/>
-        </div>
-      </div>
-      <div class="content">
-        <div class="content-title">
-          <h3>판매회원약관</h3>
-        </div>
-        <p class="desc">회원가입 및 정책 페이지에 노출되는 약관입니다</p>
-        <form action="#" method="post" class="post-form">
-          <table class="post-form-table">
-            <tbody>
-            <tr>
-              <th>약관내용</th>
-              <td>
-                      <textarea name="policy-content" class="policy-content">
-  약관데이터 출력하기</textarea
-                      >
-              </td>
-            </tr>
-            </tbody>
-          </table>
-          <div class="crud-btn-area">
-            <span></span>
-            <input type="submit" class="post-submit-btn" value="수정하기"/>
-          </div>
-        </form>
-      </div>
-      <div class="content graph-area">
-        <div class="content-title">
-          <h3>전자금융거래 약관</h3>
-        </div>
-        <p class="desc">회원가입 및 정책 페이지에 노출되는 약관입니다</p>
-        <form action="#" method="post" class="post-form">
-          <table class="post-form-table">
-            <tbody>
-            <tr>
-              <th>약관내용</th>
-              <td>
-                      <textarea name="policy-content" class="policy-content">
-  약관데이터 출력하기</textarea
-                      >
-              </td>
-            </tr>
-            </tbody>
-          </table>
-          <div class="crud-btn-area">
-            <span></span>
-            <input type="submit" class="post-submit-btn" value="수정하기"/>
-          </div>
-        </form>
-      </div>
-      <div class="content graph-area">
-        <div class="content-title">
-          <h3>위치정보이용약관</h3>
-        </div>
-        <p class="desc">회원가입 및 정책 페이지에 노출되는 약관입니다</p>
-        <form action="#" method="post" class="post-form">
-          <table class="post-form-table">
-            <tbody>
-            <tr>
-              <th>약관내용</th>
-              <td>
-                      <textarea name="policy-content" class="policy-content">
-  약관데이터 출력하기</textarea
-                      >
-              </td>
-            </tr>
-            </tbody>
-          </table>
-          <div class="crud-btn-area">
-            <span></span>
-            <input type="submit" class="post-submit-btn" value="수정하기"/>
-          </div>
-        </form>
-      </div>
-      <div class="content graph-area">
-        <div class="content-title">
-          <h3>개인정보처리방침</h3>
-        </div>
-        <p class="desc">회원가입 및 정책 페이지에 노출되는 약관입니다</p>
-        <form action="#" method="post" class="post-form">
-          <table class="post-form-table">
-            <tbody>
-            <tr>
-              <th>약관내용</th>
-              <td>
-                      <textarea name="policy-content" class="policy-content">
-  약관데이터 출력하기</textarea
-                      >
+                <textarea name="content" class="policy-content"
+                >[[${policy.getContent()}]]</textarea>
               </td>
             </tr>
             </tbody>
@@ -290,14 +72,7 @@
       </div>
     </section>
   </main>
-  <footer>
-    <div id="footer-wrapper">
-          <span>
-            Copyright ©LotteON.co.kr All rights reserved. LotteON ADMINISTRATOR
-            Version 0.0.1
-          </span>
-    </div>
-  </footer>
+  <th:block th:insert="~{/common/admin/footer}"></th:block>
 </div>
 </body>
 </html>
