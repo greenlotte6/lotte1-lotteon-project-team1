@@ -2,6 +2,7 @@
 
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 SET @@session.restrict_fk_on_non_standard_key=OFF;
 SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));
 -- -----------------------------------------------------
@@ -25,7 +26,7 @@ CREATE TABLE IF NOT EXISTS `lotteon`.`user` (
   `zip` CHAR(5) NOT NULL,
   `address` VARCHAR(255) NOT NULL,
   `address_detail` VARCHAR(255) NOT NULL,
-  `role` ENUM("member", "seller", "admin") NOT NULL,
+  `role` ENUM("member", "seller", "admin", "withdrawed") NOT NULL,
   `register_date` DATE NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
