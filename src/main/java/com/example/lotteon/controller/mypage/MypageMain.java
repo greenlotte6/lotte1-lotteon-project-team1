@@ -9,6 +9,7 @@ import com.example.lotteon.service.mypage.MyPageService;
 import com.example.lotteon.service.user.MemberService;
 import com.example.lotteon.service.user.UserService;
 import com.google.gson.Gson;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -110,12 +111,21 @@ public class MypageMain {
     }
 
     // 회원 탈퇴
-    @PostMapping("/mypage/setting/delete")
-    public String delete(String id) {
-        //서비스 호출
+    @GetMapping("/mypage/setting/delete")
+    public String delete(@RequestParam("id") String id, RedirectAttributes redirectAttributes) {
+        // 서비스 호출
         myPageService.deleteUser(id);
 
-        return "redirect:/mypage/wholeorder";
+        // 세션 무효화 및 로그아웃 처리
+        try {
+            request.logout(); // Spring Security 로그아웃
+        } catch (ServletException e) {
+            e.printStackTrace();
+        }
+
+        // 메시지나 리다이렉트 처리
+        redirectAttributes.addFlashAttribute("message", "탈퇴가 완료되었습니다.");
+        return "redirect:/";
     }
 
     //나의설정 > 비밀번호 확인 페이지
