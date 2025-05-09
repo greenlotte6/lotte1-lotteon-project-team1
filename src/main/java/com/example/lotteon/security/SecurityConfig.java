@@ -48,7 +48,11 @@ public class SecurityConfig {
 
     http.authorizeHttpRequests(
         authorize -> authorize.requestMatchers("/seller/**").hasRole("SELLER")
-            .requestMatchers("/admin", "/admin/shop/**", "/admin/order/**", "/admin/delivery/**",
+            .requestMatchers("/admin/config/**", "/admin/seller/**", "/admin/member/**",
+                "/admin/coupon/**", "/admin/cs/**")
+            .hasRole("ADMIN")
+            .requestMatchers("/admin", "/admin/sales/**", "/admin/product/**", "/admin/order/**",
+                "/admin/delivery/**",
                 "/admin/product/**")
             .hasAnyRole("ADMIN", "SELLER")
             .anyRequest()
