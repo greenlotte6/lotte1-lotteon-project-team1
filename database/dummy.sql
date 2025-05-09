@@ -96,6 +96,9 @@ INSERT INTO `faq` VALUES (20, "영수증/증빙 관련 FAQ입니다.", 16, "영�
 INSERT INTO `faq` VALUES (21, "상품 관련 FAQ입니다.", 13, "상품 FAQ 테스트 입니다.", NOW(), 0);
 INSERT INTO `faq` VALUES (22, "결제 관련 FAQ입니다.", 14, "결제 관련 FAQ 테스트 입니다.", NOW(), 0);
 
+-- 사용자
+INSERT INTO `user` VALUES("admin1", "$2a$12$L7IovRMdbD4aZUJ0stXkseHCX6/mxyVEM8IdrkWODngVfPQoVjga2", "admin1@example.com", "010-2313-6023", "12345", "부산광역시 부산진구", "행복동 101-1", "admin", NOW());
+
 -- 상점(seller)
 INSERT INTO `user` VALUES ("seller1", "$2a$12$7nR.CgoesCyfsETEl74Dtuk0Mu2wEzmJPCljlJddYY14UmIY100uG", "seller1@example.com", "051-123-4567", "12345", "부산광역시 부산진구", "행복로 127-11", "seller", NOW());
 INSERT INTO `seller` VALUES ("112-12-12345", "seller1", "김유신", "(주)행복상점", "2025-부산진구-12345", "0503-1234-5678", "ready");
@@ -329,12 +332,20 @@ GROUP BY o.order_number;
 #각 상점(seller) 별 매출
 SELECT
 s.seller_business_number,
-SUM(((p.price - (p.price * p.discount_rate / 100))) * oi.amount) AS total_price
+COUNT(case when o.status_id=2 then 1 ELSE NULL END) AS `paid_order_count`,
+COUNT(case when o.status_id=4 then 1 ELSE NULL END) AS `on_delivery_count`,
+COUNT(case when o.status_id=5 then 1 ELSE NULL END) AS `delivered_order_count`,
+COUNT(case when o.status_id=6 then 1 ELSE NULL END) AS `purchase_confirmed_count`,
+COUNT(DISTINCT o.order_number) AS order_count,
+SUM(((p.price - (p.price * p.discount_rate / 100))) * oi.amount) AS total_price,
+SUM(case when o.status_id=6 then ((p.price - (p.price * p.discount_rate / 100))) * oi.amount ELSE 0 end) AS confirmed_total_price
 FROM `sales` s
 JOIN `seller`
 ON `s`.seller_business_number = seller.business_number
 JOIN `order` o
 ON s.order_number=o.order_number
+JOIN `order_status` os
+ON o.status_id = os.id
 JOIN `order_item` oi
 ON o.order_number=oi.order_number
 JOIN `product` p
@@ -344,12 +355,20 @@ GROUP BY s.seller_business_number;
 # 특정 상점 매출
 SELECT
 s.seller_business_number,
-SUM(((p.price - (p.price * p.discount_rate / 100))) * oi.amount) AS total_price
+COUNT(case when o.status_id=2 then 1 ELSE NULL END) AS `paid_order_count`,
+COUNT(case when o.status_id=4 then 1 ELSE NULL END) AS `on_delivery_count`,
+COUNT(case when o.status_id=5 then 1 ELSE NULL END) AS `delivered_order_count`,
+COUNT(case when o.status_id=6 then 1 ELSE NULL END) AS `purchase_confirmed_count`,
+COUNT(DISTINCT o.order_number) AS order_count,
+SUM(((p.price - (p.price * p.discount_rate / 100))) * oi.amount) AS total_price,
+SUM(case when o.status_id=6 then ((p.price - (p.price * p.discount_rate / 100))) * oi.amount ELSE 0 end) AS confirmed_total_price
 FROM `sales` s
 JOIN `seller`
 ON `s`.seller_business_number = seller.business_number
 JOIN `order` o
 ON s.order_number=o.order_number
+JOIN `order_status` os
+ON o.status_id = os.id
 JOIN `order_item` oi
 ON o.order_number=oi.order_number
 JOIN `product` p
