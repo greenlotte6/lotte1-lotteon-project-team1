@@ -14,9 +14,9 @@ import org.springframework.data.mongodb.core.mapping.Field;
 @AllArgsConstructor
 public class VersionConfig {
 
-  @Field("_id")
-  @SerializedName("_id")
-  private String _id;
+  @Field("id")
+  @SerializedName("id")
+  private String id;
 
   @Field("version")
   @SerializedName("version")
