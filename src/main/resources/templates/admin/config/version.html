@@ -28,7 +28,7 @@
   ></script>
   <script th:src="@{/js/admin/config/aside-drop.js}"></script>
   <script th:src="@{/js/admin/config/version.js}"></script>
-  <script src="/js/admin/config/search.js"></script>
+  <script src="/js/common/admin/checkbox.js"></script>
 </head>
 <body>
 <div id="wrapper">
@@ -52,7 +52,7 @@
         <table class="versions">
           <tr>
             <th>
-              <input type="checkbox"/>
+              <input class="select-all" type="checkbox"/>
             </th>
             <th>버전</th>
             <th>작성자</th>
@@ -61,7 +61,8 @@
           </tr>
           <tr th:each="version : ${config.getVersions()}">
             <td>
-              <input type="checkbox"/>
+              <input class="item-checkbox target-version" type="checkbox"
+                     th:value="${version.get_id()}"/>
             </td>
             <td th:text="${version.getVersion()}">0.0.1-SNAPSHOT</td>
             <td th:text="${version.getAuthor()}">chhak0503</td>

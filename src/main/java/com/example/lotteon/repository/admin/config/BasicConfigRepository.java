@@ -17,6 +17,7 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Repository
@@ -30,6 +31,7 @@ public class BasicConfigRepository {
     return template.findOne(query, VersionConfig.class, "BasicConfig");
   }
 
+  @Transactional
   public void updateLatestVersion(VersionConfig config) {
     Query query = new Query(Criteria.where("id").is("basic_config::latest_version"));
     Update update = new Update();
@@ -58,6 +60,12 @@ public class BasicConfigRepository {
 
   public void save(VersionConfig config) {
     template.insert(config, "BasicConfig");
+  }
+
+  @Transactional
+  public void deleteById(String _id) {
+    Query query = new Query(Criteria.where("_id").is(_id));
+    template.remove(query, "BasicConfig");
   }
 
   public Site findSite() {
