@@ -1,10 +1,13 @@
 package com.example.lotteon.controller.admin.config;
 
+import com.example.lotteon.dto.admin.PolicyDTO;
 import com.example.lotteon.entity.admin.config.VersionConfig;
 import com.example.lotteon.service.admin.BasicConfigService;
 import com.example.lotteon.service.admin.CacheService;
+import com.example.lotteon.service.admin.PolicyService;
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.Date;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -21,6 +24,7 @@ public class BasicConfigController {
 
   private final CacheService cacheService;
   private final BasicConfigService service;
+  private final PolicyService policyService;
 
   @GetMapping("/basic")
   public String basic(Model model, HttpServletRequest request) {
@@ -33,8 +37,16 @@ public class BasicConfigController {
   }
 
   @GetMapping("/policy")
-  public String policy() {
+  public String policy(Model model) {
+    List<PolicyDTO> policies = policyService.list();
+    model.addAttribute("policies", policies);
     return "/admin/config/policy";
+  }
+
+  @PostMapping("/policy/edit")
+  public String edit(PolicyDTO policy) {
+    policyService.save(policy);
+    return "redirect:/admin/config/policy";
   }
 
   @GetMapping("/category")
