@@ -39,10 +39,11 @@
             <div class="main_content_detail">
 
               <div class="terms-section">
+            
                 <div class="term-box">
-                  <label class="term-label" th:text="${terms.get(0).getTitle()}"><span class="highlight">필수</span> )</label>
-                  <textarea class="term-textarea" readonly name="terms">
-                    [[${terms.get(0).getContent()}]]
+                  <label class="term-label"th:text="${terms.get(1).getTitle()}" ><span class="highlight">필수</span> ) 전자금융 이용약관</label>
+                  <textarea class="term-textarea" readonly name="id">
+                        [[${terms.get(1).getContent()}]]
                   </textarea>
                   <div class="term-check">
                     <label><input type="checkbox" class="ckbx1"> 동의하기</label>
@@ -69,10 +70,8 @@
                   </div>
                 </div>
 
-                <a th:href="@{/general}" class="agree-button">동의하기</a>
+                <a th:href="@{/seller}" class="agree-button">동의하기</a>
               </div>
-
-              
 
             </div>
           </article>
