@@ -7,7 +7,6 @@ import com.example.lotteon.entity.admin.config.Logo;
 import com.example.lotteon.entity.admin.config.Site;
 import com.example.lotteon.entity.admin.config.VersionConfig;
 import com.example.lotteon.exception.NoDocumentFoundException;
-import com.google.gson.Gson;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,11 +23,15 @@ import org.springframework.stereotype.Repository;
 public class BasicConfigRepository {
 
   private final MongoTemplate template;
-  private final Gson gson;
 
-  public VersionConfig findVersion() {
-    Query query = new Query(Criteria.where("id").is("basic_config::version"));
+  public VersionConfig findLatestVersion() {
+    Query query = new Query(Criteria.where("id").is("basic_config::latest_version"));
     return template.findOne(query, VersionConfig.class, "BasicConfig");
+  }
+
+  public List<VersionConfig> findVersions() {
+    Query query = new Query(Criteria.where("id").is("basic_config::version"));
+    return template.find(query, VersionConfig.class, "BasicConfig");
   }
 
   public VersionConfig findVersionByName(String versionName) throws NoDocumentFoundException {
@@ -42,9 +45,8 @@ public class BasicConfigRepository {
     return config;
   }
 
-  public List<VersionConfig> findAllVersion() {
-    Query query = new Query(Criteria.where("id").is("basic_config::version"));
-    return template.find(query, VersionConfig.class, "BasicConfig");
+  public void save(VersionConfig config) {
+    template.insert(config, "BasicConfig");
   }
 
   public Site findSite() {
@@ -75,7 +77,8 @@ public class BasicConfigRepository {
 
   public ConfigDocument find() {
     log.info("Retrieving config document from database");
-    VersionConfig version = findVersion();
+    VersionConfig latestVersion = findLatestVersion();
+    List<VersionConfig> versions = findVersions();
     Site site = findSite();
     Logo logo = findLogo();
     CorpInfo corpInfo = findCorpInfo();
@@ -83,7 +86,8 @@ public class BasicConfigRepository {
     String copyright = findCopyright();
 
     return ConfigDocument.builder()
-        .version(version)
+        .latestVersion(latestVersion)
+        .versions(versions)
         .site(site)
         .logo(logo)
         .corpInfo(corpInfo)

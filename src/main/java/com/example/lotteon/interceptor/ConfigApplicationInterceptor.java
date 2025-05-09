@@ -29,7 +29,8 @@ public class ConfigApplicationInterceptor implements HandlerInterceptor {
       return true;
     }
 
-    log.info("Intercepted incoming request to {}", request.getRequestURI());
+    log.info("Intercepted incoming request to {} from {}", request.getRequestURI(),
+        request.getRemoteAddr());
     ConfigDocument cachedConfig = service.getCachedConfig();
 
     if (cachedConfig == null) {
