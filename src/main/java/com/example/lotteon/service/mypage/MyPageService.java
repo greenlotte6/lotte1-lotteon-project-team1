@@ -67,17 +67,13 @@ public class MyPageService {
 
     @Transactional
     public void deleteUser(String id) {
-        Optional<User> optionalUser = userRepository.findById(id);
-        if (optionalUser.isPresent()) {
-            User user = optionalUser.get();
+        // 1. 사용자 조회
+        User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
 
-            // userId로 Member 조회 (Optional 사용)
-            Optional<Member> optionalMember = memberRepository.findOptionalByUserId(user.getId());
-            if (optionalMember.isPresent()) {
-                Member member = optionalMember.get();
-                member.setStatus("withdrawed");  // 상태 변경
-                memberRepository.save(member);   // 변경사항 저장
-            }
-        }
+        // 2. role을 "withdrawed"로 변경
+        user.setRole("withdrawed");
+
+        // 3. 변경 사항을 저장
+        userRepository.save(user);
     }
 }
