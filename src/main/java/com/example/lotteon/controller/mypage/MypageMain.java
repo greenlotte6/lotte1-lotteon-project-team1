@@ -1,10 +1,14 @@
 package com.example.lotteon.controller.mypage;
 
+import com.example.lotteon.dto.PageResponseDTO;
+import com.example.lotteon.dto.cs.QnaDTO;
 import com.example.lotteon.dto.user.MemberDTO;
 import com.example.lotteon.dto.user.UserDTO;
 import com.example.lotteon.entity.user.User;
 import com.example.lotteon.repository.UserRepository;
 import com.example.lotteon.repository.user.MemberRepository;
+import com.example.lotteon.service.cs.QnaService;
+import com.example.lotteon.service.cs.ReplyService;
 import com.example.lotteon.service.mypage.MyPageService;
 import com.example.lotteon.service.user.MemberService;
 import com.example.lotteon.service.user.UserService;
@@ -24,6 +28,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -41,6 +46,8 @@ public class MypageMain {
     private final ModelMapper modelMapper;
     private final MyPageService myPageService;
     private final PasswordEncoder passwordEncoder;
+    private final QnaService qnaService;
+    private final ReplyService replyService;
 
 
     @GetMapping("/mypage")
@@ -75,7 +82,14 @@ public class MypageMain {
 
     // 문의하기
     @GetMapping("/mypage/qna")
-    public String qna() {
+    public String qna(Model model, Principal principal) {
+
+        //현재 로그인한 사용자의 ID 가져오기
+        String userId = principal.getName();
+
+        List<QnaDTO> qnaList = qnaService.findByUserId(userId);
+        model.addAttribute("qnaList", qnaList);
+
         return "/myPage/qna";
     }
 

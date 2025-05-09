@@ -89,32 +89,17 @@
                           <th>상태</th>
                       </tr>
   
-                      <tr>
-                          <td>1</td>
-                          <td>고객센터</td>
-                          <td>주문 / 결제</td>
-                          <td>신용카드 결제 중 오류가 난 경우 어떻게 하나요?</td>
-                          <td>2024-12-10</td>
+                      <tr th:each="qna : ${qnaList}">
+                          <td>[[${qna.id}]]</td>
+                          <td>[[${qna.name}]]</td>
+                          <td>[[${qna.subtype_name}]]</td>
+                          <td><a th:href="@{/admin/cs/qna/view(id=${qna.id})}">[[${qna.title}]]</a></td>
+                          <td>[[${qna.register_date}]]</td>
                           <td class="ing">검토 중</td>
-                      </tr>
-  
-                      <tr>
-                          <td>2</td>
-                          <td>고객센터</td>
-                          <td>주문 / 결제</td>
-                          <td>신용카드 결제 중 오류가 난 경우 어떻게 하나요?</td>
-                          <td>2024-12-10</td>
                           <td class="ok">답변완료</td>
                       </tr>
   
-                      <tr>
-                          <td>3</td>
-                          <td>판매자 게시판</td>
-                          <td>배송</td>
-                          <td>배송기간이 보통 얼마나 걸리나요?</td>
-                          <td>2024-12-10</td>
-                          <td class="ok">답변완료</td>
-                      </tr>
+
                   </table>
                     
                     
