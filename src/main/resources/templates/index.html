@@ -31,10 +31,7 @@
 <div id="wrapper">
   <th:block th:insert="~{/common/header}"></th:block>
   <th:block th:insert="~{/_menu}"></th:block>
-
   <main>
-
-
     <!-- 슬라이드 배너 영역 -->
     <div class="slider-container">
       <div class="slider-track">
@@ -242,47 +239,11 @@
         <i class="fa-solid fa-angles-right"></i>
       </a>
     </section>
-    <!--TODO: 추후 삭제할 것-->
-    <div class="modal temp-notice" title="임시 공지사항">
-      <ul style="width: 100%; height: auto;">
-        <h3 style="margin-bottom:10px;font-size: 16px; font-weight: 700">접속 가능한 페이지. 아래 텍스트 클릭시 해당
-          페이지로 이동</h3>
-        <li style="margin-bottom: 10px;">
-          <a href="/">- HOME</a>
-        </li>
-        <li style="margin-bottom: 10px;">
-          <a href="/admin">- 관리자메인</a>
-        </li>
-        <li style="margin-bottom: 10px;">
-          <a href="/admin/config/basic">- 환경설정 > 기본설정</a>
-        </li>
-        <li style="margin-bottom: 10px;">
-          <a href="/admin/config/banner">- 환경설정 > 배너관리</a>
-        </li>
-        <li style="margin-bottom: 10px;">
-          <a href="/admin/config/policy">- 환경설정 > 약관관리</a>
-        </li>
-        <li style="margin-bottom: 10px;">
-          <a href="/admin/config/version">- 환경설정 > 버전관리</a>
-        </li>
-      </ul>
-    </div>
   </main>
   <th:block th:insert="~{/common/footer}"></th:block>
 </div>
 </body>
 </html>
-<!--TODO: 추후 삭제할 것-->
-<script>
-  $(() => {
-    $(".modal.temp-notice").dialog({
-      width: 600,
-      height: 500,
-      resizable: false,
-    });
-  })
-</script>
-
 <script>
   const track = document.querySelector('.slider-track');
   const slides = document.querySelectorAll('.slider-track img');

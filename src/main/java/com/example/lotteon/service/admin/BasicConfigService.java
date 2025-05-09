@@ -36,6 +36,11 @@ public class BasicConfigService {
     return repo.findVersionByName(name);
   }
 
+  public void updateLatestVersion(VersionConfig config) {
+    repo.updateLatestVersion(config);//latest_version 컬렉션 업데이트
+    repo.save(config); //version 컬렉션에 최신 버전 문서 추가
+  }
+
   public void updateSite(Site config) {
     repo.updateSite(config);
   }

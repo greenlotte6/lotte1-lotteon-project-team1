@@ -1,12 +1,16 @@
 package com.example.lotteon.controller.admin.config;
 
+import com.example.lotteon.entity.admin.config.VersionConfig;
 import com.example.lotteon.service.admin.BasicConfigService;
+import com.example.lotteon.service.admin.CacheService;
 import jakarta.servlet.http.HttpServletRequest;
+import java.util.Date;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Slf4j
@@ -15,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequiredArgsConstructor
 public class BasicConfigController {
 
+  private final CacheService cacheService;
   private final BasicConfigService service;
 
   @GetMapping("/basic")
@@ -40,5 +45,15 @@ public class BasicConfigController {
   @GetMapping("/version")
   public String version(Model model) {
     return "/admin/config/version";
+  }
+
+  @PostMapping("/version/register")
+  public String version(VersionConfig config) {
+    config.setId("basic_config::version");
+    config.setCreatedAt(new Date());
+
+    service.updateLatestVersion(config);
+    cacheService.invalidateCache();
+    return "redirect:/admin/config/version";
   }
 }

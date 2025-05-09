@@ -22,6 +22,12 @@ import org.modelmapper.convention.MatchingStrategies;
 import org.modelmapper.spi.MappingContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.mongodb.MongoDatabaseFactory;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.convert.DefaultMongoTypeMapper;
+import org.springframework.data.mongodb.core.convert.MappingMongoConverter;
+import org.springframework.data.mongodb.core.convert.MongoCustomConversions;
+import org.springframework.data.mongodb.core.mapping.MongoMappingContext;
 
 @Configuration
 public class ApplicationConfig {
@@ -83,5 +89,24 @@ public class ApplicationConfig {
         })
         .setDateFormat("yyyy-MM-dd'T'HH:mm:ssX") // 다른 날짜 형식이 필요한 경우
         .create();
+  }
+
+
+  @Bean
+  public MongoTemplate mongoTemplate(MongoDatabaseFactory dbFactory,
+      MongoMappingContext context,
+      MongoCustomConversions conversions) {
+
+    MappingMongoConverter converter = new MappingMongoConverter(
+        dbFactory, context
+    );
+    converter.setCustomConversions(conversions);
+
+    // 👇 _class 필드 제거
+    converter.setTypeMapper(new DefaultMongoTypeMapper(null));
+
+    converter.afterPropertiesSet();
+
+    return new MongoTemplate(dbFactory, converter);
   }
 }

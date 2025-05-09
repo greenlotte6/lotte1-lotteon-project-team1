@@ -7,6 +7,7 @@ import com.example.lotteon.entity.admin.config.Logo;
 import com.example.lotteon.entity.admin.config.Site;
 import com.example.lotteon.entity.admin.config.VersionConfig;
 import com.example.lotteon.exception.NoDocumentFoundException;
+import java.time.LocalDateTime;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +28,16 @@ public class BasicConfigRepository {
   public VersionConfig findLatestVersion() {
     Query query = new Query(Criteria.where("id").is("basic_config::latest_version"));
     return template.findOne(query, VersionConfig.class, "BasicConfig");
+  }
+
+  public void updateLatestVersion(VersionConfig config) {
+    Query query = new Query(Criteria.where("id").is("basic_config::latest_version"));
+    Update update = new Update();
+    update.set("version", config.getVersion());
+    update.set("author", config.getAuthor());
+    update.set("description", config.getDescription());
+    update.set("created_at", LocalDateTime.now());
+    template.updateFirst(query, update, "BasicConfig");
   }
 
   public List<VersionConfig> findVersions() {

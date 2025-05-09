@@ -11,6 +11,12 @@ header {
   height: auto;
 }
 
+#header-wrapper {
+  width: 1260px;
+  height: auto;
+  margin: 0 auto;
+}
+
 #account-area {
   width: 1260px;
   height: auto;
@@ -160,6 +166,7 @@ header {
 #menu li {
   margin-bottom: 10px;
 }
+
 #menu ul h3 {
   margin-bottom: 10px;
   font-weight: bold;
