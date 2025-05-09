@@ -39,7 +39,6 @@ public class SecurityConfig {
     // 인가설정
 //        http.authorizeHttpRequests(authorize -> authorize
 //                .requestMatchers("/").permitAll()
-//                .requestMatchers("/admin/**").hasRole("ADMIN")
 //                .requestMatchers("/manager/**").hasAnyRole("ADMIN", "MANAGER")
 //                .requestMatchers("/staff/**").hasAnyRole("ADMIN", "MANAGER", "STAFF")
 //                .requestMatchers("/article/**").authenticated()
@@ -55,6 +54,7 @@ public class SecurityConfig {
                 "/admin/delivery/**",
                 "/admin/product/**")
             .hasAnyRole("ADMIN", "SELLER")
+            .requestMatchers("/styles/**", "/js/**", "/images/**", "/static/**").permitAll()
             .anyRequest()
             .permitAll());
 
