@@ -28,6 +28,14 @@ public class MyUserDetailsService implements UserDetailsService {
       return null;
     }
 
+    // role이 "withdrawed"인 경우 로그인 차단
+    User user = optUser.get();
+
+    // role이 "withdrawed"인 경우 로그인 차단
+    if ("withdrawed".equals(user.getRole())) {
+      throw new UsernameNotFoundException("This account has been deactivated.");
+    }
+
     // Security 사용자 인증객체 생성
     MyUserDetails myUserDetails = MyUserDetails.builder()
         .user(optUser.get())
