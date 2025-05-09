@@ -25,6 +25,8 @@ public class AdminSalesController {
   @GetMapping("/list")
   public String list(@RequestParam(name = "page", defaultValue = "1") int page,
       @RequestParam(name = "size", defaultValue = "10") int size,
+      @RequestParam(name = "filter", required = false, defaultValue = "all") String filter,
+      @RequestParam(name = "sort", required = false, defaultValue = "asc") String sort,
       Model model) {
     Pageable pageable = PageRequest.of(page - 1, size);
     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -37,10 +39,10 @@ public class AdminSalesController {
 
     if (isSeller) {
       String sellerId = details.getUsername();
-      pages = service.list(sellerId, pageable);
+      pages = service.list(filter, sort, sellerId, pageable);
       role = "ROLE_SELLER";
     } else {
-      pages = service.list(pageable);
+      pages = service.list(filter, sort, pageable);
       role = "ROLE_ADMIN";
     }
 

@@ -31,14 +31,51 @@ public class SalesService {
     return wrappers;
   }
 
-  public Page<SalesWrapper> list(Pageable pageable) {
-    List<Tuple> tuples = repo.findAllAsTuples();
+  public Page<SalesWrapper> list(String filter, String sort, Pageable pageable) {
+    List<Tuple> tuples = new ArrayList<>();
+    switch (filter) {
+      case "all": {
+        tuples = repo.findAllAsTuples(sort);
+        break;
+      }
+      case "daily": {
+        tuples = repo.findAllAsTuplesWithSortDaily(sort);
+        break;
+      }
+      case "weekly": {
+        tuples = repo.findAllAsTuplesWithSortWeekly(sort);
+        break;
+      }
+      case "monthly": {
+        tuples = repo.findAllAsTuplesWithSortMonthly(sort);
+        break;
+      }
+    }
     List<SalesWrapper> wrappers = toList(tuples);
     return new PageImpl<>(wrappers, pageable, wrappers.size());
   }
 
-  public Page<SalesWrapper> list(String currentSellerId, Pageable pageable) {
-    List<Tuple> tuples = repo.findAllAsTuples(currentSellerId);
+  public Page<SalesWrapper> list(String filter, String sort, String sellerId,
+      Pageable pageable) {
+    List<Tuple> tuples = new ArrayList<>();
+    switch (filter) {
+      case "all": {
+        tuples = repo.findAllAsTuples(sort, sellerId);
+        break;
+      }
+      case "daily": {
+        tuples = repo.findAllAsTuplesWithSortDaily(sort, sellerId);
+        break;
+      }
+      case "weekly": {
+        tuples = repo.findAllAsTuplesWithSortWeekly(sort, sellerId);
+        break;
+      }
+      case "monthly": {
+        tuples = repo.findAllAsTuplesWithSortMonthly(sort, sellerId);
+        break;
+      }
+    }
     List<SalesWrapper> wrappers = toList(tuples);
     return new PageImpl<>(wrappers, pageable, wrappers.size());
   }

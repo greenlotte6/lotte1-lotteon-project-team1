@@ -7,7 +7,19 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CustomSalesRepository {
 
-  List<Tuple> findAllAsTuples();
+  List<Tuple> findAllAsTuples(String sort);
 
-  List<Tuple> findAllAsTuples(String sellerId);
+  List<Tuple> findAllAsTuples(String sort, String sellerId);
+
+  List<Tuple> findAllAsTuplesWithSortDaily(String sort);
+
+  List<Tuple> findAllAsTuplesWithSortDaily(String sort, String sellerId);
+
+  List<Tuple> findAllAsTuplesWithSortWeekly(String sort);
+
+  List<Tuple> findAllAsTuplesWithSortWeekly(String sort, String sellerId);
+
+  List<Tuple> findAllAsTuplesWithSortMonthly(String sort);
+
+  List<Tuple> findAllAsTuplesWithSortMonthly(String sort, String sellerId);
 }

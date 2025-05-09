@@ -46,14 +46,15 @@
             </span>
       </div>
       <div class="content">
-        <form action="#" method="GET" id="search-area">
+        <form th:action="@{/admin/sales/list}" method="GET" id="search-area">
           <select name="filter" class="search-filter">
             <option value="">필터</option>
+            <option value="all">전체</option>
             <option value="daily">일간</option>
             <option value="weekly">주간</option>
             <option value="monthly">월간</option>
           </select>
-          <select name="filter" class="search-filter">
+          <select name="sort" class="search-filter">
             <option value="">매출별 정렬</option>
             <option value="asc">오름차순</option>
             <option value="desc">내림차순</option>
