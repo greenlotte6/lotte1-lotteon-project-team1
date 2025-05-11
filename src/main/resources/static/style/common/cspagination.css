@@ -34,3 +34,8 @@ a.current {
   background-color: #343b4d;
   color: #fff;
 }
+
+a.page.active {
+  background-color: #343b4d;
+  color: #fff;
+}

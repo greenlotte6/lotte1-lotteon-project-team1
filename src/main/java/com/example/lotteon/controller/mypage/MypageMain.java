@@ -1,12 +1,16 @@
 package com.example.lotteon.controller.mypage;
 
 import com.example.lotteon.dto.PageResponseDTO;
+import com.example.lotteon.dto.coupon.Coupon_HistoryDTO;
 import com.example.lotteon.dto.cs.QnaDTO;
+import com.example.lotteon.dto.point.PointDTO;
 import com.example.lotteon.dto.user.MemberDTO;
 import com.example.lotteon.dto.user.UserDTO;
 import com.example.lotteon.entity.user.User;
 import com.example.lotteon.repository.UserRepository;
 import com.example.lotteon.repository.user.MemberRepository;
+import com.example.lotteon.service.admin.point.PointService;
+import com.example.lotteon.service.coupon.CouponHistoryService;
 import com.example.lotteon.service.cs.QnaService;
 import com.example.lotteon.service.cs.ReplyService;
 import com.example.lotteon.service.mypage.MyPageService;
@@ -19,6 +23,9 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -48,6 +55,8 @@ public class MypageMain {
     private final PasswordEncoder passwordEncoder;
     private final QnaService qnaService;
     private final ReplyService replyService;
+    private final CouponHistoryService couponHistoryService;
+    private final PointService pointService;
 
 
     @GetMapping("/mypage")
@@ -62,15 +71,41 @@ public class MypageMain {
         return "/myPage/wholeorder";
     }
 
-    // 포인트 내역
+    // 포인트 내역 (마이페이지)
     @GetMapping("/mypage/point")
-    public String point() {
+    public String point(@RequestParam(defaultValue = "0") int page,
+                        Model model, Principal principal) {
+
+        String userId = principal.getName();
+
+        Pageable pageable = PageRequest.of(page, 10); // 1페이지에 10개
+        Page<PointDTO> pointPage = pointService.findByUserId(userId, pageable);
+
+        model.addAttribute("pages", pointPage.getContent());  // 실제 포인트 내역 리스트
+        model.addAttribute("currentPage", pointPage.getNumber());
+        model.addAttribute("totalPages", pointPage.getTotalPages());
+        model.addAttribute("pageSize", pointPage.getSize());
+
         return "/myPage/point";
     }
 
     // 쿠폰 내역
     @GetMapping("/mypage/coupon")
-    public String coupon() {
+    public String coupon(@RequestParam(defaultValue = "0") int page,
+                         Model model, Principal principal) {
+
+        //현재 로그인한 사용자의 ID 가져오기
+        String userId = principal.getName();
+
+        Pageable pageable = PageRequest.of(page, 10);
+        Page<Coupon_HistoryDTO> couponHistoryDTOPage = couponHistoryService.findByUserId(userId, pageable);
+
+        //List<Coupon_HistoryDTO> couponHistoryDTOList = couponHistoryService.findByUserId(userId);
+        model.addAttribute("couponHistoryDTOList", couponHistoryDTOPage.getContent());
+        model.addAttribute("currentPage", couponHistoryDTOPage.getNumber());
+        model.addAttribute("totalPages", couponHistoryDTOPage.getTotalPages());
+        model.addAttribute("pageSize", couponHistoryDTOPage.getSize());
+
         return "/myPage/coupon";
     }
 
@@ -82,13 +117,20 @@ public class MypageMain {
 
     // 문의하기
     @GetMapping("/mypage/qna")
-    public String qna(Model model, Principal principal) {
+    public String qna(@RequestParam(defaultValue = "0") int page,
+                      Model model, Principal principal) {
 
         //현재 로그인한 사용자의 ID 가져오기
         String userId = principal.getName();
 
-        List<QnaDTO> qnaList = qnaService.findByUserId(userId);
-        model.addAttribute("qnaList", qnaList);
+        Pageable pageable = PageRequest.of(page, 10); // 한 페이지당 10개
+        Page<QnaDTO> qnaPage = qnaService.findByUserId(userId, pageable);
+
+        //List<QnaDTO> qnaList = qnaService.findByUserId(userId);
+        model.addAttribute("qnaList", qnaPage.getContent());
+        model.addAttribute("currentPage", qnaPage.getNumber());
+        model.addAttribute("totalPages", qnaPage.getTotalPages());
+        model.addAttribute("pageSize", qnaPage.getSize());
 
         return "/myPage/qna";
     }

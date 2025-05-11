@@ -7,10 +7,10 @@
     <link rel="stylesheet" href="/style/index.css" />
     <link rel="stylesheet" href="/style/common/header.css" />
     <link rel="stylesheet" href="/style/common/footer.css" />
-    <link rel="stylesheet" href="/static//style/common/pagination.css" />
+    <link rel="stylesheet" href="/style/common/cspagination.css" />
     <link rel="stylesheet" href="/style/common/myPage/myPagehead.css">
     <link rel="stylesheet" href="/style/common/myPage/myPageSide.css">
-    <link rel="stylesheet" href="/static/style/common/myPage/tableHead.css">
+    <link rel="stylesheet" href="/style/common/myPage/tableHead.css">
     <link rel="stylesheet" href="/style/common/myPage/myPageMain.css">
     <link rel="stylesheet" href="/style/common/myPage/pointPage.css">
     <link rel="stylesheet" href="/style/common/myPage/inquiry.css">
@@ -87,21 +87,16 @@
                           <th>유효기간</th>
                       </tr>
 
-                      <tr>
-                          <td>1만원 할인 중복 쿠폰</td>
-                          <td>10,000원</td>
-                          <td>10,000원 이상 구매시</td>
-                          <td>사용가능</td>
-                          <td>~ 12/31</td>
+                      <tr th:each="couponHistory, iterStat : ${couponHistoryDTOList}">
+                          <td>[[${currentPage * pageSize + iterStat.index + 1}]]</td>
+                          <td>[[${couponHistory.coupon.coupon_benefit.benefit}]]</td>
+                          <td>[[${couponHistory.coupon.description}]]</td>
+                          <td th:if="${couponHistory.status == 'unused'}">사용가능</td>
+                          <td th:if="${couponHistory.status == 'used'}">사용불가</td>
+                          <td>~ [[${couponHistory.coupon.to}]]</td>
                       </tr>
 
-                      <tr>
-                        <td>회원가입 축하 5천원 할인쿠폰</td>
-                        <td>5,000원</td>
-                        <td>5,000원 이상 구매시</td>
-                        <td>사용가능</td>
-                        <td>~ 12/31</td>
-                    </tr>
+
                   </table>
 
                     
@@ -121,7 +116,29 @@
 
         </div>
 
-        <th:block th:insert="~{/common/pagination}"></th:block>
+          <section class="pagination">
+              <a class="page move" th:href="@{/mypage/coupon(page=0)}">
+                  <i class="fa-solid fa-angles-left"></i>
+              </a>
+              <a class="page move" th:if="${currentPage > 0}"
+                 th:href="@{/mypage/coupon(page=${currentPage - 1})}">
+                  <i class="fa-solid fa-chevron-left"></i>
+              </a>
+
+              <a class="page" th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
+                 th:href="@{/mypage/coupon(page=${i})}"
+                 th:classappend="${i == currentPage} ? 'active'">
+                  [[${i + 1}]]
+              </a>
+
+              <a class="page move" th:if="${currentPage + 1 < totalPages}"
+                 th:href="@{/mypage/coupon(page=${currentPage + 1})}">
+                  <i class="fa-solid fa-chevron-right"></i>
+              </a>
+              <a class="page move" th:href="@{/mypage/coupon(page=${totalPages - 1})}">
+                  <i class="fa-solid fa-angles-right"></i>
+              </a>
+          </section>
         
       </main>
       <th:block th:insert="~{/common/footer}"></th:block>
