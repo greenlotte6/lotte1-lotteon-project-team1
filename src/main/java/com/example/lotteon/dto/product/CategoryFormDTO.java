@@ -1,5 +1,6 @@
 package com.example.lotteon.dto.product;
 
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,10 +10,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductSubCategoryDTO {
+public class CategoryFormDTO {
 
-  private int id;
-  private ProductCategoryDTO category;
-  private String name;
-  private int sequence;
+  private List<ProductCategoryDTO> categories;
+  private List<ProductSubCategoryDTO> subCategories;
 }

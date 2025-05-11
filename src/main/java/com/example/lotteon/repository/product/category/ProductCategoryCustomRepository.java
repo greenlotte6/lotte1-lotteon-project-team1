@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ProductCategoryCustomRepository {
 
-  void update(ProductCategory category);
+  ProductCategory findBySequence(int sequence);
 
   Map<ProductCategory, List<ProductSubCategory>> findAllWithSubCategories();
 }

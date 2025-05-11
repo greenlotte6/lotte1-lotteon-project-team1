@@ -30,4 +30,7 @@ public class ProductSubCategory {
 
   @Column(name = "name")
   private String name;
+
+  @Column(name = "sequence")
+  private int sequence;
 }

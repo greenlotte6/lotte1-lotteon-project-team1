@@ -1,5 +1,6 @@
 package com.example.lotteon.service.product.category;
 
+import com.example.lotteon.dto.product.CategoryFormDTO;
 import com.example.lotteon.dto.product.ProductCategoryDTO;
 import com.example.lotteon.dto.product.ProductSubCategoryDTO;
 import com.example.lotteon.entity.product.ProductCategory;
@@ -41,7 +42,36 @@ public class ProductCategoryService {
     return dtoMap;
   }
 
-  public void update(ProductCategory category) {
-    repo.update(category);
+  //TODO: Recent working position. Move logic below to Repository's update() method, which has @Transactional annotation.
+  public void update(CategoryFormDTO form) {
+    List<ProductCategoryDTO> categories = form.getCategories();
+    for (ProductCategoryDTO category : categories) {
+      //현재 category의 sequence를 가지고 있는 row 조회
+      int originalSrcSeq = repo.findById(category.getId()).get().getSequence();
+      int srcSequence = category.getSequence();
+      ProductCategory dest = repo.findBySequence(srcSequence);
+
+      //조회된 row의 sequence를 해당 row의 category name의 해시로 변경(임시적으로)
+      ProductCategoryDTO destDTO = mapper.map(dest, ProductCategoryDTO.class);
+      destDTO.setSequence(destDTO.getName().hashCode()); //임시 순번(hash of category name)으로 업데이트
+      ProductCategory destWithTempSequence = mapper.map(destDTO, ProductCategory.class);
+      repo.save(destWithTempSequence);
+
+      //현재 category의 id와 일치하는 row 조회
+      ProductCategory src = repo.findById(category.getId()).orElse(null);
+
+      //조회된 row의 sequence를 클라이언트가 새롭게 설정한 순번으로 업데이트
+      if (src != null) {
+        ProductCategoryDTO srcDTO = mapper.map(src, ProductCategoryDTO.class);
+        srcDTO.setSequence(category.getSequence());
+        ProductCategory srcWithNewSequence = mapper.map(srcDTO, ProductCategory.class);
+        repo.save(srcWithNewSequence);
+      }
+
+      // 임시 sequence를 가지고 있는 row의 sequence를 현재 category의 원래 sequence로 변경(swap)
+      destDTO.setSequence(originalSrcSeq);
+      ProductCategory destWithOriginalSrcSeq = mapper.map(destDTO, ProductCategory.class);
+      repo.save(destWithOriginalSrcSeq);
+    }
   }
 }

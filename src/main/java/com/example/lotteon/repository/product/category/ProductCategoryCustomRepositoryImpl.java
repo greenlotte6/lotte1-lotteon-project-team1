@@ -14,7 +14,6 @@ import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Repository
@@ -26,8 +25,10 @@ public class ProductCategoryCustomRepositoryImpl implements ProductCategoryCusto
   private final QProductSubCategory subCategory = QProductSubCategory.productSubCategory;
 
   @Override
-  @Transactional
-  public void update(ProductCategory category) {
+  public ProductCategory findBySequence(int sequence) {
+    return query.selectFrom(category)
+        .where(category.sequence.eq(sequence))
+        .fetchOne();
   }
 
   @Override
@@ -36,7 +37,7 @@ public class ProductCategoryCustomRepositoryImpl implements ProductCategoryCusto
         .select(category, subCategory)
         .from(category)
         .leftJoin(subCategory).on(subCategory.category.id.eq(category.id))
-        .orderBy(category.sequence.asc())
+        .orderBy(category.sequence.asc(), subCategory.sequence.asc())
         .fetch();
 
     return tuples.stream()
