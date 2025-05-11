@@ -52,50 +52,27 @@
           쇼핑몰 메인, 상품 페이지 옆 쪽에 나타나는 카테고리 메뉴를
           수정합니다
         </p>
-        <ul id="category-area">
+        <ul id="category-area" th:each="entry : ${map}">
           <ul class="category">
             <div class="category-title">
               <i class="fa-solid fa-caret-down"></i>
-              <input type="text" value="여성패션"/>
+              <input type="text" th:value="${entry.getKey().getName()}"/>
+              <input type="hidden" class="category-sequence"
+                     th:value="${entry.getKey().getSequence()}"/>
               <button class="delete-btn">삭제</button>
             </div>
-            <ul class="sub-category">
-              <li>
+            <ul class="sub-category" th:if="${entry.getValue().size() > 0}">
+              <li th:each="subCategory : ${entry.getValue()}">
                 <input
                     class="category-input"
                     type="text"
-                    value="브랜드의류"
+                    th:value="${subCategory.getName()}"
                 />
                 <button class="modify-btn">수정</button>
                 <button class="delete-btn">삭제</button>
               </li>
-              <li>
-                <input
-                    type="text"
-                    value="브랜드가방"
-                    class="category-input"
-                />
-                <button class="modify-btn">수정</button>
-                <button class="delete-btn">삭제</button>
-              </li>
-              <li>
-                <input
-                    type="text"
-                    value="브랜드신발"
-                    class="category-input"
-                />
-                <button class="modify-btn">수정</button>
-                <button class="delete-btn">삭제</button>
-              </li>
-              <li>
-                <input
-                    type="text"
-                    value="브랜드잡화"
-                    class="category-input"
-                />
-                <button class="modify-btn">수정</button>
-                <button class="delete-btn">삭제</button>
-              </li>
+            </ul>
+            <ul class="sub-category" th:if="${entry.getValue().size() == 0}">
               <li>
                 <button class="add-sub-cate-btn">
                   <i class="fa-solid fa-plus"></i>
@@ -103,125 +80,6 @@
                 </button>
               </li>
             </ul>
-          </ul>
-          <ul class="category">
-            <div class="category-title">
-              <i class="fa-solid fa-caret-down"></i>
-              <input type="text" value="남성패션" class="category-input"/>
-              <button class="delete-btn">삭제</button>
-            </div>
-            <ul class="sub-category">
-              <li>
-                <input
-                    type="text"
-                    value="브랜드의류"
-                    class="category-input"
-                />
-                <button class="modify-btn">수정</button>
-                <button class="delete-btn">삭제</button>
-              </li>
-              <li>
-                <input
-                    type="text"
-                    value="브랜드가방"
-                    class="category-input"
-                />
-                <button class="modify-btn">수정</button>
-                <button class="delete-btn">삭제</button>
-              </li>
-              <li>
-                <input
-                    type="text"
-                    value="브랜드신발"
-                    class="category-input"
-                />
-                <button class="modify-btn">수정</button>
-                <button class="delete-btn">삭제</button>
-              </li>
-              <li>
-                <input
-                    type="text"
-                    value="브랜드잡화"
-                    class="category-input"
-                />
-                <button class="modify-btn">수정</button>
-                <button class="delete-btn">삭제</button>
-              </li>
-              <li>
-                <button class="add-sub-cate-btn">
-                  <i class="fa-solid fa-plus"></i>
-                  <span>2차 카테고리 추가</span>
-                </button>
-              </li>
-            </ul>
-          </ul>
-          <ul class="category">
-            <div class="category-title">
-              <i class="fa-solid fa-caret-down"></i>
-              <input type="text" value="식품"/>
-              <button class="delete-btn">삭제</button>
-            </div>
-            <ul class="sub-category">
-              <li>
-                <button class="add-sub-cate-btn">
-                  <i class="fa-solid fa-plus"></i>
-                  <span>2차 카테고리 추가</span>
-                </button>
-              </li>
-            </ul>
-          </ul>
-          <ul class="category">
-            <div class="category-title">
-              <i class="fa-solid fa-caret-down"></i>
-              <input type="text" value="생활 / 건강"/>
-              <button class="delete-btn">삭제</button>
-            </div>
-            <ul class="sub-category">
-              <li>
-                <button class="add-sub-cate-btn">
-                  <i class="fa-solid fa-plus"></i>
-                  <span>2차 카테고리 추가</span>
-                </button>
-              </li>
-            </ul>
-          </ul>
-          <ul class="category">
-            <div class="category-title">
-              <i class="fa-solid fa-caret-down"></i>
-              <input type="text" value="유아동"/>
-              <button class="delete-btn">삭제</button>
-            </div>
-            <ul class="sub-category">
-              <li>
-                <button class="add-sub-cate-btn">
-                  <i class="fa-solid fa-plus"></i>
-                  <span>2차 카테고리 추가</span>
-                </button>
-              </li>
-            </ul>
-          </ul>
-          <ul class="category">
-            <div class="category-title">
-              <i class="fa-solid fa-caret-down"></i>
-              <input type="text" value="가전"/>
-              <button class="delete-btn">삭제</button>
-            </div>
-            <ul class="sub-category">
-              <li>
-                <button class="add-sub-cate-btn">
-                  <i class="fa-solid fa-plus"></i>
-                  <span>2차 카테고리 추가</span>
-                </button>
-              </li>
-            </ul>
-          </ul>
-          <ul class="category">
-            <div class="category-title">
-              <button class="add-cate-btn">
-                <i class="fa-solid fa-plus"></i>
-                <span>1차 카테고리 추가</span>
-              </button>
-            </div>
           </ul>
         </ul>
         <button class="modify-all-btn">일괄수정</button>
