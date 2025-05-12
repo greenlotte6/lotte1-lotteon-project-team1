@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="/style/index.css" />
     <link rel="stylesheet" href="/style/common/header.css" />
     <link rel="stylesheet" href="/style/common/footer.css" />
+      <link rel="stylesheet" href="/style/common/cspagination.css" />
     <link rel="stylesheet" href="/style/common/myPage/point.css">
     <link rel="stylesheet" href="/style/common/myPage/myPageMain.css">
     <link rel="stylesheet" href="/style/common/myPage/myPagehead.css">
@@ -126,24 +127,30 @@
                             <th>비고</th>
                             <th>유효기간</th>
                         </tr>
-  
-                        <tr>
-                            <td>2022-12-13</td>
-                            <td>적립</td>
-                            <td>2022121001</td>
-                            <td>340</td>
-                            <td>상품 구매확정</td>
-                            <td>2024-12-10</td>
+
+                          <tr th:each="point, iterStat : ${pages}">
+                              <!-- 날짜 -->
+                              <td th:text="${#dates.format(point.issuedDate, 'yyyy-MM-dd')}">2025-05-10</td>
+
+                              <!-- 구분: amount가 양수면 적립, 음수면 차감 -->
+                              <td th:text="${point.amount > 0 ? '적립' : '차감'}">적립</td>
+
+                              <!-- 주문번호:  -->
+                              <td th:text="${point.id}">-</td>
+
+                              <!-- 적립금액: 금액은 절댓값으로 표시 -->
+                              <td th:text="${point.amount}">340</td>
+
+                              <!-- 비고: description -->
+                              <td th:text="${point.description}">상품 구매확정</td>
+
+                              <!-- 유효기간: 현재 DTO에 없음. 예시로 issuedDate + 6개월 -->
+                              <td>
+                                  <span class="expirationDate" th:data-issued-date="${point.issuedDate}"></span>
+                              </td>
                         </tr>
   
-                        <tr>
-                            <td>2022-12-13</td>
-                            <td>적립</td>
-                            <td>2022121001</td>
-                            <td>340</td>
-                            <td>상품 구매확정</td>
-                            <td>2024-12-10</td>
-                        </tr>
+
                     </table>
                     
                    
@@ -154,9 +161,42 @@
 
         </div>
 
-          <th:block th:insert="~{/common/pagination}"></th:block>
+          <section class="pagination">
+              <a class="page move" th:href="@{/mypage/point(page=0)}">
+                  <i class="fa-solid fa-angles-left"></i>
+              </a>
+              <a class="page move" th:if="${currentPage > 0}"
+                 th:href="@{/mypage/point(page=${currentPage - 1})}">
+                  <i class="fa-solid fa-chevron-left"></i>
+              </a>
+
+              <a class="page" th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
+                 th:href="@{/mypage/point(page=${i})}"
+                 th:classappend="${i == currentPage} ? 'active'">
+                  [[${i + 1}]]
+              </a>
+
+              <a class="page move" th:if="${currentPage + 1 < totalPages}"
+                 th:href="@{/mypage/point(page=${currentPage + 1})}">
+                  <i class="fa-solid fa-chevron-right"></i>
+              </a>
+              <a class="page move" th:href="@{/mypage/point(page=${totalPages - 1})}">
+                  <i class="fa-solid fa-angles-right"></i>
+              </a>
+          </section>
       </main>
         <th:block th:insert="~{/common/footer}"></th:block>
     </div>
   </body>
 </html>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    document.querySelectorAll(".expirationDate").forEach(function(el) {
+        var issuedDate = new Date(el.dataset.issuedDate);
+        issuedDate.setMonth(issuedDate.getMonth() + 6);
+        var expiration = issuedDate.toISOString().split('T')[0];
+        el.innerText = expiration;
+    });
+    /*]]>*/
+</script>

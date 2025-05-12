@@ -126,16 +126,19 @@ INSERT INTO `seller` VALUES ("112-12-11119", "seller11", "김유신", "(주)행�
 -- 상품
 INSERT INTO `product_image` VALUES (1, "/upload/product/t-shirt.jpg", "/upload/product/t-shirt.jpg" ,"/upload/product/t-shirt.jpg", "/upload/product/t-shirt.jpg");
 
-INSERT INTO `product_category` VALUES(1, "의류");
-INSERT INTO `product_category` VALUES(2, "화장품");
+INSERT INTO `product_category` VALUES(1, "의류", 1);
+INSERT INTO `product_category` VALUES(2, "화장품", 8);
+INSERT INTO `product_category` VALUES(3, "식품", 9);
+INSERT INTO `product_category` VALUES(4, "생활/건강", 23);
+INSERT INTO `product_category` VALUES(5, "가전", 27);
 
 
-INSERT INTO `product_subcategory` VALUES(1, "상의");
-INSERT INTO `product_subcategory` VALUES(2, "하의");
-INSERT INTO `product_subcategory` VALUES(3, "악세서리");
-INSERT INTO `product_subcategory` VALUES(4, "폼클렌징");
-INSERT INTO `product_subcategory` VALUES(5, "파운데이션");
-INSERT INTO `product_subcategory` VALUES(6, "마스크팩");
+INSERT INTO `product_subcategory` VALUES(1, 1, "상의");
+INSERT INTO `product_subcategory` VALUES(2, 1, "하의");
+INSERT INTO `product_subcategory` VALUES(3, 1, "악세서리");
+INSERT INTO `product_subcategory` VALUES(4, 2, "폼클렌징");
+INSERT INTO `product_subcategory` VALUES(5, 2, "파운데이션");
+INSERT INTO `product_subcategory` VALUES(6, 2, "마스크팩");
 
 INSERT INTO `product` VALUES("2025010001", 1, 1,"112-12-12345", "seller1", "맨투맨", "맨투맨입니다", 39000, 39, 10, 200, 2500, 1, "on_sale", 1, "통신판매업", 1, "국내산", "new");
 INSERT INTO `product` VALUES("2025010002", 1, 1,"112-12-12525", "seller2", "후드티", "후드티입니다", 49000, 100, 10, 200, 2500, 1, "on_sale", 1, "통신판매업", 1, "국내산", "new");
@@ -379,3 +382,27 @@ JOIN `product` p
 ON oi.product_id = p.id AND p.seller_business_number = s.seller_business_number
 WHERE s.seller_business_number = "112-12-12345"
 GROUP BY s.seller_business_number;
+
+SELECT
+*
+FROM product_subcategory psc
+JOIN product_category pc
+ON psc.category_id = pc.id
+GROUP BY psc.id;
+
+SELECT
+pc.id AS `category_id`,
+GROUP_CONCAT(psc.category_id SEPARATOR ',') AS `subcategory_ids`
+FROM product_category pc
+left JOIN  product_subcategory psc
+ON pc.id = psc.category_id;
+
+SELECT 
+  c.id AS category_id,
+  JSON_ARRAYAGG(sc.id) AS subcategory_ids
+FROM 
+  product_category c
+left JOIN 
+  product_subcategory sc ON c.id = sc.category_id
+GROUP BY 
+  c.id;

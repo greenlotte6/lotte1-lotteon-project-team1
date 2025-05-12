@@ -13,4 +13,5 @@ public class ProductCategoryDTO {
 
   private int id;
   private String name;
+  private int sequence;
 }

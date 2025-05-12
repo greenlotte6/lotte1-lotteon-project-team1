@@ -125,9 +125,12 @@ ENGINE = InnoDB;
 -- Table `lotteon`.`product_category`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `lotteon`.`product_category` (
-  `id` INT NOT NULL AUTO_INCREMENT,
+  `id` INT NOT NULL,
   `name` VARCHAR(20) NOT NULL,
-  PRIMARY KEY (`id`))
+  `sequence` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `name_UNIQUE` (`name` ASC) VISIBLE,
+  UNIQUE INDEX `sequence_UNIQUE` (`sequence` ASC) VISIBLE)
 ENGINE = InnoDB;
 
 
@@ -136,8 +139,16 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `lotteon`.`product_subcategory` (
   `id` INT NOT NULL AUTO_INCREMENT,
+  `category_id` INT NOT NULL,
   `name` VARCHAR(20) NOT NULL,
-  PRIMARY KEY (`id`))
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `name_UNIQUE` (`name` ASC) VISIBLE,
+  INDEX `fk_product_subcategory_product_category1_idx` (`category_id` ASC) VISIBLE,
+  CONSTRAINT `fk_product_subcategory_product_category1`
+    FOREIGN KEY (`category_id`)
+    REFERENCES `lotteon`.`product_category` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 

@@ -1,10 +1,12 @@
 package com.example.lotteon.controller.user;
 
 import com.example.lotteon.dto.TermsDTO;
+import com.example.lotteon.dto.seller.SellerDTO;
 import com.example.lotteon.dto.user.MemberDTO;
 import com.example.lotteon.dto.user.UserDTO;
 import com.example.lotteon.exception.EntityAlreadyExistsException;
 import com.example.lotteon.service.TermsService;
+import com.example.lotteon.service.seller.SellerService;
 import com.example.lotteon.service.user.MemberService;
 import com.example.lotteon.service.user.UserService;
 import jakarta.servlet.http.HttpServletResponse;
@@ -30,6 +32,7 @@ public class UserController {
   private final TermsService termsService;
   private final UserService userService;
   private final MemberService memberService;
+  private final SellerService sellerService;
 
   @GetMapping("/general")
   public String general() {
@@ -54,14 +57,29 @@ public class UserController {
     return "redirect:/login";
   }
 
+  @GetMapping("/genseller")
+  public String seller() {
+    return "/user/genseller";
+  }
+
+  @PostMapping("/genseller")
+  public String genseller(SellerDTO sellerDTO, String passwordConfirm, HttpServletResponse response) {
+    try {
+      UserDTO userDTO = sellerDTO.getSellerId().getUser();
+      userDTO.setRole(UserDTO.ROLE_SELLER);
+      userService.register(userDTO, UserDTO.ROLE_SELLER);
+      sellerDTO.setStatus("ready");
+      sellerService.save(sellerDTO);
+    } catch (EntityAlreadyExistsException e) {
+      response.setStatus(HttpServletResponse.SC_CONFLICT);
+      return null;
+    }
+    return "redirect:/login";
+  }
+
   @GetMapping("/login")
   public String login() {
     return "/user/login";
-  }
-
-  @GetMapping("/seller")
-  public String seller() {
-    return "/user/seller";
   }
 
   @GetMapping("/user/sort")
@@ -83,20 +101,14 @@ public class UserController {
     return "/user/terms2";
   }
 
-  @GetMapping("/user/tax")
-  public String tax() {
-    return "/user/tax";
-  }
-
   // 유효성 검사
   @GetMapping("check/{type}/{value}")
   public ResponseEntity<Map<String, Long>> user(@PathVariable("type") String type,
       @PathVariable("value") String value) {
     log.info("type : " + type + ", value : " + value);
-    // 서비스 호출
+
     long count = userService.checkUser(type, value);
 
-    // JSON 생성
     Map<String, Long> resultMap = new HashMap<>();
     resultMap.put("count", count);
 
@@ -119,6 +131,18 @@ public class UserController {
     }
 
     return ResponseEntity.ok().body(false);
+  }
+
+  @GetMapping("/user/findid")
+  public String findid() {
+    return "/user/findid";
+  }
+
+
+
+  @GetMapping("/user/findpassword")
+  public String findpassword() {
+    return "/user/findpassword";
   }
 
 }

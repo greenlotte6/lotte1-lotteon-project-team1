@@ -259,4 +259,57 @@ public class CouponHistoryService {
         // save 생략 가능하지만 명시적으로 작성 가능
         couponHistoryRepository.save(history);
     }
+
+    //public List<Coupon_HistoryDTO> findByUserId(String userId) {
+    public Page<Coupon_HistoryDTO> findByUserId(String userId, Pageable pageable) {
+
+        //List<Coupon_History> couponHistoryList = couponHistoryRepository.findByMember_MemberId_User_Id(userId);
+
+        Page<Coupon_History> couponHistoryPage = couponHistoryRepository.findByMember_MemberId_User_Id(userId, pageable);
+
+        //return couponHistoryList.stream().map(couponHistory -> {
+        return couponHistoryPage.map(couponHistory -> {
+            Coupon_BenefitDTO benefitDTO = Coupon_BenefitDTO.builder()
+                    .id(couponHistory.getCoupon().getCoupon_benefit().getId())
+                    .benefit(couponHistory.getCoupon().getCoupon_benefit().getBenefit())
+                    .build();
+
+            Coupon_TypeDTO typeDTO = Coupon_TypeDTO.builder()
+                    .id(couponHistory.getCoupon().getCoupon_type().getId())
+                    .name(couponHistory.getCoupon().getCoupon_type().getName())
+                    .build();
+
+            CouponDTO couponDTO = CouponDTO.builder()
+                    .id(couponHistory.getCoupon().getId())
+                    .type_id(couponHistory.getCoupon().getCoupon_type().getId())
+                    .name(couponHistory.getCoupon().getName())
+                    .to(couponHistory.getCoupon().getTo())
+                    .description(couponHistory.getCoupon().getDescription())
+                    .coupon_benefit(benefitDTO)
+                    .coupon_type(typeDTO)
+                    .build();
+
+            UserDTO userDTO = UserDTO.builder()
+                    .id(couponHistory.getMember().getMemberId().getUser().getId())
+                    .build();
+
+            MemberIdDTO memberIdDTO = MemberIdDTO.builder()
+                    .user(userDTO)
+                    .build();
+
+            MemberDTO memberDTO = MemberDTO.builder()
+                    .memberId(memberIdDTO)
+                    .build();
+
+            return Coupon_HistoryDTO.builder()
+                    .id(couponHistory.getId())
+                    .coupon_id(couponHistory.getCoupon().getId())
+                    .user_id(userDTO.getId())
+                    .status(couponHistory.getStatus())
+                    .used_date(couponHistory.getUsed_date())
+                    .coupon(couponDTO)
+                    .member(memberDTO)
+                    .build();
+        });
+    }
 }

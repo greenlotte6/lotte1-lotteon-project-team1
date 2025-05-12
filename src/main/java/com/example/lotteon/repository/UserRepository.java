@@ -13,5 +13,6 @@ public interface UserRepository extends JpaRepository<User, String> {
     long countByEmail(String email);
     long countByContact(String contact);
 
-    //Optional<User> findByEmail(String email);
+//    Optional<User> findByNameAndEmail(String name, String email);
+
 }
