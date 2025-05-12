@@ -1,6 +1,7 @@
 package com.example.lotteon.service.order;
 
 import com.example.lotteon.dto.order.OrderItemDTO;
+import com.example.lotteon.dto.order.OrderSheet;
 import com.example.lotteon.dto.order.OrderStatusDTO;
 import com.example.lotteon.dto.order.OrderWrapper;
 import com.example.lotteon.entity.order.DeliveryStatus;
@@ -133,5 +134,19 @@ public class OrderService {
   public void updateStatusByOrderNumber(String orderNumber, OrderStatusDTO status) {
     OrderStatus entity = mapper.map(status, OrderStatus.class);
     repo.updateStatusByOrderNumber(orderNumber, entity);
+  }
+
+  public String getLatestOrderNumber() {
+    String lastNumberString = repo.findLatestOrderNumber();
+    int latestNumber = Integer.parseInt(lastNumberString) + 1;
+    return String.valueOf(latestNumber);
+  }
+
+  public void placeOrder(OrderSheet orderSheet) {
+    Order order = mapper.map(orderSheet.getOrder(), Order.class);
+    repo.save(order);
+    List<OrderItem> orderItems = orderSheet.getOrderItems().stream().map(((orderItemDTO) -> {
+      return mapper.map(orderItemDTO, OrderItem.class);
+    })).toList();
   }
 }

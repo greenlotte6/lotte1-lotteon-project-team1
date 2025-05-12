@@ -38,403 +38,205 @@
   <main>
     <div class="main">
       <article class="article-body">
-        <table class="list">
-          <tr class="table_hd">
-            <th><input type="checkbox"></th>
-            <th></th>
-            <th>상품명</th>
-            <th>옵션</th>
-            <th>수량</th>
-            <th>판매가</th>
-            <th>할인</th>
-            <th>포인트</th>
-            <th>배송비</th>
-            <th>총합</th>
-          </tr>
-          <tr class="table_bd" th:each="product : ${form.getProducts()}">
-            <td><input type="checkbox" name="product.id" th:value="${product.id}"
-                       class="selectItem"></td>
-            <td><img th:src="${product.getImage().getListThumbnailLocation()}" alt="상품 이미지"></td>
-            <td th:text="${product.getName()}">
-              <input type="hidden" name="product.name" th:value="${product.getName()}"/>
-              상품명
-            </td>
-            <td th:each="option : ${form.getOptions()}">
-              <div>
-                <span th:text="${option.getOption()}">
-                  <input type="hidden" name="options.option" th:value="${option.getOption()}"/>
-                </span>
-                <span th:text="${option.getValue()}">
-                  <input type="hidden" name="options.value" th:value="${option.getOption()}"/>
-                </span>
-              </div>
-            </td>
-            <td class="amount" th:text="${form.getAmount()}">수량</td>
-            <td class="price-td" th:text="${product.getPrice()}">판매가</td>
-            <td class="discount-rate" th:text="${product.getDiscountRate()}">할인율</td>
-            <td class="point" th:text="${product.getPoint()}">포인트</td>
-            <td class="delivery-fee" th:text="${product.getDeliveryFee()}">배송비</td>
-            <td class="sumprice" th:text="${form.getTotalPrice()}">총합</td>
-          </tr>
-        </table>
-
-        <div class="shopping">
-          <div class="line">
-            <div class="delivery-info">
-              <div class="info">
-                <div class="delivery-title">
-                  <p>배송정보</p>
-                </div>
-
-                <div class="delivery-info">
-                  <div>
-                    <span class="a">수령자</span>
-                    <input type="text" name="receiverName" placeholder="수령자 이름 입력" required/>
-                  </div>
-
-                  <div>
-                    <span class="a">휴대폰</span>
-                    <input type="text" name="contact" th:value="${user.contact}"/>
-                  </div>
-
-                  <div>
-                    <span class="a-1">우편번호</span>
-                    <input type="text" name="zip" th:value="${user.zip}"/>
-                    <button type="button" class="Addrsearch-btn">검색</button>
-                  </div>
-
-                  <div>
-                    <span class="addr-info">기본주소</span>
-                    <input type="text" name="address" th:value="${user.address}"/>
-                  </div>
-
-                  <div>
-                    <span class="addr-info">상세주소</span>
-                    <input type="text" name="addressDetail" th:value="${user.addressDetail}"/>
-                  </div>
-
-                  <div>
-                    <span class="etc">기타</span>
-                    <input type="text" name="extra" placeholder="배송 요청사항 등"/>
-                  </div>
-                </div>
-
-                <!--div class="info">
-                    <div class="sale-title">
-                        <p>할인정보</p>
-                    </div>
-
-                    <div class="sale-info">
-                        <div>
-                            <span>현재포인트:</span>
-                            <span>7200점</span>
-                            <input type="text" class="point-input" />
-                            <button>사용하기</button>
-                        </div>
-
-                        <div class="point-info">
-                            <span>포인트 5,000점 이상이면 현금처럼 사용가능</span>
-                        </div>
-
-                        <div class="cupon">
-                            <span>쿠폰적용</span>
-                            <select class="option-menu">
-                                <option value="default" selected>쿠폰선택</option>
-                                <option value="쿠폰1">쿠폰1</option>
-                                <option value="쿠폰1">쿠폰2</option>
-                                <option value="쿠폰1">쿠폰3</option>
-                            </select>
-                            <button>사용하기</button>
-                        </div>
-                    </div>
-            </div-->
-
+        <form th:action="@{/order/place}" method="POST">
+          <table class="list">
+            <tr class="table_hd">
+              <th><input type="checkbox"></th>
+              <th></th>
+              <th>상품명</th>
+              <th>옵션</th>
+              <th>수량</th>
+              <th>판매가</th>
+              <th>할인</th>
+              <th>포인트</th>
+              <th>배송비</th>
+              <th>총합</th>
+            </tr>
+            <tr class="table_bd" th:each="orderItem, iterStat : ${orderSheet.getOrderItems}">
+              <td><input type="checkbox" th:name="|products[${iterStat.index}].id|"
+                         th:value="${orderItem.product.id}"
+                         class="selectItem"></td>
+              <td><img
+                  th:src="${orderItem.product.getImage().getListThumbnailLocation()}"
+                  alt="상품 이미지">
+              </td>
+              <td th:text="${orderItem.product.getName()}">
+                상품명
+              </td>
+              <td th:each="option, iterStat : ${orderSheet.getOptions()}">
                 <div>
-                  <div class="payment">
-                    <p>결제방법</p>
+                  <input type="hidden" th:name="|options[${iterStat.index}].id|"
+                         th:value="${option.getId()}"/>
+                  <span th:text="${option.getOption()}">
+                </span>
+                  <span th:text="${option.getValue()}">
+                </span>
+                </div>
+              </td>
+              <td class="amount" th:text="${orderItem.getAmount()}">
+                수량
+              </td>
+              <td class="price-td" th:text="${orderItem.product.getPrice()}">판매가</td>
+              <td class="discount-rate" th:text="${orderItem.product.getDiscountRate()}">
+                할인율
+              </td>
+              <td class="point" th:text="${orderItem.product.getPoint()}">포인트</td>
+              <td class="delivery-fee" th:text="${orderItem.product.getDeliveryFee()}">
+                배송비
+              </td>
+              <td class="sumprice" th:text="${orderItem.getTotalPrice()}">총합</td>
+            </tr>
+          </table>
+
+          <div class="shopping">
+            <div class="line">
+              <div class="delivery-info">
+                <div class="info">
+                  <div class="delivery-title">
+                    <p>배송정보</p>
                   </div>
 
-                  <div class="payment-option">
+                  <div class="delivery-info">
                     <div>
-                      <label><input type="radio">신용카드</label>
-                      <label><input type="radio">체크카드</label>
+                      <span class="a">수령자</span>
+                      <input type="text" name="recipientName" placeholder="수령자 이름 입력"
+                             required/>
                     </div>
 
                     <div>
-                      <label><input type="radio">계좌이체</label>
-                      <label><input type="radio">무통장입금</label>
+                      <span class="a">휴대폰</span>
+                      <input type="text" name="recipientContact" th:value="${user.contact}"/>
                     </div>
 
                     <div>
-                      <label><input type="radio">휴대폰결제</label>
-                      <label class="kakao-img">
-                        <input type="radio">카카오페이
-                        <img src="/proDetail-img/kakao.png" alt="카카오 이미지" class="kakao">
-                      </label>
+                      <span class="a-1">우편번호</span>
+                      <input type="text" name="recipientZip" th:value="${user.zip}"/>
+                      <button type="button" class="Addrsearch-btn">검색</button>
                     </div>
 
+                    <div>
+                      <span class="addr-info">기본주소</span>
+                      <input type="text" name="recipientAddress" th:value="${user.address}"/>
+                    </div>
+
+                    <div>
+                      <span class="addr-info">상세주소</span>
+                      <input type="text" name="recipientAddressDetail"
+                             th:value="${user.addressDetail}"/>
+                    </div>
+
+                    <div>
+                      <span class="etc">기타</span>
+                      <input type="text" name="description" placeholder="배송 요청사항 등"/>
+                    </div>
                   </div>
+
+                  <!--div class="info">
+                      <div class="sale-title">
+                          <p>할인정보</p>
+                      </div>
+
+                      <div class="sale-info">
+                          <div>
+                              <span>현재포인트:</span>
+                              <span>7200점</span>
+                              <input type="text" class="point-input" />
+                              <button>사용하기</button>
+                          </div>
+
+                          <div class="point-info">
+                              <span>포인트 5,000점 이상이면 현금처럼 사용가능</span>
+                          </div>
+
+                          <div class="cupon">
+                              <span>쿠폰적용</span>
+                              <select class="option-menu">
+                                  <option value="default" selected>쿠폰선택</option>
+                                  <option value="쿠폰1">쿠폰1</option>
+                                  <option value="쿠폰1">쿠폰2</option>
+                                  <option value="쿠폰1">쿠폰3</option>
+                              </select>
+                              <button>사용하기</button>
+                          </div>
+                      </div>
+              </div-->
+
+                  <div>
+                    <div class="payment">
+                      <p>결제방법</p>
+                    </div>
+
+                    <div class="payment-option">
+                      <div>
+                        <label><input name="payment" type="radio" value="신용카드">신용카드</label>
+                        <label><input name="payment" type="radio" value="체크카드">체크카드</label>
+                      </div>
+
+                      <div>
+                        <label><input name="payment" type="radio" value="계좌이체">계좌이체</label>
+                        <label><input name="payment" type="radio" value="무통장입금">무통장입금</label>
+                      </div>
+
+                      <div>
+                        <label><input name="payment" type="radio" value="휴대폰결제">휴대폰결제</label>
+                        <label class="kakao-img">
+                          <input name="payment" type="radio">카카오페이
+                          <img src="/proDetail-img/kakao.png" alt="카카오 이미지" class="kakao">
+                        </label>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="shopping-Box">
+                <div class="sum">
+                  <p>전체합계</p>
+                </div>
+                <div class="form-box">
+                  <div class="form-body">
+                    <span>상품수</span>
+                    <span id="total-amount-result">0</span>
+                  </div>
+
+                  <div class="form-body">
+                    <span>상품금액</span>
+                    <span id="price-result">0</span>
+                  </div>
+
+                  <div class="form-body">
+                    <span>할인금액</span>
+                    <span id="total-discounted-result">0</span>
+                  </div>
+
+                  <div class="form-body">
+                    <span>배송비</span>
+                    <span id="total-delivery-fee">0</span>
+                  </div>
+
+                  <div class="form-body">
+                    <span>전체주문 금액</span>
+                    <span id="total-price-result">0</span>
+                  </div>
+
+                  <div class="form-body">
+                    <span>적립 포인트</span>
+                    <span id="total-point-result">0</span>
+                  </div>
+                </div>
+
+                <div class="form-btn">
+                  <input type="submit" value="결제하기">
                 </div>
               </div>
             </div>
-
-            <form th:action="@{/product/orderRs}" class="shopping-Box">
-              <div class="sum">
-                <p>전체합계</p>
-              </div>
-
-              <div class="form-box">
-                <div class="form-body">
-                  <span>상품수</span>
-                  <span id="total-amount-result">0</span>
-                </div>
-
-                <div class="form-body">
-                  <span>상품금액</span>
-                  <span id="price-result">0</span>
-                </div>
-
-                <div class="form-body">
-                  <span>할인금액</span>
-                  <span id="total-discounted-result">0</span>
-                </div>
-
-                <div class="form-body">
-                  <span>배송비</span>
-                  <span id="total-delivery-fee">0</span>
-                </div>
-
-                <div class="form-body">
-                  <span>전체주문 금액</span>
-                  <span id="total-price-result">0</span>
-                </div>
-
-                <div class="form-body">
-                  <span>적립 포인트</span>
-                  <span id="total-point-result">0</span>
-                </div>
-              </div>
-
-              <div class="form-btn">
-                <input type="submit" value="결제하기">
-              </div>
-            </form>
           </div>
-        </div>
-
+        </form>
       </article>
-
     </div>
   </main>
-
-  <footer>
-    <div id="footer-shortcut-wrapper">
-      <div id="footer-shortcut">
-        <nav>
-          <a href="#" class="footer-nav">회사소개</a>
-          <a href="#" class="footer-nav">이용약관</a>
-          <a href="#" class="footer-nav">전자금융거래약관</a>
-          <a href="#" class="footer-nav">개인정보처리방침</a>
-          <a href="#" class="footer-nav">청소년보호방침</a>
-          <a href="#" class="footer-nav">임직원등록</a>
-          <a href="#" class="footer-nav">준법경영</a>
-          <a href="#" class="footer-nav">오류신고</a>
-          <a href="#" class="footer-nav">리서치 패널가입</a>
-        </nav>
-        <div id="selectors">
-          <button class="footer-drop-btn family-site">
-            <span>Family Site</span>
-            <i class="fa-solid fa-caret-down"></i>
-          </button>
-          <ul class="footer-selectors family-site">
-            <li>
-              <a href="http://www.lotte.co.kr/">롯데지주</a>
-            </li>
-            <li>
-              <a href="http://www.lottecon.co.kr/">롯데건설</a>
-            </li>
-            <li>
-              <a href="http://www.lotteglogis.com/">롯데글로벌로지스</a>
-            </li>
-            <li>
-              <a href="http://www.lottelem.co.kr/">롯데기공</a>
-            </li>
-            <li>
-              <a href="http://www.lottebp.co.kr/">롯데비피화학</a>
-            </li>
-            <li>
-              <a href="http://www.lotterentacar.net/">롯데렌탈</a>
-            </li>
-            <li>
-              <a href="http://www.llc.co.kr/">롯데로지스틱스</a>
-            </li>
-            <li>
-              <a href="http://www.lotteria.com/">롯데리아</a>
-            </li>
-            <li>
-              <a href="http://www.lottedfs.com/">롯데면세점</a>
-            </li>
-            <li>
-              <a href="http://www.lpoint.com/">롯데멤버스</a>
-            </li>
-          </ul>
-          <button class="footer-drop-btn seller-service">
-            <span>판매자서비스</span>
-            <i class="fa-solid fa-caret-down"></i>
-          </button>
-          <ul class="footer-selectors seller-service">
-            <li>
-              <a href="#"> 입점신청 </a>
-            </li>
-            <li>
-              <a href="#"> 판매자 센터 </a>
-            </li>
-            <li>
-              <a href="#"> 판매자교육 센터 </a>
-            </li>
-            <li>
-              <a href="#"> API 센터 </a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-    <table id="footer-content">
-      <tbody>
-      <tr>
-        <td>
-          <img
-              src="https://contents.lotteon.com/ec/public/common-bi-lotteon.png"
-              alt="logo"
-              class="footer-logo"
-          />
-        </td>
-        <td>
-          <h3>롯데쇼핑 주식회사</h3>
-          <p>
-            대표이사: 김사무엘상현, 신동빈, 정준호, 강성현 <br/>
-            주소: 서울특별시 강남구 테헤란로 507 (삼성동, WeWork빌딩),
-            7층<br/>
-            사업자등록번호 : 529-85-00774(롯데쇼핑(주) e커머스사업부)
-            <br/>
-            통신판매업 신고 : 2024-서울강남-04439 사업자 정보 확인 <br/>
-            호스팅 서비스사업자 : 롯데쇼핑(주) e커머스사업부사업자등록번호
-          </p>
-        </td>
-        <td>
-          <h4>고객센터</h4>
-          <p>
-            전화번호 : 1899-7000(유료) <br/>
-            E-mail : lotteon@lotte.net
-          </p>
-          <a href="#"> 분쟁해결기준 </a>
-          <div class="service-shortcut">
-            <a href="#">FAQ보기</a>
-            <a href="#">1:1 문의하기</a>
-            <a href="#">고객센터</a>
-            <a href="#">공지사항</a>
-          </div>
-        </td>
-      </tr>
-      <tr>
-        <td></td>
-        <td>
-          <h4>롯데쇼핑 e커머스 사업부 에스크로</h4>
-          <p>
-            고객님의 안전거래를 위해 현금 등으로 결제 시 결제금액 전액에
-            대해
-            <br/>
-            소비자 피해 방지 서비스를 이용합니다.
-          </p>
-        </td>
-        <td>
-          <h4>전자금융거래 분쟁 담당</h4>
-          <p>Tel : 1899-7000(유료) <br/></p>
-          <span>
-                  E-mail:
-                  <a href="#">lotteon@lotte.net</a>
-                </span>
-          <a href="https://www.lotteon.com/p/trustsafety/main"
-          >안전거래센터</a
-          >
-        </td>
-      </tr>
-      <tr>
-        <td></td>
-        <td></td>
-        <td class="contents-protection">
-          <h3>콘텐츠산업진흥법에 의한 콘텐츠보호안내</h3>
-          <span class="modal">자세히보기</span>
-        </td>
-      </tr>
-      </tbody>
-    </table>
-    <div id="certificate-area">
-      <img
-          src="https://contents.lotteon.com/ec/public/footer-img-logo-2-2023.png"
-          alt="online-shopping-association"
-      />
-      <img
-          src="https://contents.lotteon.com/ec/public/footer-img-logo-3-2023.png"
-          alt="tax"
-      />
-      <img
-          src="https://contents.lotteon.com/ec/public/footer-img-logo-4-2023.png"
-          alt="hazardous-product"
-      />
-      <img
-          src="https://contents.lotteon.com/ec/public/footer-img-logo-5-2023.png"
-          alt="손말이음"
-      />
-      <img
-          src="https://contents.lotteon.com/ec/public/footer-img-logo-7-2023.png"
-          alt="personal-info-protection"
-      />
-    </div>
-    <section class="copyright">
-      <div>
-        <p>
-          롯데쇼핑(주)는 통신판매중개자이며 통신판매의 거래당사자가
-          아닙니다. 입점판매자가 등록한 상품정보 및 거래에 대해
-          롯데쇼핑(주)는 일체 책임을 지지 않습니다.
-        </p>
-        <p>Copyright © LOTTESHOPPING Co., LTD. All rights reserved.</p>
-      </div>
-    </section>
-    <div id="dialog" title="콘텐츠산업진흥법에 의한 표시">
-      <img
-          src="https://static.lotteon.com/p/common/foCommon/assets/img/footer_logo-content.png"
-          alt="contents"
-      />
-      <ul>
-        <li>
-          <p>콘텐츠의 명칭: 상품정보 및 이벤트 정보 등</p>
-        </li>
-        <li>
-          <p>
-            콘텐츠 제작 연월일 : 2020년 3월 29일 <br/>
-            (또는, 콘텐츠가 업그레이드된 경우 그 갱신일)
-          </p>
-        </li>
-        <li>
-          <p>
-            콘텐츠 제작자 : 롯데쇼핑(주) e커머스사업부 <br/>
-            서울특별시 송파구 올림픽로 300 롯데월드타워 26층 <br/>
-            Tel : 02-3668-8500 FAX : 02-3668-8501
-          </p>
-        </li>
-        <li>
-          <p>
-            롯데쇼핑(주) e커머스사업부가 운영하는 홈페이지 내의 모든
-            콘텐츠는 <br/>
-            콘텐츠산업 진흥법에 따라 제작일 또는 그 갱신일로부터 5년간
-            보호됩니다. <br/>
-            (동의없는 무단 복제를 금함)
-          </p>
-        </li>
-      </ul>
-    </div>
-  </footer>
+  <th:block th:insert="~{/common/footer}"></th:block>
 </div>
 </body>
 </html>

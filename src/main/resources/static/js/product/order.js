@@ -24,6 +24,7 @@ $(() => {
       totalPoint)
   $("#total-amount-result").text(totalAmount)
   $("#price-result").text(price);
+  $("#total-discounted-result").text(discountedPrice)
   $("#total-delivery-fee").text(deliveryFee)
   $("#total-price-result").text(totalPrice)
   $("#total-point-result").text(totalPoint)

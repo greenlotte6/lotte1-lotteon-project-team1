@@ -1,6 +1,5 @@
 package com.example.lotteon.dto.order;
 
-import com.example.lotteon.dto.product.ProductDTO;
 import com.example.lotteon.dto.product.ProductOptionsDTO;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -12,10 +11,9 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrderSheetRequestForm {
+public class OrderSheet {
 
-  private int amount;
+  private OrderDTO order;
+  private List<OrderItemDTO> orderItems;
   private List<ProductOptionsDTO> options;
-  private List<ProductDTO> products;
-  private int totalPrice;
 }
