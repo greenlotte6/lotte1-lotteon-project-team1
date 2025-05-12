@@ -1,103 +1,124 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8" />
-    <title>롯데ON</title>
-    <link rel="stylesheet" href="/style/init.css" />
-    <link rel="stylesheet" href="/style/index.css" />
-    <link rel="stylesheet" href="/style/common/header.css" />
-    <link rel="stylesheet" href="/style/common/footer.css" />
-    <link rel="stylesheet" href="/style/common/pagination.css" />
-    <link rel="stylesheet" href="/style/product/proList.css">
-    <link rel="stylesheet" href="/style/product/mainheader.css">
-    <link rel="stylesheet" href="/style/product/aside.css">
-    <link rel="icon" href="https://static.lotteon.com/p/common/assets/favicon/1/favicon-32.png" />
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css" />
-    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-    <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
-    <script src="/js/common/header.js"></script>
-    <script src="/js/common/footer.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/all.min.js" crossorigin="anonymous"></script>
+  <meta charset="UTF-8"/>
+  <title>롯데ON</title>
+  <link rel="stylesheet" href="/style/init.css"/>
+  <link rel="stylesheet" href="/style/index.css"/>
+  <link rel="stylesheet" href="/style/common/header.css"/>
+  <link rel="stylesheet" href="/style/common/footer.css"/>
+  <link rel="stylesheet" href="/style/common/pagination.css"/>
+  <link rel="stylesheet" href="/style/product/proList.css">
+  <link rel="stylesheet" href="/style/product/mainheader.css">
+  <link rel="stylesheet" href="/style/product/aside.css">
+  <link rel="icon" href="https://static.lotteon.com/p/common/assets/favicon/1/favicon-32.png"/>
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css"/>
+  <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+  <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
+  <script src="/js/common/header.js"></script>
+  <script src="/js/common/footer.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/all.min.js"
+          crossorigin="anonymous"></script>
 </head>
 <body>
 <div id="wrapper">
-    <th:block th:insert="~{/common/header}"></th:block>
-    <th:block th:insert="~{/_menu}"></th:block>
+  <th:block th:insert="~{/common/header}"></th:block>
+  <th:block th:insert="~{/_menu}"></th:block>
 
-    <main>
-        <div class="main">
-            <th:block th:insert="~{/product/_side1}"></th:block>
+  <main>
+    <div class="main">
+      <!--th:block th:insert="~{/product/_side1}"></th:block-->
 
-            <article class="article-body">
-                <div class="article-header">
-                    <div class="main-heder">
-                        <p>상품 목록</p>
-                        <ul>
-                            <li>HOME > </li>
-                            <li>패션 · 의류 · 뷰티 > </li>
-                            <li>남성의류</li>
-                        </ul>
-                    </div>
+      <article class="article-body">
+        <div class="article-header">
+          <div class="main-heder">
+            <h3 class="list-title">상품 목록</h3>
+          </div>
 
-                    <div class="main-heder2">
-                        <ul>
-                            <li>판매많은순 | </li>
-                            <li>낮은가격순 | </li>
-                            <li>높은가격순 | </li>
-                            <li>평점높은순 | </li>
-                            <li>후기많은순 | </li>
-                            <li>최근등록순</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="grid">
-                    <div class="product" th:each="product : ${products}">
-                        <a th:href="@{/product/detail(id=${product.id})}">
-                            <div class="grid-img">
-                                <img th:src="@{/proDetail-img/img5.png}" alt="이미지" />
-                                <!-- 실제 이미지 경로 사용 시 -->
-                                <!-- <img th:src="@{${product.image.path}}" alt="이미지" /> -->
-                            </div>
-
-                            <div class="icon">
-                                <button><i class="fa-regular fa-heart" id="heart"></i></button>
-                                <button><i class="fa-solid fa-cart-plus"></i></button>
-                            </div>
-
-                            <div class="Protitle">
-                                <span th:text="${product.seller != null ? product.seller.companyName : '판매자 정보 없음'}"></span>
-                                <span th:text="${product.name}"></span>
-                            </div>
-
-                            <div class="Proprice">
-                                <del th:text="${product.price + '원'}"></del>
-                            </div>
-
-                            <div class="sela-price" th:if="${product.price != null and product.discountRate != null}">
-                                <span class="sale" th:text="${product.discountRate + '%'}"></span>
-                                <span th:text="${#numbers.formatInteger(product.price - (product.price / 100.0) * product.discountRate, 0) + '원'}"></span>
-                            </div>
-
-                            <div class="rank">
-                                <i class="fa-solid fa-star"></i>
-                                <span>5.0 |</span>
-                                <span>리뷰 1</span>
-                            </div>
-
-                            <div class="free">
-                                <span>무료배송</span>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </article>
+          <div class="main-heder2">
+            <ul>
+              <li>
+                <a href="/admin/product/list?filter=sales&sort=desc">판매많은순&nbsp;</a>
+              </li>
+              <li>
+                <a href="/admin/product/list?filter=price&sort=asc">
+                  낮은가격순&nbsp;
+                </a>
+              </li>
+              <li>
+                <a href="/admin/product/list?filter=price&sort=asc">
+                  높은가격순&nbsp;
+                </a>
+              </li>
+              <li>
+                <a href="/admin/product/list?filter=review&sort=desc">
+                  평점높은순&nbsp;
+                </a>
+              </li>
+              <li>
+                <a href="/admin/product/list?filter=review&sort=asc">
+                  후기많은순&nbsp;
+                </a>
+              </li>
+              <li>
+                <a href="/admin/product/list?filter=register&sort=desc">
+                  최근등록순
+                </a>
+              </li>
+            </ul>
+          </div>
         </div>
 
-        <th:block th:insert="~{/common/pagination}"></th:block>
-    </main>
+        <div class="grid">
+          <div class="product" th:each="product : ${products}">
+            <a th:href="@{/product/detail(id=${product.id})}">
+              <div class="grid-img">
+                <img th:src="@{/proDetail-img/img5.png}" alt="이미지"/>
+                <!-- 실제 이미지 경로 사용 시 -->
+                <!-- <img th:src="@{${product.image.path}}" alt="이미지" /> -->
+              </div>
 
-    <th:block th:insert="~{/common/footer}"></th:block>
+              <div class="icon">
+                <button><i class="fa-regular fa-heart" id="heart"></i></button>
+                <button><i class="fa-solid fa-cart-plus"></i></button>
+              </div>
+
+              <div class="Protitle">
+                <span
+                    th:text="${product.seller != null ? product.seller.companyName : '판매자 정보 없음'}"></span>
+                <span th:text="${product.name}"></span>
+              </div>
+
+              <div class="Proprice">
+                <del th:text="${product.price + '원'}"></del>
+              </div>
+
+              <div class="sela-price"
+                   th:if="${product.price != null and product.discountRate != null}">
+                <span class="sale" th:text="${product.discountRate + '%'}"></span>
+                <span
+                    th:text="${#numbers.formatInteger(product.price - (product.price / 100.0) * product.discountRate, 0) + '원'}"></span>
+              </div>
+
+              <div class="rank">
+                <i class="fa-solid fa-star"></i>
+                <span>5.0 |</span>
+                <span>리뷰 1</span>
+              </div>
+
+              <div class="free">
+                <span>무료배송</span>
+              </div>
+            </a>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <th:block th:insert="~{/common/pagination}"></th:block>
+  </main>
+
+  <th:block th:insert="~{/common/footer}"></th:block>
 </div>
 </body>
 </html>

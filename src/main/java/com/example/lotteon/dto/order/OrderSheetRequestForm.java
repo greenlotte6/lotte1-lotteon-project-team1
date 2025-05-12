@@ -1,7 +1,8 @@
 package com.example.lotteon.dto.order;
 
 import com.example.lotteon.dto.product.ProductDTO;
-import com.google.gson.annotations.SerializedName;
+import com.example.lotteon.dto.product.ProductOptionsDTO;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,16 +12,10 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrderItemDTO {
+public class OrderSheetRequestForm {
 
-  @SerializedName("id")
-  private int id;
-  @SerializedName("order")
-  private OrderDTO order;
-  @SerializedName("product")
-  private ProductDTO product;
-  @SerializedName("amount")
   private int amount;
-  @SerializedName("totalPrice")
+  private List<ProductOptionsDTO> options;
+  private List<ProductDTO> products;
   private int totalPrice;
 }

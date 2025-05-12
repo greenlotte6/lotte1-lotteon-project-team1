@@ -15,6 +15,14 @@ public class ProductOptionsService {
   private final ProductOptionsRepository repo;
   private final ModelMapper mapper;
 
+  public ProductOptionsDTO getById(int id) {
+    ProductOptions entity = repo.findById(id).orElse(null);
+    if (entity != null) {
+      return mapper.map(entity, ProductOptionsDTO.class);
+    }
+    return null;
+  }
+
   public void update(List<ProductOptionsDTO> options) {
     for (ProductOptionsDTO option : options) {
       ProductOptions entity = mapper.map(option, ProductOptions.class);

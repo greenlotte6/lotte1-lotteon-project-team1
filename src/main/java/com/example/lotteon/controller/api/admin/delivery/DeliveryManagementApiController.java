@@ -1,4 +1,4 @@
-package com.example.lotteon.controller.api;
+package com.example.lotteon.controller.api.admin.delivery;
 
 import com.example.lotteon.dto.order.DeliveryOrderItemWrapper;
 import com.example.lotteon.service.delivery.DeliveryService;
