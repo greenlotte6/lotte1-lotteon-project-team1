@@ -163,13 +163,17 @@ public class QnaService {
     qnaRepository.deleteById(id);
   }
 
-  // 마이페이지 문의하기에서 유저별 문의하기 리스트 출력
-  public List<QnaDTO> findByUserId(String userId) {
+  // 기존마이페이지 문의하기에서 유저별 문의하기 리스트 출력 >> 페이징 + 글번호 순차 추가
+  //public List<QnaDTO> findByUserId(String userId, Pageable pageable) {
+  public Page<QnaDTO> findByUserId(String userId, Pageable pageable) {
     // 여기서 qnaRepository 호출
-    List<Qna> qnaList = qnaRepository.findByUserIdOrderByRegisterDateDesc(userId);
+    //List<Qna> qnaList = qnaRepository.findByUserIdOrderByRegisterDateDesc(userId);
+
+    Page<Qna> qnaPage = qnaRepository.findByUserIdOrderByRegisterDateDesc(userId, pageable);
 
     // QnaDTO로 변환
-    return qnaList.stream().map(qna -> QnaDTO.builder()
+    //return qnaList.stream().map(qna -> QnaDTO.builder()
+    return qnaPage.map(qna -> QnaDTO.builder()
             .id(qna.getId())
             .member_id(qna.getMember_id().getMemberId().getUser().getId())
             .title(qna.getTitle())
@@ -179,7 +183,6 @@ public class QnaService {
             .name(qna.getType_id().getName())
             .subtype_name(qna.getType_id().getSubtype_name())
             .status(qna.getStatus())
-            .build()
-    ).toList();
+            .build());
   }
 }
