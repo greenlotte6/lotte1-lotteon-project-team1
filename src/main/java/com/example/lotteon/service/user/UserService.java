@@ -10,6 +10,8 @@ import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+
+import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,6 +32,7 @@ public class UserService {
   private final ModelMapper mapper;
   private final JavaMailSender mailSender;
   private final HttpServletRequest request;
+  private final ModelMapper modelMapper;
 
 
   public void register(UserDTO userDTO, String role) throws EntityAlreadyExistsException {
@@ -49,6 +52,7 @@ public class UserService {
     // 저장
     userRepository.save(user);
   }
+
 
   // 유효성 검사
   public long checkUser(String type, String value) {

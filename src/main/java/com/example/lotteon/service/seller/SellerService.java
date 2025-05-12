@@ -75,12 +75,11 @@ public class SellerService {
   public void save(SellerDTO sellerDTO) throws EntityAlreadyExistsException {
     String businessNumber = sellerDTO.getSellerId().getBusinessNumber();
     if (repo.existsByBusinessNumber(businessNumber)) {
-      String message = String.format("A seller with business number %s already exists",
-          businessNumber);
-      throw new EntityAlreadyExistsException(message);
+      throw new EntityAlreadyExistsException("중복된 사업자등록번호입니다.");
     }
-    encryptPassword(sellerDTO);
+
     sellerDTO.setStatus(SellerDTO.STATUS_READY);
+
     Seller seller = toEntity(sellerDTO);
     repo.save(seller);
   }
