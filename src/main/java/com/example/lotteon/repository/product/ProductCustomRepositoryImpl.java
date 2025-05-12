@@ -105,6 +105,16 @@ public class ProductCustomRepositoryImpl implements ProductCustomRepository {
         .from(product)
         .join(options)
         .on(options.product.id.eq(productId))
+        .orderBy(options.id.asc())
         .fetch();
+  }
+
+  @Override
+  public ProductOptions findOptionByProductId(int productId) {
+    return query.select(options)
+        .from(product)
+        .join(options)
+        .on(options.product.id.eq(productId))
+        .fetchOne();
   }
 }

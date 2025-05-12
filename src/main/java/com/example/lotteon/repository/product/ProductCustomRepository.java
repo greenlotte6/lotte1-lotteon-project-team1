@@ -22,6 +22,8 @@ public interface ProductCustomRepository {
 
   List<ProductOptions> findOptionsByProductId(int productId);
 
+  ProductOptions findOptionByProductId(int productId);
+
   void updateStatusById(int id, String status);
 
   void updateById(int id, Product product);

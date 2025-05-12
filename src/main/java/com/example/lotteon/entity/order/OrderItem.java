@@ -42,4 +42,7 @@ public class OrderItem {
   @SerializedName("amount")
   private int amount;
 
+  @Column(name = "total_price")
+  private int totalPrice;
+
 }

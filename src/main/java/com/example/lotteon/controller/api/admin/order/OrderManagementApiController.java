@@ -1,4 +1,4 @@
-package com.example.lotteon.controller.api;
+package com.example.lotteon.controller.api.admin.order;
 
 import com.example.lotteon.dto.order.OrderItemDTO;
 import com.example.lotteon.entity.order.Order;

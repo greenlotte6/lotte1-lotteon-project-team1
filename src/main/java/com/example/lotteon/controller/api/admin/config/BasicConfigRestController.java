@@ -1,4 +1,4 @@
-package com.example.lotteon.controller.api;
+package com.example.lotteon.controller.api.admin.config;
 
 import com.example.lotteon.entity.admin.config.CorpInfo;
 import com.example.lotteon.entity.admin.config.CustomerServiceInfo;

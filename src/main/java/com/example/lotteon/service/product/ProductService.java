@@ -1,6 +1,7 @@
 package com.example.lotteon.service.product;
 
 import com.example.lotteon.dto.product.ProductDTO;
+import com.example.lotteon.dto.product.ProductOptionsDTO;
 import com.example.lotteon.dto.seller.SellerDTO;
 import com.example.lotteon.dto.seller.SellerIdDTO;
 import com.example.lotteon.dto.user.UserDTO;
@@ -88,6 +89,11 @@ public class ProductService {
 
   public List<ProductOptions> getOptions(int productId) {
     return repo.findOptionsByProductId(productId);
+  }
+
+  public ProductOptionsDTO getOption(int productId) {
+    ProductOptions option = repo.findOptionByProductId(productId);
+    return modelMapper.map(option, ProductOptionsDTO.class);
   }
 
 }

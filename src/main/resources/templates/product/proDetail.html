@@ -46,12 +46,13 @@
 
         <form action="/product/cart/add" method="post" class="detail">
           <div>
-            <img src="/proDetail-img/main.png" alt="이미지" class="main-proimg">
+            <img th:src="${prodtos.getImage().getMainThumbnailLocation()}" alt="이미지"
+                 class="main-proimg">
           </div>
 
           <div class="info-list">
             <div class="pro-top">
-              <input type="hidden" name="id" th:value="${prodtos.id}"/>
+              <input type="hidden" name="products[0].id" th:value="${prodtos.id}"/>
               <span>상품번호 : [[${prodtos.id}]]</span>
               <span th:text="${prodtos.seller.companyName}"></span>
             </div>
@@ -65,31 +66,32 @@
             </div>
 
             <div class="pro-price">
+              <input type="hidden" name="products[0].price" th:value="${prodtos.price}"/>
+              <input type="hidden" name="products[0].discountRate"
+                     th:value="${prodtos.discountRate}"/>
+              <input type="hidden" name="products[0].deliveryFee"
+                     th:value="${prodtos.deliveryFee}"/>
               <del th:text="${prodtos.price + '원'}"></del>
               <span class="sale" th:text="${prodtos.discountRate + '%↓'}"></span>
               <p th:text="${prodtos.price - (prodtos.price / 100.0) * prodtos.discountRate + '원'}"></p>
             </div>
 
             <div class="delivery">
-              <p>
-                <span>무료배송</span>
-                모레 (금) 7/8 도착예정
-              </p>
-              <p>본상품은 국내배송만 가능합니다.</p>
+              <p th:text="${prodtos.getDescription()}"></p>
             </div>
 
             <div class="from">
-              <p>원산지 - 상세설명 참고</p>
+              <p th:text="'원산지:' + ${prodtos.getOrigin()}+ '(상세설명 참고)'">원산지 - 상세설명 참고</p>
             </div>
 
-            <!-- 사이즈 선택 -->
-            <div class="size-option">
-              <select name="size"> <!-- 사이즈 선택 추가 -->
+            <!-- 옵션 선택 -->
+            <div class="size-option" th:each="entry, iterStat : ${options}">
+              <h3 th:text="${entry.getKey()}"></h3>
+              <select th:name="|options[${iterStat.index}].id|">
                 <option value="default" selected>선택하기</option>
-                <option value="S">S</option>
-                <option value="M">M</option>
-                <option value="L">L</option>
-                <option value="XL">XL</option>
+                <option th:each="option : ${entry.getValue()}" th:value="${option.getId()}"
+                        th:text="${option.getValue()}">S
+                </option>
               </select>
             </div>
 
@@ -99,7 +101,7 @@
               <div class="count-main">
                 <div class="count">
                   <button type="button" class="minus">-</button>
-                  <input type="number" name="quantity" value="1" min="1" class="count-input"
+                  <input type="number" name="amount" value="1" min="1" class="count-input"
                          id="quantity"> <!-- 수량을 input 태그로 입력 -->
                   <button type="button" class="plus">+</button>
                 </div>
@@ -110,14 +112,14 @@
               </div>
               <div class="sum-price">
                 <p>총 상품금액&nbsp;</p>
-                <p id="total-price"></p>
+                <input type="hidden" id="total-price"/>
               </div>
             </div>
 
             <!-- 장바구니와 구매하기 버튼 -->
             <div class="cart-and-purchase">
               <input type="submit" value="장바구니"/>
-              <button type="submit" formaction="/product/order" formmethod="post">구매하기</button>
+              <button type="submit" th:formaction="@{/order}" formmethod="GET">구매하기</button>
             </div>
           </div>
         </form>
@@ -127,71 +129,7 @@
 
         <div class="details-body" id="details-body">
           <div class="title">
-            <img src="/proDetail-img/title.PNG" alt="title1">
-          </div>
-
-          <div class="title2-header">
-            <p>판매자 공지사항</p>
-          </div>
-
-          <div class="title2">
-            <img src="/proDetail-img/title2.PNG" alt="title2">
-          </div>
-
-          <div class="body">
-            <img src="/proDetail-img/mainTitle.PNG" class="mainTitle">
-          </div>
-
-          <div class="body">
-            <img src="/proDetail-img/color.PNG" alt="color-img">
-          </div>
-
-          <div class="body">
-            <img src="/proDetail-img/fabric.PNG" alt="fabric">
-          </div>
-
-          <div class="body">
-            <img src="/proDetail-img/black.PNG" alt="black">
-          </div>
-
-          <div class="body">
-            <img src="/proDetail-img/black2.PNG" alt="black2">
-          </div>
-
-          <div class="body">
-            <img src="/proDetail-img/khaki.PNG" alt="khaki">
-          </div>
-
-          <div class="body">
-            <img src="/proDetail-img/khaki2.PNG" alt="khaki2">
-          </div>
-
-          <div class="body">
-            <img src="/proDetail-img/detail1.PNG" alt="detail1">
-          </div>
-
-          <div class="body">
-            <img src="/proDetail-img/detail2.PNG" alt="detail2">
-          </div>
-
-          <div class="body">
-            <img src="/proDetail-img/detail3.PNG" alt="detail3">
-          </div>
-
-          <div class="body">
-            <img src="/proDetail-img/detail4.PNG" alt="detail4">
-          </div>
-
-          <div class="body">
-            <img src="/proDetail-img/size.PNG" alt="size">
-          </div>
-
-          <div class="body">
-            <img src="/proDetail-img/info.PNG" alt="info">
-          </div>
-
-          <div class="body">
-            <img src="/proDetail-img/infodetail.PNG" alt="">
+            <img th:src="${prodtos.getImage().getDetailImageLocation()}" alt="title1">
           </div>
 
           <div class="reviews-box">

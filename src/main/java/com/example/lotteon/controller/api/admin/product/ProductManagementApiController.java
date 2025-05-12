@@ -1,4 +1,4 @@
-package com.example.lotteon.controller.api;
+package com.example.lotteon.controller.api.admin.product;
 
 import com.example.lotteon.service.product.ProductService;
 import com.google.gson.Gson;
