@@ -40,4 +40,15 @@ public class RecruitService {
 
 
 
+  public void saveRecruit(Recruit recruit) {
+    recruitRepository.save(recruit);
+  }
+
+  public List<Recruit> findAll() {
+    return recruitRepository.findAll();
+  }
+
+  public void deleteByIds(List<Long> ids) {
+    recruitRepository.deleteAllById(ids);
+  }
 }
