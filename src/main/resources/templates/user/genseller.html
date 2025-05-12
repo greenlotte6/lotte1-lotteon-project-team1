@@ -20,6 +20,9 @@
     <script src="/js/common/header.js"></script>
     <script src="/js/common/footer.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/all.min.js" crossorigin="anonymous"></script>
+      <script src="/js/user/postcode.js"></script>
+      <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+      <script src="/js/user/validation.js"></script>
   </head>
 
   <body>
@@ -37,79 +40,92 @@
 
             <div class="main_content_detail">
 
-                <form name="formRegister" action="" method="post">
+                <form name="formRegister" class="formRegister2" th:action="@{/genseller}" method="post">
                     <table style="border-collapse: collapse;">
                         <tr>
                             <th>아이디<span style="color: red;">*</span></th>
                             <td>
-                                <input type="text" name="uid" placeholder="아이디 입력" maxlength="10">
+                                <input type="text" name="sellerId.user.id" placeholder="아이디 입력" maxlength="10" required>
                                 <button id="btnCheckUid" type="button">중복체크</button>
                                 <span class="uidResult" style="margin-left: 10px; color: #333333;">영문·숫자 조합 4~10자 이내</span>
                             </td>
                         </tr>
                         <tr>
                             <th>비밀번호<span style="color: red;">*</span></th>
-                            <td><input type="password" name="pass" placeholder="비밀번호 입력" maxlength="16">
+                            <td><input type="password" name="sellerId.user.password" placeholder="비밀번호 입력" maxlength="16" required>
                             <span class="passResult" style="margin-left: 10px; color: #333333;">비밀번호는 8-16자리 이내, 영문ㆍ숫자ㆍ특수문자 조합</span>
                             </td>
-                            
+
                         </tr>
                         <tr>
                             <th>비밀번호 확인<span style="color: red;">*</span></th>
-                            <td><input type="password" name="pass2" placeholder="비밀번호 확인입력" maxlength="16"></td>
+                            <td><input type="password" name="passwordConfirm" placeholder="비밀번호 확인입력" maxlength="16"></td>
                         </tr>
                         <tr>
                             <th>회사명<span style="color: red;">*</span></th>
                             <td>
-                                <input type="text" name="company" placeholder="회사명입력 예) (주)상호명">
+                                <input type="text" name="companyName" placeholder="회사명입력 예) (주)상호명" required>
                                 <span class="companyResult"></span>
                             </td>
                         </tr>
                         <tr>
                             <th>대표<span style="color: red;">*</span></th>
                             <td>
-                                <input type="text" name="name" placeholder="이름입력">
+                                <input type="text" name="ceo" placeholder="이름입력" required>
                                 <span class="nameResult"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>이메일<span style="color: red;">*</span></th>
+                            <td>
+                                <input type="email" name="sellerId.user.email" placeholder="이메일 입력" required/>
+                                <button id="btnSendEmail" type="button">인증코드 전송</button>
+                                <span class="emailResult"></span>
+                                <div class="auth" style="display: none">
+                                    <input type="text" name="auth" placeholder="인증번호 입력"/>
+                                    <button id="btnAuthEmail" type="button">확인</button>
+                                </div>
                             </td>
                         </tr>
                         <tr>
                             <th>사업자등록번호<span style="color: red;">*</span></th>
                             <td>
-                                <input type="text" name="business" placeholder="사업자등록번호 입력" maxlength="12">
+                                <input type="text" name="sellerId.businessNumber" placeholder="사업자등록번호 입력" maxlength="12" required>
                                 <span class="businessResult" style="margin-left: 10px; color: #333333;"> - 포함 12 자리 입력</span>
                             </td>
                         </tr>
                         <tr>
                             <th>통신판매업번호<span style="color: red;">*</span></th>
                             <td>
-                                <input type="text" name="telemarketing" placeholder="통신판매업번호 입력" maxlength="12">
+                                <input type="text" name="sellerNumber" placeholder="통신판매업번호 입력" maxlength="16" required>
                                 <span class="telemarketingResult"></span>
                             </td>
                         </tr>
                         <tr>
                             <th>전화번호<span style="color: red;">*</span></th>
                             <td>
-                                <input type="text" name="phone" placeholder="전화번호 입력" maxlength="13">
+                                <input type="text" name="sellerId.user.contact" placeholder="전화번호 입력" maxlength="13" required>
+                                <button id="btnSendHp" type="button">휴대폰 인증</button>
                                 <span class="phoneResult"></span>
                             </td>
                         </tr>
                         <tr>
                             <th>팩스<span style="color: red;">*</span></th>
                             <td>
-                                <input type="text" name="fax" placeholder="팩스번호 입력" maxlength="13">
+                                <input type="text" name="fax" placeholder="팩스번호 입력" maxlength="14" required>
                                 <span class="faxResult"></span>
                             </td>
                         </tr>
                         <tr>
                             <th>주소</th>
                             <td>
-                                <input type="text" id="zip" name="zip" placeholder="우편번호"/>
+                                <input type="text" id="zip" name="sellerId.user.zip" placeholder="우편번호"/>
                                 <button type="button" onclick="postcode()">우편번호 찾기</button><br>
-                                <input type="text" id="addr1" name="addr1" placeholder="주소 검색"/><br>
-                                <input type="text" id="addr2" name="addr2" placeholder="상세주소 입력"/>
+                                <input type="text" id="addr1" name="sellerId.user.address" placeholder="주소 검색"/><br>
+                                <input type="text" id="addr2" name="sellerId.user.addressDetail" placeholder="상세주소 입력"/>
                             </td>
                         </tr>
-                        
+
                     </table>
                     <p style="margin-top: 10px; color: #666666;"><span style="color: red;">*</span>필수입력</p>
 
