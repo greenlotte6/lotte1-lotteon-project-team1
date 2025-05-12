@@ -190,49 +190,36 @@
               <input type="submit" class="search-submit-btn" value="검색" />
             </form>
             <table>
+              <thead>
+              <tr>
+                <th><input type="checkbox" onclick="return false;" /></th>
+                <th>번호</th>
+                <th>채용부서</th>
+                <th>경력사항</th>
+                <th>채용형태</th>
+                <th>제목</th>
+                <th>작성자</th>
+                <th>상태</th>
+                <th>모집기간</th>
+                <th>작성일</th>
+              </tr>
+              </thead>
               <tbody>
-                <tr>
-                  <th>
-                    <input type="checkbox" onclick="return false;" />
-                  </th>
-                  <th>번호</th>
-                  <th>채용부서</th>
-                  <th>경력사항</th>
-                  <th>채용형태</th>
-                  <th>제목</th>
-                  <th>작성자</th>
-                  <th>상태</th>
-                  <th>모집기간</th>
-                  <th>작성일</th>
-                </tr>
-                <tr>
-                  <td>
-                    <input type="checkbox" />
-                  </td>
-                  <td>120</td>
-                  <td>광고사업</td>
-                  <td>경력 4 ~ 15년</td>
-                  <td>정규직</td>
-                  <td>광고 플랫폼 기획</td>
-                  <td>관리자</td>
-                  <td class="text-green">모집중</td>
-                  <td>0000-00-00 ~ 0000-00-00</td>
-                  <td>0000-00-00 00:00:00</td>
-                </tr>
-                <tr>
-                  <td>
-                    <input type="checkbox" />
-                  </td>
-                  <td>120</td>
-                  <td>광고사업</td>
-                  <td>경력 4 ~ 15년</td>
-                  <td>정규직</td>
-                  <td>광고 플랫폼 기획</td>
-                  <td>관리자</td>
-                  <td class="text-gray">종료</td>
-                  <td>0000-00-00 ~ 0000-00-00</td>
-                  <td>0000-00-00 00:00:00</td>
-                </tr>
+              <tr th:each="recruit : ${recruits}">
+                <td><input type="checkbox" th:value="${recruit.id}" /></td>
+                <td th:text="${recruit.id}">1</td>
+                <td th:text="${recruit.department.name}">채용부서</td>
+                <td th:text="${recruit.career.description}">경력사항</td>
+                <td th:text="${recruit.employmentType.name}">채용형태</td>
+                <td>
+                  <a th:href="@{'/admin/recruit/' + ${recruit.id}}" th:text="${recruit.title}">제목</a>
+                </td>
+                <td th:text="${recruit.writer}">작성자</td>
+                <td th:text="${recruit.status}"
+                    th:classappend="${recruit.status == '모집중'} ? 'text-green' : 'text-gray'">상태</td>
+                <td th:text="${recruit.period}">2025-01-01 ~ 2025-01-31</td>
+                <td th:text="${#temporals.format(recruit.createdAt, 'yyyy-MM-dd HH:mm:ss')}">작성일</td>
+              </tr>
               </tbody>
             </table>
             <div class="crud-btn-area">
