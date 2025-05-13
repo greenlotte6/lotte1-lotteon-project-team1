@@ -20,4 +20,7 @@ public interface MemberRepository extends JpaRepository<Member, MemberId>, Membe
     // 새로 추가: Optional로 반환하여 ifPresent 등으로 안전하게 사용 가능
     @Query("SELECT m FROM Member m WHERE m.memberId.user.id = :userId")
     Optional<Member> findOptionalByUserId(@Param("userId") String userId);
+
+    Optional<Member> findByNameAndMemberIdUserEmail(String name, String email);
+
 }

@@ -1,4 +1,4 @@
-package com.example.lotteon.controller.api;
+package com.example.lotteon.controller.api.admin.seller;
 
 import com.example.lotteon.service.seller.SellerService;
 import com.example.lotteon.service.user.UserService;

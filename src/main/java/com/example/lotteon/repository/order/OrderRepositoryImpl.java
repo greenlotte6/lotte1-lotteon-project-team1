@@ -244,7 +244,6 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
         .execute();
   }
 
-
   //마이페이지 코드
   @Override
   public Page<MypageOrderWrapper> findOrderWrappersByUserId(String userId, Pageable pageable) {
@@ -290,22 +289,31 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
             .limit(pageable.getPageSize())
             .fetch();
 
-    // MypageOrderWrapper 객체로 변환
-    List<MypageOrderWrapper> content = tuples.stream()
-            .map(tuple -> {
-              // totalPrice는 index 7에 존재하므로 tuple.get(7)로 가져옵니다.
-              Long totalPrice = tuple.get(7, Long.class);  // totalPrice를 Long으로 정확히 받아오기
+            // MypageOrderWrapper 객체로 변환
+            List<MypageOrderWrapper> content = tuples.stream()
+                    .map(tuple -> {
+                      // totalPrice는 index 7에 존재하므로 tuple.get(7)로 가져옵니다.
+                      Long totalPrice = tuple.get(7, Long.class);  // totalPrice를 Long으로 정확히 받아오기
 
-              // 만약 totalPrice가 null일 수 있으면 기본값 0을 할당
-              long price = (totalPrice != null) ? totalPrice : 0L;
+                      // 만약 totalPrice가 null일 수 있으면 기본값 0을 할당
+                      long price = (totalPrice != null) ? totalPrice : 0L;
 
-              // OrderWrapper.builder()를 사용하여 필드 설정
-              return MypageOrderWrapper.builder()
-                      .tuples(tuple)  // Tuple을 builder로 전달하여 처리
-                      .build();
-            })
-            .collect(Collectors.toList());
+                      // OrderWrapper.builder()를 사용하여 필드 설정
+                      return MypageOrderWrapper.builder()
+                              .tuples(tuple)  // Tuple을 builder로 전달하여 처리
+                              .build();
+                    })
+                    .collect(Collectors.toList());
 
-    return new PageImpl<>(content, pageable, total);
+            return new PageImpl<>(content, pageable, total);
+  }
+  
+  @Override
+  public String findLatestOrderNumber() {
+    return query.select(order.orderNumber)
+        .from(order)
+        .orderBy(order.orderNumber.desc())
+        .limit(1)
+        .fetchOne();
   }
 }

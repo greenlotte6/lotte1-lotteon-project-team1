@@ -21,4 +21,6 @@ public class OrderItemDTO {
   private ProductDTO product;
   @SerializedName("amount")
   private int amount;
+  @SerializedName("totalPrice")
+  private int totalPrice;
 }

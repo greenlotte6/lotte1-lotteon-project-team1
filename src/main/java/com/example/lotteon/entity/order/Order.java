@@ -21,7 +21,7 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "order")
+@Table(name = "`order`")
 public class Order {
 
   @Id

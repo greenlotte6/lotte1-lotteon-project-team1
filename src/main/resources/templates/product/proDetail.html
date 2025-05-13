@@ -1,346 +1,215 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>롯데ON</title>
-    <link rel="stylesheet" href="/style/init.css" />
-    <link rel="stylesheet" href="/style/index.css" />
-    <link rel="stylesheet" href="/style/common/header.css" />
-    <link rel="stylesheet" href="/style/common/footer.css" />
-    <link rel="stylesheet" href="/style/common/pagination.css">
-    <link rel="stylesheet" href="/style/product/proDetail.css" />
-    <link rel="stylesheet" href="/style/product/aside.css">
-    <link rel="stylesheet" href="/style/product/mainheader.css">
-    <link
+<head>
+  <meta charset="UTF-8"/>
+  <title>롯데ON</title>
+  <link rel="stylesheet" href="/style/init.css"/>
+  <link rel="stylesheet" href="/style/index.css"/>
+  <link rel="stylesheet" href="/style/common/header.css"/>
+  <link rel="stylesheet" href="/style/common/footer.css"/>
+  <link rel="stylesheet" href="/style/common/pagination.css">
+  <link rel="stylesheet" href="/style/product/proDetail.css"/>
+  <link rel="stylesheet" href="/style/product/aside.css">
+  <link rel="stylesheet" href="/style/product/mainheader.css">
+  <link
       rel="icon"
       href="https://static.lotteon.com/p/common/assets/favicon/1/favicon-32.png"
-    />
-    <link
+  />
+  <link
       rel="stylesheet"
       href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css"
-    />
-    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-    <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
-    <script src="/js/common/header.js"></script>
-    <script src="/js/common/footer.js"></script>
-    <script
+  />
+  <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+  <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
+  <script src="/js/common/header.js"></script>
+  <script src="/js/common/footer.js"></script>
+  <script
       src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/all.min.js"
       crossorigin="anonymous"
-    ></script>
+  ></script>
 
-    <script src="/js/product/proCount.js"></script>
-    <script src="/js/product/proDetail.js"></script>
-    <script src="/js/product/action.js"></script>
-  </head>
-  <body>
-    <div id="wrapper">
-        <th:block th:insert="~{/common/header}"></th:block>
-        <th:block th:insert="~{/_menu}"></th:block>
+  <script src="/js/product/proCount.js"></script>
+  <!--script src="/js/product/proDetail.js"></script-->
+  <script src="/js/product/action.js"></script>
+</head>
+<body>
+<div id="wrapper">
+  <th:block th:insert="~{/common/header}"></th:block>
+  <main>
+    <div class="main">
+      <article class="article-body">
+        <form th:action="@{/product/detail/give-coupon(id=${prodtos.id})}" method="POST">
+          <button type="submit">쿠폰받기</button>
+        </form>
 
-      <main>
-         <div class="main">
-            <aside class="aside1">
+        <form th:action="@{/cart}" method="post" class="detail">
+          <div>
+            <img th:src="${prodtos.getImage().getMainThumbnailLocation()}" alt="이미지"
+                 class="main-proimg">
+          </div>
+
+          <div class="info-list">
+            <div class="pro-top">
+              <input type="hidden" name="product.id" th:value="${prodtos.id}"/>
+              <input type="hidden" name="orderItems[0].product.id"
+                     th:value="${prodtos.id}"/>
+              <span>상품번호 : [[${prodtos.id}]]</span>
+              <span th:text="${prodtos.seller.companyName}"></span>
+            </div>
+
+            <div class="pro-name">
+              <span>[[${prodtos.name}]]</span>
+              <div>
+                <span>★★★★☆</span>
+                <a href="#">상품평보기</a>
+              </div>
+            </div>
+
+            <div class="pro-price">
+              <del th:text="${prodtos.price + '원'}"></del>
+              <span class="sale" th:text="${prodtos.discountRate + '%↓'}"></span>
+              <p th:text="${prodtos.price - (prodtos.price / 100.0) * prodtos.discountRate + '원'}"></p>
+            </div>
+
+            <div class="delivery">
+              <p th:text="${prodtos.getDescription()}"></p>
+            </div>
+
+            <div class="from">
+              <p th:text="'원산지:' + ${prodtos.getOrigin()}+ '(상세설명 참고)'">원산지 - 상세설명 참고</p>
+            </div>
+
+            <!-- 옵션 선택 -->
+            <div class="size-option" th:each="entry, iterStat : ${options}">
+              <h3 th:text="${entry.getKey()}"></h3>
+              <select th:name="|options[${iterStat.index}].id|">
+                <option value="default" selected>선택하기</option>
+                <option th:each="option : ${entry.getValue()}" th:value="${option.getId()}"
+                        th:text="${option.getValue()}">S
+                </option>
+              </select>
+            </div>
+
+            <!-- 수량 조정 -->
+            <div class="count-option">
+              <p>선택한 상품명</p>
+              <div class="count-main">
+                <div class="count">
+                  <button type="button" class="minus">-</button>
+                  <input type="hidden" name="amount" value="1" min="1"
+                         class="count-input-hidden quantity"/>
+                  <input type="number" name="orderItems[0].amount" value="1" min="1"
+                         class="count-input quantity"> <!-- 수량을 input 태그로 입력 -->
+                  <button type="button" class="plus">+</button>
+                </div>
                 <div>
-                    <div class="bestPro">
-                        <p><i class="fa-solid fa-tag"></i>베스트 상품</p>
-                        <span class="sale">1</span>
-                        <div>
-                            <img src="/proDetail-img/img5.png" alt="이미지">
-                        </div>
-                        <div>
-                            <p>상품명</p>
-                            <del>30,000원</del>
-                            <span class="sale">10%↓</span>
-                            <p>27,000원</p>
-                        </div>
-                    </div>
-
-                    <div class="items">
-                        <div>
-                            <span class="sale">2</span>
-                            <img src="/proDetail-img/img5.png" alt="이미지">
-                        </div>
-                        <div class="productDescription">
-                            <p>상품명</p>
-                            <p><del>30,000원</del><span class="sale">10%↓</span></p>
-                            <p>27,000원</p>
-                        </div>
-                    </div>
-                    
-                    <div class="items">
-                        <div>
-                            <span class="sale">3</span>
-                            <img src="/proDetail-img/img5.png" alt="이미지">
-                        </div>
-                        
-                        <div class="productDescription">
-                            <p>상품명</p>
-                            <p><del>30,000원</del><span class="sale">10%↓</span></p>
-                            <p>27,000원</p>
-                        </div>
-                    </div>
+                  <span id="sum_price"
+                        th:text="${prodtos.price - (prodtos.price / 100.0) * prodtos.discountRate}"></span>
                 </div>
-            </aside>
-
-            
-            <article class="article-body">
-              <div class="article-header">
-                <div class="main-heder">
-                    <p>상품 목록</p>
-                    <ul>
-                        <li>HOME > </li>
-                        <li>패션 · 의류 · 뷰티 > </li>
-                        <li>남성의류</li>
-                    </ul>
-                </div>
-
-                <div class="main-heder2">
-                    <ul>
-                        <li>판매많은순 | </li>
-                        <li>낮은가격순 | </li>
-                        <li>높은가격순 | </li>
-                        <li>평점높은순 | </li>
-                        <li>후기많은순 | </li>
-                        <li>최근등록순</li>
-                    </ul>
-                </div>
-             </div>
-                <form th:action="@{/product/detail/give-coupon(id=${prodtos.id})}" method="POST">
-                    <button type="submit">쿠폰받기</button>
-                </form>
-
-                <form action="/product/cart/add" method="post" class="detail">
-                    <div>
-                        <img src="/proDetail-img/main.png" alt="이미지" class="main-proimg">
-                    </div>
-
-                    <div class="info-list">
-                        <div class="pro-top">
-                            <input type="hidden" name="id" th:value="${prodtos.id}" />
-                            <span>상품번호 : [[${prodtos.id}]]</span>
-                            <span th:text="'(주)' + ${prodtos.seller.companyName}"></span>
-                        </div>
-
-                        <div class="pro-name">
-                            <span>[[${prodtos.name}]]</span>
-                            <div>
-                                <span>★★★★☆</span>
-                                <a href="#">상품평보기</a>
-                            </div>
-                        </div>
-
-                        <div class="pro-price">
-                            <del th:text="${prodtos.price + '원'}"></del>
-                            <span class="sale" th:text="${prodtos.discountRate + '%↓'}"></span>
-                            <p th:text="${prodtos.price - (prodtos.price / 100.0) * prodtos.discountRate + '원'}"></p>
-                        </div>
-
-                        <div class="delivery">
-                            <p>
-                                <span>무료배송</span>
-                                모레 (금) 7/8 도착예정
-                            </p>
-                            <p>본상품은 국내배송만 가능합니다.</p>
-                        </div>
-
-                        <div class="from">
-                            <p>원산지 - 상세설명 참고</p>
-                        </div>
-
-                        <!-- 사이즈 선택 -->
-                        <div class="size-option">
-                            <select name="size"> <!-- 사이즈 선택 추가 -->
-                                <option value="default" selected>선택하기</option>
-                                <option value="S">S</option>
-                                <option value="M">M</option>
-                                <option value="L">L</option>
-                                <option value="XL">XL</option>
-                            </select>
-                        </div>
-
-                        <!-- 수량 조정 -->
-                        <div class="count-option">
-                            <p>선택한 상품명</p>
-                            <div class="count-main">
-                                <div class="count">
-                                    <button type="button" class="minus">-</button>
-                                    <input type="number" name="quantity" value="1" min="1" class="count-input" id="quantity"> <!-- 수량을 input 태그로 입력 -->
-                                    <button type="button" class="plus">+</button>
-                                </div>
-                                <div>
-                                    <span id="sum_price" th:text="${prodtos.price - (prodtos.price / 100.0) * prodtos.discountRate}"></span>
-                                </div>
-                            </div>
-                            <div class="sum-price">
-                                <p>총 상품금액</p>
-                                <p id="total-price"></p>
-                            </div>
-                        </div>
-
-                        <!-- 장바구니와 구매하기 버튼 -->
-                        <div class="cart-and-purchase">
-                            <input type="submit" value="장바구니" />
-                            <button type="submit" formaction="/product/order" formmethod="post">구매하기</button>
-                        </div>
-
-                        <a href="#" class="advertisement">
-                            <img src="/proDetail-img/advertisement.jpg" alt="광고">
-                        </a>
-                    </div>
-                </form>
-
-
-
-                <div class="details-body" id="details-body">
-              <div class="title">
-                <img src="/proDetail-img/title.PNG" alt="title1">
               </div>
-
-              <div class="title2-header">
-                <p>판매자 공지사항</p>
+              <div class="sum-price">
+                <p>총 상품금액&nbsp;</p>
+                <input type="hidden" id="total-price"/>
               </div>
-
-              <div class="title2">
-                <img src="/proDetail-img/title2.PNG" alt="title2">
-              </div>
-
-              <div class="body">
-                <img src="/proDetail-img/mainTitle.PNG" class="mainTitle">
-              </div>
-
-              <div class="body">
-                <img src="/proDetail-img/color.PNG" alt="color-img">
-              </div>
-
-              <div class="body">
-                <img src="/proDetail-img/fabric.PNG" alt="fabric">
-              </div>
-
-              <div class="body">
-                <img src="/proDetail-img/black.PNG" alt="black">
-              </div>
-
-              <div class="body">
-                <img src="/proDetail-img/black2.PNG" alt="black2">
-              </div>
-
-              <div class="body">
-                <img src="/proDetail-img/khaki.PNG" alt="khaki">
-              </div>
-
-              <div class="body">
-                <img src="/proDetail-img/khaki2.PNG" alt="khaki2">
-              </div>
-
-              <div class="body">
-                <img src="/proDetail-img/detail1.PNG" alt="detail1">
-              </div>
-
-              <div class="body">
-                <img src="/proDetail-img/detail2.PNG" alt="detail2">
-              </div>
-
-              <div class="body">
-                <img src="/proDetail-img/detail3.PNG" alt="detail3">
-              </div>
-
-              <div class="body">
-                <img src="/proDetail-img/detail4.PNG" alt="detail4">
-              </div>
-
-              <div class="body">
-                <img src="/proDetail-img/size.PNG" alt="size">
-              </div>
-
-              <div class="body">
-                <img src="/proDetail-img/info.PNG" alt="info">
-              </div>
-
-              <div class="body">
-                <img src="/proDetail-img/infodetail.PNG" alt="">
-              </div>
-
-              <div class="reviews-box">  
-                <p>리뷰</p>
-                  <div class="items">
-                    <div>
-                      <div class="pro-review">
-                        <div class="review-info">
-                          <img src="/proDetail-img/review_icon.png" alt="프로필 아이콘">
-                          <span>기모찌맨</span>
-                        </div>
-                        <span>★★★★☆</span>
-                      </div>
-
-                      <div class="review-title">
-                        <p>상품평</p>
-                        <img src="/proDetail-img/img5.png" alt="이미지" class="items-img">
-                      </div>
-
-                    </div>
-                    <div class="productDescription">
-                      <span>개좋음 닥치고 사셈!!</span>
-                    </div>
-                  </div>
-                  
-                  <div class="items">
-                    <div>
-                      <div class="pro-review">
-                        <div class="review-info">
-                          <img src="/proDetail-img/review_icon.png" alt="프로필 아이콘">
-                          <span>개꼬임</span>
-                        </div>
-                        <span>★★★★☆</span>
-                      </div>
-
-                      <div class="review-title">
-                        <p>상품평</p>
-                        <img src="/proDetail-img/img5.png" alt="이미지" class="items-img">
-                      </div>
-
-                    </div>
-                    <div class="productDescription">
-                      <span>별로 안좋은데 위에 댓글 알바임? ㅋㅋ 돈아깝다 왜 사냐</span>
-                    </div>
-                  </div>
-
-                  <div class="items">
-                    <div>
-                      <div class="pro-review">
-                        <div class="review-info">
-                          <img src="/proDetail-img/review_icon.png" alt="프로필 아이콘">
-                          <span>asd23님</span>
-                        </div>
-                        <span>★★★★☆</span>
-                      </div>
-
-                      <div class="review-title">
-                        <p>상품평</p>
-                        <img src="/proDetail-img/img5.png" alt="이미지" class="items-img">
-                      </div>
-
-                    </div>
-                    <div class="productDescription">
-                      <span>댓글 달기 귀찮누;;</span>
-                    </div>
-                  </div>
-
-              </div>
-
             </div>
 
-            <div class="detail-btnBox">
-              <button id="detail-btn">상세정보  더보기</button>
+            <!-- 장바구니와 구매하기 버튼 -->
+            <div class="cart-and-purchase">
+              <input type="submit" value="장바구니"/>
+              <button type="submit" th:formaction="@{/order}" formmethod="POST">구매하기</button>
+            </div>
+          </div>
+        </form>
+        <a href="#" class="advertisement">
+          <img src="/proDetail-img/advertisement.jpg" alt="광고">
+        </a>
+
+        <div class="details-body" id="details-body">
+          <div class="title">
+            <img th:src="${prodtos.getImage().getDetailImageLocation()}" alt="title1">
+          </div>
+
+          <div class="reviews-box">
+            <p>리뷰</p>
+            <div class="items">
+              <div>
+                <div class="pro-review">
+                  <div class="review-info">
+                    <img src="/proDetail-img/review_icon.png" alt="프로필 아이콘">
+                    <span>기모찌맨</span>
+                  </div>
+                  <span>★★★★☆</span>
+                </div>
+
+                <div class="review-title">
+                  <p>상품평</p>
+                  <img src="/proDetail-img/img5.png" alt="이미지" class="items-img">
+                </div>
+
+              </div>
+              <div class="productDescription">
+                <span>개좋음 닥치고 사셈!!</span>
+              </div>
             </div>
 
-            </article>
+            <div class="items">
+              <div>
+                <div class="pro-review">
+                  <div class="review-info">
+                    <img src="/proDetail-img/review_icon.png" alt="프로필 아이콘">
+                    <span>개꼬임</span>
+                  </div>
+                  <span>★★★★☆</span>
+                </div>
+
+                <div class="review-title">
+                  <p>상품평</p>
+                  <img src="/proDetail-img/img5.png" alt="이미지" class="items-img">
+                </div>
+
+              </div>
+              <div class="productDescription">
+                <span>별로 안좋은데 위에 댓글 알바임? ㅋㅋ 돈아깝다 왜 사냐</span>
+              </div>
+            </div>
+
+            <div class="items">
+              <div>
+                <div class="pro-review">
+                  <div class="review-info">
+                    <img src="/proDetail-img/review_icon.png" alt="프로필 아이콘">
+                    <span>asd23님</span>
+                  </div>
+                  <span>★★★★☆</span>
+                </div>
+
+                <div class="review-title">
+                  <p>상품평</p>
+                  <img src="/proDetail-img/img5.png" alt="이미지" class="items-img">
+                </div>
+
+              </div>
+              <div class="productDescription">
+                <span>댓글 달기 귀찮누;;</span>
+              </div>
+            </div>
+
+          </div>
 
         </div>
 
-         </main>
+        <div class="detail-btnBox">
+          <button id="detail-btn">상세정보 더보기</button>
+        </div>
 
-        <th:block th:insert="~{/common/footer}"></th:block>
+      </article>
 
     </div>
-  </body>
+
+  </main>
+
+  <th:block th:insert="~{/common/footer}"></th:block>
+
+</div>
+</body>
 </html>

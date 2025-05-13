@@ -73,5 +73,89 @@
     <!-- FOOTER -->
     <th:block th:insert="~{/common/footer}"></th:block>
 </div>
+<script>
+    let verified = false;
+
+    // 1. 이메일 인증코드 전송
+    $('#verify-btn').click(function () {
+        const email = $('#user-email').val();
+        const name = $('#user-name').val();
+
+        if (!email || !name) {
+            alert("이름과 이메일을 모두 입력해주세요.");
+            return;
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "/user/sendCode",
+            contentType: "application/json",
+            data: JSON.stringify({ name, email }),
+            success: function (res) {
+                if (res === "NO_USER") {
+                    alert("등록된 회원 정보가 없습니다.");
+                    return;
+                }
+
+                alert("인증코드가 이메일로 발송되었습니다.");
+                $('#verification-box').show();
+            }
+        });
+    });
+    // 2. 인증코드 확인
+    $('#btnAuthEmail').click(function () {
+        const code = $('#verification-code').val();
+        const email = $('#user-email').val(); // email 추가
+
+        $.ajax({
+            type: "POST",
+            url: "/email/auth",
+            contentType: "application/json",
+            data: JSON.stringify({ code, email }), // email 포함해서 보냄
+            success: function (result) {
+                if (result) {
+                    alert("인증되었습니다.");
+                    verified = true;
+                    $('.login-btn').prop('disabled', false);
+                } else {
+                    alert("인증코드가 일치하지 않습니다.");
+                    verified = false;
+                    $('.login-btn').prop('disabled', true);
+                }
+            }
+        });
+    });
+
+
+    // 3. 아이디 찾기 요청
+    $('#find-id-form').submit(function (e) {
+        e.preventDefault();
+
+        if (!verified) {
+            alert("이메일 인증을 먼저 완료해주세요.");
+            return;
+        }
+
+        const name = $('#user-name').val();
+        const email = $('#user-email').val();
+        const code = $('#verification-code').val();
+
+        $.ajax({
+            type: "POST",
+            url: "/user/findid",
+            contentType: "application/json",
+            data: JSON.stringify({ name, email, code }),
+            success: function (res) {
+                $('.result').text(res).css("color", res.includes("아이디") ? "green" : "red");
+            }
+        });
+    });
+
+    // 취소 버튼 (홈으로 이동 or 초기화 등)
+    $('.cancel-btn').click(function () {
+        location.href = '/login';
+    });
+</script>
 </body>
+
 </html>

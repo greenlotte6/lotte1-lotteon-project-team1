@@ -1,202 +1,133 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>롯데ON</title>
-    <link rel="stylesheet" href="/style/init.css" />
-    <link rel="stylesheet" href="/style/index.css" />
-    <link rel="stylesheet" href="/style/common/header.css" />
-    <link rel="stylesheet" href="/style/common/footer.css" />
-    <link rel="stylesheet" href="/style/common/pagination.css">
-    <link rel="stylesheet" href="/style/product/shoppingCart.css" />
-    <link rel="stylesheet" href="/style/product/aside.css">
-    <link rel="stylesheet" href="/style/product/mainheader.css">
-    <link
+<head>
+  <meta charset="UTF-8"/>
+  <title>롯데ON</title>
+  <link rel="stylesheet" href="/style/init.css"/>
+  <link rel="stylesheet" href="/style/index.css"/>
+  <link rel="stylesheet" href="/style/common/header.css"/>
+  <link rel="stylesheet" href="/style/common/footer.css"/>
+  <link rel="stylesheet" href="/style/common/pagination.css">
+  <link rel="stylesheet" href="/style/product/shoppingCart.css"/>
+  <link rel="stylesheet" href="/style/product/aside.css">
+  <link rel="stylesheet" href="/style/product/mainheader.css">
+  <link
       rel="icon"
       href="https://static.lotteon.com/p/common/assets/favicon/1/favicon-32.png"
-    />
-    <link
+  />
+  <link
       rel="stylesheet"
       href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css"
-    />
-    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-    <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
-    <script src="/js/common/header.js"></script>
-    <script src="/js/common/footer.js"></script>
-    <script
+  />
+  <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+  <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
+  <script src="/js/common/header.js"></script>
+  <script src="/js/common/footer.js"></script>
+  <script
       src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/all.min.js"
       crossorigin="anonymous"
-    ></script>
-  </head>
-  <body>
-    <div id="wrapper">
-        <th:block th:insert="~{/common/header}"></th:block>
-        <th:block th:insert="~{/_menu}"></th:block>
+  ></script>
+  <script src="/js/product/orderResult.js"></script>
+</head>
+<body>
+<div id="wrapper">
+  <th:block th:insert="~{/common/header}"></th:block>
+  <main>
+    <div class="main">
+      <article class="article-body">
+        <div class="article-header">
+          <!-- ✅ 선택삭제용 form 시작 -->
+          <form method="post" action="/cart">
+            <table class="list" th:if="${!cartItems.isEmpty()}">
+              <thead>
+              <tr class="table_hd">
+                <th><input type="checkbox" id="selectAll"></th>
+                <th></th>
+                <th>상품명</th>
+                <th>수량</th>
+                <th>판매가</th>
+                <th>할인</th>
+                <th>포인트</th>
+                <th>배송비</th>
+                <th>총합</th>
+              </tr>
+              </thead>
 
-      <main>
-        <div class="main">
-            <aside class="aside1">
-                <div>
-                    <div class="bestPro">
-                        <p><i class="fa-solid fa-tag"></i>베스트 상품</p>
-                        <span class="sale">1</span>
-                        <div>
-                            <img src="/proDetail-img/img5.png" alt="이미지">
-                        </div>
-                        <div>
-                            <p>상품명</p>
-                            <del>30,000원</del>
-                            <span class="sale">10%↓</span>
-                            <p>27,000원</p>
-                        </div>
-                    </div>
+              <tbody>
+              <tr class="table_bd" th:each="item : ${cartItems}">
+                <td><input type="checkbox" name="productIds"
+                           class="selectItem"></td>
+                <td><img th:src="${item.getProduct().getImage().getListThumbnailLocation()}"
+                         alt="상품 이미지"></td>
+                <td>상품명</td>
+                <td class="amount" th:text="${item.getAmount()}">수량</td>
+                <td class="product-price" th:text="${item.getProduct().getPrice()}">판매가</td>
+                <td class="discount" th:with="price=${item.getProduct().getPrice()},
+discountRate = ${item.getProduct().getDiscountRate()},
+amount = ${item.getAmount()},
+discount=${(price * discountRate / 100) * amount}" th:text="'-' + ${discount}">할인율
+                </td>
+                <td class="point" th:text="${item.getProduct().getPoint()}">포인트</td>
+                <td class="delivery-fee" th:text="${item.getProduct().getDeliveryFee()}">배송비</td>
+                <td class="sumprice" th:with="price =${item.getProduct().getPrice()},
+                discountRate = ${item.getProduct().getDiscountRate()},
+                amount = ${item.getAmount()},
+                deliveryFee=${item.getProduct().getDeliveryFee()}"
+                    th:text="${(price - (price * discountRate / 100)) * amount + deliveryFee}">총합
+                </td>
+              </tr>
+              </tbody>
+            </table>
 
-                    <div class="items">
-                        <div>
-                            <span class="sale">2</span>
-                            <img src="/proDetail-img/img5.png" alt="이미지">
-                        </div>
-                        <div class="productDescription">
-                            <p>상품명</p>
-                            <p><del>30,000원</del><span class="sale">10%↓</span></p>
-                            <p>27,000원</p>
-                        </div>
-                    </div>
-                    
-                    <div class="items">
-                        <div>
-                            <span class="sale">3</span>
-                            <img src="/proDetail-img/img5.png" alt="이미지">
-                        </div>
-                        
-                        <div class="productDescription">
-                            <p>상품명</p>
-                            <p><del>30,000원</del><span class="sale">10%↓</span></p>
-                            <p>27,000원</p>
-                        </div>
-                    </div>
-                </div>
-            </aside>
+            <div class="empty-cart" th:if="${cartItems.isEmpty()}">
+              <i class="fa-solid fa-cart-shopping"></i>
+              <h3>장바구니가 비어있습니다.</h3>
+            </div>
 
-            <article class="article-body">
-                <div class="article-header">
-                    <div class="main-heder">
-                        <p>장바구니</p>
-                        <ul>
-                            <li>HOME > </li>
-                            <li>패션 · 의류 · 뷰티 > </li>
-                            <li>장바구니</li>
-                        </ul>
-                    </div>
+            <div class="shopping" th:if="${!cartItems.isEmpty()}">
+              <div class="delete">
+                <button type="submit" formaction="/cart/delete" formmethod="POST">선택삭제</button>
+              </div>
+            </div>
+          </form>
+          <div class="shopping-Box" th:if="${!cartItems.isEmpty()}">
+            <div class="sum">
+              <p>전체합계</p>
+            </div>
+            <div class="form-box">
+              <div class="form-body">
+                <span>총 상품금액</span>
+                <span class="price-result">0</span>
+              </div>
 
-                    <!-- ✅ 선택삭제용 form 시작 -->
-                    <form method="post" action="/cart/deleteSelected">
-                        <table class="list">
-                            <thead>
-                            <tr class="table_hd">
-                                <th><input type="checkbox" id="selectAll"></th>
-                                <th></th>
-                                <th>상품명</th>
-                                <th>수량</th>
-                                <th>판매가</th>
-                                <th>할인</th>
-                                <th>포인트</th>
-                                <th>배송비</th>
-                                <th>총합</th>
-                            </tr>
-                            </thead>
+              <div class="form-body">
+                <span>총 할인금액</span>
+                <span id="discount-result">0</span>
+              </div>
 
-                            <tbody>
-                            <tr class="table_bd" th:each="cart : ${cart}">
-                                <td><input type="checkbox" name="productIds" th:value="${cart.productId}" class="selectItem"></td>
-                                <td><img src="/proDetail-img/img5.png" alt="상품 이미지"></td>
-                                <td th:text="${cart.productName}">상품명</td>
-                                <td th:text="${cart.quantity}">수량</td>
-                                <td th:text="${cart.price}">판매가</td>
-                                <td th:text="${cart.discountRate}">할인율</td>
-                                <td th:text="${cart.point}">포인트</td>
-                                <td th:text="${cart.dil}">배송비</td>
-                                <td class="sumprice" th:text="${cart.totalPrice}">총합</td>
-                            </tr>
-                            </tbody>
-                        </table>
+              <div class="form-body">
+                <span>총 배송비</span>
+                <span id="delivery-fee-result">0</span>
+              </div>
 
-                        <div class="shopping">
-                            <div class="delete">
-                                <button type="submit">선택삭제</button>
-                            </div>
-                        </div>
-                    </form>
+              <div class="form-body">
+                <span>총 결제금액</span>
+                <span id="total-price-result">0</span>
+              </div>
+            </div>
 
-                    <form method="get" action="/product/order" class="shopping-Box">
-                        <div class="sum">
-                            <p>전체합계</p>
-                        </div>
-
-                        <div class="form-box">
-                            <div class="form-body">
-                                <span>상품수</span>
-                                <span th:text="${productCount}">0</span>
-                            </div>
-
-                            <div class="form-body">
-                                <span>상품금액</span>
-                                <span th:text="${#numbers.formatInteger(totalProductPrice, 3, 'COMMA')}">0</span>
-                            </div>
-
-                            <div class="form-body">
-                                <span>할인금액</span>
-                                <span th:text="'-' + ${#numbers.formatInteger(totalDiscount, 3, 'COMMA')}">0</span>
-                            </div>
-
-                            <div class="form-body">
-                                <span>배송비</span>
-                                <span th:text="${#numbers.formatInteger(totalShippingFee, 3, 'COMMA')}">0</span>
-                            </div>
-
-                            <div class="form-body">
-                                <span>전체주문 금액</span>
-                                <span class="sumprice" th:text="${#numbers.formatInteger(totalOrderPrice, 3, 'COMMA')}">0</span>
-                            </div>
-
-                            <div class="form-body">
-                                <span>적립 포인트</span>
-                                <span th:text="${totalPoint}">0</span>
-                            </div>
-                        </div>
-
-                        <div class="form-btn">
-                            <input type="submit" value="주문하기">
-                        </div>
-                    </form>
-
-                </div>
-            </article>
+            <div class="form-btn">
+              <input type="submit" value="주문하기">
+            </div>
+          </div>
 
         </div>
-
-        <section class="pagination">
-          <a class="page move" href="#">
-            <i class="fa-solid fa-angles-left"></i>
-          </a>
-          <a class="page move" href="#">
-            <i class="fa-solid fa-chevron-left"></i>
-          </a>
-          <a class="page" href="">1</a>
-          <a class="page" href="">2</a>
-          <a class="page" href="">3</a>
-          <a class="page" href="">4</a>
-          <a class="page move" href="#">
-            <i class="fa-solid fa-chevron-right"></i>
-          </a>
-          <a class="page move" href="#">
-            <i class="fa-solid fa-angles-right"></i>
-          </a>
-        </section>
-      </main>
-
-        <th:block th:insert="~{/common/footer}"></th:block>
-
+      </article>
     </div>
-  </body>
+  </main>
+
+  <th:block th:insert="~{/common/footer}"></th:block>
+
+</div>
+</body>
 </html>

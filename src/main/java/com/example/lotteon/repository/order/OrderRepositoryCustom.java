@@ -64,7 +64,7 @@ public interface OrderRepositoryCustom {
 
   void updateStatusByOrderNumber(String orderNumber, OrderStatus status);
 
-  // 마이페이지 코드
   Page<MypageOrderWrapper> findOrderWrappersByUserId(String userId, Pageable pageable);
 
+  String findLatestOrderNumber();
 }

@@ -1,4 +1,4 @@
-package com.example.lotteon.controller.api;
+package com.example.lotteon.controller.api.admin.member;
 
 import com.example.lotteon.dto.user.MemberDTO;
 import com.example.lotteon.service.admin.point.PointService;

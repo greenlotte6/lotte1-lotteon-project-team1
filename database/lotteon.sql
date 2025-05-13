@@ -125,9 +125,12 @@ ENGINE = InnoDB;
 -- Table `lotteon`.`product_category`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `lotteon`.`product_category` (
-  `id` INT NOT NULL AUTO_INCREMENT,
+  `id` INT NOT NULL,
   `name` VARCHAR(20) NOT NULL,
-  PRIMARY KEY (`id`))
+  `sequence` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `name_UNIQUE` (`name` ASC) VISIBLE,
+  UNIQUE INDEX `sequence_UNIQUE` (`sequence` ASC) VISIBLE)
 ENGINE = InnoDB;
 
 
@@ -136,8 +139,16 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `lotteon`.`product_subcategory` (
   `id` INT NOT NULL AUTO_INCREMENT,
+  `category_id` INT NOT NULL,
   `name` VARCHAR(20) NOT NULL,
-  PRIMARY KEY (`id`))
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `name_UNIQUE` (`name` ASC) VISIBLE,
+  INDEX `fk_product_subcategory_product_category1_idx` (`category_id` ASC) VISIBLE,
+  CONSTRAINT `fk_product_subcategory_product_category1`
+    FOREIGN KEY (`category_id`)
+    REFERENCES `lotteon`.`product_category` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
@@ -544,6 +555,7 @@ CREATE TABLE IF NOT EXISTS `lotteon`.`cart` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `member_id` VARCHAR(16) NOT NULL,
   `product_id` VARCHAR(45) NOT NULL,
+  `amount` INT NOT NULL DEFAULT 1,
   `register_date` DATE NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_cart_member1_idx` (`member_id` ASC) VISIBLE,
@@ -696,6 +708,7 @@ CREATE TABLE IF NOT EXISTS `lotteon`.`order_item` (
   `order_number` VARCHAR(45) NOT NULL,
   `product_id` VARCHAR(45) NOT NULL,
   `amount` INT NULL,
+  `total_price` INT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_order_item_product1_idx` (`product_id` ASC) VISIBLE,
   INDEX `fk_order_item_order1_idx` (`order_number` ASC) VISIBLE,
@@ -707,6 +720,29 @@ CREATE TABLE IF NOT EXISTS `lotteon`.`order_item` (
   CONSTRAINT `fk_order_item_order1`
     FOREIGN KEY (`order_number`)
     REFERENCES `lotteon`.`order` (`order_number`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `lotteon`.`order_item_options`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `lotteon`.`order_item_options` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `order_item_id` INT NOT NULL,
+  `product_options_id` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_order_item_options_order_item1_idx` (`order_item_id` ASC) VISIBLE,
+  INDEX `fk_order_item_options_product_options1_idx` (`product_options_id` ASC) VISIBLE,
+  CONSTRAINT `fk_order_item_options_order_item1`
+    FOREIGN KEY (`order_item_id`)
+    REFERENCES `lotteon`.`order_item` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_order_item_options_product_options1`
+    FOREIGN KEY (`product_options_id`)
+    REFERENCES `lotteon`.`product_options` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;

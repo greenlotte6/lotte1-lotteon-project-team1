@@ -98,6 +98,8 @@ INSERT INTO `faq` VALUES (22, "결제 관련 FAQ입니다.", 14, "결제 관련 
 
 -- 사용자
 INSERT INTO `user` VALUES("admin1", "$2a$12$L7IovRMdbD4aZUJ0stXkseHCX6/mxyVEM8IdrkWODngVfPQoVjga2", "admin1@example.com", "010-2313-6023", "12345", "부산광역시 부산진구", "행복동 101-1", "admin", NOW());
+INSERT INTO `user` VALUES("member1", "$2a$10$/dP6IfOvrnvJxovfLgIuS.c2HLQQfHK8ni/fpmBY4zq1ktFf1CU32", "jas06113@gmail.com", "010-4356-1697", "48277", "부산 수영구 민락동 161-25", "행복아파트 103동 803호", "member", "2025-05-12");
+INSERT INTO `member` VALUES("member1", "이현민", "m", "2025-05-12", "normal", "family", "1999-04-16");
 
 -- 상점(seller)
 INSERT INTO `user` VALUES ("seller1", "$2a$12$7nR.CgoesCyfsETEl74Dtuk0Mu2wEzmJPCljlJddYY14UmIY100uG", "seller1@example.com", "051-123-4567", "12345", "부산광역시 부산진구", "행복로 127-11", "seller", NOW());
@@ -126,16 +128,19 @@ INSERT INTO `seller` VALUES ("112-12-11119", "seller11", "김유신", "(주)행�
 -- 상품
 INSERT INTO `product_image` VALUES (1, "/upload/product/t-shirt.jpg", "/upload/product/t-shirt.jpg" ,"/upload/product/t-shirt.jpg", "/upload/product/t-shirt.jpg");
 
-INSERT INTO `product_category` VALUES(1, "의류");
-INSERT INTO `product_category` VALUES(2, "화장품");
+INSERT INTO `product_category` VALUES(1, "의류", 1);
+INSERT INTO `product_category` VALUES(2, "화장품", 8);
+INSERT INTO `product_category` VALUES(3, "식품", 9);
+INSERT INTO `product_category` VALUES(4, "생활/건강", 23);
+INSERT INTO `product_category` VALUES(5, "가전", 27);
 
 
-INSERT INTO `product_subcategory` VALUES(1, "상의");
-INSERT INTO `product_subcategory` VALUES(2, "하의");
-INSERT INTO `product_subcategory` VALUES(3, "악세서리");
-INSERT INTO `product_subcategory` VALUES(4, "폼클렌징");
-INSERT INTO `product_subcategory` VALUES(5, "파운데이션");
-INSERT INTO `product_subcategory` VALUES(6, "마스크팩");
+INSERT INTO `product_subcategory` VALUES(1, 1, "상의");
+INSERT INTO `product_subcategory` VALUES(2, 1, "하의");
+INSERT INTO `product_subcategory` VALUES(3, 1, "악세서리");
+INSERT INTO `product_subcategory` VALUES(4, 2, "폼클렌징");
+INSERT INTO `product_subcategory` VALUES(5, 2, "파운데이션");
+INSERT INTO `product_subcategory` VALUES(6, 2, "마스크팩");
 
 INSERT INTO `product` VALUES("2025010001", 1, 1,"112-12-12345", "seller1", "맨투맨", "맨투맨입니다", 39000, 39, 10, 200, 2500, 1, "on_sale", 1, "통신판매업", 1, "국내산", "new");
 INSERT INTO `product` VALUES("2025010002", 1, 1,"112-12-12525", "seller2", "후드티", "후드티입니다", 49000, 100, 10, 200, 2500, 1, "on_sale", 1, "통신판매업", 1, "국내산", "new");
@@ -213,15 +218,14 @@ INSERT INTO `order` VALUES("202500002", "abc123", "신용카드", "장보고", "
 INSERT INTO `order` VALUES("202500003", "xyz123", "신용카드", "이성계", "010-2451-1230", "12345", "부산광역시", "남구", "빠른 배송 부탁드립니다", 1, NOW());
 INSERT INTO `order` VALUES("202500004", "jas06113", "신용카드","이현민", "010-2351-2341", "12345", "부산광역시", "남구", "빠른 배송 부탁드립니다", 3, NOW());
 
-INSERT INTO `order_item` VALUES(1, "202500001", "2025010001", 1);
-INSERT INTO `order_item` VALUES(2, "202500001", "2025010002", 1);
-INSERT INTO `order_item` VALUES(3, "202500001", "2025010003", 1);
-INSERT INTO `order_item` VALUES(6, "202500001", "2025010001", 1);
+INSERT INTO `order_item` VALUES(1, "202500001", "2025010001", 1, 37600);
+INSERT INTO `order_item` VALUES(2, "202500001", "2025010002", 1, 46600);
+INSERT INTO `order_item` VALUES(3, "202500001", "2025010003", 1, 46600);
 
-INSERT INTO `order_item` VALUES(4, "202500002", "2025010001", 2);
+INSERT INTO `order_item` VALUES(4, "202500002", "2025010001", 2, 72700);
 
-INSERT INTO `order_item` VALUES(5, "202500003", "2025010002", 2);
-INSERT INTO `order_item` VALUES(7, "202500004", "2025010001", 4);
+INSERT INTO `order_item` VALUES(5, "202500003", "2025010002", 2, 90700);
+INSERT INTO `order_item` VALUES(6, "202500004", "2025010001", 4, 142900);
 
 # 매출
 INSERT INTO `sales` VALUES(1, "202500001", "112-12-12345", "seller1");
@@ -337,7 +341,7 @@ COUNT(case when o.status_id=4 then 1 ELSE NULL END) AS `on_delivery_count`,
 COUNT(case when o.status_id=5 then 1 ELSE NULL END) AS `delivered_order_count`,
 COUNT(case when o.status_id=6 then 1 ELSE NULL END) AS `purchase_confirmed_count`,
 COUNT(DISTINCT o.order_number) AS order_count,
-SUM(((p.price - (p.price * p.discount_rate / 100))) * oi.amount) AS total_price,
+SUM(oi.total_price) AS total_price,
 SUM(case when o.status_id=6 then ((p.price - (p.price * p.discount_rate / 100))) * oi.amount ELSE 0 end) AS confirmed_total_price
 FROM `sales` s
 JOIN `seller`
@@ -365,8 +369,8 @@ COUNT(case when o.status_id=4 then 1 ELSE NULL END) AS `on_delivery_count`,
 COUNT(case when o.status_id=5 then 1 ELSE NULL END) AS `delivered_order_count`,
 COUNT(case when o.status_id=6 then 1 ELSE NULL END) AS `purchase_confirmed_count`,
 COUNT(DISTINCT o.order_number) AS order_count,
-SUM(((p.price - (p.price * p.discount_rate / 100))) * oi.amount) AS total_price,
-SUM(case when o.status_id=6 then ((p.price - (p.price * p.discount_rate / 100))) * oi.amount ELSE 0 end) AS confirmed_total_price
+SUM(oi.total_price) AS total_price2,
+SUM(case when o.status_id=6 then SUM(oi.total_price) ELSE 0 end) AS confirmed_total_price
 FROM `sales` s
 JOIN `seller`
 ON `s`.seller_business_number = seller.business_number
@@ -380,3 +384,27 @@ JOIN `product` p
 ON oi.product_id = p.id AND p.seller_business_number = s.seller_business_number
 WHERE s.seller_business_number = "112-12-12345"
 GROUP BY s.seller_business_number;
+
+SELECT
+*
+FROM product_subcategory psc
+JOIN product_category pc
+ON psc.category_id = pc.id
+GROUP BY psc.id;
+
+SELECT
+pc.id AS `category_id`,
+GROUP_CONCAT(psc.category_id SEPARATOR ',') AS `subcategory_ids`
+FROM product_category pc
+left JOIN  product_subcategory psc
+ON pc.id = psc.category_id;
+
+SELECT 
+  c.id AS category_id,
+  JSON_ARRAYAGG(sc.id) AS subcategory_ids
+FROM 
+  product_category c
+left JOIN 
+  product_subcategory sc ON c.id = sc.category_id
+GROUP BY 
+  c.id;

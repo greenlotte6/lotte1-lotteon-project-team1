@@ -1,13 +1,19 @@
 package com.example.lotteon.controller.admin.config;
 
 import com.example.lotteon.dto.admin.PolicyDTO;
+import com.example.lotteon.dto.product.CategoryFormDTO;
+import com.example.lotteon.dto.product.ProductCategoryDTO;
+import com.example.lotteon.dto.product.ProductSubCategoryDTO;
 import com.example.lotteon.entity.admin.config.VersionConfig;
 import com.example.lotteon.service.admin.BasicConfigService;
 import com.example.lotteon.service.admin.CacheService;
 import com.example.lotteon.service.admin.PolicyService;
+import com.example.lotteon.service.product.category.ProductCategoryService;
+import com.example.lotteon.service.product.category.ProductSubCategoryService;
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -22,6 +28,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequiredArgsConstructor
 public class BasicConfigController {
 
+  private final ProductCategoryService categoryService;
+  private final ProductSubCategoryService subCategoryService;
   private final CacheService cacheService;
   private final BasicConfigService service;
   private final PolicyService policyService;
@@ -50,9 +58,18 @@ public class BasicConfigController {
   }
 
   @GetMapping("/category")
-  public String category() {
+  public String category(Model model) {
+    Map<ProductCategoryDTO, List<ProductSubCategoryDTO>> map = categoryService.listWithSubCategories();
+    model.addAttribute("map", map);
     return "/admin/config/category";
   }
+
+  @PostMapping("/category")
+  public String edit(CategoryFormDTO form) {
+    categoryService.update(form);
+    return "redirect:/admin/config/category";
+  }
+
 
   @GetMapping("/version")
   public String version(Model model) {

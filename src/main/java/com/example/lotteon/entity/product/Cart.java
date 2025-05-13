@@ -1,41 +1,44 @@
 package com.example.lotteon.entity.product;
 
-import jakarta.persistence.*;
-import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
+import com.example.lotteon.entity.user.Member;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 import java.time.LocalDate;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@IdClass(CartId.class)
+@Table(name = "cart")
 public class Cart {
 
-    @Id
-    @Column(name = "member_id")
-    private String memberId;
+  @Id
+  private int id;
 
-    @Id
-    @Column(name = "product_id")
-    private int productId;
+  @JoinColumn(name = "member_id")
+  @OneToOne(fetch = FetchType.LAZY)
+  private Member member;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_id", insertable = false, updatable = false)
-    private Product product;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "product_id")
+  private Product product;
 
-    @CreationTimestamp
-    private LocalDate registerDate;
+  @Column(name = "amount")
+  private int amount;
 
-    private int quantity;
-    private int price;
-    private int totalPrice;
-    private int dil;
-
-    public void updateQuantity(int newQuantity, int pricePerItem) {
-        this.quantity = newQuantity;
-        this.totalPrice = newQuantity * pricePerItem;
-    }
+  @CreationTimestamp
+  private LocalDate registerDate;
 }
 

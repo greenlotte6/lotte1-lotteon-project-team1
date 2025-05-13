@@ -54,6 +54,7 @@ public class SecurityConfig {
                 "/admin/delivery/**",
                 "/admin/product/**")
             .hasAnyRole("ADMIN", "SELLER")
+            .requestMatchers("/order/**").hasRole("MEMBER")
             .requestMatchers("/styles/**", "/js/**", "/images/**", "/static/**").permitAll()
             .anyRequest()
             .permitAll());
