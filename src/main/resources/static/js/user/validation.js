@@ -136,6 +136,13 @@ document.addEventListener("DOMContentLoaded", function () {
             emailResult.style.color = "red";
             isEmailOk = false;
         } else {
+            // 🔥 세션에 인증코드 저장되도록 별도 호출 추가
+            await fetch("/user/sendJoinCode", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email: value })
+            });
+
             emailResult.innerText = "인증코드를 발송했습니다.";
             emailResult.style.color = "green";
             auth.style.display = "block";
@@ -146,10 +153,12 @@ document.addEventListener("DOMContentLoaded", function () {
     const btnAuthEmail = document.getElementById("btnAuthEmail");
     btnAuthEmail.onclick = async function () {
         const code = $("input[name='auth']").val();
+        const email = $(`input[name='${prefix}email']`).val(); // 🔥 email 가져옴
+
         const res = await fetch("/email/auth", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ code })
+            body: JSON.stringify({ code, email }) // 🔥 email 같이 보냄
         });
 
         const data = await res.json();

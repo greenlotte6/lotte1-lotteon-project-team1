@@ -46,7 +46,7 @@
               <tr>
                 <th>아이디<span style="color: red;">*</span></th>
                 <td>
-                  <input type="text" name="memberId.user.id" placeholder="아이디 입력" maxlength="10">
+                  <input type="text" name="memberId.user.id" placeholder="아이디 입력" maxlength="10" required>
                   <button id="btnCheckId" type="button">중복체크</button>
                   <span class="IdResult" style="margin-left: 10px; color: #333333;">영문·숫자 조합 4~10자 이내</span>
                 </td>
@@ -63,13 +63,13 @@
               <tr>
                 <th>비밀번호 확인<span style="color: red;">*</span></th>
                 <td><input type="password" name="passwordConfirm" placeholder="비밀번호 확인입력"
-                           maxlength="16">
+                           maxlength="16" required>
                 </td>
               </tr>
               <tr>
                 <th>이름<span style="color: red;">*</span></th>
                 <td>
-                  <input type="text" name="name" placeholder="이름 입력">
+                  <input type="text" name="name" placeholder="이름 입력" required>
                   <span class="nameResult"></span>
                 </td>
               </tr>
@@ -86,7 +86,7 @@
                 <th>휴대폰<span style="color: red;">*</span></th>
                 <td>
                   <input type="text" name="memberId.user.contact" placeholder="휴대폰 입력"
-                         maxlength="13">
+                         maxlength="13" required>
                   <button id="btnSendHp" type="button">휴대폰 인증</button>
                   <span class="hpResult"></span>
                 </td>
@@ -102,7 +102,7 @@
               <tr>
                 <th>이메일<span style="color: red;">*</span></th>
                 <td>
-                  <input type="email" name="memberId.user.email" placeholder="이메일 입력"/>
+                  <input type="email" name="memberId.user.email" placeholder="이메일 입력" required/>
                   <button id="btnSendEmail" type="button">인증코드 전송</button>
                   <span class="emailResult"></span>
                   <div class="auth" style="display: none">
