@@ -50,6 +50,7 @@ public class CartController {
         // 세션 장바구니를 DB에 저장
         List<CartDTO> cartItems = sessionCart.getCartItems();
         cartService.addAll(memberId, cartItems);
+        session.removeAttribute("sessionCart");
       }
 
       // 비회원 상태에서 장바구니에 상품을 담지 않았을 경우, 단순 조회
@@ -90,7 +91,6 @@ public class CartController {
   @PostMapping("/cart/delete")
   public String deleteSelectedCartItems(@RequestParam("productIds") List<Integer> productIds,
       HttpSession session) {
-    session.removeAttribute("sessionCart");
     return "redirect:/product/cart/view";
   }
 }
