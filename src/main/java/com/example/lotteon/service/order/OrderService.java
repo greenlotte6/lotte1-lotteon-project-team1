@@ -1,5 +1,6 @@
 package com.example.lotteon.service.order;
 
+import com.example.lotteon.dto.order.MypageOrderWrapper;
 import com.example.lotteon.dto.order.OrderItemDTO;
 import com.example.lotteon.dto.order.OrderSheet;
 import com.example.lotteon.dto.order.OrderStatusDTO;
@@ -139,6 +140,11 @@ public class OrderService {
     repo.updateStatusByOrderNumber(orderNumber, entity);
   }
 
+  // 마이페이지 코드
+  public Page<MypageOrderWrapper> findOrderWrappersByUserId(String userId, Pageable pageable) {
+    return repo.findOrderWrappersByUserId(userId, pageable);
+  }
+  
   public String getLatestOrderNumber() {
     String lastNumberString = repo.findLatestOrderNumber();
     int latestNumber = Integer.parseInt(lastNumberString) + 1;

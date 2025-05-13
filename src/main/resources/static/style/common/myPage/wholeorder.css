@@ -201,3 +201,7 @@ td {
 .sa {
   width: 300px;
 }
+
+.table-bd td:last-child {
+    vertical-align: top;
+}
