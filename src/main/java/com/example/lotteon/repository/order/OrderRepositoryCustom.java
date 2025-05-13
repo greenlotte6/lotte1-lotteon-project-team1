@@ -64,7 +64,4 @@ public interface OrderRepositoryCustom {
   void updateStatusByOrderNumber(String orderNumber, OrderStatus status);
 
   String findLatestOrderNumber();
-
-  void saveOrderItems(List<OrderItem> orderItems);
-
 }

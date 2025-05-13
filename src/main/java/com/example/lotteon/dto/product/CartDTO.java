@@ -1,11 +1,11 @@
 package com.example.lotteon.dto.product;
 
+import com.example.lotteon.dto.user.MemberDTO;
+import java.time.LocalDate;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDate;
 
 @Data
 @Builder
@@ -13,11 +13,9 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class CartDTO {
 
-    private String member_id;
-    private int product_id;
-    private LocalDate register_date;
-    private int quantity;
-    private int price;
-    private int dil;
-    private int totalPrice;
+  private int id;
+  private MemberDTO member;
+  private ProductDTO product;
+  private int amount;
+  private LocalDate registerDate;
 }

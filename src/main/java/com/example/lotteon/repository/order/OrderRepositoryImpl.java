@@ -247,8 +247,4 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
         .limit(1)
         .fetchOne();
   }
-
-  @Override
-  public void saveOrderItems(List<OrderItem> orderItems) {
-  }
 }

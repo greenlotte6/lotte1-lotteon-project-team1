@@ -42,7 +42,7 @@
           <button type="submit">쿠폰받기</button>
         </form>
 
-        <form action="/product/cart/add" method="post" class="detail">
+        <form th:action="@{/cart}" method="post" class="detail">
           <div>
             <img th:src="${prodtos.getImage().getMainThumbnailLocation()}" alt="이미지"
                  class="main-proimg">
@@ -50,6 +50,7 @@
 
           <div class="info-list">
             <div class="pro-top">
+              <input type="hidden" name="product.id" th:value="${prodtos.id}"/>
               <input type="hidden" name="orderItems[0].product.id"
                      th:value="${prodtos.id}"/>
               <span>상품번호 : [[${prodtos.id}]]</span>
@@ -95,9 +96,10 @@
               <div class="count-main">
                 <div class="count">
                   <button type="button" class="minus">-</button>
+                  <input type="hidden" name="amount" value="1" min="1"
+                         class="count-input-hidden quantity"/>
                   <input type="number" name="orderItems[0].amount" value="1" min="1"
-                         class="count-input"
-                         id="quantity"> <!-- 수량을 input 태그로 입력 -->
+                         class="count-input quantity"> <!-- 수량을 input 태그로 입력 -->
                   <button type="button" class="plus">+</button>
                 </div>
                 <div>

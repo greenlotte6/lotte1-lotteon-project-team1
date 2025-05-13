@@ -39,7 +39,6 @@ public class ProductController {
   public String productList(Model model) {
     List<ProductDTO> proDTOs = productService.proList();
 
-    log.info("proDTOs: {}", proDTOs);
     model.addAttribute("products", proDTOs);
     return "/product/proList";
   }
