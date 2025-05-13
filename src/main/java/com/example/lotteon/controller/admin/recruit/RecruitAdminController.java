@@ -19,16 +19,16 @@ public class RecruitAdminController {
 
 
   //등록 폼
-  @GetMapping("/register")
+  @PostMapping("/register")
   public String showRegisterForm(Model model) {
-    return "/admin/recruit/register";
+    return "/admin/cs/recruit/list";
   }
 
   // 목록 보기
   @GetMapping("/list")
   public String listRecruit(Model model) {
     model.addAttribute("recruits", recruitService.findAll());
-    return "admin/recruit/list";
+    return "/admin/cs/recruit/list";
   }
 
   // 삭제 처리
