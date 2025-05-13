@@ -23,18 +23,26 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-@RequiredArgsConstructor
 @Slf4j
 @Controller
-public class ProductDetailController {
+@RequiredArgsConstructor
+public class ProductController {
 
-  private final ProductDetailService productDetailService;
   private final ProductService productService;
+  private final ProductDetailService productDetailService;
   private final MemberService memberService;
   private final CouponHistoryRepository couponHistoryRepository;
   private final CouponRepository couponRepository;
   private final CouponHistoryService couponHistoryService;
 
+  @GetMapping("/product/list")
+  public String productList(Model model) {
+    List<ProductDTO> proDTOs = productService.proList();
+
+    log.info("proDTOs: {}", proDTOs);
+    model.addAttribute("products", proDTOs);
+    return "/product/proList";
+  }
 
   @GetMapping("/product/detail")
   public String productDetail(@RequestParam("id") int productId, Model model) {
