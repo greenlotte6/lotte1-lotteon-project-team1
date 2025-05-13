@@ -250,7 +250,5 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
 
   @Override
   public void saveOrderItems(List<OrderItem> orderItems) {
-
-    //TODO: Currently working position. Find out bulk insert
   }
 }

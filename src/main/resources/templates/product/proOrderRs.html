@@ -28,6 +28,7 @@
       src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/all.min.js"
       crossorigin="anonymous"
   ></script>
+  <script src="/js/product/orderResult.js"></script>
 </head>
 <body>
 <div id="wrapper">
@@ -35,43 +36,38 @@
   <main>
     <div class="main">
       <article class="article-body">
-        <div class="article-header">
-          <div class="main-heder">
-            <p>주문완료</p>
-            <ul>
-              <li>HOME ></li>
-              <li>패션 · 의류 · 뷰티 ></li>
-              <li>장바구니</li>
-            </ul>
-          </div>
-        </div>
-
         <div class="rs-title">
           <p>고객님의 주문이 정상적으로 완료되었습니다.</p>
           <p>즐거운 쇼핑이 되셨나요? 항상 고객님을 위한 롯데 ON이 되겠습니다.</p>
         </div>
 
-
         <table class="list">
           <tr class="table_hd">
-            <th><input type="checkbox"></th>
-            <th></th>
+            <th>이미지</th>
             <th>상품명</th>
             <th>상품금액</th>
+            <th>배송비</th>
             <th>할인금액</th>
             <th>수량</th>
             <th>주문금액</th>
           </tr>
-          <tr class="table_bd">
-            <td><input type="checkbox"></td>
+          <tr class="table_bd" th:each="orderItem : ${orderSheet.getOrderItems()}">
             <td>
-              <img src="/proDetail-img/img5.png" alt="#">
+              <img th:src="@{${orderItem.getProduct().getImage().getListThumbnailLocation()}}"
+                   alt="#">
             </td>
-            <td>상품소개입니다.</td>
-            <td>27,000원</td>
-            <td>-1,350</td>
-            <td>1</td>
-            <td class="sumprice">25,650</td>
+            <td th:text="${orderItem.getProduct().getName()}"></td>
+            <td class="product-price" th:text="${orderItem.getProduct().getPrice()}">27,000원</td>
+            <td class="delivery-fee" th:text="${orderItem.getProduct().getDeliveryFee()}"></td>
+            <td class="discount" th:with="price=${orderItem.getProduct().getPrice()},
+            discountRate=${orderItem.getProduct().getDiscountRate()},
+            amount = ${orderItem.getAmount()},
+            discount=${(price * discountRate / 100) * amount}"
+                th:text="'-' + ${discount}">-1,350
+            </td>
+            <td th:text="${orderItem.getAmount()}">1</td>
+            <td class="sumprice" th:text="${orderItem.getTotalPrice()}">25,650
+            </td>
           </tr>
         </table>
 
@@ -79,22 +75,22 @@
           <div class="rs-price">
             <div>
               <span>총 상품금액</span>
-              <span>27,000원</span>
+              <span class="price-result">27,000원</span>
             </div>
 
             <div>
               <span>총 할인금액</span>
-              <span>-1,350원</span>
+              <span id="discount-result">-1,350원</span>
             </div>
 
             <div>
               <span>배송비</span>
-              <span>0원</span>
+              <span id="delivery-fee-result">0원</span>
             </div>
 
             <div>
               <span>총 결제금액</span>
-              <span class="sumprice">25,650원</span>
+              <span id="total-price-result" class="sumprice">25,650원</span>
             </div>
           </div>
         </div>
@@ -102,7 +98,7 @@
         <div class="order-info-box">
           <p>주문정보</p>
 
-          <div class="order-info">
+          <div class="order-info" th:with="order=${orderSheet.getOrder()}">
             <div>
               <p>주문번호</p>
               <p>결제방법</p>
@@ -110,18 +106,17 @@
             </div>
 
             <div>
-              <p>1000121121</p>
-              <p>신용카드</p>
-
+              <p th:text="${order.getOrderNumber()}">1000121121</p>
+              <p th:text="${order.getPayment()}">신용카드</p>
               <div>
-                <span>홍길동 /</span>
-                <span>010-1234-1234</span>
+                <span th:text="${order.getRecipientName()}">홍길동 /</span>
+                <span th:text="${order.getRecipientContact()}">010-1234-1234</span>
               </div>
             </div>
 
             <div>
               <span>총 결제금액</span>
-              <span>24,650 원</span>
+              <span class="price-result">24,650 원</span>
             </div>
           </div>
         </div>
@@ -133,36 +128,22 @@
             <div>
               <p>수취인</p>
               <p>연락처</p>
+              <p>배송지 우편번호</p>
               <p>배송지 주소</p>
+              <p>배송지 상세주소</p>
             </div>
 
-            <div>
-              <p>홍길동</p>
-              <p>010-1234-1234</p>
-              <p>부산 금정구 123-11 10층</p>
+            <div th:with="order=${orderSheet.getOrder()}">
+              <p th:text="${order.getRecipientName()}">홍길동</p>
+              <p th:text="${order.getRecipientContact()}">010-1234-1234</p>
+              <p th:text="${order.getRecipientZip()}">부산 금정구 123-11 10층</p>
+              <p th:text="${order.getRecipientAddress()}">부산 금정구 123-11 10층</p>
+              <p th:text="${order.getRecipientAddressDetail()}">부산 금정구 123-11 10층</p>
             </div>
           </div>
         </div>
       </article>
     </div>
-    <section class="pagination">
-      <a class="page move" href="#">
-        <i class="fa-solid fa-angles-left"></i>
-      </a>
-      <a class="page move" href="#">
-        <i class="fa-solid fa-chevron-left"></i>
-      </a>
-      <a class="page" href="">1</a>
-      <a class="page" href="">2</a>
-      <a class="page" href="">3</a>
-      <a class="page" href="">4</a>
-      <a class="page move" href="#">
-        <i class="fa-solid fa-chevron-right"></i>
-      </a>
-      <a class="page move" href="#">
-        <i class="fa-solid fa-angles-right"></i>
-      </a>
-    </section>
   </main>
   <th:block th:insert="~{/common/footer}"></th:block>
 </div>

@@ -134,6 +134,15 @@ public class OrderController {
     // 세션 주문서의 OrderDTO 속성 초기화
     sessionOrderSheet.setOrder(order);
 
+    orderService.placeOrder(sessionOrderSheet);
+
+    return "redirect:/order/result";
+  }
+
+  @GetMapping("/order/result")
+  public String orderResult(HttpSession session, Model model) {
+    OrderSheet sessionSheet = (OrderSheet) session.getAttribute("orderSheet");
+    model.addAttribute("orderSheet", sessionSheet);
     session.removeAttribute("orderSheet");
     return "/product/proOrderRs";
   }

@@ -8,6 +8,7 @@ import com.example.lotteon.entity.order.DeliveryStatus;
 import com.example.lotteon.entity.order.Order;
 import com.example.lotteon.entity.order.OrderItem;
 import com.example.lotteon.entity.order.OrderStatus;
+import com.example.lotteon.repository.order.OrderItemRepository;
 import com.example.lotteon.repository.order.OrderRepository;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -18,12 +19,14 @@ import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class OrderService {
 
+  private final OrderItemRepository orderItemRepo;
   private final OrderRepository repo;
   private final ModelMapper mapper;
 
@@ -142,11 +145,15 @@ public class OrderService {
     return String.valueOf(latestNumber);
   }
 
+  @Transactional
   public void placeOrder(OrderSheet orderSheet) {
     Order order = mapper.map(orderSheet.getOrder(), Order.class);
     repo.save(order);
+    repo.flush();
     List<OrderItem> orderItems = orderSheet.getOrderItems().stream().map(((orderItemDTO) -> {
       return mapper.map(orderItemDTO, OrderItem.class);
     })).toList();
+    orderItemRepo.saveAll(orderItems);
+    orderItemRepo.flush();
   }
 }
