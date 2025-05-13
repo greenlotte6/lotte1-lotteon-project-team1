@@ -1,5 +1,6 @@
 package com.example.lotteon.repository.order;
 
+import com.example.lotteon.dto.order.MypageOrderWrapper;
 import com.example.lotteon.dto.order.OrderWrapper;
 import com.example.lotteon.entity.order.Order;
 import com.example.lotteon.entity.order.OrderItem;
@@ -62,5 +63,8 @@ public interface OrderRepositoryCustom {
   Page<OrderWrapper> findByMemberId(String currentSellerId, String memberId, Pageable pageable);
 
   void updateStatusByOrderNumber(String orderNumber, OrderStatus status);
+
+  // 마이페이지 코드
+  Page<MypageOrderWrapper> findOrderWrappersByUserId(String userId, Pageable pageable);
 
 }

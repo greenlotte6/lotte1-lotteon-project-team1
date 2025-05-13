@@ -3,17 +3,21 @@ package com.example.lotteon.controller.mypage;
 import com.example.lotteon.dto.PageResponseDTO;
 import com.example.lotteon.dto.coupon.Coupon_HistoryDTO;
 import com.example.lotteon.dto.cs.QnaDTO;
+import com.example.lotteon.dto.order.MypageOrderWrapper;
+import com.example.lotteon.dto.order.OrderWrapper;
 import com.example.lotteon.dto.point.PointDTO;
 import com.example.lotteon.dto.user.MemberDTO;
 import com.example.lotteon.dto.user.UserDTO;
 import com.example.lotteon.entity.user.User;
 import com.example.lotteon.repository.UserRepository;
+import com.example.lotteon.repository.order.OrderRepository;
 import com.example.lotteon.repository.user.MemberRepository;
 import com.example.lotteon.service.admin.point.PointService;
 import com.example.lotteon.service.coupon.CouponHistoryService;
 import com.example.lotteon.service.cs.QnaService;
 import com.example.lotteon.service.cs.ReplyService;
 import com.example.lotteon.service.mypage.MyPageService;
+import com.example.lotteon.service.order.OrderService;
 import com.example.lotteon.service.user.MemberService;
 import com.example.lotteon.service.user.UserService;
 import com.google.gson.Gson;
@@ -57,6 +61,8 @@ public class MypageMain {
     private final ReplyService replyService;
     private final CouponHistoryService couponHistoryService;
     private final PointService pointService;
+    private final OrderService orderService;
+    private final OrderRepository orderRepository;
 
 
     @GetMapping("/mypage")
@@ -67,7 +73,18 @@ public class MypageMain {
 
     // 전체주문내역
     @GetMapping("/mypage/wholeorder")
-    public String wholeorder() {
+    public String wholeorder(@RequestParam(defaultValue = "0") int page,
+                             Model model, Principal principal) {
+
+        String userId = principal.getName();
+
+        Pageable pageable = PageRequest.of(page, 10); // 1페이지에 10개
+
+        Page<MypageOrderWrapper> pages = orderService.findOrderWrappersByUserId(userId, pageable);
+
+        model.addAttribute("pages", pages);
+        model.addAttribute("currentPage", page + 1); // 페이지 번호는 1부터 시작 표시
+
         return "/myPage/wholeorder";
     }
 

@@ -58,12 +58,12 @@ public class OrderWrapper {
       Member member = Member.builder().memberId(memberId).name(memberName).build();
       OrderStatus status = OrderStatus.builder().id(statusId).build();
       Order order = Order.builder()
-          .orderNumber(orderNumber)
-          .member(member)
-          .payment(payment)
-          .status(status)
-          .orderDate(orderDate)
-          .build();
+              .orderNumber(orderNumber)
+              .member(member)
+              .payment(payment)
+              .status(status)
+              .orderDate(orderDate)
+              .build();
 
       return new OrderWrapper(order, itemCount, totalPrice);
     }

@@ -1,5 +1,6 @@
 package com.example.lotteon.service.order;
 
+import com.example.lotteon.dto.order.MypageOrderWrapper;
 import com.example.lotteon.dto.order.OrderItemDTO;
 import com.example.lotteon.dto.order.OrderStatusDTO;
 import com.example.lotteon.dto.order.OrderWrapper;
@@ -133,5 +134,10 @@ public class OrderService {
   public void updateStatusByOrderNumber(String orderNumber, OrderStatusDTO status) {
     OrderStatus entity = mapper.map(status, OrderStatus.class);
     repo.updateStatusByOrderNumber(orderNumber, entity);
+  }
+
+  // 마이페이지 코드
+  public Page<MypageOrderWrapper> findOrderWrappersByUserId(String userId, Pageable pageable) {
+    return repo.findOrderWrappersByUserId(userId, pageable);
   }
 }

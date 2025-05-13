@@ -1,5 +1,6 @@
 package com.example.lotteon.repository.order;
 
+import com.example.lotteon.dto.order.MypageOrderWrapper;
 import com.example.lotteon.dto.order.OrderWrapper;
 import com.example.lotteon.entity.order.Order;
 import com.example.lotteon.entity.order.OrderItem;
@@ -13,11 +14,15 @@ import com.example.lotteon.entity.seller.QSeller;
 import com.example.lotteon.entity.user.QMember;
 import com.example.lotteon.entity.user.QUser;
 import com.querydsl.core.Tuple;
+import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -237,5 +242,70 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
         .set(order.status, status)
         .where(order.orderNumber.eq(orderNumber))
         .execute();
+  }
+
+
+  //마이페이지 코드
+  @Override
+  public Page<MypageOrderWrapper> findOrderWrappersByUserId(String userId, Pageable pageable) {
+    // 전체 개수
+    long total = query
+            .select(order.count())
+            .from(order)
+            .join(order.member, member)
+            .join(member.memberId.user, user)
+            .where(user.id.eq(userId))
+            .fetchOne();
+
+    // totalPriceExpression 정의 (Long으로 받기)
+    var totalPriceExpression = product.price
+            .subtract(product.price.multiply(product.discountRate.divide(100))) // 할인된 가격
+            .multiply(orderItem.amount) // 주문 수량에 곱하기
+            .add(product.deliveryFee) // 배송비 추가
+            .sum()
+            .longValue();  // 결과를 Long 타입으로 변환
+
+    // 튜플 조회 시 Long으로 받기
+    List<Tuple> tuples = query
+            .select(
+                    order.orderNumber,
+                    user.id,
+                    member.name,
+                    order.payment,
+                    order.status.id,
+                    order.orderDate,
+                    // ✅ count를 Integer로 강제 캐스팅
+                    Expressions.numberTemplate(Integer.class, "count({0})", orderItem),
+                    totalPriceExpression.as("totalPrice"),
+                    product.name // ✅ 상품명 추가
+            )
+            .from(order)
+            .join(order.member, member)
+            .join(member.memberId.user, user)
+            .join(orderItem).on(order.orderNumber.eq(orderItem.order.orderNumber))
+            .join(product).on(orderItem.product.id.eq(product.id))
+            .where(user.id.eq(userId))
+            .groupBy(order.orderNumber)
+            .offset(pageable.getOffset())
+            .limit(pageable.getPageSize())
+            .fetch();
+
+    // MypageOrderWrapper 객체로 변환
+    List<MypageOrderWrapper> content = tuples.stream()
+            .map(tuple -> {
+              // totalPrice는 index 7에 존재하므로 tuple.get(7)로 가져옵니다.
+              Long totalPrice = tuple.get(7, Long.class);  // totalPrice를 Long으로 정확히 받아오기
+
+              // 만약 totalPrice가 null일 수 있으면 기본값 0을 할당
+              long price = (totalPrice != null) ? totalPrice : 0L;
+
+              // OrderWrapper.builder()를 사용하여 필드 설정
+              return MypageOrderWrapper.builder()
+                      .tuples(tuple)  // Tuple을 builder로 전달하여 처리
+                      .build();
+            })
+            .collect(Collectors.toList());
+
+    return new PageImpl<>(content, pageable, total);
   }
 }
