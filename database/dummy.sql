@@ -98,6 +98,8 @@ INSERT INTO `faq` VALUES (22, "결제 관련 FAQ입니다.", 14, "결제 관련 
 
 -- 사용자
 INSERT INTO `user` VALUES("admin1", "$2a$12$L7IovRMdbD4aZUJ0stXkseHCX6/mxyVEM8IdrkWODngVfPQoVjga2", "admin1@example.com", "010-2313-6023", "12345", "부산광역시 부산진구", "행복동 101-1", "admin", NOW());
+INSERT INTO `user` VALUES("member1", "$2a$10$/dP6IfOvrnvJxovfLgIuS.c2HLQQfHK8ni/fpmBY4zq1ktFf1CU32", "jas06113@gmail.com", "010-4356-1697", "48277", "부산 수영구 민락동 161-25", "행복아파트 103동 803호", "member", "2025-05-12");
+INSERT INTO `member` VALUES("member1", "이현민", "m", "2025-05-12", "normal", "family", "1999-04-16");
 
 -- 상점(seller)
 INSERT INTO `user` VALUES ("seller1", "$2a$12$7nR.CgoesCyfsETEl74Dtuk0Mu2wEzmJPCljlJddYY14UmIY100uG", "seller1@example.com", "051-123-4567", "12345", "부산광역시 부산진구", "행복로 127-11", "seller", NOW());

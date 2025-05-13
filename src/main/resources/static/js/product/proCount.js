@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const minusBtn = document.querySelector('.minus');
   const plusBtn = document.querySelector('.plus');
   const countInput = document.querySelector('.count-input');
+  const countInputHidden = $(".count-input-hidden")
   const priceDisplay = document.getElementById('sum_price');
   const totalPriceDisplay = document.querySelector('#total-price');
 
@@ -25,6 +26,7 @@ document.addEventListener("DOMContentLoaded", function () {
     let current = parseInt(countInput.value);
     if (current > 1) {
       countInput.value = current - 1;
+      countInputHidden.val(current - 1);
       updatePrice(); //  수량 줄일 때 가격 갱신
     }
   });
@@ -33,12 +35,14 @@ document.addEventListener("DOMContentLoaded", function () {
     event.preventDefault();
     let current = parseInt(countInput.value);
     countInput.value = current + 1;
+    countInputHidden.val(current + 1);
     updatePrice(); //  수량 늘릴 때 가격 갱신
   });
 
   // 수동으로 input 변경될 때도 가격 업데이트
   countInput.addEventListener('change', () => {
     if (countInput.value < 1) {
+      countInput.value = 1;
       countInput.value = 1;
     } // 최소 1 보장
     updatePrice();

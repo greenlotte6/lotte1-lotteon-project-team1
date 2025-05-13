@@ -35,8 +35,6 @@
 <body>
 <div id="wrapper">
   <th:block th:insert="~{/common/header}"></th:block>
-  <th:block th:insert="~{/_menu}"></th:block>
-
   <main>
     <div class="main">
       <article class="article-body">
@@ -44,7 +42,7 @@
           <button type="submit">쿠폰받기</button>
         </form>
 
-        <form action="/product/cart/add" method="post" class="detail">
+        <form th:action="@{/cart}" method="post" class="detail">
           <div>
             <img th:src="${prodtos.getImage().getMainThumbnailLocation()}" alt="이미지"
                  class="main-proimg">
@@ -52,7 +50,9 @@
 
           <div class="info-list">
             <div class="pro-top">
-              <input type="hidden" name="products[0].id" th:value="${prodtos.id}"/>
+              <input type="hidden" name="product.id" th:value="${prodtos.id}"/>
+              <input type="hidden" name="orderItems[0].product.id"
+                     th:value="${prodtos.id}"/>
               <span>상품번호 : [[${prodtos.id}]]</span>
               <span th:text="${prodtos.seller.companyName}"></span>
             </div>
@@ -66,11 +66,6 @@
             </div>
 
             <div class="pro-price">
-              <input type="hidden" name="products[0].price" th:value="${prodtos.price}"/>
-              <input type="hidden" name="products[0].discountRate"
-                     th:value="${prodtos.discountRate}"/>
-              <input type="hidden" name="products[0].deliveryFee"
-                     th:value="${prodtos.deliveryFee}"/>
               <del th:text="${prodtos.price + '원'}"></del>
               <span class="sale" th:text="${prodtos.discountRate + '%↓'}"></span>
               <p th:text="${prodtos.price - (prodtos.price / 100.0) * prodtos.discountRate + '원'}"></p>
@@ -101,8 +96,10 @@
               <div class="count-main">
                 <div class="count">
                   <button type="button" class="minus">-</button>
-                  <input type="number" name="amount" value="1" min="1" class="count-input"
-                         id="quantity"> <!-- 수량을 input 태그로 입력 -->
+                  <input type="hidden" name="amount" value="1" min="1"
+                         class="count-input-hidden quantity"/>
+                  <input type="number" name="orderItems[0].amount" value="1" min="1"
+                         class="count-input quantity"> <!-- 수량을 input 태그로 입력 -->
                   <button type="button" class="plus">+</button>
                 </div>
                 <div>
@@ -119,7 +116,7 @@
             <!-- 장바구니와 구매하기 버튼 -->
             <div class="cart-and-purchase">
               <input type="submit" value="장바구니"/>
-              <button type="submit" th:formaction="@{/order}" formmethod="GET">구매하기</button>
+              <button type="submit" th:formaction="@{/order}" formmethod="POST">구매하기</button>
             </div>
           </div>
         </form>

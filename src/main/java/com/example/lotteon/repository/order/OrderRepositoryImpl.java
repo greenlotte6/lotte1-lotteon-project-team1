@@ -238,4 +238,13 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
         .where(order.orderNumber.eq(orderNumber))
         .execute();
   }
+
+  @Override
+  public String findLatestOrderNumber() {
+    return query.select(order.orderNumber)
+        .from(order)
+        .orderBy(order.orderNumber.desc())
+        .limit(1)
+        .fetchOne();
+  }
 }
