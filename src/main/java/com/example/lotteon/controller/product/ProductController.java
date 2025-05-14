@@ -36,10 +36,22 @@ public class ProductController {
   private final CouponHistoryService couponHistoryService;
 
   @GetMapping("/product/list")
-  public String productList(Model model) {
-    List<ProductDTO> proDTOs = productService.proList();
+  public String productList(
+          @RequestParam(required = false) String filter,
+          @RequestParam(required = false) String sort,
+          Model model) {
 
-    model.addAttribute("products", proDTOs);
+    List<ProductDTO> products;
+
+    if ("sales".equals(filter)) {
+      products = productService.proListSortedBySales();
+    } else if ("price".equals(filter)) {
+      products = productService.proListSortedByPrice(sort);
+    } else {
+      products = productService.proList();
+    }
+
+    model.addAttribute("products", products);
     return "/product/proList";
   }
 
