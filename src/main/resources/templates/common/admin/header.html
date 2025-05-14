@@ -1,23 +1,20 @@
 <header>
   <div class="header-wrapper">
-    <!--img
-        src="https://static.lotteon.com/p/common/foCommon/assets/img/logo_lotte-on@2x.png"
-        alt="logo"
-    -->
     <img th:src="${config.getLogo().getHeaderLogoLocation()}">
-    <h1>ADMINISTRATOR</h1>
+    <h1>
+      <a href="/admin">
+        ADMINISTRATOR
+      </a>
+    </h1>
     <ul>
       <li>
-        <span class="greeting"> 안녕하세요, [홍길동]님, 반갑습니다. </span>
+        <a href="/admin"> 홈 </a>
       </li>
       <li>
-        <a href="#"> 홈 </a>
+        <a th:href="@{/logout}"> 로그아웃 </a>
       </li>
       <li>
-        <a href="#"> 로그아웃 </a>
-      </li>
-      <li>
-        <a href="#"> 고객센터 </a>
+        <a href="/admin/cs/notice/notice"> 고객센터 </a>
       </li>
     </ul>
   </div>

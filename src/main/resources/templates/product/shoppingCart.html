@@ -60,12 +60,12 @@
                 <td><img th:src="${item.getProduct().getImage().getListThumbnailLocation()}"
                          alt="상품 이미지"></td>
                 <td>상품명</td>
-                <td class="amount" th:text="${item.getAmount()}">수량</td>
+                <td class="amount" th:text="${item.getAmount()}"></td>
                 <td class="product-price" th:text="${item.getProduct().getPrice()}">판매가</td>
                 <td class="discount" th:with="price=${item.getProduct().getPrice()},
-discountRate = ${item.getProduct().getDiscountRate()},
-amount = ${item.getAmount()},
-discount=${(price * discountRate / 100) * amount}" th:text="'-' + ${discount}">할인율
+                 discountRate = ${item.getProduct().getDiscountRate()},
+                 amount = ${item.getAmount()},
+                 discount=${(price * discountRate / 100) * amount}" th:text="'-' + ${discount}">할인율
                 </td>
                 <td class="point" th:text="${item.getProduct().getPoint()}">포인트</td>
                 <td class="delivery-fee" th:text="${item.getProduct().getDeliveryFee()}">배송비</td>
@@ -116,9 +116,9 @@ discount=${(price * discountRate / 100) * amount}" th:text="'-' + ${discount}">�
               </div>
             </div>
 
-            <div class="form-btn">
-              <input type="submit" value="주문하기">
-            </div>
+            <form class="form-btn" th:action="@{/cart/order}" method="POST">
+              <input type="submit" value="주문하기"/>
+            </form>
           </div>
 
         </div>

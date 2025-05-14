@@ -78,10 +78,9 @@ public class OrderController {
 
         int totalPrice = calculatedTotalPrice(targetProduct, orderItem.getAmount());
         orderItem.setTotalPrice(totalPrice);
-
       }
 
-      List<ProductOptionsDTO> options = sessionOrderSheet.getOptions();
+      List<ProductOptionsDTO> options = sessionOrderSheet.getOptions(); //TODO Delete options from order sheet or use them
       for (ProductOptionsDTO option : options) {
         ProductOptionsDTO targetOption = optionsService.getById(option.getId());
         option.setId(targetOption.getId());

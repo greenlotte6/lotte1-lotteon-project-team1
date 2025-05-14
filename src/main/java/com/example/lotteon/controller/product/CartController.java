@@ -1,12 +1,16 @@
 package com.example.lotteon.controller.product;
 
+import com.example.lotteon.dto.order.OrderItemDTO;
+import com.example.lotteon.dto.order.OrderSheet;
 import com.example.lotteon.dto.product.CartDTO;
 import com.example.lotteon.dto.product.ProductDTO;
 import com.example.lotteon.dto.product.SessionCartDTO;
 import com.example.lotteon.entity.product.Product;
 import com.example.lotteon.service.product.CartService;
 import com.example.lotteon.service.product.ProductService;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -82,10 +86,37 @@ public class CartController {
         sessionCart.getCartItems().add(cartItem);
       }
     } else {//회원이 장바구니에 상품을 담는 경우
-      UserDetails details = (UserDetails) auth.getDetails();
+      UserDetails details = (UserDetails) auth.getPrincipal();
       cartService.add(details.getUsername(), cartItem);
     }
     return "redirect:/cart";
+  }
+
+  @PostMapping("/cart/order")
+  public String orderCart(HttpSession session, HttpServletResponse response) throws IOException {
+    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    if (auth == null || !auth.isAuthenticated()
+        || auth instanceof AnonymousAuthenticationToken) {  // 비회원 사용자가 접근했을 경우
+      response.sendError(HttpServletResponse.SC_FORBIDDEN);
+    } else {
+      OrderSheet orderSheet = OrderSheet.builder().build();
+      UserDetails userDetails = (UserDetails) auth.getPrincipal();
+      String memberId = userDetails.getUsername();
+      List<CartDTO> cartItems = cartService.listForCurrentMember(memberId);
+      List<OrderItemDTO> orderItems = new ArrayList<>();
+      for (CartDTO cartItem : cartItems) {
+        ProductDTO currProduct = cartItem.getProduct();
+        OrderItemDTO newOrderItem = OrderItemDTO.builder()
+            .product(currProduct)
+            .amount(cartItem.getAmount())
+            .build();
+        orderItems.add(newOrderItem);
+      }
+      orderSheet.setOrderItems(orderItems);
+      orderSheet.setOptions(new ArrayList<>()); //TODO Delete options from order sheet or use them
+      session.setAttribute("orderSheet", orderSheet);
+    }
+    return "redirect:/order/sheet";
   }
 
   @PostMapping("/cart/delete")
