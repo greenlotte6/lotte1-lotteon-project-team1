@@ -16,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -26,6 +27,7 @@ public class ProductService {
   private final SellerRepository sellerRepository;
   private final ProductRepository repo;
   private final ModelMapper modelMapper;
+  private final ProductRepository productRepository;
 
   public List<ProductDTO> proList() {
     List<Product> products = repo.findAll();
@@ -96,4 +98,29 @@ public class ProductService {
     return modelMapper.map(option, ProductOptionsDTO.class);
   }
 
+  public List<ProductDTO> proListSortedByPrice(String sort) {
+    Sort.Direction direction = "desc".equalsIgnoreCase(sort) ? Sort.Direction.DESC : Sort.Direction.ASC;
+    List<Product> products = repo.findAll(Sort.by(direction, "price"));
+
+    List<ProductDTO> productDTOS = new ArrayList<>();
+    for (Product product : products) {
+      ProductDTO productDTO = modelMapper.map(product, ProductDTO.class);
+      productDTOS.add(productDTO);
+    }
+    return productDTOS;
+  }
+
+  public List<ProductDTO> proListSortedBySales() {
+    List<Object[]> result = productRepository.findProductsOrderBySalesDesc();
+
+    List<ProductDTO> dtoList = new ArrayList<>();
+    for (Object[] row : result) {
+      Product product = (Product) row[0];
+
+      ProductDTO dto = modelMapper.map(product, ProductDTO.class);
+      dtoList.add(dto);
+    }
+
+    return dtoList;
+  }
 }
