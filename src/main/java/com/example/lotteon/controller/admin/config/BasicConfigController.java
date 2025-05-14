@@ -67,9 +67,10 @@ public class BasicConfigController {
   @PostMapping("/category")
   public String edit(CategoryFormDTO form) {
     categoryService.update(form);
+    cacheService.invalidateCategoryCache();
+    cacheService.invalidateSubCategoryCache();
     return "redirect:/admin/config/category";
   }
-
 
   @GetMapping("/version")
   public String version(Model model) {

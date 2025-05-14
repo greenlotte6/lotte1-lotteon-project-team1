@@ -6,6 +6,7 @@ import com.example.lotteon.dto.product.ProductSubCategoryDTO;
 import com.example.lotteon.entity.product.ProductCategory;
 import com.example.lotteon.entity.product.ProductSubCategory;
 import com.example.lotteon.repository.product.category.ProductCategoryRepository;
+import com.example.lotteon.service.admin.CacheService;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -19,11 +20,21 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class ProductCategoryService {
 
+  private final CacheService cacheService;
   private final ProductCategoryRepository repo;
   private final ModelMapper mapper;
 
-  public List<ProductCategory> getAll() {
-    return repo.findAll();
+  public List<ProductCategoryDTO> getAll() {
+    List<ProductCategoryDTO> cachedCategories = cacheService.getCachedCategory();
+    if (cachedCategories == null) { //캐시된 카테고리 데이터가 없는 경우
+      List<ProductCategoryDTO> categories = repo.findAll().stream()
+          .map((category) -> { //MySQL에서 조회
+            return mapper.map(category, ProductCategoryDTO.class);
+          }).toList();
+      cacheService.cacheCategory(categories); //캐싱
+      cachedCategories = categories;
+    }
+    return cachedCategories;
   }
 
   public Map<ProductCategoryDTO, List<ProductSubCategoryDTO>> listWithSubCategories() {

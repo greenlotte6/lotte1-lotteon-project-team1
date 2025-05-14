@@ -1,13 +1,14 @@
 package com.example.lotteon.controller.admin.product;
 
+import com.example.lotteon.dto.product.ProductCategoryDTO;
 import com.example.lotteon.dto.product.ProductDTO;
 import com.example.lotteon.dto.product.ProductImageDTO;
 import com.example.lotteon.dto.product.ProductOptionsDTO;
+import com.example.lotteon.dto.product.ProductSubCategoryDTO;
 import com.example.lotteon.dto.product.ProductWrapperDTO;
 import com.example.lotteon.entity.product.Product;
-import com.example.lotteon.entity.product.ProductCategory;
 import com.example.lotteon.entity.product.ProductOptions;
-import com.example.lotteon.entity.product.ProductSubCategory;
+import com.example.lotteon.service.admin.CacheService;
 import com.example.lotteon.service.product.ProductService;
 import com.example.lotteon.service.product.category.ProductCategoryService;
 import com.example.lotteon.service.product.category.ProductSubCategoryService;
@@ -20,6 +21,7 @@ import java.util.List;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -47,6 +49,8 @@ public class ProductManagementController {
   private final ProductOptionsService optionsService;
   private final ProductCategoryService categoryService;
   private final ProductSubCategoryService subCategoryService;
+  private final CacheService cacheService;
+  private final ModelMapper modelMapper;
 
   private int createNewId(int categoryId) {
     String latestIdField =
@@ -101,8 +105,8 @@ public class ProductManagementController {
 
   @GetMapping("/register")
   public String register(Model model) {
-    List<ProductCategory> categories = categoryService.getAll();
-    List<ProductSubCategory> subCategories = subCategoryService.getAll();
+    List<ProductCategoryDTO> categories = categoryService.getAll();
+    List<ProductSubCategoryDTO> subCategories = subCategoryService.getAll();
     model.addAttribute("categories", categories);
     model.addAttribute("subCategories", subCategories);
     return "/admin/product/register";
@@ -133,13 +137,14 @@ public class ProductManagementController {
 
   @GetMapping("/edit")
   public String edit(@RequestParam(name = "id") int id, Model model) {
-    List<ProductCategory> categories = categoryService.getAll();
-    List<ProductSubCategory> subCategories = subCategoryService.getAll();
+    List<ProductCategoryDTO> categories = categoryService.getAll();
+    List<ProductSubCategoryDTO> cachedSubCategories = subCategoryService.getAll();
+
     Product product = service.getById(id);
     List<ProductOptions> options = service.getOptions(id);
     model.addAttribute("product", product);
     model.addAttribute("categories", categories);
-    model.addAttribute("subCategories", subCategories);
+    model.addAttribute("subCategories", cachedSubCategories);
     model.addAttribute("options", options);
     return "/admin/product/edit";
   }
