@@ -51,4 +51,7 @@ public class RecruitService {
   public void deleteByIds(List<Long> ids) {
     recruitRepository.deleteAllById(ids);
   }
+
+
 }
+
