@@ -26,13 +26,21 @@ public class BannerDocument {
   @SerializedName("id")
   private String id;
 
-  @Field("id")
+  @Field("banner_info")
   @SerializedName("banner_info")
   private BannerInfo bannerInfo;
+
+  @Field("position")
+  @SerializedName("position")
+  private String position;
 
   @Field("location")
   @SerializedName("location")
   private String location;
+
+  @Field("start")
+  @SerializedName("start")
+  private LocalDateTime start;
 
   @Field("expiration")
   @SerializedName("expiration")
