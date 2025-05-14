@@ -1,0 +1,58 @@
+[{
+  "_id": {
+    "$oid": "6807794b3a618b12ce9cd98e"
+  },
+  "id": "basic_config::version",
+  "version": "0.0.6-SNAPSHOT",
+  "author": "id3ntity99",
+  "created_at": {
+    "$date": "2025-04-24T15:00:00.000Z"
+  },
+  "description": "관리자 기본 설정 기능 구현 등등"
+},
+{
+  "_id": {
+    "$oid": "68077a043a618b12ce9cd990"
+  },
+  "id": "basic_config::site",
+  "title": "롯데ON",
+  "subtitle": "1조"
+},
+{
+  "_id": {
+    "$oid": "68077a323a618b12ce9cd991"
+  },
+  "id": "basic_config::logo",
+  "header_location": "/upload/logo_lotte-on@header.png",
+  "footer_location": "/upload/logo_lotte-on@footer.png",
+  "favicon_location": "/upload/favicon-32.png"
+},
+{
+  "_id": {
+    "$oid": "68077ac73a618b12ce9cd992"
+  },
+  "id": "basic_config::corp_info",
+  "name": "롯데쇼핑주식회사",
+  "ceo": "김철수",
+  "business_num": "123-12-12345",
+  "seller_num": "2024-서울강남-1234",
+  "address": "서울특별시 강남구 테헤란로 507",
+  "address_detail": "삼성동, WeWork 빌딩 7층"
+},
+{
+  "_id": {
+    "$oid": "68077ae63a618b12ce9cd993"
+  },
+  "id": "basic_config::cs_info",
+  "contact": "02-1234-5678",
+  "office_hour": "평일 09:00 ~ 18:00",
+  "email": "lotteon@lotte.net",
+  "dispute_contact": "1234-1234"
+},
+{
+  "_id": {
+    "$oid": "68077b073a618b12ce9cd994"
+  },
+  "id": "basic_config::copyright",
+  "copyright": "Copyright© Lotte ON. All rights reserved"
+}]

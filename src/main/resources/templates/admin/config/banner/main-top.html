@@ -52,19 +52,19 @@
       </div>
 
       <nav class="tab">
-        <a class="tab-option active" href="/admin/config/banner/main/top"
+        <a class="tab-option active" href="/admin/config/banner?position=MAIN"
         >메인상단 배너</a
         >
-        <a class="tab-option" href="/admin/config/banner/main/slider"
+        <a class="tab-option" href="/admin/config/banner?position=SLIDER"
         >메인슬라이더 배너</a
         >
-        <a class="tab-option" href="/admin/config/banner/product/detail"
+        <a class="tab-option" href="/admin/config/banner?position=PRODUCT"
         >상품 상세보기배너</a
         >
-        <a class="tab-option" href="/admin/config/banner/user/login"
+        <a class="tab-option" href="/admin/config/banner?position=LOGIN"
         >회원로그인 배너</a
         >
-        <a class="tab-option" href="/admin/config/banner/mypage"
+        <a class="tab-option" href="/admin/config/banner?position=MYPAGE"
         >마이페이지 배너</a
         >
       </nav>
@@ -84,25 +84,21 @@
                 />
               </th>
               <th>번호</th>
-              <th>이미지</th>
               <th>배너정보</th>
               <th>배너위치</th>
-              <th>시작일</th>
-              <th>종료일</th>
-              <th>시작시간</th>
-              <th>종료시간</th>
+              <th>시작일시</th>
+              <th>종료일시</th>
               <th>관리</th>
             </tr>
-            <tr>
+            <tr th:each="banner, iterStat : ${banners}">
               <td>
                 <input
                     type="checkbox"
+                    name="_id"
+                    th:value="${banner.get_id()}"
                 />
               </td>
-              <td>1</td>
-              <td>
-                <img th:src="@{/images/img-symbol.jpg}" alt=""/>
-              </td>
+              <td th:text="${iterStat.count}">1</td>
               <td>
                 <button class="control-btn expired banner-info-btn">
                   배너정보 보기
@@ -112,6 +108,7 @@
                     title="배너 정보 상세"
                     style="display: none"
                 >
+                  <img th:src="${banner.getLocation()}" alt=""/>
                   <ul>
                     <li>배너명</li>
                     <li>크기: 1200*800</li>
@@ -120,14 +117,25 @@
                   </ul>
                 </div>
               </td>
-              <td>MAIN1</td>
-              <td>2023/01/01</td>
-              <td>2023/01/31</td>
-              <td>00:00</td>
-              <td>23:59</td>
+              <td th:text="${banner.getPosition()}">MAIN1</td>
+              <td th:text="${#temporals.format(banner.getStart(), 'yyyy-MM-dd HH:mm:ss')}">
+              </td>
+              <td th:text="${#temporals.format(banner.getExpiration(), 'yyyy-MM-dd HH:mm:ss')}">
+                2023/01/31
+              </td>
               <td>
-                <input type="submit" class="post-submit-btn" value="활성화"/>
-                <input type="submit" class="post-submit-btn red" value="비활성화"/>
+                <button type="submit" class="post-submit-btn" value="active"
+                        th:formaction="@{/admin/config/banner/update(_id=${banner.get_id()}, status='active',
+                        position=${banner.getPosition()})}"
+                        formmethod="POST"
+                        th:if="${banner.getStatus().equals('inactive')}">활성화
+                </button>
+                <button type="submit" class="post-submit-btn red" value="inactive"
+                        th:formaction="@{/admin/config/banner/update(_id=${banner.get_id()}, status='inactive',
+                        position=${banner.getPosition()})}"
+                        formmethod="POST"
+                        th:if="${banner.getStatus().equals('active')}">비활성화
+                </button>
               </td>
             </tr>
             </tbody>

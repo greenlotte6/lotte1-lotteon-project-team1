@@ -1,0 +1,22 @@
+[{
+  "_id": {
+    "$oid": "682446dbfe3b96f7e46aee05"
+  },
+  "id": "admin::banner",
+  "banner_info": {
+    "title": "메인 배너1",
+    "width": 1200,
+    "height": 800,
+    "background_color": "#eb4b6f",
+    "url": "#"
+  },
+  "position": "MAIN",
+  "location": "/upload/banner/MAIN_banner1.webp",
+  "start": {
+    "$date": "2025-05-14T00:00:00.000Z"
+  },
+  "expiration": {
+    "$date": "2025-05-15T00:00:00.000Z"
+  },
+  "status": "inactive"
+}]

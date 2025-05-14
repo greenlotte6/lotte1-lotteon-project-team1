@@ -2,7 +2,9 @@ $(function () {
   let isBannerInfoOpened = false;
   $(".banner-info").dialog({
     autoOpen: false,
-    draggable: false,
+    draggable: true,
+    width: "auto",
+    height: "auto",
     close: (event, ui) => {
       isBannerInfoOpened = false;
     },
