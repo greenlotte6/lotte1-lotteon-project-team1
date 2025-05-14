@@ -29,11 +29,18 @@ public class MypageOrderWrapper {
     @SerializedName("product_name")
     private final String productName;
 
-    private MypageOrderWrapper(Order order, int itemCount, long totalPrice, String productName) {
+    @SerializedName("image_path")
+    private final String imagePath;
+
+    private final String companyName;
+
+    private MypageOrderWrapper(Order order, int itemCount, long totalPrice, String productName, String imagePath, String companyName) {
         this.order = order;
         this.itemCount = itemCount;
         this.totalPrice = totalPrice;
         this.productName = productName;
+        this.imagePath = imagePath;
+        this.companyName = companyName;
     }
 
     public static Builder builder() {
@@ -59,6 +66,9 @@ public class MypageOrderWrapper {
             int itemCount = tuple.get(6, int.class);
             long totalPrice = tuple.get(7, Long.class);
             String productName = tuple.get(8, String.class); // 8번째 인덱스에 있음
+            String imagePath = tuple.get(9, String.class); // 9번째 인덱스 (아래 쿼리에서 추가 예정)
+            String companyName = tuple.get(10, String.class);
+
 
             User user = User.builder().id(userId).build();
             MemberId memberId = MemberId.builder().user(user).build();
@@ -72,7 +82,7 @@ public class MypageOrderWrapper {
                     .orderDate(orderDate)
                     .build();
 
-            return new MypageOrderWrapper(order, itemCount, totalPrice, productName);
+            return new MypageOrderWrapper(order, itemCount, totalPrice, productName, imagePath, companyName);
         }
     }
 }

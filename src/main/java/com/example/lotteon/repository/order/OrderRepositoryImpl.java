@@ -273,16 +273,19 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
                     order.payment,
                     order.status.id,
                     order.orderDate,
-                    // ✅ count를 Integer로 강제 캐스팅
+                    //  count를 Integer로 강제 캐스팅
                     Expressions.numberTemplate(Integer.class, "count({0})", orderItem),
                     totalPriceExpression.as("totalPrice"),
-                    product.name // ✅ 상품명 추가
+                    product.name, //  상품명 추가
+                    product.image.listThumbnailLocation, //  이미지 경로
+                    seller.companyName //  추가
             )
             .from(order)
             .join(order.member, member)
             .join(member.memberId.user, user)
             .join(orderItem).on(order.orderNumber.eq(orderItem.order.orderNumber))
             .join(product).on(orderItem.product.id.eq(product.id))
+            .join(seller).on(product.seller.sellerId.eq(seller.sellerId)) //  추가!
             .where(user.id.eq(userId))
             .groupBy(order.orderNumber)
             .offset(pageable.getOffset())

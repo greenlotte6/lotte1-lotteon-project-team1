@@ -126,11 +126,12 @@
                               <td>
                                   <div class="pro-info">
                                       <div class="table-proimg">
-                                          <!--<img th:src="@{/proDetail-img/img5.png}" alt="이미지">-->
+                                          <img th:src="@{${mypageOrderWrapper.imagePath}}" alt="상품 이미지">
+                                          <!--<img th:src="@{'/upload/' + ${mypageOrderWrapper.imagePath}}" alt="상품 이미지">-->
                                       </div>
                                       <div class="order-info">
                                           <p>주문번호 : <span th:text="${mypageOrderWrapper.order.orderNumber}">1012211341</span></p>
-                                          <p th:text="${mypageOrderWrapper.order.member.name}">(주) 상호명</p>
+                                          <p th:text="${mypageOrderWrapper.companyName}">(주) 상호명</p>
                                           <p th:text="${mypageOrderWrapper.productName}">상품명</p>
                                           <p>수량 : <span th:text="${mypageOrderWrapper.itemCount + '개'}">1개</span></p>
                                           <p th:text="${mypageOrderWrapper.totalPrice + '원'}">34,000원</p>
