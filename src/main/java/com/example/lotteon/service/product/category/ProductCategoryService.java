@@ -53,7 +53,7 @@ public class ProductCategoryService {
     return dtoMap;
   }
 
-  //TODO: Recent working position. Move logic below to Repository's update() method, which has @Transactional annotation.
+  //TODO:  Move logic below to Repository's update() method, which has @Transactional annotation.
   public void update(CategoryFormDTO form) {
     List<ProductCategoryDTO> categories = form.getCategories();
     for (ProductCategoryDTO category : categories) {
