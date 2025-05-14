@@ -63,6 +63,7 @@
               <td th:text="${orderItem.product.getName()}">
                 상품명
               </td>
+              <!--TODO Delete options from order sheet or use them-->
               <td th:each="option, iterStat : ${orderSheet.getOptions()}">
                 <div>
                   <input type="hidden" th:name="|options[${iterStat.index}].id|"

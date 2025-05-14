@@ -39,7 +39,14 @@ public class CartService {
   }
 
   public void add(String memberId, CartDTO cartItem) {
-    cartItem.getMember().getMemberId().getUser().setId(memberId);
+    UserDTO user = UserDTO.builder()
+        .id(memberId)
+        .build();
+    MemberIdDTO memberIdDTO = MemberIdDTO.builder().user(user).build();
+    MemberDTO member = MemberDTO.builder()
+        .memberId(memberIdDTO)
+        .build();
+    cartItem.setMember(member);
     cartItem.setRegisterDate(LocalDate.now());
     Cart cart = mapper.map(cartItem, Cart.class);
     repo.save(cart);
