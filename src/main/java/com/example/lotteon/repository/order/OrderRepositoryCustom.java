@@ -67,4 +67,7 @@ public interface OrderRepositoryCustom {
   Page<MypageOrderWrapper> findOrderWrappersByUserId(String userId, Pageable pageable);
 
   String findLatestOrderNumber();
+
+  // 마이페이지 전제주문내역 상세정보
+  List<OrderItem> findWithProductInfoByOrderNumberAndUserId(String orderNumber, String userId);
 }

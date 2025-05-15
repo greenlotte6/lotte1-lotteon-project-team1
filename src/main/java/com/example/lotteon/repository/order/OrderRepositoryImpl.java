@@ -319,4 +319,22 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
         .limit(1)
         .fetchOne();
   }
+
+  //마이페이지 전체 주문내역 상세정보 코드
+  @Override
+  public List<OrderItem> findWithProductInfoByOrderNumberAndUserId(String orderNumber, String userId) {
+    return query
+            .selectFrom(orderItem)
+            .join(orderItem.order, order).fetchJoin()
+            .join(order.member, member).fetchJoin()
+            .join(member.memberId.user, user)
+            .join(orderItem.product, product).fetchJoin()
+            .join(product.seller, seller).fetchJoin()
+            .where(
+                    order.orderNumber.eq(orderNumber),
+                    user.id.eq(userId)
+            )
+            .fetch();
+  }
+
 }

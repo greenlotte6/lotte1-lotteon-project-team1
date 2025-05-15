@@ -25,7 +25,7 @@
     box-shadow: 0 5px 15px rgba(0,0,0,0.3);
 }
 
-.inquiry-table {
+#inquiry-info-modal .inquiry-table {
     width: 90%;
     margin: 0 auto;
     border-top: 1px solid #ccc;
@@ -33,54 +33,53 @@
     margin-top: 70px;
 }
 
-.inquiry-table tr {
+#inquiry-info-modal .inquiry-table tr {
     border-bottom: 1px solid #ccc;
 }
 
-
-
-.close-btn {
+#inquiry-info-modal .close-btn {
     padding-left: 100px;
 }
 
-.td-lf {
+#inquiry-info-modal .td-lf {
     padding-top: 10px;
     height: 30px;
     text-align: center;
     background: #eee;
 }
 
-.td-rg {
+#inquiry-info-modal .td-rg {
     height: auto;
     padding-left: 10px;
 }
 
-.form-input {
+#inquiry-info-modal .form-input {
     width: 250px;
     border: 2px solid #ccc;
     border-radius: 3px;
     height: 25px;
 }
 
-.form-input2 {
+#inquiry-info-modal .form-input2 {
     height: auto;
     padding: 6px 6px 6px 0;
 }
 
-.form-input2 > input {
+#inquiry-info-modal .form-input2 > input {
     width: 100%;
     border: 2px solid #ccc;
     border-radius: 3px;
     height: 250px;
 }
 
-.btn-box {
+#inquiry-info-modal .btn-box {
     display: flex;
     justify-content: center;
     margin-top: 40px;
 }
 
-.btn-box > input, button {
+#inquiry-info-modal .btn-box > input,
+#inquiry-info-modal .btn-box > button {
     width: 130px;
     height: 35px;
     margin-left: 10px;
@@ -89,17 +88,10 @@
     cursor: pointer;
 }
 
-
-.btn-box > input {
+#inquiry-info-modal .btn-box > input {
     background: #7BAAEC;
 }
 
-.btn-box > button {
+#inquiry-info-modal .btn-box > button {
     background: #ccc;
 }
-
-
-
-
-
-
