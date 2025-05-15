@@ -19,11 +19,11 @@ public class BannerInfo {
 
   @Field("width")
   @SerializedName("width")
-  private int width;
+  private double width;
 
   @Field("height")
   @SerializedName("height")
-  private int height;
+  private double height;
 
   @Field("background_color")
   @SerializedName("background_color")

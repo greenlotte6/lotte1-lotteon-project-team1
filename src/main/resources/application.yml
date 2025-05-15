@@ -82,6 +82,10 @@ lotteon:
     path: /var/www/upload
     product:
       path: /var/www/upload/product
+    banner:
+      path: /var/www/upload/banner
+    prefix:
+      banner: /upload/banner/
 ---
 # 개발용 설정
 spring:
@@ -167,6 +171,10 @@ lotteon:
     path: C:\var\www\upload
     product:
       path: C:\var\www\upload\product
+    banner:
+      path: C:\var\www\upload\banner
+    prefix:
+      banner: /upload/banner/
 
 
 ---
