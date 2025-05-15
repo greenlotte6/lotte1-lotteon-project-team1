@@ -21,6 +21,8 @@ import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -86,6 +88,10 @@ public class UserController {
 
   @GetMapping("/login")
   public String login(Model model) {
+    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    if (auth != null && auth.isAuthenticated()) {//유저가 이미 로그인한 경우
+      //TODO: Handle this
+    }
     List<BannerDocument> banners = cacheService.getCachedBanner("LOGIN");
     if (banners != null) {
       int randomIndex = (int) (Math.random() * banners.size());
