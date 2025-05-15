@@ -1,10 +1,16 @@
 package com.example.lotteon.controller.admin;
 
-import com.example.lotteon.service.order.OrderService;
-import com.example.lotteon.service.user.MemberService;
-import java.time.LocalDate;
+import com.example.lotteon.entity.cs.Notice;
+import com.example.lotteon.entity.cs.Qna;
+import com.example.lotteon.service.admin.statistics.StatisticsService;
+import com.example.lotteon.service.cs.CsService;
+import com.example.lotteon.service.cs.QnaService;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,40 +22,42 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequiredArgsConstructor
 public class AdminMainController {
 
-  private final MemberService memberService;
-  private final OrderService orderService;
+  private final CsService csService;
+  private final QnaService qnaService;
+  private final StatisticsService statService;
 
   @GetMapping(value = {"", "/", "/index"})
   public String index(Model model) {
-    log.info("request received");
-    LocalDate today = LocalDate.now();
-    LocalDate yesterday = LocalDate.now().minusDays(1);
+    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    UserDetails details = (UserDetails) auth.getPrincipal();
+    boolean isSeller = details.getAuthorities().stream()
+        .anyMatch(a -> a.getAuthority().equals("ROLE_SELLER"));
 
-    long todayNewMembers = memberService.countNewMembersOf(today);
-    long yesterdayNewMembers = memberService.countNewMembersOf(yesterday);
-    model.addAttribute("todayNewMembers", todayNewMembers);
-    model.addAttribute("yesterdayNewMembers", yesterdayNewMembers);
+    String role = null;
+    long orderCount = 0L;
+    long paidCount = 0L;
+    long totalSales = 0L;
 
-    long todayTotalPrice = orderService.calculatePriceOfValidOrdersAt(today);
-    long yesterdayTotalPrice = orderService.calculatePriceOfValidOrdersAt(yesterday);
-    model.addAttribute("todayTotalPrice", todayTotalPrice);
-    model.addAttribute("yesterdayTotalPrice", yesterdayTotalPrice);
+    if (isSeller) {
+      role = "ROLE_SELLER";
+      orderCount = statService.countAllOrders(details.getUsername());
+      totalSales = statService.getTotalSales(details.getUsername());
+      System.out.println(totalSales);
 
-    long paymentWaitingOrders = orderService.countPaymentWaitingOrdersAt(today);
-    long deliveryReadyOrders = orderService.countDeliveryReadyOrdersAt(today);
-    long cancelRequestedOrders = orderService.countCancelRequestedOrdersAt(today);
-    long exchangeRequestedOrders = orderService.countExchangeRequestedOrdersAt(today);
-    long refundRequestedOrders = orderService.countRefundRequestedOrdersAt(today);
-    model.addAttribute("paymentWaitingOrders", paymentWaitingOrders);
-    model.addAttribute("deliveryReadyOrders", deliveryReadyOrders);
-    model.addAttribute("cancelRequestedOrders", cancelRequestedOrders);
-    model.addAttribute("exchangeRequestedOrders", exchangeRequestedOrders);
-    model.addAttribute("refundRequestedOrders", refundRequestedOrders);
+    } else {
+      role = "ROLE_ADMIN";
+      List<Notice> notices = csService.getNoticeLimit(5);
+      List<Qna> qnas = qnaService.getWithLimit(5);
+      orderCount = statService.countAllOrders();
+      paidCount = statService.countAllOrdersByStatus(2);
+      totalSales = statService.getTotalSales();
 
-    long todayValidOrders = orderService.countValidOrdersAt(today);
-    long yesterdayValidOrders = orderService.countValidOrdersAt(yesterday);
-    model.addAttribute("todayValidOrders", todayValidOrders);
-    model.addAttribute("yesterdayValidOrders", yesterdayValidOrders);
+      model.addAttribute("notices", notices);
+      model.addAttribute("qnas", qnas);
+    }
+
+    model.addAttribute("orderCount", orderCount);
+    model.addAttribute("role", role);
     return "/admin/index";
   }
 }

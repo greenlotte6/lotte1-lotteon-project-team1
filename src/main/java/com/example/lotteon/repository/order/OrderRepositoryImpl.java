@@ -18,11 +18,9 @@ import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -76,40 +74,6 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
         .join(seller.sellerId.user, user)
         .join(order.member, member)
         .join(order.status, status);
-  }
-
-  @Override
-  public List<Order> findByStatuesWithOrAt(String status1, String status2, LocalDate date) {
-    //TODO: Impl this
-    return List.of();
-  }
-
-  @Override
-  public Long countByStatuesWithOrAt(String status1, String status2, LocalDate date) {
-    return query.select(order.count())
-        .from(order)
-        .where(order.status.name.eq(status1).or(order.status.name.eq(status2)),
-            order.orderDate.eq(date))
-        .fetchFirst()
-        .longValue();
-  }
-
-  @Override
-  public Long countByStatusAt(String status, LocalDate date) {
-    return query.select(order.count())
-        .from(order)
-        .where(order.status.name.eq(status), order.orderDate.eq(date))
-        .fetchFirst();
-  }
-
-  @Override
-  public Long countByDeliveryStatusAt(String status, LocalDate date) {
-    return query.select(order.count())
-        .from(order)
-        .join(delivery)
-        .on(delivery.order.orderNumber.eq(order.orderNumber))
-        .where(order.orderDate.eq(date))
-        .fetchFirst();
   }
 
   @Override
@@ -249,68 +213,68 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
   public Page<MypageOrderWrapper> findOrderWrappersByUserId(String userId, Pageable pageable) {
     // 전체 개수
     long total = query
-            .select(order.count())
-            .from(order)
-            .join(order.member, member)
-            .join(member.memberId.user, user)
-            .where(user.id.eq(userId))
-            .fetchOne();
+        .select(order.count())
+        .from(order)
+        .join(order.member, member)
+        .join(member.memberId.user, user)
+        .where(user.id.eq(userId))
+        .fetchOne();
 
     // totalPriceExpression 정의 (Long으로 받기)
     var totalPriceExpression = product.price
-            .subtract(product.price.multiply(product.discountRate.divide(100))) // 할인된 가격
-            .multiply(orderItem.amount) // 주문 수량에 곱하기
-            .add(product.deliveryFee) // 배송비 추가
-            .sum()
-            .longValue();  // 결과를 Long 타입으로 변환
+        .subtract(product.price.multiply(product.discountRate.divide(100))) // 할인된 가격
+        .multiply(orderItem.amount) // 주문 수량에 곱하기
+        .add(product.deliveryFee) // 배송비 추가
+        .sum()
+        .longValue();  // 결과를 Long 타입으로 변환
 
     // 튜플 조회 시 Long으로 받기
     List<Tuple> tuples = query
-            .select(
-                    order.orderNumber,
-                    user.id,
-                    member.name,
-                    order.payment,
-                    order.status.id,
-                    order.orderDate,
-                    //  count를 Integer로 강제 캐스팅
-                    Expressions.numberTemplate(Integer.class, "count({0})", orderItem),
-                    totalPriceExpression.as("totalPrice"),
-                    product.name, //  상품명 추가
-                    product.image.listThumbnailLocation, //  이미지 경로
-                    seller.companyName //  추가
-            )
-            .from(order)
-            .join(order.member, member)
-            .join(member.memberId.user, user)
-            .join(orderItem).on(order.orderNumber.eq(orderItem.order.orderNumber))
-            .join(product).on(orderItem.product.id.eq(product.id))
-            .join(seller).on(product.seller.sellerId.eq(seller.sellerId)) //  추가!
-            .where(user.id.eq(userId))
-            .groupBy(order.orderNumber)
-            .offset(pageable.getOffset())
-            .limit(pageable.getPageSize())
-            .fetch();
+        .select(
+            order.orderNumber,
+            user.id,
+            member.name,
+            order.payment,
+            order.status.id,
+            order.orderDate,
+            //  count를 Integer로 강제 캐스팅
+            Expressions.numberTemplate(Integer.class, "count({0})", orderItem),
+            totalPriceExpression.as("totalPrice"),
+            product.name, //  상품명 추가
+            product.image.listThumbnailLocation, //  이미지 경로
+            seller.companyName //  추가
+        )
+        .from(order)
+        .join(order.member, member)
+        .join(member.memberId.user, user)
+        .join(orderItem).on(order.orderNumber.eq(orderItem.order.orderNumber))
+        .join(product).on(orderItem.product.id.eq(product.id))
+        .join(seller).on(product.seller.sellerId.eq(seller.sellerId)) //  추가!
+        .where(user.id.eq(userId))
+        .groupBy(order.orderNumber)
+        .offset(pageable.getOffset())
+        .limit(pageable.getPageSize())
+        .fetch();
 
-            // MypageOrderWrapper 객체로 변환
-            List<MypageOrderWrapper> content = tuples.stream()
-                    .map(tuple -> {
-                      // totalPrice는 index 7에 존재하므로 tuple.get(7)로 가져옵니다.
-                      Long totalPrice = tuple.get(7, Long.class);  // totalPrice를 Long으로 정확히 받아오기
+    // MypageOrderWrapper 객체로 변환
+    List<MypageOrderWrapper> content = tuples.stream()
+        .map(tuple -> {
+          // totalPrice는 index 7에 존재하므로 tuple.get(7)로 가져옵니다.
+          Long totalPrice = tuple.get(7, Long.class);  // totalPrice를 Long으로 정확히 받아오기
 
-                      // 만약 totalPrice가 null일 수 있으면 기본값 0을 할당
-                      long price = (totalPrice != null) ? totalPrice : 0L;
+          // 만약 totalPrice가 null일 수 있으면 기본값 0을 할당
+          long price = (totalPrice != null) ? totalPrice : 0L;
 
-                      // OrderWrapper.builder()를 사용하여 필드 설정
-                      return MypageOrderWrapper.builder()
-                              .tuples(tuple)  // Tuple을 builder로 전달하여 처리
-                              .build();
-                    })
-                    .collect(Collectors.toList());
+          // OrderWrapper.builder()를 사용하여 필드 설정
+          return MypageOrderWrapper.builder()
+              .tuples(tuple)  // Tuple을 builder로 전달하여 처리
+              .build();
+        })
+        .collect(Collectors.toList());
 
-            return new PageImpl<>(content, pageable, total);
+    return new PageImpl<>(content, pageable, total);
   }
-  
+
   @Override
   public String findLatestOrderNumber() {
     return query.select(order.orderNumber)
@@ -322,19 +286,90 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
 
   //마이페이지 전체 주문내역 상세정보 코드
   @Override
-  public List<OrderItem> findWithProductInfoByOrderNumberAndUserId(String orderNumber, String userId) {
+  public List<OrderItem> findWithProductInfoByOrderNumberAndUserId(String orderNumber,
+      String userId) {
     return query
-            .selectFrom(orderItem)
-            .join(orderItem.order, order).fetchJoin()
-            .join(order.member, member).fetchJoin()
-            .join(member.memberId.user, user)
-            .join(orderItem.product, product).fetchJoin()
-            .join(product.seller, seller).fetchJoin()
-            .where(
-                    order.orderNumber.eq(orderNumber),
-                    user.id.eq(userId)
-            )
-            .fetch();
+        .selectFrom(orderItem)
+        .join(orderItem.order, order).fetchJoin()
+        .join(order.member, member).fetchJoin()
+        .join(member.memberId.user, user)
+        .join(orderItem.product, product).fetchJoin()
+        .join(product.seller, seller).fetchJoin()
+        .where(
+            order.orderNumber.eq(orderNumber),
+            user.id.eq(userId)
+        )
+        .fetch();
   }
 
+  @Override
+  public long count(LocalDate today) {
+    Long count = query
+        .select(order.count())
+        .from(order)
+        .where(order.orderDate.eq(today))
+        .fetchOne();
+    return count == null ? 0 : count;
+  }
+
+  @Override
+  public long countBySellerId(String sellerId, LocalDate today) {
+    Long count = query
+        .select(order.count())
+        .from(order)
+        .join(orderItem).on(orderItem.order.orderNumber.eq(order.orderNumber))
+        .join(product).on(orderItem.product.id.eq(product.id))
+        .join(product.seller, seller)
+        .join(seller.sellerId.user, user)
+        .where(user.id.eq(sellerId).and(order.orderDate.eq(today)))
+        .fetchOne();
+    return count == null ? 0 : count;
+  }
+
+  @Override
+  public long countByStatus(int status, LocalDate today) {
+    Long count = query
+        .select(order.count())
+        .from(order)
+        .join(order.status, this.status)
+        .where(this.status.id.eq(status).and(order.orderDate.eq(today)))
+        .fetchOne();
+    return count == null ? 0 : count;
+  }
+
+  @Override
+  public long countByStatus(String sellerId, int status, LocalDate today) {
+    Long count = query
+        .select(order.count())
+        .from(order)
+        .join(orderItem).on(orderItem.order.orderNumber.eq(order.orderNumber))
+        .join(product).on(orderItem.product.id.eq(product.id))
+        .join(product.seller, seller)
+        .join(seller.sellerId.user, user)
+        .where(user.id.eq(sellerId).and(order.orderDate.eq(today))
+            .and(this.status.id.eq(status)))
+        .fetchOne();
+    return count == null ? 0 : count;
+  }
+
+  @Override
+  public long findTotalSales(LocalDate today) {
+    Integer total = query.select(orderItem.totalPrice.sum())
+        .from(orderItem)
+        .where(orderItem.order.orderDate.eq(today))
+        .fetchOne();
+    return total == null ? 0 : total;
+  }
+
+  @Override
+  public long findTotalSales(String sellerId, LocalDate today) {
+    Integer total = query.select(orderItem.totalPrice.sum())
+        .from(orderItem)
+        .join(orderItem.product, product)
+        .join(product.seller, seller)
+        .join(seller.sellerId.user, user)
+        .where(user.id.eq(sellerId).and(orderItem.order.orderDate.eq(today)))
+        .fetchOne();
+    return total == null ? 0 : total;
+  }
 }
