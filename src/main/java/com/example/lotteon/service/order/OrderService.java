@@ -5,13 +5,11 @@ import com.example.lotteon.dto.order.OrderItemDTO;
 import com.example.lotteon.dto.order.OrderSheet;
 import com.example.lotteon.dto.order.OrderStatusDTO;
 import com.example.lotteon.dto.order.OrderWrapper;
-import com.example.lotteon.entity.order.DeliveryStatus;
 import com.example.lotteon.entity.order.Order;
 import com.example.lotteon.entity.order.OrderItem;
 import com.example.lotteon.entity.order.OrderStatus;
 import com.example.lotteon.repository.order.OrderItemRepository;
 import com.example.lotteon.repository.order.OrderRepository;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -30,44 +28,6 @@ public class OrderService {
   private final OrderItemRepository orderItemRepo;
   private final OrderRepository repo;
   private final ModelMapper mapper;
-
-  public long countPaymentWaitingOrdersAt(LocalDate date) {
-    return repo.countByStatusAt(OrderStatusDTO.STATUS_PAYMENT_WAITING, date);
-  }
-
-  public long countDeliveryReadyOrdersAt(LocalDate date) {
-    return repo.countByDeliveryStatusAt(DeliveryStatus.STATUS_READY, date);
-  }
-
-  public long countCancelRequestedOrdersAt(LocalDate date) {
-    return repo.countByStatusAt(OrderStatusDTO.STATUS_CANCEL_REQUESTED, date);
-  }
-
-  public long countExchangeRequestedOrdersAt(LocalDate date) {
-    return repo.countByStatusAt(OrderStatusDTO.STATUS_EXCHANGE_REQUESTED, date);
-  }
-
-  public long countRefundRequestedOrdersAt(LocalDate date) {
-    return repo.countByStatusAt(OrderStatusDTO.STATUS_REFUND_REQUESTED, date);
-  }
-
-  public long countValidOrdersAt(LocalDate date) {
-    return repo.countByStatuesWithOrAt(OrderStatusDTO.STATUS_PAID,
-        OrderStatusDTO.STATUS_EXCHANGE_REQUESTED, date);
-  }
-
-  public long calculatePriceOfValidOrdersAt(LocalDate date) {
-    List<Order> orders = repo.findByStatuesWithOrAt(OrderStatusDTO.STATUS_PAID,
-        OrderStatusDTO.STATUS_EXCHANGE_REQUESTED, date);
-    //TODO: Fix this method
-    //long price = 0;
-    //for (Order order : orders) {
-    //  price += order.getProduct().getPrice();
-    //}
-
-    //return price;
-    return 0L;
-  }
 
   public Page<OrderWrapper> getAllOrders(Pageable pageable) {
     return repo.findAllOrders(pageable);
@@ -144,7 +104,7 @@ public class OrderService {
   public Page<MypageOrderWrapper> findOrderWrappersByUserId(String userId, Pageable pageable) {
     return repo.findOrderWrappersByUserId(userId, pageable);
   }
-  
+
   public String getLatestOrderNumber() {
     String lastNumberString = repo.findLatestOrderNumber();
     int latestNumber = Integer.parseInt(lastNumberString) + 1;

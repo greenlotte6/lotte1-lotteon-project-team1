@@ -28,13 +28,19 @@
       src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/all.min.js"
       crossorigin="anonymous"
   ></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"
+          crossorigin="anonymous"></script>
   <script th:src="@{/js/admin/config/aside-drop.js}"></script>
 </head>
 <body>
 <div id="wrapper">
-  <th:block th:insert="~{/common/admin/header}"></th:block>
+  <th:block th:if="${role.equals('ROLE_ADMIN')}" th:insert="~{/common/admin/header}"></th:block>
+  <th:block th:if="${role.equals('ROLE_SELLER')}"
+            th:insert="~{/common/admin/sellerHeader}"></th:block>
   <main>
-    <th:block th:insert="~{/common/admin/aside}"></th:block>
+    <th:block th:if="${role.equals('ROLE_ADMIN')}" th:insert="~{/common/admin/aside}"></th:block>
+    <th:block th:if="${role.equals('ROLE_SELLER')}"
+              th:insert="~{/common/admin/sellerAside}"></th:block>
     <section id="content-area">
       <div class="content-area-title">
         <h3>관리자메인</h3>
@@ -103,34 +109,28 @@
           </tbody>
         </table>
       </div>
-      <div class="content mini-content to-left">
+      <div class="content mini-content to-left" th:if="${role.equals('ROLE_ADMIN')}">
         <div class="content-title with-underline">
           <h3>공지사항</h3>
         </div>
-        <ul class="articles-list">
+        <ul class="articles-list" th:each="notice : ${notices}">
           <li class="with-space-between">
-            <a class="to-left" href="#">[안내] 해외결제 사칭 문자 주의</a>
-            <span class="to-right">22.01.31</span>
+            <a class="to-left" th:href="@{/admin/cs/notice/view(id=${notice.getId()})}"
+               th:text="${notice.getTitle()}">[안내] 해외결제 사칭 문자 주의</a>
+            <span class="to-right" th:text="${notice.getRegister_date()}">22.01.31</span>
           </li>
         </ul>
       </div>
-      <div class="content mini-content to-right">
+      <div class="content mini-content to-right" th:if="${role.equals('ROLE_ADMIN')}">
         <div class="content-title with-underline">
           <h3>고객문의</h3>
         </div>
-        <ul class="articles-list">
+        <ul class="articles-list" th:each="qna : ${qnas}">
           <li class="with-space-between">
-            <a href="#">[가입] 가입문의내용</a>
+            <a href="#" th:text="${qna.getTitle()}">[가입] 가입문의내용</a>
             <div>
-              <span>chh**</span>
-              <span>22.01.31</span>
-            </div>
-          </li>
-          <li class="with-space-between">
-            <a href="#">[가입] 가입문의내용 질문입니다.</a>
-            <div>
-              <span>chh**</span>
-              <span>22.01.31</span>
+              <span th:text="${qna.getMember_id().getMemberId().getUser().getId()}">chh**</span>
+              <span th:text="${qna.getRegister_date()}">22.01.31</span>
             </div>
           </li>
         </ul>
