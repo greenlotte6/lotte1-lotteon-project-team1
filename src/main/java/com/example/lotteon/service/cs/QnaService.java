@@ -185,4 +185,6 @@ public class QnaService {
             .status(qna.getStatus())
             .build());
   }
+
+
 }

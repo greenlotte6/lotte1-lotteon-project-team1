@@ -7,6 +7,7 @@ import com.example.lotteon.dto.order.MypageOrderWrapper;
 import com.example.lotteon.dto.order.OrderItemDTO;
 import com.example.lotteon.dto.order.OrderWrapper;
 import com.example.lotteon.dto.point.PointDTO;
+import com.example.lotteon.dto.seller.SellerDTO;
 import com.example.lotteon.dto.user.MemberDTO;
 import com.example.lotteon.dto.user.UserDTO;
 import com.example.lotteon.entity.user.User;
@@ -31,6 +32,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -237,7 +239,8 @@ public class MypageMain {
         return "redirect:/mypage/setting";
     }
 
-    @GetMapping("/mypage/wholeorder/{orderNumber}")
+    // 주문 상세 내역
+    @GetMapping("/mypage/wholeorder/detail/{orderNumber}")
     @ResponseBody
     public ResponseEntity<String> getOrderDetailForMypage(@PathVariable String orderNumber) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -256,4 +259,57 @@ public class MypageMain {
         return ResponseEntity.ok(json);
     }
 
+    // 판매자 정보
+    @GetMapping("/mypage/wholeorder/seller/{businessNumber}")
+    @ResponseBody
+    public ResponseEntity<String> getSellerDetailForMypage(@PathVariable String businessNumber) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails details = (UserDetails) auth.getPrincipal();
+
+
+        // 현재 로그인한 사용자의 주문인지 확인하는 로직이 내부적으로 있어야 함
+        SellerDTO sellerDTO = myPageService.getSellerDetail(businessNumber);
+
+        if (sellerDTO == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        String json = gson.toJson(sellerDTO);
+        return ResponseEntity.ok(json);
+    }
+
+    @PostMapping("/mypage/wholeorder/qna")
+    @ResponseBody
+    public ResponseEntity<String> submitQna(@RequestBody QnaDTO qnaDTO) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String memberId = ((UserDetails) auth.getPrincipal()).getUsername();
+
+        // member_id 세팅 및 상태 기본값 세팅
+        qnaDTO.setMember_id(memberId);
+        qnaDTO.setStatus("open"); // 처음엔 open 상태로
+
+        int savedId = qnaService.qnaRegister(qnaDTO);  // 서비스 호출
+
+        if (savedId > 0) {
+            return ResponseEntity.ok("success");
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("fail");
+        }
+    }
+
+    @PostMapping("/mypage/wholeorder/confirm")
+    @ResponseBody
+    public ResponseEntity<String> confirmOrder(@RequestBody Map<String, String> payload) {
+        String orderNumber = payload.get("orderNumber");
+        try {
+            myPageService.confirmOrder(orderNumber); // 서비스 호출
+            return ResponseEntity.ok("구매확정 완료");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("구매확정 실패");
+        }
+    }
+
+
 }
+
+

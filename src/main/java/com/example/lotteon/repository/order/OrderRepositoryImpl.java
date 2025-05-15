@@ -278,7 +278,8 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
                     totalPriceExpression.as("totalPrice"),
                     product.name, //  상품명 추가
                     product.image.listThumbnailLocation, //  이미지 경로
-                    seller.companyName //  추가
+                    seller.companyName, //  추가
+                    seller.sellerId.businessNumber // 셀러 아이디 구하기 위해서 추가 해주기
             )
             .from(order)
             .join(order.member, member)

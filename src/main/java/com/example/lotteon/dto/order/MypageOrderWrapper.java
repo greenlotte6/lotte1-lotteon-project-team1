@@ -34,13 +34,16 @@ public class MypageOrderWrapper {
 
     private final String companyName;
 
-    private MypageOrderWrapper(Order order, int itemCount, long totalPrice, String productName, String imagePath, String companyName) {
+    private final String businessNumber;
+
+    private MypageOrderWrapper(Order order, int itemCount, long totalPrice, String productName, String imagePath, String companyName, String businessNumber) {
         this.order = order;
         this.itemCount = itemCount;
         this.totalPrice = totalPrice;
         this.productName = productName;
         this.imagePath = imagePath;
         this.companyName = companyName;
+        this.businessNumber = businessNumber;
     }
 
     public static Builder builder() {
@@ -68,6 +71,7 @@ public class MypageOrderWrapper {
             String productName = tuple.get(8, String.class); // 8번째 인덱스에 있음
             String imagePath = tuple.get(9, String.class); // 9번째 인덱스 (아래 쿼리에서 추가 예정)
             String companyName = tuple.get(10, String.class);
+            String businessNumber = tuple.get(11, String.class); // 마지막 인덱스
 
 
             User user = User.builder().id(userId).build();
@@ -82,7 +86,7 @@ public class MypageOrderWrapper {
                     .orderDate(orderDate)
                     .build();
 
-            return new MypageOrderWrapper(order, itemCount, totalPrice, productName, imagePath, companyName);
+            return new MypageOrderWrapper(order, itemCount, totalPrice, productName, imagePath, companyName, businessNumber);
         }
     }
 }
