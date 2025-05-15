@@ -13,25 +13,35 @@ import com.example.lotteon.service.admin.PolicyService;
 import com.example.lotteon.service.product.category.ProductCategoryService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 @Slf4j
 @Controller
 @RequestMapping("/admin/config")
 @RequiredArgsConstructor
 public class BasicConfigController {
+
+  @Value("${lotteon.upload.banner.path}")
+  private String uploadPath;
+
+  @Value("${lotteon.upload.prefix.banner}")
+  private String uploadPrefix;
 
   private final ProductCategoryService categoryService;
   private final BannerRepository bannerRepository;
@@ -50,14 +60,13 @@ public class BasicConfigController {
     List<BannerDocument> bannerDocs = bannerRepository.getBannerByPosition(position);
     model.addAttribute("banners", bannerDocs);
 
-    //return switch (position.toLowerCase()) {
-    //  case "login" -> "/admin/config/banner/login";
-    //  case "mypage" -> "/admin/config/banner/mypage";
-    //  case "slider" -> "/admin/config/banner/main-slider";
-    //  case "product" -> "/admin/config/banner/product";
-    //  default -> "/admin/config/banner/main-top";
-    //};
-    return "/admin/config/banner/main-top";
+    return switch (position.toLowerCase()) {
+      case "login" -> "/admin/config/banner/login";
+      case "mypage" -> "/admin/config/banner/mypage";
+      case "slider" -> "/admin/config/banner/main-slider";
+      case "detail" -> "/admin/config/banner/product-detail";
+      default -> "/admin/config/banner/main-top";
+    };
   }
 
   @PostMapping("/banner/update")
@@ -65,17 +74,16 @@ public class BasicConfigController {
       @RequestParam("status") String newStatus,
       @RequestParam("position") String position,
       HttpServletResponse response) throws IOException {
-    if (newStatus.equals("active")) {
+    if (newStatus.equals("active")) { //배너의 상태를 active로 변경
       BannerDocument targetDoc = bannerRepository.getBanner(_id);
       LocalDateTime startTime = targetDoc.getStart();
       LocalDateTime expireTime = targetDoc.getExpiration();
 
       //이미 만료된 배너를 활성화 시키고자 하거나 시작 날짜 이전에 활성화 시키고자 하는 경우
       if (expireTime.isBefore(LocalDateTime.now()) || startTime.isAfter(LocalDateTime.now())) {
-        response.sendError(HttpServletResponse.SC_BAD_REQUEST);
         return "redirect:/admin/config/banner?position=" + position;
       }
-    } else if (newStatus.equals("inactive")) {
+    } else if (newStatus.equals("inactive")) {//배너의 상태를 inactive로 변경
       BannerDocument targetDoc = bannerRepository.getBanner(_id);
       LocalDateTime startTime = targetDoc.getStart();
       if (LocalDateTime.now().isBefore(startTime)) { //시작 날짜 이전에 배너를 비활성화 시키고자 하는 경우
@@ -83,8 +91,44 @@ public class BasicConfigController {
         return "redirect:/admin/config/banner?position=" + position;
       }
     }
-    bannerRepository.changeStatus(_id, newStatus);
+    bannerRepository.changeStatus(_id, newStatus); //MongoDB의 배너 데이터 상태 변경
+    BannerDocument targetDoc = bannerRepository.getBanner(_id); //변경된 배너 데이터 MongoDB에서 조회
+    if (targetDoc.getStatus().equals("active")) { //변경된 상태가 active인 경우
+      cacheService.cacheBanner(targetDoc);
+    } else { // 변경된 상태가 inactive인 경우, 캐시에서 삭제
+      cacheService.invalidateBannerCache(targetDoc.get_id(), targetDoc.getPosition());
+    }
     return "redirect:/admin/config/banner?position=" + position;
+  }
+
+  private File getUploadPath(MultipartFile image) {
+    String originalName = image.getOriginalFilename();
+    int extensionIndex = originalName.lastIndexOf(".");
+    String extension = originalName.substring(extensionIndex);
+    String uuidName = UUID.randomUUID().toString();
+    String destinationPath = uploadPath + "/" + uuidName + extension;
+    return new File(destinationPath);
+  }
+
+  @PostMapping("/banner/register")
+  public String registerBanner(MultipartFile image, BannerDocument banner) throws IOException {
+    File dest = getUploadPath(image);
+    image.transferTo(dest);
+    String url = uploadPrefix + dest.getName();
+
+    banner.setId("admin::banner");
+    banner.setLocation(url);
+    bannerRepository.save(banner);
+    return "redirect:/admin/config/banner?position=" + banner.getPosition();
+  }
+
+  @PostMapping("/banner/delete")
+  public String deleteBanner(@RequestParam("_ids") List<String> _ids) {
+    _ids.forEach(id -> {
+      bannerRepository.delete(id);
+      cacheService.invalidateBannerCache(id);
+    });
+    return "redirect:/admin/config/banner";
   }
 
   @GetMapping("/policy")

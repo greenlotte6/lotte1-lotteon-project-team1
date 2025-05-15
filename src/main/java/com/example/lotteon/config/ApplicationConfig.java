@@ -86,7 +86,7 @@ public class ApplicationConfig {
               JsonDeserializationContext context) {
             return LocalDate.parse(json.getAsString(), formatter);
           }
-        })
+        }).registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
         .setDateFormat("yyyy-MM-dd'T'HH:mm:ssX") // 다른 날짜 형식이 필요한 경우
         .create();
   }
