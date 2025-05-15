@@ -18,27 +18,27 @@
     font-weight: bold;
 }
 
-.orderList {
+#order-info-modal .orderList {
     width: 90%;
     margin: 0 auto;
     margin-top: 20px;
 }
 
-.list-head {
+#order-info-modal .list-head {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.list-head > p {
+#order-info-modal .list-head > p {
    font-weight: bold;
 }
 
-.order-table {
+#order-info-modal .order-table {
     text-align: center;
 }
 
-.order-table {
+#order-info-modal .order-table {
     width: 100%;
     height: 250px;
     margin-top: 15px;
@@ -47,91 +47,91 @@
     text-align: center;
 }
 
-.table-head {
+#order-info-modal .table-head {
     height: 60px;
     background: #eee;
 }
 
-.table-head > th {
+#order-info-modal .table-head > th {
     vertical-align: middle; 
 }
 
-.end {
+#order-info-modal .end {
     padding-right: 30px
 }
 
-.price-t {
+#order-info-modal .price-t {
     padding-right: 30px;
 }
 
-td {
+#order-info-modal td {
     vertical-align: middle; 
 }
 
-.p-info {
+#order-info-modal .p-info {
     display: flex;
     margin-left: 40px;
 }
 
-.proimg {
+#order-info-modal .proimg {
     width: 150px;
     height: 100px
 }
 
-.proimg > img {
+#order-info-modal .proimg > img {
     width: 100px;
     height: 120px;
 }
 
-.table-body > td:last-child {
+#order-info-modal .table-body > td:last-child {
     margin-right: 30px;
 }
 
-.o-info > p {
+#order-info-modal .o-info > p {
     display: flex;
     margin-top: 15px;
 }
 
-.o-info > p :nth-child(1) {
+#order-info-modal .o-info > p :nth-child(1) {
     margin-left: 30px;
 }
 
-.o-info > p > span {
+#order-info-modal .o-info > p > span {
     margin-left: 10px;
 }
 
 /* --------------------------  */
-.p-info2 {
+#order-info-modal .p-info2 {
     display: flex;
     margin-left: 40px;
     margin-right: 20px;
 }
 
-.o-info2 > p {
+#order-info-modal .o-info2 > p {
     display: flex;
     justify-content: space-between;
     margin-top: 10px;
 }
 
-.o-info2 > p :nth-child(1) {
+#order-info-modal .o-info2 > p :nth-child(1) {
     margin-left: 20px;
 }
 
-.o-info2 > p:nth-child(3) {
+#order-info-modal .o-info2 > p:nth-child(3) {
     margin-top: 70px;
 }
 
-.o-info2 > p > span {
+#order-info-modal .o-info2 > p > span {
     margin-left: 10px;
 }
 
 
 /* --------------------------  */
-.price {
+#order-info-modal .price {
     font-weight: bold;
 }
 
-.btn-option {
+#order-info-modal .btn-option {
     display: flex;
     flex-direction: column;
     margin-top: 5px;
@@ -141,13 +141,13 @@ td {
 
 
 /*table2*/
-.all-deliveryList {
+#order-info-modal .all-deliveryList {
     width: 90%;
     margin: 0 auto;
     margin-top: 20px;
 }
 
-.delivery-table {
+#order-info-modal .delivery-table {
     width: 100%;
     height: 250px;
     margin-top: 15px;
@@ -155,17 +155,17 @@ td {
     border-bottom: 1px solid #eee;
 }
 
-.delivery-table td {
+#order-info-modal .delivery-table td {
     border-bottom: 1px solid #ccc;
 }
 
-.td-l {
+#order-info-modal .td-l {
    text-align: center;
    background: #eee;
    width: 150px;
 }
 
-.td-r {
+#order-info-modal .td-r {
     padding-left: 20px;
 }
 

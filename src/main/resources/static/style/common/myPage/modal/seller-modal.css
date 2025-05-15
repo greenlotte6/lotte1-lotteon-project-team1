@@ -17,7 +17,7 @@
     box-shadow: 0 5px 15px rgba(0,0,0,0.3);
 }
 
-.seller-Table {
+#seller-info-modal .seller-Table {
     width: 90%;
     margin: 0 auto;
     border-top: 1px solid #ccc;
@@ -25,33 +25,33 @@
     margin-top: 70px;
 }
 
-.seller-Table td {
+#seller-info-modal .seller-Table td {
     vertical-align: middle;
     height: 50px;
     border-bottom: 1px solid #ccc;
 }
 
-.td-l {
+#seller-info-modal .td-l {
     width: 100px;
     text-align: center;
     background: #eee;
 }
-.td-r {
+#seller-info-modal .td-r {
     padding-left: 20px;
 }
 
-.etc {
+#seller-info-modal .etc {
     width: 90%;
     margin: 0 auto;
     margin-top: 30px;
 }
 
-.etc span {
+#seller-info-modal .etc span {
     vertical-align: middle;
     margin-right: 10px;
 }
 
-.inquiry {
+#seller-info-modal .inquiry {
     display: flex;
     justify-content: center;
     width: 90%;
@@ -59,7 +59,7 @@
     margin-top: 40px;
 }
 
-.inquiry > button{
+#seller-info-modal .inquiry > button{
     width: 170px;
     height: 50px;
     background: #7BAAEC;

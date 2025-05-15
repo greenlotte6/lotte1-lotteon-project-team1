@@ -1,9 +1,14 @@
 package com.example.lotteon.service.mypage;
 
+import com.example.lotteon.dto.order.MypageOrderWrapper;
+import com.example.lotteon.dto.order.OrderItemDTO;
 import com.example.lotteon.dto.user.UserDTO;
+import com.example.lotteon.entity.order.OrderItem;
 import com.example.lotteon.entity.user.Member;
 import com.example.lotteon.entity.user.User;
 import com.example.lotteon.repository.UserRepository;
+import com.example.lotteon.repository.order.OrderItemRepository;
+import com.example.lotteon.repository.order.OrderRepository;
 import com.example.lotteon.repository.user.MemberRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +21,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -30,6 +38,9 @@ public class MyPageService {
     private final ModelMapper mapper;
     private final JavaMailSender mailSender;
     private final HttpServletRequest request;
+    private final OrderItemRepository orderItemRepository;
+    private final OrderRepository orderRepository;
+
 
 
 
@@ -75,5 +86,14 @@ public class MyPageService {
 
         // 3. 변경 사항을 저장
         userRepository.save(user);
+    }
+
+
+    public List<OrderItemDTO> getOrderDetail(String userId, String orderNumber) {
+        List<OrderItem> entities = orderRepository.findWithProductInfoByOrderNumberAndUserId(orderNumber, userId);
+
+        return entities.stream()
+                .map(entity -> mapper.map(entity, OrderItemDTO.class))
+                .collect(Collectors.toList());
     }
 }

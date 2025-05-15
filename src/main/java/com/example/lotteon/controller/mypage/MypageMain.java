@@ -4,6 +4,7 @@ import com.example.lotteon.dto.PageResponseDTO;
 import com.example.lotteon.dto.coupon.Coupon_HistoryDTO;
 import com.example.lotteon.dto.cs.QnaDTO;
 import com.example.lotteon.dto.order.MypageOrderWrapper;
+import com.example.lotteon.dto.order.OrderItemDTO;
 import com.example.lotteon.dto.order.OrderWrapper;
 import com.example.lotteon.dto.point.PointDTO;
 import com.example.lotteon.dto.user.MemberDTO;
@@ -31,6 +32,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -231,6 +235,25 @@ public class MypageMain {
         // 비밀번호가 맞으면 설정 페이지로 리다이렉트하고 비밀번호 수정 상태 전달
         redirectAttributes.addFlashAttribute("passwordModified", true);
         return "redirect:/mypage/setting";
+    }
+
+    @GetMapping("/mypage/wholeorder/{orderNumber}")
+    @ResponseBody
+    public ResponseEntity<String> getOrderDetailForMypage(@PathVariable String orderNumber) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails details = (UserDetails) auth.getPrincipal();
+
+        String currentUserId = details.getUsername();
+
+        // 현재 로그인한 사용자의 주문인지 확인하는 로직이 내부적으로 있어야 함
+        List<OrderItemDTO> items = myPageService.getOrderDetail(currentUserId, orderNumber);
+
+        if (items.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        String json = gson.toJson(items);
+        return ResponseEntity.ok(json);
     }
 
 }
