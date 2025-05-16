@@ -1,10 +1,9 @@
 package com.example.lotteon.service.admin.statistics;
 
 import com.example.lotteon.dto.admin.StatisticDTO;
+import com.example.lotteon.repository.UserRepository;
+import com.example.lotteon.repository.cs.QnaRepository;
 import com.example.lotteon.repository.order.OrderRepository;
-import com.example.lotteon.repository.seller.SalesRepository;
-import com.example.lotteon.service.cs.QnaService;
-import com.example.lotteon.service.user.UserService;
 import java.time.LocalDate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,10 +12,9 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class StatisticsService {
 
+  private final UserRepository userRepo;
   private final OrderRepository orderRepo;
-  private final UserService userService;
-  private final QnaService qnaService;
-  private final SalesRepository salesRepo;
+  private final QnaRepository qnaRepo;
 
   // 주문건수
   public long countAllOrders() {
@@ -46,11 +44,12 @@ public class StatisticsService {
 
   public long getTotalSales(String sellerId) {
     LocalDate today = LocalDate.now();
-    return orderRepo.findTotalSales(sellerId, LocalDate.of(2025, 5, 13));
+    return orderRepo.findTotalSales(sellerId, today);
   }
 
   public long countNewUsers() {
-    return 0;
+    LocalDate today = LocalDate.now();
+    return userRepo.countNewUsers(today);
   }
 
   public long countHit() {
@@ -58,11 +57,19 @@ public class StatisticsService {
   }
 
   public long countAllQna() {
-    return 0;
+    LocalDate today = LocalDate.now();
+    return qnaRepo.countAll(today);
   }
 
-  public StatisticDTO getStatistics() {
+  public StatisticDTO getAdminStat(int orderStatus) {
     //TODO Controller will use this method
-    return new StatisticDTO();
+    long orderCount = countAllOrders();
+    long orderCountByStatus = countAllOrdersByStatus(orderStatus);
+    long totalSales = getTotalSales();
+    long newUsersCount = countNewUsers();
+    long hitCount = countHit();
+    long qnaCount = countAllQna();
+    return StatisticDTO.builder()
+        .build();
   }
 }

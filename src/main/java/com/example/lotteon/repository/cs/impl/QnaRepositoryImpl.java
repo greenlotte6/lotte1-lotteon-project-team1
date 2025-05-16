@@ -8,6 +8,7 @@ import com.example.lotteon.repository.cs.custom.QnaRepositoryCustom;
 import com.querydsl.core.Tuple;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import java.time.LocalDate;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -98,5 +99,14 @@ public class QnaRepositoryImpl implements QnaRepositoryCustom {
         .limit(limit)
         .orderBy(qQna.register_date.desc())
         .fetch();
+  }
+
+  @Override
+  public long countAll(LocalDate date) {
+    Long count = queryFactory.select(qQna.id.count())
+        .from(qQna)
+        .where(qQna.register_date.eq(date))
+        .fetchOne();
+    return count == null ? 0 : count;
   }
 }
