@@ -72,16 +72,16 @@ public class ProductService {
     return repo.getLatestIdAndIncrement();
   }
 
-  public void register(ProductDTO product) {
+  public void register(String sellerId, ProductDTO product) {
     UserDTO user = UserDTO.builder()
-        .id("seller1")
+        .id(sellerId)
         .build();
-    SellerIdDTO sellerId = SellerIdDTO.builder()
+    SellerIdDTO sellerIdDTO = SellerIdDTO.builder()
         .businessNumber("112-12-12345")
         .user(user)
         .build();
     SellerDTO sellerDTO = SellerDTO.builder()
-        .sellerId(sellerId)
+        .sellerId(sellerIdDTO)
         .build();
 
     product.setSeller(sellerDTO);
@@ -99,7 +99,8 @@ public class ProductService {
   }
 
   public List<ProductDTO> proListSortedByPrice(String sort) {
-    Sort.Direction direction = "desc".equalsIgnoreCase(sort) ? Sort.Direction.DESC : Sort.Direction.ASC;
+    Sort.Direction direction =
+        "desc".equalsIgnoreCase(sort) ? Sort.Direction.DESC : Sort.Direction.ASC;
     List<Product> products = repo.findAll(Sort.by(direction, "price"));
 
     List<ProductDTO> productDTOS = new ArrayList<>();
