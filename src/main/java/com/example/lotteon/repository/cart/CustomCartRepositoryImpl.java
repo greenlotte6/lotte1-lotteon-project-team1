@@ -9,6 +9,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 @RequiredArgsConstructor
@@ -28,5 +29,22 @@ public class CustomCartRepositoryImpl implements CustomCartRepository {
         .join(member.memberId.user, user)
         .where(user.id.eq(memberId))
         .fetch();
+  }
+
+  @Override
+  @Transactional
+  public void deleteByMemberId(String memberId) {
+    List<Integer> targetIds = query.select(cart.id).from(cart)
+        .join(cart.product).on(cart.product.id.eq(product.id))
+        .join(cart.member, member)
+        .join(member.memberId.user, user)
+        .where(user.id.eq(memberId))
+        .fetch();
+
+    for (Integer targetId : targetIds) {
+      query.delete(cart)
+          .where(cart.id.eq(targetId))
+          .execute();
+    }
   }
 }

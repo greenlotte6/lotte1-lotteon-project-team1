@@ -10,11 +10,13 @@ import com.example.lotteon.entity.product.ProductOptions;
 import com.example.lotteon.repository.product.ProductRepository;
 import com.example.lotteon.repository.seller.SellerRepository;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -68,20 +70,25 @@ public class ProductService {
     repo.updateById(id, product);
   }
 
+  public List<Product> getBestProducts() {
+    Pageable topFive = PageRequest.of(0, 5); // 상위 5개
+    return productRepository.findTop5ByOrderBySalesDesc(topFive);
+  }
+
   public int getLatestIdAndIncrement() {
     return repo.getLatestIdAndIncrement();
   }
 
-  public void register(ProductDTO product) {
+  public void register(String sellerId, ProductDTO product) {
     UserDTO user = UserDTO.builder()
-        .id("seller1")
+        .id(sellerId)
         .build();
-    SellerIdDTO sellerId = SellerIdDTO.builder()
+    SellerIdDTO sellerIdDTO = SellerIdDTO.builder()
         .businessNumber("112-12-12345")
         .user(user)
         .build();
     SellerDTO sellerDTO = SellerDTO.builder()
-        .sellerId(sellerId)
+        .sellerId(sellerIdDTO)
         .build();
 
     product.setSeller(sellerDTO);
@@ -99,7 +106,8 @@ public class ProductService {
   }
 
   public List<ProductDTO> proListSortedByPrice(String sort) {
-    Sort.Direction direction = "desc".equalsIgnoreCase(sort) ? Sort.Direction.DESC : Sort.Direction.ASC;
+    Sort.Direction direction =
+        "desc".equalsIgnoreCase(sort) ? Sort.Direction.DESC : Sort.Direction.ASC;
     List<Product> products = repo.findAll(Sort.by(direction, "price"));
 
     List<ProductDTO> productDTOS = new ArrayList<>();
@@ -122,5 +130,30 @@ public class ProductService {
     }
 
     return dtoList;
+  }
+  public List<ProductDTO> getDiscountedProducts() {
+    return productRepository.findAll().stream()
+            .filter(p -> p.getDiscountRate() > 0)
+            .sorted(Comparator.comparingInt(Product::getDiscountRate).reversed())
+            .map(p -> modelMapper.map(p, ProductDTO.class))
+            .limit(8)
+            .toList();
+  }
+
+  public List<Product> getHitProducts() {
+    return productRepository.findProductsOrderBySalesDesc().stream()
+            .map(row -> (Product) row[0])
+            .limit(8)
+            .toList();
+  }
+
+  public List<ProductDTO> getRecommendedProducts() {
+    return productRepository.findAll().stream()
+            .sorted(Comparator.comparingInt(p ->
+                    (int) (p.getPrice() * (100 - p.getDiscountRate()) / 100.0)
+            ))
+            .limit(8)
+            .map(p -> modelMapper.map(p, ProductDTO.class))
+            .toList();
   }
 }

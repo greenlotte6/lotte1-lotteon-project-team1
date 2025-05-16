@@ -10,6 +10,7 @@ import com.example.lotteon.dto.user.MemberDTO;
 import com.example.lotteon.dto.user.UserDTO;
 import com.example.lotteon.entity.product.Product;
 import com.example.lotteon.service.order.OrderService;
+import com.example.lotteon.service.product.CartService;
 import com.example.lotteon.service.product.ProductService;
 import com.example.lotteon.service.product.options.ProductOptionsService;
 import com.example.lotteon.service.user.MemberService;
@@ -29,6 +30,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * 상품 상세 페이지에서 구매하기 버튼을 눌렀을 때 전송되는 데이터에 대한 컨트롤러.
@@ -43,6 +45,7 @@ public class OrderController {
   private final ProductOptionsService optionsService;
   private final ProductService productService;
   private final ModelMapper mapper;
+  private final CartService cartService;
 
   private int calculatedTotalPrice(ProductDTO product, int amount) {
     int price = product.getPrice();
@@ -57,11 +60,12 @@ public class OrderController {
       HttpSession session) {
     session.setAttribute("orderSheet", orderSheet);//세션에 주문서 임시 저장
     session.setMaxInactiveInterval(1800); //30분 후 세션 만료 => 세션에 임시 저장 된 Order 관련 데이터 삭제
-    return "redirect:/order/sheet";
+    return "redirect:/order/sheet?src=detail";
   }
 
   @GetMapping("/order/sheet")
-  public String orderSheet(HttpServletResponse response, HttpSession session, Model model)
+  public String orderSheet(HttpServletResponse response, HttpSession session, Model model,
+      @RequestParam("src") String src)
       throws IOException {
     OrderSheet sessionOrderSheet = (OrderSheet) session.getAttribute("orderSheet");
 
@@ -90,20 +94,18 @@ public class OrderController {
 
       UserDTO user = userService.getUserInfo(userDetails.getUsername());
 
+      model.addAttribute("src", src);
       model.addAttribute("user", user);
       model.addAttribute("orderSheet", sessionOrderSheet);
       session.setAttribute("orderSheet", sessionOrderSheet); //세션에 주문서 임시 저장
       //session.removeAttribute("orderSheets");
-    } else {
-      response.sendError(HttpServletResponse.SC_FORBIDDEN);
     }
+
     return "/product/proOrder";
   }
 
   @PostMapping("/order/place")
-  public String placeOrder(HttpSession session,
-      OrderDTO order,
-      Model model) {
+  public String placeOrder(HttpSession session, OrderDTO order, @RequestParam("src") String src) {
     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
     UserDetails userDetails = (UserDetails) auth.getPrincipal();
 
@@ -135,14 +137,20 @@ public class OrderController {
 
     orderService.placeOrder(sessionOrderSheet);
 
-    return "redirect:/order/result";
+    return "redirect:/order/result?src=" + src;
   }
 
   @GetMapping("/order/result")
-  public String orderResult(HttpSession session, Model model) {
+  public String orderResult(HttpSession session, Model model, @RequestParam("src") String src) {
+    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    UserDetails userDetails = (UserDetails) auth.getPrincipal();
     OrderSheet sessionSheet = (OrderSheet) session.getAttribute("orderSheet");
     model.addAttribute("orderSheet", sessionSheet);
     session.removeAttribute("orderSheet");
+
+    if (src.equals("cart")) {
+      cartService.deleteByMemberId(userDetails.getUsername());
+    }
     return "/product/proOrderRs";
   }
 }

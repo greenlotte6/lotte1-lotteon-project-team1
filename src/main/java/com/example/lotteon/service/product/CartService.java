@@ -62,5 +62,9 @@ public class CartService {
   public CartDTO get(String id) {
     return null;
   }
+
+  public void deleteByMemberId(String memberId) {
+    repo.deleteByMemberId(memberId);
+  }
 }
 

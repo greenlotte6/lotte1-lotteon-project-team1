@@ -97,7 +97,7 @@ public class CartController {
     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
     if (auth == null || !auth.isAuthenticated()
         || auth instanceof AnonymousAuthenticationToken) {  // 비회원 사용자가 접근했을 경우
-      response.sendError(HttpServletResponse.SC_FORBIDDEN);
+      return "redirect:/cart";
     } else {
       OrderSheet orderSheet = OrderSheet.builder().build();
       UserDetails userDetails = (UserDetails) auth.getPrincipal();
@@ -116,7 +116,7 @@ public class CartController {
       orderSheet.setOptions(new ArrayList<>()); //TODO Delete options from order sheet or use them
       session.setAttribute("orderSheet", orderSheet);
     }
-    return "redirect:/order/sheet";
+    return "redirect:/order/sheet?src=cart";
   }
 
   @PostMapping("/cart/delete")

@@ -1,22 +1,26 @@
 package com.example.lotteon.service.admin.statistics;
 
 import com.example.lotteon.dto.admin.StatisticDTO;
+import com.example.lotteon.dto.order.OrderStatusDTO;
+import com.example.lotteon.repository.UserRepository;
+import com.example.lotteon.repository.cs.QnaRepository;
 import com.example.lotteon.repository.order.OrderRepository;
-import com.example.lotteon.repository.seller.SalesRepository;
-import com.example.lotteon.service.cs.QnaService;
-import com.example.lotteon.service.user.UserService;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import java.time.LocalDate;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class StatisticsService {
 
+  private final UserRepository userRepo;
   private final OrderRepository orderRepo;
-  private final UserService userService;
-  private final QnaService qnaService;
-  private final SalesRepository salesRepo;
+  private final QnaRepository qnaRepo;
+  private final ModelMapper mapper;
+  private final Gson gson;
 
   // 주문건수
   public long countAllOrders() {
@@ -46,11 +50,12 @@ public class StatisticsService {
 
   public long getTotalSales(String sellerId) {
     LocalDate today = LocalDate.now();
-    return orderRepo.findTotalSales(sellerId, LocalDate.of(2025, 5, 13));
+    return orderRepo.findTotalSales(sellerId, today);
   }
 
   public long countNewUsers() {
-    return 0;
+    LocalDate today = LocalDate.now();
+    return userRepo.countNewUsers(today);
   }
 
   public long countHit() {
@@ -58,11 +63,81 @@ public class StatisticsService {
   }
 
   public long countAllQna() {
-    return 0;
+    LocalDate today = LocalDate.now();
+    return qnaRepo.countAll(today);
   }
 
-  public StatisticDTO getStatistics() {
-    //TODO Controller will use this method
-    return new StatisticDTO();
+  public String getBarData(LocalDate from, LocalDate to) {
+    long confirmedCount = orderRepo.countByStatusBetween(
+        OrderStatusDTO.STATUS_PURCHASE_CONFIRMED_ID, from, to);
+    long canceledCount = orderRepo.countByStatusBetween(OrderStatusDTO.STATUS_CANCELLED_ID, from,
+        to);
+    long onDeliveryCount = orderRepo.countByStatusBetween(OrderStatusDTO.STATUS_ON_DELIVERY_ID,
+        from, to);
+    JsonObject json = new JsonObject();
+    json.addProperty("confirmed", confirmedCount);
+    json.addProperty("canceled", canceledCount);
+    json.addProperty("on_delivery", onDeliveryCount);
+    return gson.toJson(json);
+  }
+
+  public String getBarData(String sellerId, LocalDate from, LocalDate to) {
+    long confirmedCount = orderRepo.countByStatusBetween(
+        OrderStatusDTO.STATUS_PURCHASE_CONFIRMED_ID, sellerId, from, to);
+    long canceledCount = orderRepo.countByStatusBetween(OrderStatusDTO.STATUS_CANCELLED_ID,
+        sellerId, from,
+        to);
+    long onDeliveryCount = orderRepo.countByStatusBetween(OrderStatusDTO.STATUS_ON_DELIVERY_ID,
+        sellerId, from, to);
+    JsonObject json = new JsonObject();
+    json.addProperty("confirmed", confirmedCount);
+    json.addProperty("canceled", canceledCount);
+    json.addProperty("on_delivery", onDeliveryCount);
+    return gson.toJson(json);
+  }
+
+  public String getPieData(LocalDate from, LocalDate to) {
+    return null;
+  }
+
+  public StatisticDTO getSellerStat(String sellerId) {
+    long orderCount = countAllOrders(sellerId);
+    long totalSales = getTotalSales(sellerId);
+    return StatisticDTO.builder()
+        .paidCount(countAllOrdersByStatus(OrderStatusDTO.STATUS_PAID_ID, sellerId))
+        .paymentWaitingCount(
+            countAllOrdersByStatus(OrderStatusDTO.STATUS_PAYMENT_WAITING_ID, sellerId))
+        .cancelRequestedCount(
+            countAllOrdersByStatus(OrderStatusDTO.STATUS_CANCEL_REQUESTED_ID, sellerId))
+        .exchangeRequestedCount(
+            countAllOrdersByStatus(OrderStatusDTO.STATUS_EXCHANGE_REQUESTED_ID, sellerId))
+        .prepareDeliveryCount(
+            countAllOrdersByStatus(OrderStatusDTO.STATUS_PREPARE_DELIVERY_ID, sellerId))
+        .refundRequestedCount(
+            countAllOrdersByStatus(OrderStatusDTO.STATUS_REFUND_REQUESTED_ID, sellerId))
+        .totalSales(totalSales)
+        .orderCount(orderCount)
+        .build();
+  }
+
+  public StatisticDTO getAdminStat() {
+    long orderCount = countAllOrders();
+    long totalSales = getTotalSales();
+    long newUsersCount = countNewUsers();
+    long hitCount = countHit();
+    long qnaCount = countAllQna();
+    return StatisticDTO.builder()
+        .paidCount(countAllOrdersByStatus(OrderStatusDTO.STATUS_PAID_ID))
+        .paymentWaitingCount(countAllOrdersByStatus(OrderStatusDTO.STATUS_PAYMENT_WAITING_ID))
+        .cancelRequestedCount(countAllOrdersByStatus(OrderStatusDTO.STATUS_CANCEL_REQUESTED_ID))
+        .exchangeRequestedCount(countAllOrdersByStatus(OrderStatusDTO.STATUS_EXCHANGE_REQUESTED_ID))
+        .prepareDeliveryCount(countAllOrdersByStatus(OrderStatusDTO.STATUS_PREPARE_DELIVERY_ID))
+        .refundRequestedCount(countAllOrdersByStatus(OrderStatusDTO.STATUS_REFUND_REQUESTED_ID))
+        .totalSales(totalSales)
+        .newUserCount(newUsersCount)
+        .hitCount(hitCount)
+        .qnaCount(qnaCount)
+        .orderCount(orderCount)
+        .build();
   }
 }

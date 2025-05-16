@@ -26,6 +26,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -54,9 +57,9 @@ public class ProductManagementController {
 
   private int createNewId(int categoryId) {
     String latestIdField =
-        "000" + String.valueOf(service.getLatestIdAndIncrement() % 10000);//ex)0001;
+        "000" + (service.getLatestIdAndIncrement() % 10000);//ex)0001;
     String registeredYear = String.valueOf(LocalDate.now().getYear());//ex) 2025
-    String categoryIdStr = "0" + String.valueOf(categoryId);//ex) 01
+    String categoryIdStr = "0" + (categoryId);//ex) 01
     return Integer.parseInt(registeredYear + categoryIdStr + latestIdField);
   }
 
@@ -116,15 +119,18 @@ public class ProductManagementController {
   public String register(@ModelAttribute ProductWrapperDTO wrapper,
       @RequestParam Map<String, MultipartFile> imageMap,
       HttpServletResponse response) {
+    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    UserDetails details = (UserDetails) auth.getPrincipal();
     ProductDTO incomingProduct = wrapper.getProduct();
     List<ProductOptionsDTO> incomingOptions = wrapper.getOptions();
-    int createdId = createNewId(incomingProduct.getCategory().getId());//최신 product id 생성
+    //int createdId = createNewId(incomingProduct.getCategory().getId());//최신 product id 생성
+    int createdId = service.getLatestIdAndIncrement() + 1;
     try {
       ProductImageDTO insertedImage = uploader.uploadAndInsert(imageMap);
       incomingProduct.setImage(insertedImage);
       incomingProduct.setId(createdId); // POST 요청의 product에 생성된 id 초기화
       incomingProduct.setStatus("on_sale"); // 상품 상태 == 판매중
-      service.register(incomingProduct); // POST 요청된 product INSERT
+      service.register(details.getUsername(), incomingProduct); // POST 요청된 product INSERT
       optionsService.save(wrapper.getProduct().getId(),
           incomingOptions); // POSt 요청된 product options INSERT
     } catch (IOException e) {

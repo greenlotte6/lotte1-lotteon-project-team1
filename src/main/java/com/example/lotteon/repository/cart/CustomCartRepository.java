@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository;
 public interface CustomCartRepository {
 
   List<Cart> findAllByMemberId(String memberId);
+
+  void deleteByMemberId(String memberId);
 }

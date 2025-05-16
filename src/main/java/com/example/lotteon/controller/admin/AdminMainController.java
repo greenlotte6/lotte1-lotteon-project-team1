@@ -1,5 +1,6 @@
 package com.example.lotteon.controller.admin;
 
+import com.example.lotteon.dto.admin.StatisticDTO;
 import com.example.lotteon.entity.cs.Notice;
 import com.example.lotteon.entity.cs.Qna;
 import com.example.lotteon.service.admin.statistics.StatisticsService;
@@ -34,29 +35,21 @@ public class AdminMainController {
         .anyMatch(a -> a.getAuthority().equals("ROLE_SELLER"));
 
     String role = null;
-    long orderCount = 0L;
-    long paidCount = 0L;
-    long totalSales = 0L;
+    StatisticDTO stat = null;
 
     if (isSeller) {
       role = "ROLE_SELLER";
-      orderCount = statService.countAllOrders(details.getUsername());
-      totalSales = statService.getTotalSales(details.getUsername());
-      System.out.println(totalSales);
-
+      stat = statService.getSellerStat(details.getUsername());
     } else {
       role = "ROLE_ADMIN";
-      List<Notice> notices = csService.getNoticeLimit(5);
+      stat = statService.getAdminStat();
       List<Qna> qnas = qnaService.getWithLimit(5);
-      orderCount = statService.countAllOrders();
-      paidCount = statService.countAllOrdersByStatus(2);
-      totalSales = statService.getTotalSales();
-
-      model.addAttribute("notices", notices);
+      List<Notice> notices = csService.getNoticeLimit(5);
       model.addAttribute("qnas", qnas);
+      model.addAttribute("notices", notices);
     }
 
-    model.addAttribute("orderCount", orderCount);
+    model.addAttribute("stat", stat);
     model.addAttribute("role", role);
     return "/admin/index";
   }
