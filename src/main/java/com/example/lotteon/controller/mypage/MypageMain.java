@@ -280,21 +280,12 @@ public class MypageMain {
     return ResponseEntity.ok(json);
   }
 
+  //판매자 상세정보 > 문의하기
   @PostMapping("/mypage/wholeorder/qna")
   @ResponseBody
   public ResponseEntity<String> submitQna(@RequestBody QnaDTO qnaDTO) {
     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
     String memberId = ((UserDetails) auth.getPrincipal()).getUsername();
-        String json = gson.toJson(sellerDTO);
-        return ResponseEntity.ok(json);
-    }
-
-    //판매자 상세정보 > 문의하기
-    @PostMapping("/mypage/wholeorder/qna")
-    @ResponseBody
-    public ResponseEntity<String> submitQna(@RequestBody QnaDTO qnaDTO) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String memberId = ((UserDetails) auth.getPrincipal()).getUsername();
 
     // member_id 세팅 및 상태 기본값 세팅
     qnaDTO.setMember_id(memberId);
@@ -307,6 +298,7 @@ public class MypageMain {
     } else {
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("fail");
     }
+  }
 
     //구매 확정
     @PostMapping("/mypage/wholeorder/confirm")
@@ -340,20 +332,6 @@ public class MypageMain {
         String json = gson.toJson(items);
         return ResponseEntity.ok(json);
     }
-
-    //반품 신청
-    @PostMapping("/mypage/wholeorder/return")
-    @ResponseBody
-    public ResponseEntity<String> returnOrder(@RequestBody Map<String, String> payload) {
-        String orderNumber = payload.get("orderNumber");
-        try {
-            myPageService.returnOrder(orderNumber); // 서비스 호출
-            return ResponseEntity.ok("반품신청 완료");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("반품신청 실패");
-        }
-    }
-
 
 }
 
