@@ -29,6 +29,14 @@
 </head>
 <body>
 <div id="wrapper">
+  <div id="MAIN-area">
+    <div id="MAIN" th:if="${mainBanner != null}"
+         th:style="'background-color:' + ${mainBanner.getBannerInfo().getBackgroundColor()} + ';'">
+      <a th:href="${mainBanner.getBannerInfo().getUrl()}" target="_blank">
+        <img th:src="@{${mainBanner.getLocation()}}" class="main-banner-img"/>
+      </a>
+    </div>
+  </div>
   <th:block th:insert="~{/common/header}"></th:block>
   <th:block th:insert="~{/_menu}"></th:block>
   <main>
@@ -41,7 +49,7 @@
         <img src="/images/banner4.PNG" alt="배너4"/>
         <img src="/images/banner5.PNG" alt="배너5"/>
       </div>
-    </div>
+<!--    </div>-->
 
     <!--베스트상품-->
     <section class="best-products">

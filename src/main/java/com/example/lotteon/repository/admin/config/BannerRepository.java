@@ -4,6 +4,7 @@ import com.example.lotteon.entity.admin.banner.BannerDocument;
 import com.example.lotteon.entity.admin.banner.BannerInfo;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -19,7 +20,7 @@ public class BannerRepository {
   private final MongoTemplate template;
 
   public BannerDocument getBanner(String _id) {
-    Query query = new Query(Criteria.where("_id").is(_id));
+    Query query = new Query(Criteria.where("_id").is(new ObjectId(_id)));
     return template.findOne(query, BannerDocument.class);
   }
 
@@ -39,7 +40,7 @@ public class BannerRepository {
   }
 
   public BannerInfo getBannerInfoById(String _id) {
-    Query query = new Query(Criteria.where("_id").is(_id));
+    Query query = new Query(Criteria.where("_id").is(new ObjectId(_id)));
     BannerDocument bannerDocument = template.findOne(query, BannerDocument.class);
     if (bannerDocument == null) {
       return null;
@@ -52,12 +53,12 @@ public class BannerRepository {
   }
 
   public void delete(String _id) {
-    Query query = new Query(Criteria.where("_id").is(_id));
-    template.remove(query);
+    Query query = new Query(Criteria.where("_id").is(new ObjectId(_id)));
+    template.remove(query, BannerDocument.class);
   }
 
   public void changeStatus(String _id, String newStatus) {
-    Query query = new Query(Criteria.where("_id").is(_id));
+    Query query = new Query(Criteria.where("_id").is(new ObjectId(_id)));
     Update update = new Update();
     update.set("status", newStatus);
     template.updateFirst(query, update, BannerDocument.class);

@@ -124,5 +124,17 @@
   padding: 0;
 }
 
-.post-form {
+.post-form-table {
+  width: 600px;
+  height: auto;
+  border: 1px solid #a6a6a6;
 }
+
+.post-form-table tr {
+  border-bottom: 1px solid #a6a6a6;
+}
+
+.post-form-table th {
+  text-align: center;
+}
+

@@ -4,9 +4,11 @@ import com.example.lotteon.dto.TermsDTO;
 import com.example.lotteon.dto.seller.SellerDTO;
 import com.example.lotteon.dto.user.MemberDTO;
 import com.example.lotteon.dto.user.UserDTO;
+import com.example.lotteon.entity.admin.banner.BannerDocument;
 import com.example.lotteon.entity.user.User;
 import com.example.lotteon.exception.EntityAlreadyExistsException;
 import com.example.lotteon.service.TermsService;
+import com.example.lotteon.service.admin.CacheService;
 import com.example.lotteon.service.seller.SellerService;
 import com.example.lotteon.service.user.MemberService;
 import com.example.lotteon.service.user.UserService;
@@ -16,13 +18,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Slf4j
 @Controller
@@ -33,6 +40,7 @@ public class UserController {
   private final UserService userService;
   private final MemberService memberService;
   private final SellerService sellerService;
+  private final CacheService cacheService;
 
   @GetMapping("/general")
   public String general() {
@@ -63,7 +71,8 @@ public class UserController {
   }
 
   @PostMapping("/genseller")
-  public String genseller(SellerDTO sellerDTO, String passwordConfirm, HttpServletResponse response) {
+  public String genseller(SellerDTO sellerDTO, String passwordConfirm,
+      HttpServletResponse response) {
     try {
       UserDTO userDTO = sellerDTO.getSellerId().getUser();
       userDTO.setRole(UserDTO.ROLE_SELLER);
@@ -78,7 +87,17 @@ public class UserController {
   }
 
   @GetMapping("/login")
-  public String login() {
+  public String login(Model model) {
+    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    if (auth != null && auth.isAuthenticated()) {//유저가 이미 로그인한 경우
+      //TODO: Handle this
+    }
+    List<BannerDocument> banners = cacheService.getCachedBanner("LOGIN");
+    if (banners != null) {
+      int randomIndex = (int) (Math.random() * banners.size());
+      BannerDocument randomBanner = banners.get(randomIndex);
+      model.addAttribute("banner", randomBanner);
+    }
     return "/user/login";
   }
 
@@ -118,7 +137,8 @@ public class UserController {
 
   // JSON 단일 문자열값이 직접 String으로 매핑되지 않기 때문에 JSON과 호환되는 Map 타입으로 JSON 수신
   @PostMapping("/email/auth")
-  public ResponseEntity<Boolean> emailAuth(@RequestBody Map<String, String> map, HttpSession session) {
+  public ResponseEntity<Boolean> emailAuth(@RequestBody Map<String, String> map,
+      HttpSession session) {
     String code = map.get("code");
     String email = map.get("email");
     String type = map.get("type"); // "findid", "findpw", null
@@ -139,7 +159,6 @@ public class UserController {
 
     return ResponseEntity.ok(code.equals(sessAuthCode));
   }
-
 
 
   @GetMapping("/user/findid")
@@ -164,13 +183,14 @@ public class UserController {
 
     // 이름과 이메일로 사용자 아이디 찾기
     return userService.findUserId(name, email)
-            .map(id -> ResponseEntity.ok("당신의 아이디는 '" + id + "' 입니다."))
-            .orElse(ResponseEntity.ok("일치하는 회원 정보가 없습니다."));
+        .map(id -> ResponseEntity.ok("당신의 아이디는 '" + id + "' 입니다."))
+        .orElse(ResponseEntity.ok("일치하는 회원 정보가 없습니다."));
   }
 
   @PostMapping("/user/sendCode")
   @ResponseBody
-  public ResponseEntity<String> sendCode(@RequestBody Map<String, String> map, HttpSession session) {
+  public ResponseEntity<String> sendCode(@RequestBody Map<String, String> map,
+      HttpSession session) {
     String email = map.get("email");
     String name = map.get("name");
 
@@ -210,7 +230,8 @@ public class UserController {
 
   @PostMapping("/user/sendPwCode")
   @ResponseBody
-  public ResponseEntity<String> sendPwCode(@RequestBody Map<String, String> map, HttpSession session) {
+  public ResponseEntity<String> sendPwCode(@RequestBody Map<String, String> map,
+      HttpSession session) {
     String id = map.get("id");
     String email = map.get("email");
 
@@ -228,7 +249,8 @@ public class UserController {
 
   @PostMapping("/user/sendJoinCode")
   @ResponseBody
-  public ResponseEntity<String> sendJoinCode(@RequestBody Map<String, String> map, HttpSession session) {
+  public ResponseEntity<String> sendJoinCode(@RequestBody Map<String, String> map,
+      HttpSession session) {
     String email = map.get("email");
 
     String code = userService.sendEmailCode(email);
