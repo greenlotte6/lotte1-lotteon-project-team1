@@ -1,4 +1,4 @@
-package com.example.lotteon.controller.api.admin.config;
+package com.example.lotteon.controller.api.admin;
 
 import com.example.lotteon.service.admin.statistics.StatisticsService;
 import com.google.gson.Gson;
@@ -18,11 +18,11 @@ public class StatisticsController {
   private final StatisticsService statService;
   private final Gson gson;
 
-  @GetMapping("/bar")
+  @GetMapping("/chart")
   public ResponseEntity<String> getBarStat() {
-    LocalDate weekAgo = LocalDate.now().minusDays(7);
+    LocalDate weekAgo = LocalDate.now().minusDays(14);
     LocalDate today = LocalDate.now();
-    String barData = statService.getBarData(weekAgo, today);
+    String barData = statService.getBarData(weekAgo, today, 2, 3, 4);
     String pieData = statService.getPieData(weekAgo, today);
 
     JsonObject json = new JsonObject();

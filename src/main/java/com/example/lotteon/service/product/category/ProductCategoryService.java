@@ -15,6 +15,7 @@ import java.util.Map.Entry;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -53,7 +54,7 @@ public class ProductCategoryService {
     return dtoMap;
   }
 
-  //TODO:  Move logic below to Repository's update() method, which has @Transactional annotation.
+  @Transactional
   public void update(CategoryFormDTO form) {
     List<ProductCategoryDTO> categories = form.getCategories();
     for (ProductCategoryDTO category : categories) {

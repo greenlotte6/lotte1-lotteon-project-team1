@@ -38,9 +38,9 @@
   <main>
     <div class="main">
       <article class="article-body">
-        <form th:action="@{/product/detail/give-coupon(id=${prodtos.id})}" method="POST">
+        <!--form th:action="@{/product/detail/give-coupon(id=${prodtos.id})}" method="POST">
           <button type="submit">쿠폰받기</button>
-        </form>
+        </form-->
 
         <form th:action="@{/cart}" method="post" class="detail">
           <div>
@@ -53,37 +53,32 @@
               <input type="hidden" name="product.id" th:value="${prodtos.id}"/>
               <input type="hidden" name="orderItems[0].product.id"
                      th:value="${prodtos.id}"/>
-              <span>상품번호 : [[${prodtos.id}]]</span>
-              <span th:text="${prodtos.seller.companyName}"></span>
             </div>
 
             <div class="pro-name">
               <span>[[${prodtos.name}]]</span>
-              <div>
-                <span>★★★★☆</span>
-                <a href="#">상품평보기</a>
-              </div>
+            </div>
+            <div>
+              <span>★★★★☆</span>
+              <a href="#">상품평보기</a>
             </div>
 
             <div class="pro-price">
-              <del th:text="${prodtos.price + '원'}"></del>
+              <del>
+                <h3 th:text="${#numbers.formatCurrency(prodtos.price) + '원'}"></h3>
+              </del>
               <span class="sale" th:text="${prodtos.discountRate + '%↓'}"></span>
-              <p th:text="${prodtos.price - (prodtos.price / 100.0) * prodtos.discountRate + '원'}"></p>
+              <h3 th:text="${#numbers.formatCurrency(prodtos.price - (prodtos.price / 100.0) * prodtos.discountRate) + '원'}"></h3>
             </div>
 
             <div class="delivery">
               <p th:text="${prodtos.getDescription()}"></p>
             </div>
 
-            <div class="from">
-              <p th:text="'원산지:' + ${prodtos.getOrigin()}+ '(상세설명 참고)'">원산지 - 상세설명 참고</p>
-            </div>
-
             <!-- 옵션 선택 -->
             <div class="size-option" th:each="entry, iterStat : ${options}">
-              <h3 th:text="${entry.getKey()}"></h3>
-              <select th:name="|options[${iterStat.index}].id|">
-                <option value="default" selected>선택하기</option>
+              <select th:name="|options[${iterStat.index}].id|" id="option">
+                <option value="" th:text="${entry.getKey()}" selected>선택하기</option>
                 <option th:each="option : ${entry.getValue()}" th:value="${option.getId()}"
                         th:text="${option.getValue()}">S
                 </option>
@@ -92,7 +87,6 @@
 
             <!-- 수량 조정 -->
             <div class="count-option">
-              <p>선택한 상품명</p>
               <div class="count-main">
                 <div class="count">
                   <button type="button" class="minus">-</button>
@@ -108,9 +102,12 @@
                 </div>
               </div>
               <div class="sum-price">
-                <p>총 상품금액&nbsp;</p>
                 <input type="hidden" id="total-price"/>
               </div>
+            </div>
+
+            <div class="from">
+              <p th:text="'원산지:' + ${prodtos.getOrigin()}+ '(상세설명 참고)'">원산지 - 상세설명 참고</p>
             </div>
 
             <!-- 장바구니와 구매하기 버튼 -->

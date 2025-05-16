@@ -5,6 +5,7 @@ import com.example.lotteon.dto.order.OrderWrapper;
 import com.example.lotteon.entity.order.Order;
 import com.example.lotteon.entity.order.OrderItem;
 import com.example.lotteon.entity.order.OrderStatus;
+import com.querydsl.core.Tuple;
 import java.time.LocalDate;
 import java.util.List;
 import org.springframework.data.domain.Page;
@@ -59,7 +60,7 @@ public interface OrderRepositoryCustom {
 
   long findTotalSales(String sellerId, LocalDate today);
 
-  long countByStatusBetween(int status, LocalDate from, LocalDate to);
+  List<Tuple> countByStatusBetween(LocalDate from, LocalDate to, int... status);
 
   long countByStatusBetween(int status, String sellerId, LocalDate from, LocalDate to);
 }

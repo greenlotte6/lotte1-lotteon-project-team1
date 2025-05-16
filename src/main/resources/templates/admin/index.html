@@ -28,9 +28,11 @@
       src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/all.min.js"
       crossorigin="anonymous"
   ></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"
-          crossorigin="anonymous"></script>
+  ?d
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"
+          crossorigin="anonymous" type="module"></script>
   <script th:src="@{/js/admin/config/aside-drop.js}"></script>
+  <script src="/js/admin/main.js" type="module"></script>
 </head>
 <body>
 <div id="wrapper">
@@ -53,8 +55,9 @@
         <div class="content-title">
           <h3>집계현황</h3>
         </div>
-        <img th:src="@{/images/dummy-graph.png}" alt="graph"/>
-        <img th:src="@{/images/dummy-graph.png}" alt="graph"/>
+        <div id="chart">
+
+        </div>
       </div>
       <div class="content operation-status">
         <div class="content-title">

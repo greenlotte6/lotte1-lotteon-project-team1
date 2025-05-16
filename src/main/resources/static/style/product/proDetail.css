@@ -1,4 +1,8 @@
 /* 기타 */
+.info-list > div {
+  padding: 10px 20px;
+}
+
 img {
   width: 100%;
   height: 200px;
@@ -22,7 +26,10 @@ img {
 }
 
 .sale {
-  color: #C00000;
+  display: inline;
+  font-size: 20px;
+  font-weight: bolder;
+  color: #e9445f;
 }
 
 
@@ -34,7 +41,6 @@ img {
 
 .pro-top {
   margin-top: 10px;
-  border-bottom: 1px solid #dfdfdf;
   box-sizing: border-box;
   padding-bottom: 7px;
 }
@@ -48,12 +54,18 @@ img {
 }
 
 .pro-name {
+  height: auto;
   display: flex;
   justify-content: space-between;
   margin-top: 10px;
-  border-bottom: 1px solid #dfdfdf;
   box-sizing: border-box;
+  border-bottom: #333;
   padding-bottom: 10px;
+}
+
+.pro-name > span {
+  line-height: 27px;
+  font-size: 24px;
 }
 
 .pro-name > div > a {
@@ -63,9 +75,9 @@ img {
 }
 
 .pro-price {
+  width: 100%;
   margin-top: 10px;
   padding-bottom: 10px;
-  border-bottom: 1px solid #dfdfdf;
 }
 
 .pro-price > span:nth-child(5) {
@@ -73,7 +85,19 @@ img {
 }
 
 .pro-price > del {
+  display: inline;
   color: gray;
+}
+
+.pro-price > del > h3 {
+  color: inherit;
+  font-size: 20px;
+  font-weight: bolder;
+}
+
+.pro-price > h3 {
+  font-size: 26px;
+  font-weight: bolder;
 }
 
 .pro-price > button {
@@ -92,7 +116,6 @@ img {
 
 .delivery {
   margin-top: 10px;
-  border-bottom: 1px solid #dfdfdf;
   padding-bottom: 10px;
 }
 
@@ -111,14 +134,11 @@ img {
 
 .from {
   margin-top: 10px;
-  font-size: 20px;
-  border-bottom: 1px solid #dfdfdf;
   padding-bottom: 10px;
 }
 
 .size-option {
   margin-top: 10px;
-  border-bottom: 1px solid #dfdfdf;
   padding-bottom: 10px;
 }
 
@@ -161,6 +181,12 @@ input[type=number]::-webkit-outer-spin-button {
   display: flex;
 }
 
+.count-option {
+  background-color: #f8f8f8;
+  border-radius: 5px;
+  padding: 10px 10px;
+}
+
 .count-option > p {
   margin-bottom: 10px;
 }
@@ -168,6 +194,7 @@ input[type=number]::-webkit-outer-spin-button {
 .count-main {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   margin-bottom: 15px;
 }
 
@@ -247,11 +274,12 @@ input[type=number]::-webkit-outer-spin-button {
 .title {
   display: flex;
   justify-content: center;
+  height: auto;
 }
 
 .title > img {
-  width: 35%;
-  height: 150px;
+  width: auto;
+  height: auto;
 }
 
 .title2-header {
@@ -306,7 +334,6 @@ input[type=number]::-webkit-outer-spin-button {
 .items {
   margin-bottom: 50px;
   padding-bottom: 30px;
-  border-bottom: 2px solid #ccc;
 }
 
 .items-img {
@@ -352,7 +379,12 @@ input[type=number]::-webkit-outer-spin-button {
   margin-bottom: 10px;
 }
 
-.info-list > div {
-  padding: 10px 0;
+#option {
+  width: 100%;
+  height: 60px;
+  border: 2px solid #a6a6a6;
+  font-size: 15px;
+  color: #a6a6a6;
+  outline: none;
 }
 

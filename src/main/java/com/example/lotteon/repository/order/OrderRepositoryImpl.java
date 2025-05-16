@@ -15,6 +15,7 @@ import com.example.lotteon.entity.user.QMember;
 import com.example.lotteon.entity.user.QUser;
 import com.querydsl.core.Tuple;
 import com.querydsl.core.types.dsl.CaseBuilder;
+import com.querydsl.core.types.dsl.DatePath;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.NumberExpression;
 import com.querydsl.jpa.impl.JPAQuery;
@@ -385,14 +386,20 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
     return total == null ? 0 : total;
   }
 
+  //TODO: Currently working position
   @Override
-  public long countByStatusBetween(int status, LocalDate from, LocalDate to) {
-    Long count = query.select(order.orderNumber.count())
+  public List<Tuple> countByStatusBetween(LocalDate from, LocalDate to, int... statuses) {
+    DatePath<LocalDate> datePath = order.orderDate;
+    List<NumberExpression<Long>> expressions = new ArrayList<>();
+
+    for (int status : statuses) {
+      expressions.add(selectCountByStatus(status));
+    }
+
+    return query.select()
         .from(order)
-        .join(order.status, this.status)
-        .where(this.status.id.eq(status).and(order.orderDate.between(from, to)))
-        .fetchOne();
-    return count == null ? 0 : count;
+        .join(order.status, status)
+        .fetch();
   }
 
   @Override
