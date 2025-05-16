@@ -50,203 +50,105 @@
         <img src="/images/banner5.PNG" alt="배너5"/>
       </div>
 <!--    </div>-->
+    </div>
+      <section class="best-products">
+        <h2>베스트 상품</h2>
+        <div class="product-grid">
+          <div th:each="product : ${bestProducts}" class="product-card">
+            <!-- 실제 이미지 경로 사용 시 -->
+            <img th:src="@{${product.image.listThumbnailLocation}}" alt="이미지" />
+            <h3 th:text="${product.name}"></h3>
+            <p th:text="${product.description}"></p>
 
-    <!--베스트상품-->
-    <section class="best-products">
-      <h2>베스트 상품</h2>
-      <div class="product-grid">
-        <div class="product-card">
-          <img src="/images/product1.jfif" alt="상품1">
-          <h3>스타일 캐리어 29인치</h3>
-          <p>튼튼하고 가벼운 프리미엄 여행용 캐리어</p>
-          <div class="price">
-            <span class="discount">28%</span>
-            <span class="final">430,560원</span>
+            <div class="price">
+              <span class="discount" th:text="${product.discountRate + '%'}"></span>
+              <span class="original" style="text-decoration:line-through; color:gray;"
+                    th:text="${#numbers.formatInteger(product.price, 3, 'COMMA') + '원'}"></span>
+              <span class="final" style="color:red; font-weight:bold;"
+                    th:text="${#numbers.formatInteger(product.price * (100 - product.discountRate) / 100, 3, 'COMMA') + '원'}"></span>
+            </div>
           </div>
         </div>
-        <div class="product-card">
-          <img src="/images/product2.jfif" alt="상품2">
-          <h3>오투 스퀘어 유리장</h3>
-          <p>세련된 거실 수납장</p>
-          <div class="price">
-            <span class="discount">10%</span>
-            <span class="final">472,500원</span>
+      </section>
+
+      <!-- 할인상품 -->
+      <section>
+        <div class="product-list-wrapper">
+          <h2>🌟 할인상품</h2>
+
+          <div class="product-list">
+            <div th:each="product : ${discountProducts}" class="product-card">
+              <img th:src="@{${product.image.listThumbnailLocation}}" alt="이미지" />
+              <h4 th:text="${product.name}"></h4>
+              <p>
+          <span style="text-decoration: line-through; color: gray;"
+                th:text="${#numbers.formatInteger(product.price, 3, 'COMMA') + '원'}">
+          </span>
+                <br />
+                <span style="color: red; font-weight: bold;"
+                      th:text="${#numbers.formatInteger(product.price * (100 - product.discountRate) / 100, 3, 'COMMA') + '원'}">
+          </span>
+                <br />
+                <span th:text="${product.discountRate + '% 할인'}"></span>
+              </p>
+            </div>
           </div>
         </div>
-        <div class="product-card">
-          <img src="/images/product3.jfif" alt="상품3">
-          <h3>수플린 망고 세트</h3>
-          <p>달콤한 수량 한정 망고 6입</p>
-          <div class="price">
-            <span class="discount">20%</span>
-            <span class="final">14,320원</span>
+      </section>
+
+      <!-- 히트상품 -->
+      <section>
+        <div class="product-list-wrapper">
+          <h2>🔥 히트상품</h2>
+          <div class="product-list">
+            <div th:each="product : ${hitProducts}" class="product-card">
+              <img th:src="@{${product.image.listThumbnailLocation}}" alt="이미지" />
+              <h4 th:text="${product.name}"></h4>
+              <p>
+          <span th:if="${product.discountRate > 0}" style="text-decoration: line-through; color: gray;"
+                th:text="${#numbers.formatInteger(product.price, 3, 'COMMA') + '원'}">
+          </span>
+                <br th:if="${product.discountRate > 0}" />
+                <span style="color: red; font-weight: bold;"
+                      th:text="${#numbers.formatInteger(product.price * (100 - product.discountRate) / 100, 3, 'COMMA') + '원'}">
+          </span>
+                <br th:if="${product.discountRate > 0}" />
+                <span th:if="${product.discountRate > 0}"
+                      th:text="${product.discountRate + '% 할인'}"
+                      style="color: orange; font-size: 12px;">
+          </span>
+              </p>
+            </div>
           </div>
         </div>
-        <div class="product-card">
-          <img src="/images/product4.jfif" alt="상품4">
-          <h3>슬림 백팩</h3>
-          <p>가볍고 실용적인 직장인용 가방</p>
-          <div class="price">
-            <span class="discount">15%</span>
-            <span class="final">58,650원</span>
+      </section>
+
+      <!-- 추가 추천상품 -->
+      <section>
+        <div class="product-list-wrapper">
+          <h2>🌟 추천상품</h2>
+          <div class="product-list">
+            <div th:each="product : ${recommendedProducts}" class="product-card">
+              <img th:src="@{${product.image.listThumbnailLocation}}" alt="이미지" />
+              <h4 th:text="${product.name}"></h4>
+              <p>
+          <span th:if="${product.discountRate > 0}" style="text-decoration: line-through; color: gray;"
+                th:text="${#numbers.formatInteger(product.price, 3, 'COMMA') + '원'}">
+          </span>
+                <br th:if="${product.discountRate > 0}" />
+                <span style="color: red; font-weight: bold;"
+                      th:text="${#numbers.formatInteger(product.price * (100 - product.discountRate) / 100, 3, 'COMMA') + '원'}">
+          </span>
+                <br th:if="${product.discountRate > 0}" />
+                <span th:if="${product.discountRate > 0}"
+                      th:text="${product.discountRate + '% 할인'}"
+                      style="color: orange; font-size: 12px;">
+          </span>
+              </p>
+            </div>
           </div>
         </div>
-        <div class="product-card">
-          <img src="/images/product5.jfif" alt="상품5">
-          <h3>프리미엄 원두 커피</h3>
-          <p>갓 볶은 신선한 향의 원두</p>
-          <div class="price">
-            <span class="discount">12%</span>
-            <span class="final">19,800원</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 할인상품 -->
-    <section>
-      <div class="product-list-wrapper">
-        <h2>🌟 할인상품</h2>
-
-        <div class="product-list">
-          <div class="product-card"><img src="/images/sample1.jfif"><h4>할인상품 9</h4>
-            <p>₩40,000</p></div>
-          <div class="product-card"><img src="/images/sample1.jfif"><h4>할인상품 10</h4>
-            <p>₩41,000</p></div>
-          <div class="product-card"><img src="/images/sample1.jfif"><h4>할인상품 11</h4>
-            <p>₩42,000</p></div>
-          <div class="product-card"><img src="/images/sample1.jfif"><h4>할인상품 12</h4>
-            <p>₩43,000</p></div>
-          <div class="product-card"><img src="/images/sample1.jfif"><h4>할인상품 13</h4>
-            <p>₩44,000</p></div>
-          <div class="product-card"><img src="/images/sample1.jfif"><h4>할인상품 14</h4>
-            <p>₩45,000</p></div>
-          <div class="product-card"><img src="/images/sample1.jfif"><h4>할인상품 15</h4>
-            <p>₩46,000</p></div>
-          <div class="product-card"><img src="/images/sample1.jfif"><h4>할인상품 16</h4>
-            <p>₩47,000</p></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 히트상품 -->
-    <section>
-      <div class="product-list-wrapper">
-        <h2>🔥 히트상품</h2>
-        <div class="product-list">
-          <div class="product-card"><img src="/images/sample1.jfif"><h4>히트상품 1</h4>
-            <p>₩10,000</p></div>
-          <div class="product-card"><img src="/images/sample1.jfif"><h4>히트상품 2</h4>
-            <p>₩11,000</p></div>
-          <div class="product-card"><img src="/images/sample1.jfif"><h4>히트상품 3</h4>
-            <p>₩12,000</p></div>
-          <div class="product-card"><img src="/images/sample1.jfif"><h4>히트상품 4</h4>
-            <p>₩13,000</p></div>
-          <div class="product-card"><img src="/images/sample1.jfif"><h4>히트상품 5</h4>
-            <p>₩14,000</p></div>
-          <div class="product-card"><img src="/images/sample1.jfif"><h4>히트상품 6</h4>
-            <p>₩15,000</p></div>
-          <div class="product-card"><img src="/images/sample1.jfif"><h4>히트상품 7</h4>
-            <p>₩16,000</p></div>
-          <div class="product-card"><img src="/images/sample1.jfif"><h4>히트상품 8</h4>
-            <p>₩17,000</p></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 추천상품 -->
-    <section>
-      <div class="product-list-wrapper">
-        <h2>🌟 추천상품</h2>
-        <div class="product-list">
-          <div class="product-card"><img src="/images/sample1.jfif"><h4>추천상품 1</h4>
-            <p>₩20,000</p></div>
-          <div class="product-card"><img src="/images/sample1.jfif"><h4>추천상품 2</h4>
-            <p>₩21,000</p></div>
-          <div class="product-card"><img src="/images/sample1.jfif"><h4>추천상품 3</h4>
-            <p>₩22,000</p></div>
-          <div class="product-card"><img src="/images/sample1.jfif"><h4>추천상품 4</h4>
-            <p>₩23,000</p></div>
-          <div class="product-card"><img src="/images/sample1.jfif"><h4>추천상품 5</h4>
-            <p>₩24,000</p></div>
-          <div class="product-card"><img src="/images/sample1.jfif"><h4>추천상품 6</h4>
-            <p>₩25,000</p></div>
-          <div class="product-card"><img src="/images/sample1.jfif"><h4>추천상품 7</h4>
-            <p>₩26,000</p></div>
-          <div class="product-card"><img src="/images/sample1.jfif"><h4>추천상품 8</h4>
-            <p>₩27,000</p></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 최신상품 -->
-    <section>
-      <div class="product-list-wrapper">
-        <h2>🆕 최신상품</h2>
-        <div class="product-list">
-          <div class="product-card"><img src="/images/sample1.jfif"><h4>최신상품 1</h4>
-            <p>₩30,000</p></div>
-          <div class="product-card"><img src="/images/sample1.jfif"><h4>최신상품 2</h4>
-            <p>₩31,000</p></div>
-          <div class="product-card"><img src="/images/sample1.jfif"><h4>최신상품 3</h4>
-            <p>₩32,000</p></div>
-          <div class="product-card"><img src="/images/sample1.jfif"><h4>최신상품 4</h4>
-            <p>₩33,000</p></div>
-          <div class="product-card"><img src="/images/sample1.jfif"><h4>최신상품 5</h4>
-            <p>₩34,000</p></div>
-          <div class="product-card"><img src="/images/sample1.jfif"><h4>최신상품 6</h4>
-            <p>₩35,000</p></div>
-          <div class="product-card"><img src="/images/sample1.jfif"><h4>최신상품 7</h4>
-            <p>₩36,000</p></div>
-          <div class="product-card"><img src="/images/sample1.jfif"><h4>최신상품 8</h4>
-            <p>₩37,000</p></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 추가 추천상품 -->
-    <section>
-      <div class="product-list-wrapper">
-        <h2>🌟 추천상품</h2>
-
-        <div class="product-list">
-          <div class="product-card"><img src="/images/sample1.jfif"><h4>추천상품 9</h4>
-            <p>₩40,000</p></div>
-          <div class="product-card"><img src="/images/sample1.jfif"><h4>추천상품 10</h4>
-            <p>₩41,000</p></div>
-          <div class="product-card"><img src="/images/sample1.jfif"><h4>추천상품 11</h4>
-            <p>₩42,000</p></div>
-          <div class="product-card"><img src="/images/sample1.jfif"><h4>추천상품 12</h4>
-            <p>₩43,000</p></div>
-          <div class="product-card"><img src="/images/sample1.jfif"><h4>추천상품 13</h4>
-            <p>₩44,000</p></div>
-          <div class="product-card"><img src="/images/sample1.jfif"><h4>추천상품 14</h4>
-            <p>₩45,000</p></div>
-          <div class="product-card"><img src="/images/sample1.jfif"><h4>추천상품 15</h4>
-            <p>₩46,000</p></div>
-          <div class="product-card"><img src="/images/sample1.jfif"><h4>추천상품 16</h4>
-            <p>₩47,000</p></div>
-        </div>
-      </div>
-    </section>
-    <section class="pagination">
-      <a class="page move" href="#">
-        <i class="fa-solid fa-angles-left"></i>
-      </a>
-      <a class="page move" href="#">
-        <i class="fa-solid fa-chevron-left"></i>
-      </a>
-      <a class="page" href="">1</a>
-      <a class="page" href="">2</a>
-      <a class="page" href="">3</a>
-      <a class="page" href="">4</a>
-      <a class="page move" href="#">
-        <i class="fa-solid fa-chevron-right"></i>
-      </a>
-      <a class="page move" href="#">
-        <i class="fa-solid fa-angles-right"></i>
-      </a>
-    </section>
+      </section>
   </main>
   <th:block th:insert="~{/common/footer}"></th:block>
 </div>
