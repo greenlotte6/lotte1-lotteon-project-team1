@@ -1,4 +1,4 @@
-.modal-hd {
+#return-info-modal .modal-hd {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -6,7 +6,7 @@
     background: #7BAAEC;;
 }
 
-.modal-hd > button {
+#return-info-modal .modal-hd > button {
     background: none;
     border: none;
     font-size: 20px;
@@ -14,31 +14,31 @@
     cursor: pointer;
 }
 
-.modal-hd > p {
+#return-info-modal .modal-hd > p {
     font-weight: bold;
 }
 
-.all-orderList {
+#return-info-modal .all-orderList {
     width: 90%;
     margin: 0 auto;
     margin-top: 20px;
 }
 
-.list-head {
+#return-info-modal .list-head {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.list-head > p {
+#return-info-modal .list-head > p {
    font-weight: bold;
 }
 
-.order-table {
+#return-info-modal .order-table {
     text-align: center;
 }
 
-table {
+#return-info-modal table {
     width: 100%;
     height: 250px;
     margin-top: 15px;
@@ -46,146 +46,146 @@ table {
     border-bottom: 1px solid #eee;
 }
 
-.table-hd {
+#return-info-modal .table-hd {
     height: 60px;
     background: #eee;
 }
 
-.table-hd > th {
+#return-info-modal .table-hd > th {
     vertical-align: middle; 
 }
 
-.end {
+#return-info-modal .end {
     padding-right: 30px
 }
 
-.price-t {
+#return-info-modal .price-t {
     padding-right: 30px;
 }
 
-td {
+#return-info-modal td {
     vertical-align: middle; 
 }
 
-.pro-info {
+#return-info-modal .pro-info {
     display: flex;
     margin-left: 40px;
 }
 
-.table-proimg {
+#return-info-modal .table-proimg {
     width: 150px;
     height: 100px
 }
 
-.table-proimg > img {
+#return-info-modal .table-proimg > img {
     width: 100px;
     height: 120px;
 }
 
-.table-bd > td:last-child {
+#return-info-modal .table-bd > td:last-child {
     margin-right: 30px;
 }
 
-.order-info > p {
+#return-info-modal .order-info > p {
     display: flex;
     margin-top: 15px;
 }
 
-.order-info > p :nth-child(1) {
+#return-info-modal .order-info > p :nth-child(1) {
     margin-left: 30px;
 }
 
-.order-info > p > span {
+#return-info-modal .order-info > p > span {
     margin-left: 10px;
 }
 
 /* --------------------------  */
-.pro-info2 {
+#return-info-modal .pro-info2 {
     display: flex;
     margin-left: 40px;
     margin-right: 20px;
 }
 
-.order-info2 > p {
+#return-info-modal .order-info2 > p {
     display: flex;
     justify-content: space-between;
     margin-top: 10px;
 }
 
-.order-info2 > p :nth-child(1) {
+#return-info-modal .order-info2 > p :nth-child(1) {
     margin-left: 20px;
 }
 
-.order-info2 > p:nth-child(3) {
+#return-info-modal .order-info2 > p:nth-child(3) {
     margin-top: 70px;
 }
 
-.order-info2 > p > span {
+#return-info-modal .order-info2 > p > span {
     margin-left: 10px;
 }
 
 
 /* --------------------------  */
-.price {
+#return-info-modal .price {
     font-weight: bold;
 }
 
-.btn-option {
+#return-info-modal .btn-option {
     display: flex;
     flex-direction: column;
     margin-top: 5px;
     margin-right: 10px;
 }
 
-.btn-option > button {
+#return-info-modal .btn-option > button {
     height: 35px;
     margin-bottom: 5px;
     cursor: pointer;
 }
 
-.btn-option > button:nth-child(-n+2) {
+#return-info-modal .btn-option > button:nth-child(-n+2) {
     border: none;
     background: #7BAAEC;
     color: white;
 }
 
-.btn-option > button:nth-child(n+3) {
+#return-info-modal .btn-option > button:nth-child(n+3) {
     border: 2px solid gray;
 }
 
-.sa {
+#return-info-modal .sa {
     width: 300px;
 }
 
 /*table2*/
-.all-deliveryList {
+#return-info-modal .all-deliveryList {
     width: 90%;
     margin: 0 auto;
     margin-top: 20px;
 }
 
-.delivery-table td {
+#return-info-modal .delivery-table td {
     border-bottom: 1px solid #ccc;
 }
 
-.td-l {
+#return-info-modal .td-l {
    text-align: center;
    background: #eee;
    width: 150px;
 }
 
-.td-r {
+#return-info-modal .td-r {
     padding-left: 20px;
 }
 
 
-.td-r > textarea {
+#return-info-modal .td-r > textarea {
     width: 95%;
     height: 80%;
     resize: none;
 }
 
-.inquiry {
+#return-info-modal .inquiry {
     display: flex;
     justify-content: center;
     width: 90%;
@@ -194,7 +194,7 @@ td {
     gap: 20px;
 }
 
-.inquiry > button{
+#return-info-modal .inquiry > button{
     width: 170px;
     height: 50px;
     background: #7BAAEC;
