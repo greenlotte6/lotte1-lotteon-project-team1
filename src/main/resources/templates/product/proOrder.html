@@ -38,7 +38,7 @@
   <main>
     <div class="main">
       <article class="article-body">
-        <form th:action="@{/order/place}" method="POST">
+        <form th:action="@{/order/place(src=${src})}" method="POST">
           <table class="list">
             <tr class="table_hd">
               <th><input type="checkbox"></th>

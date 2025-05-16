@@ -116,7 +116,7 @@ public class CartController {
       orderSheet.setOptions(new ArrayList<>()); //TODO Delete options from order sheet or use them
       session.setAttribute("orderSheet", orderSheet);
     }
-    return "redirect:/order/sheet";
+    return "redirect:/order/sheet?src=cart";
   }
 
   @PostMapping("/cart/delete")
