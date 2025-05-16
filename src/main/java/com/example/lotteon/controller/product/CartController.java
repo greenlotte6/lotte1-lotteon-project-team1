@@ -97,7 +97,7 @@ public class CartController {
     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
     if (auth == null || !auth.isAuthenticated()
         || auth instanceof AnonymousAuthenticationToken) {  // 비회원 사용자가 접근했을 경우
-      response.sendError(HttpServletResponse.SC_FORBIDDEN);
+      return "redirect:/cart";
     } else {
       OrderSheet orderSheet = OrderSheet.builder().build();
       UserDetails userDetails = (UserDetails) auth.getPrincipal();

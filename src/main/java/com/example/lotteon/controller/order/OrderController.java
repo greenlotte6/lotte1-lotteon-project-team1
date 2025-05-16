@@ -10,6 +10,7 @@ import com.example.lotteon.dto.user.MemberDTO;
 import com.example.lotteon.dto.user.UserDTO;
 import com.example.lotteon.entity.product.Product;
 import com.example.lotteon.service.order.OrderService;
+import com.example.lotteon.service.product.CartService;
 import com.example.lotteon.service.product.ProductService;
 import com.example.lotteon.service.product.options.ProductOptionsService;
 import com.example.lotteon.service.user.MemberService;
@@ -43,6 +44,7 @@ public class OrderController {
   private final ProductOptionsService optionsService;
   private final ProductService productService;
   private final ModelMapper mapper;
+  private final CartService cartService;
 
   private int calculatedTotalPrice(ProductDTO product, int amount) {
     int price = product.getPrice();
@@ -94,9 +96,8 @@ public class OrderController {
       model.addAttribute("orderSheet", sessionOrderSheet);
       session.setAttribute("orderSheet", sessionOrderSheet); //세션에 주문서 임시 저장
       //session.removeAttribute("orderSheets");
-    } else {
-      response.sendError(HttpServletResponse.SC_FORBIDDEN);
     }
+
     return "/product/proOrder";
   }
 
@@ -140,9 +141,12 @@ public class OrderController {
 
   @GetMapping("/order/result")
   public String orderResult(HttpSession session, Model model) {
+    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    UserDetails userDetails = (UserDetails) auth.getPrincipal();
     OrderSheet sessionSheet = (OrderSheet) session.getAttribute("orderSheet");
     model.addAttribute("orderSheet", sessionSheet);
     session.removeAttribute("orderSheet");
+    cartService.deleteByMemberId(userDetails.getUsername());
     return "/product/proOrderRs";
   }
 }
