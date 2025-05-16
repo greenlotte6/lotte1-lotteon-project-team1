@@ -3,6 +3,7 @@ package com.example.lotteon.repository.cs.custom;
 import com.example.lotteon.dto.PageRequestDTO;
 import com.example.lotteon.entity.cs.Qna;
 import com.querydsl.core.Tuple;
+import java.time.LocalDate;
 import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,5 +17,6 @@ public interface QnaRepositoryCustom {
 
   List<Qna> findLimit(int limit);
 
+  long countAll(LocalDate date);
 
 }

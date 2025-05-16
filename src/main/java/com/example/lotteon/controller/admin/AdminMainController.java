@@ -51,6 +51,7 @@ public class AdminMainController {
       orderCount = statService.countAllOrders();
       paidCount = statService.countAllOrdersByStatus(2);
       totalSales = statService.getTotalSales();
+      long userCount = statService.countNewUsers();
 
       model.addAttribute("notices", notices);
       model.addAttribute("qnas", qnas);
