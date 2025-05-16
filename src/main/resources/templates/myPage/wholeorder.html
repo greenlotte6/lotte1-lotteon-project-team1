@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="/style/common/myPage/modal/order-modal.css">
     <link rel="stylesheet" href="/style/common/myPage/modal/seller-modal.css">
     <link rel="stylesheet" href="/style/common/myPage/modal/inquiry-modal.css">
+    <link rel="stylesheet" href="/style/common/myPage/modal/confirm-modal.css">
 
     <link
       rel="icon"
@@ -34,6 +35,7 @@
     ></script>
       <script src="/js/mypage/order-info-modal.js"></script>
       <script src="/js/mypage/seller-info-modal.js"></script>
+      <script src="/js/mypage/confirm-info-modal.js"></script>
 
   </head>
   <body>
@@ -136,11 +138,13 @@
                                           <!--<img th:src="@{'/upload/' + ${mypageOrderWrapper.imagePath}}" alt="상품 이미지">-->
                                       </div>
                                       <div class="order-info">
-                                          <a href="#" class="orderModal" th:data-id="${mypageOrderWrapper.order.orderNumber}">
+                                          <a href="#" class="orderModal" th:data-id="${mypageOrderWrapper.order.orderNumber}"
+                                             th:data-url="@{/mypage/wholeorder/detail/{orderNumber}(orderNumber=${mypageOrderWrapper.order.orderNumber})}">
                                               <p>주문번호 : <span>[[${mypageOrderWrapper.order.orderNumber}]]</span></p>
                                           </a>
-                                          <a href="#" class="sellerModal" th:data-id="${mypageOrderWrapper.companyName}">
-                                          <p th:text="${mypageOrderWrapper.companyName}">(주) 상호명</p>
+                                          <a href="#" class="sellerModal" th:data-id="${mypageOrderWrapper.businessNumber}"
+                                             th:data-url="@{/mypage/wholeorder/seller/{businessNumber}(businessNumber=${mypageOrderWrapper.businessNumber})}">
+                                              <p th:text="${mypageOrderWrapper.companyName}">(주) 상호명</p>
                                           </a>
                                           <p th:text="${mypageOrderWrapper.productName}">상품명</p>
                                           <p>수량 : <span th:text="${mypageOrderWrapper.itemCount + '개'}">1개</span></p>
@@ -163,10 +167,17 @@
                               </td>
                               <td>
                                   <div class="btn-option">
-                                      <button>구매확정</button>
-                                      <button>상품평쓰기</button>
-                                      <button>반품신청</button>
-                                      <button>교환신청</button>
+                                      <button type="button" class="confirmModalBtn"
+                                              th:data-order-number="${mypageOrderWrapper.order.orderNumber}"
+                                              th:if="${mypageOrderWrapper.order.status.id == 2
+                        or mypageOrderWrapper.order.status.id == 3
+                        or mypageOrderWrapper.order.status.id == 4
+                        or mypageOrderWrapper.order.status.id == 5}">
+                                          구매확정
+                                      </button>
+                                      <button id="reviewModal">상품평쓰기</button>
+                                      <button id="returnModal">반품신청</button>
+                                      <button id="exchangeModal">교환신청</button>
                                   </div>
                               </td>
                           </tr>
@@ -275,42 +286,35 @@
                       <table class="seller-Table">
                           <tr>
                               <td class="td-l">판매자 등급</td>
-                              <td class="td-r">파워 딜러</td>
+                              <td class="td-r grade">파워 딜러</td>
                           </tr>
-
                           <tr>
                               <td class="td-l">상호</td>
-                              <td class="td-r">(주) 상호명</td>
+                              <td class="td-r company-name">(주) 상호명</td>
                           </tr>
-
                           <tr>
                               <td class="td-l">대표자</td>
-                              <td class="td-r">홍길동</td>
+                              <td class="td-r ceo">홍길동</td>
                           </tr>
-
                           <tr>
                               <td class="td-l">전화번호</td>
-                              <td class="td-r">051-123-1000</td>
+                              <td class="td-r contact">051-123-1000</td>
                           </tr>
-
                           <tr>
                               <td class="td-l">FAX</td>
-                              <td class="td-r">051-123-1001</td>
+                              <td class="td-r fax">051-123-1001</td>
                           </tr>
-
                           <tr>
                               <td class="td-l">Email</td>
-                              <td class="td-r">company@abc.com</td>
+                              <td class="td-r email">company@abc.com</td>
                           </tr>
-
                           <tr>
                               <td class="td-l">사업자번호</td>
-                              <td class="td-r">123-12-123457</td>
+                              <td class="td-r business-number">123-12-123457</td>
                           </tr>
-
                           <tr>
                               <td class="td-l">영업소 재지</td>
-                              <td class="td-r">[21000] 부산광역시 부산진구 대연동 121 10층 1004호</td>
+                              <td class="td-r address">[21000] 부산광역시 부산진구 대연동 121 10층 1004호</td>
                           </tr>
                       </table>
 
@@ -341,20 +345,21 @@
                                   <td class="td-lf">문의종류</td>
                                   <td class="td-rg">
                                       <div>
-                                          <label><input type="radio">상품</label>
-                                          <label><input type="radio">배송</label>
-                                          <label><input type="radio">반품/취소</label>
-                                          <label><input type="radio">교환</label>
-                                          <label><input type="radio">기타</label>
+                                          <label><input type="radio" name="type" value="상품">상품</label>
+                                          <label><input type="radio" name="type" value="배송">배송</label>
+                                          <label><input type="radio" name="type" value="반품/취소">반품/취소</label>
+                                          <label><input type="radio" name="type" value="교환">교환</label>
+                                          <label><input type="radio" name="type" value="기타">기타</label>
                                       </div>
                                   </td>
                               </tr>
+
 
                               <tr>
                                   <td class="td-lf">Email</td>
                                   <td class="td-rg">
                                       <div>
-                                          <input type="text" placeholder="이메메일 입력" class="form-input">
+                                          <input type="text" id="inquiry-email" >
                                       </div>
                                   </td>
                               </tr>
@@ -363,7 +368,7 @@
                                   <td class="td-lf">제목</td>
                                   <td class="td-rg">
                                       <div>
-                                          <input type="text" placeholder="제목 입력" class="form-input">
+                                          <input type="text" id="inquiry-title" placeholder="제목 입력">
                                       </div>
                                   </td>
                               </tr>
@@ -372,7 +377,7 @@
                                   <td class="td-lf">내용</td>
                                   <td class="td-rg" id="td-l">
                                       <div class="form-input2">
-                                          <input type="text">
+                                          <textarea id="inquiry-content" placeholder="내용 입력" class="form-input2"></textarea>
                                       </div>
                                   </td>
                               </tr>
@@ -384,6 +389,33 @@
                           </div>
                       </form>
 
+                  </div>
+              </div>
+          </div>
+
+
+          <div class="modal-back" id="confirm-info-modal">
+              <div id="modal-wrapper" style="width: 500px; height: 300px;">
+
+                  <div class="modal-hd">
+                      <p>구매확정</p>
+                      <button class="close-confirm">x</button>
+                  </div>
+
+                  <div class="all-orderList">
+
+
+
+                      <div class="etc">
+                          <p>상품을 받으셨나요 ?<br><br>
+                              상품을 받으신분만 구매확정을 해주세요.
+                          </p>
+                      </div>
+
+                      <div class="inquiry">
+                          <button id="confirm-order-btn">확인</button>
+                          <button class="close-confirm" style="background-color: #bfbfbf;">취소</button>
+                      </div>
                   </div>
               </div>
           </div>

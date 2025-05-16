@@ -189,4 +189,6 @@ public class QnaService {
   public List<Qna> getWithLimit(int limit) {
     return qnaRepository.findLimit(limit);
   }
+
+
 }

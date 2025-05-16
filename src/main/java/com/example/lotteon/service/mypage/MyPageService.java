@@ -2,13 +2,17 @@ package com.example.lotteon.service.mypage;
 
 import com.example.lotteon.dto.order.MypageOrderWrapper;
 import com.example.lotteon.dto.order.OrderItemDTO;
+import com.example.lotteon.dto.seller.SellerDTO;
 import com.example.lotteon.dto.user.UserDTO;
+import com.example.lotteon.entity.order.Order;
 import com.example.lotteon.entity.order.OrderItem;
+import com.example.lotteon.entity.order.OrderStatus;
 import com.example.lotteon.entity.user.Member;
 import com.example.lotteon.entity.user.User;
 import com.example.lotteon.repository.UserRepository;
 import com.example.lotteon.repository.order.OrderItemRepository;
 import com.example.lotteon.repository.order.OrderRepository;
+import com.example.lotteon.repository.seller.SellerRepository;
 import com.example.lotteon.repository.user.MemberRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -40,6 +44,7 @@ public class MyPageService {
     private final HttpServletRequest request;
     private final OrderItemRepository orderItemRepository;
     private final OrderRepository orderRepository;
+    private final SellerRepository sellerRepository;
 
 
 
@@ -95,5 +100,26 @@ public class MyPageService {
         return entities.stream()
                 .map(entity -> mapper.map(entity, OrderItemDTO.class))
                 .collect(Collectors.toList());
+    }
+
+
+    public SellerDTO getSellerDetail(String businessNumber) {
+        return sellerRepository.findBySellerId_BusinessNumber(businessNumber)
+                .map(seller -> mapper.map(seller, SellerDTO.class))
+                .orElse(null);
+    }
+
+    @Transactional
+    public void confirmOrder(String orderNumber) {
+        Order order = orderRepository.findByOrderNumber(orderNumber);
+
+        if (order == null) {
+            throw new IllegalArgumentException("해당 주문을 찾을 수 없습니다.");
+        }
+
+        // 상태를 "구매확정(6)"으로 변경
+        order.setStatus(OrderStatus.builder().id(6).build());
+
+        orderRepository.save(order); // 변경 사항 저장
     }
 }

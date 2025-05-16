@@ -15,5 +15,6 @@ public interface SellerRepository extends JpaRepository<Seller, Integer>, Custom
 
   Page<Seller> findAll(Pageable pageable);
 
-
+    //마이페이지 셀러 디테일 코드
+    Optional<Seller> findBySellerId_BusinessNumber(String businessNumber);
 }

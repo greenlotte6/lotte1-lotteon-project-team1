@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const orderNumber = btn.dataset.id;
 
             // API 호출해서 데이터 가져오기
-            fetch(`/mypage/wholeorder/${orderNumber}`)
+            fetch(`/mypage/wholeorder/detail/${orderNumber}`)
                 .then(response => response.json())
                 .then(orderItems => {
                     if (!orderItems || orderItems.length === 0) {

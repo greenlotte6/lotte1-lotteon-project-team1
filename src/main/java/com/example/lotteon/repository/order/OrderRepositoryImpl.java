@@ -230,49 +230,50 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
 
     // 튜플 조회 시 Long으로 받기
     List<Tuple> tuples = query
-        .select(
-            order.orderNumber,
-            user.id,
-            member.name,
-            order.payment,
-            order.status.id,
-            order.orderDate,
-            //  count를 Integer로 강제 캐스팅
-            Expressions.numberTemplate(Integer.class, "count({0})", orderItem),
-            totalPriceExpression.as("totalPrice"),
-            product.name, //  상품명 추가
-            product.image.listThumbnailLocation, //  이미지 경로
-            seller.companyName //  추가
-        )
-        .from(order)
-        .join(order.member, member)
-        .join(member.memberId.user, user)
-        .join(orderItem).on(order.orderNumber.eq(orderItem.order.orderNumber))
-        .join(product).on(orderItem.product.id.eq(product.id))
-        .join(seller).on(product.seller.sellerId.eq(seller.sellerId)) //  추가!
-        .where(user.id.eq(userId))
-        .groupBy(order.orderNumber)
-        .offset(pageable.getOffset())
-        .limit(pageable.getPageSize())
-        .fetch();
+            .select(
+                    order.orderNumber,
+                    user.id,
+                    member.name,
+                    order.payment,
+                    order.status.id,
+                    order.orderDate,
+                    //  count를 Integer로 강제 캐스팅
+                    Expressions.numberTemplate(Integer.class, "count({0})", orderItem),
+                    totalPriceExpression.as("totalPrice"),
+                    product.name, //  상품명 추가
+                    product.image.listThumbnailLocation, //  이미지 경로
+                    seller.companyName, //  추가
+                    seller.sellerId.businessNumber // 셀러 아이디 구하기 위해서 추가 해주기
+            )
+            .from(order)
+            .join(order.member, member)
+            .join(member.memberId.user, user)
+            .join(orderItem).on(order.orderNumber.eq(orderItem.order.orderNumber))
+            .join(product).on(orderItem.product.id.eq(product.id))
+            .join(seller).on(product.seller.sellerId.eq(seller.sellerId)) //  추가!
+            .where(user.id.eq(userId))
+            .groupBy(order.orderNumber)
+            .offset(pageable.getOffset())
+            .limit(pageable.getPageSize())
+            .fetch();
 
-    // MypageOrderWrapper 객체로 변환
-    List<MypageOrderWrapper> content = tuples.stream()
-        .map(tuple -> {
-          // totalPrice는 index 7에 존재하므로 tuple.get(7)로 가져옵니다.
-          Long totalPrice = tuple.get(7, Long.class);  // totalPrice를 Long으로 정확히 받아오기
+            // MypageOrderWrapper 객체로 변환
+            List<MypageOrderWrapper> content = tuples.stream()
+                    .map(tuple -> {
+                      // totalPrice는 index 7에 존재하므로 tuple.get(7)로 가져옵니다.
+                      Long totalPrice = tuple.get(7, Long.class);  // totalPrice를 Long으로 정확히 받아오기
 
-          // 만약 totalPrice가 null일 수 있으면 기본값 0을 할당
-          long price = (totalPrice != null) ? totalPrice : 0L;
+                      // 만약 totalPrice가 null일 수 있으면 기본값 0을 할당
+                      long price = (totalPrice != null) ? totalPrice : 0L;
 
-          // OrderWrapper.builder()를 사용하여 필드 설정
-          return MypageOrderWrapper.builder()
-              .tuples(tuple)  // Tuple을 builder로 전달하여 처리
-              .build();
-        })
-        .collect(Collectors.toList());
+                      // OrderWrapper.builder()를 사용하여 필드 설정
+                      return MypageOrderWrapper.builder()
+                              .tuples(tuple)  // Tuple을 builder로 전달하여 처리
+                              .build();
+                    })
+                    .collect(Collectors.toList());
 
-    return new PageImpl<>(content, pageable, total);
+            return new PageImpl<>(content, pageable, total);
   }
 
   @Override
