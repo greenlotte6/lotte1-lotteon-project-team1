@@ -42,8 +42,15 @@ public class MemberRepositoryImpl implements MemberRepositoryCustom {
 
   @Override
   public Page<Member> findAll(Pageable pageable) {
-    List<Member> members = query.selectFrom(member).fetch();
-    return new PageImpl<>(members, pageable, members.size());
+    List<Member> members = query.selectFrom(member)
+        .offset(pageable.getOffset())
+        .limit(pageable.getPageSize())
+        .fetch();
+
+    Long longVal = query.select(member.count()).from(member).fetchOne();
+    long count = longVal == null ? 0 : longVal;
+
+    return new PageImpl<>(members, pageable, count);
   }
 
   @Override
@@ -52,8 +59,13 @@ public class MemberRepositoryImpl implements MemberRepositoryCustom {
         .join(user)
         .on(member.memberId.user.id.eq(user.id))
         .where(member.memberId.user.id.eq(id))
+        .offset(pageable.getOffset())
+        .limit(pageable.getPageSize())
         .fetch();
-    return new PageImpl<>(members, pageable, members.size());
+    Long longVal = query.select(member.count()).from(member).fetchOne();
+    long count = longVal == null ? 0 : longVal;
+
+    return new PageImpl<>(members, pageable, count);
   }
 
   @Override
@@ -62,8 +74,13 @@ public class MemberRepositoryImpl implements MemberRepositoryCustom {
         .join(user)
         .on(member.memberId.user.id.eq(user.id))
         .where(member.name.eq(name))
+        .offset(pageable.getOffset())
+        .limit(pageable.getPageSize())
         .fetch();
-    return new PageImpl<>(members, pageable, members.size());
+    Long longVal = query.select(member.count()).from(member).fetchOne();
+    long count = longVal == null ? 0 : longVal;
+
+    return new PageImpl<>(members, pageable, count);
   }
 
   @Override
@@ -72,8 +89,13 @@ public class MemberRepositoryImpl implements MemberRepositoryCustom {
         .join(user)
         .on(member.memberId.user.id.eq(user.id))
         .where(member.name.eq(email))
+        .offset(pageable.getOffset())
+        .limit(pageable.getPageSize())
         .fetch();
-    return new PageImpl<>(members, pageable, members.size());
+    Long longVal = query.select(member.count()).from(member).fetchOne();
+    long count = longVal == null ? 0 : longVal;
+
+    return new PageImpl<>(members, pageable, count);
   }
 
   @Override
@@ -82,8 +104,13 @@ public class MemberRepositoryImpl implements MemberRepositoryCustom {
         .join(user)
         .on(member.memberId.user.id.eq(user.id))
         .where(member.name.eq(contact))
+        .offset(pageable.getOffset())
+        .limit(pageable.getPageSize())
         .fetch();
-    return new PageImpl<>(members, pageable, members.size());
+    Long longVal = query.select(member.count()).from(member).fetchOne();
+    long count = longVal == null ? 0 : longVal;
+
+    return new PageImpl<>(members, pageable, count);
   }
 
   @Override

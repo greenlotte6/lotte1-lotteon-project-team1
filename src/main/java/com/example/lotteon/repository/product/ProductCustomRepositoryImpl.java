@@ -33,32 +33,55 @@ public class ProductCustomRepositoryImpl implements ProductCustomRepository {
 
   @Override
   public Page<Product> findAll(Pageable pageable) {
-    List<Product> products = query.selectFrom(product).fetch();
-    return new PageImpl<>(products, pageable, products.size());
+    List<Product> products = query.selectFrom(product)
+        .offset(pageable.getOffset())
+        .limit(pageable.getPageSize())
+        .fetch();
+    Long longValue = query.select(product.id.count()).from(product).fetchOne();
+    long count = longValue == null ? 0 : longValue;
+    return new PageImpl<>(products, pageable, count);
   }
 
   @Override
   public Page<Product> findById(int id, Pageable pageable) {
     List<Product> products = query.selectFrom(product)
         .where(product.id.eq(id))
+        .offset(pageable.getOffset())
+        .limit(pageable.getPageSize())
         .fetch();
-    return new PageImpl<>(products, pageable, products.size());
+
+    Long longValue = query.select(product.id.count()).from(product).fetchOne();
+    long count = longValue == null ? 0 : longValue;
+
+    return new PageImpl<>(products, pageable, count);
   }
 
   @Override
   public Page<Product> findByName(String name, Pageable pageable) {
     List<Product> products = query.selectFrom(product)
         .where(product.name.eq(name))
+        .offset(pageable.getOffset())
+        .limit(pageable.getPageSize())
         .fetch();
-    return new PageImpl<>(products, pageable, products.size());
+
+    Long longValue = query.select(product.id.count()).from(product).fetchOne();
+    long count = longValue == null ? 0 : longValue;
+
+    return new PageImpl<>(products, pageable, count);
   }
 
   @Override
   public Page<Product> findByCompany(String company, Pageable pageable) {
     List<Product> products = query.selectFrom(product)
         .where(product.seller.companyName.eq(company))
+        .offset(pageable.getOffset())
+        .limit(pageable.getPageSize())
         .fetch();
-    return new PageImpl<>(products, pageable, products.size());
+
+    Long longValue = query.select(product.id.count()).from(product).fetchOne();
+    long count = longValue == null ? 0 : longValue;
+
+    return new PageImpl<>(products, pageable, count);
   }
 
   @Override
