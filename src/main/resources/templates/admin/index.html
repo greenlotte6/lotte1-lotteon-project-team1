@@ -70,11 +70,11 @@
             <th>반품요청</th>
           </tr>
           <tr class="table-data">
-            <td th:text="${paymentWaitingOrders}">101</td>
-            <td th:text="${deliveryReadyOrders}"></td>
-            <td th:text="${cancelRequestedOrders}">14</td>
-            <td th:text="${refundRequestedOrders}">7</td>
-            <td th:text="${exchangeRequestedOrders}">24</td>
+            <td th:text="${stat.getPaymentWaitingCount()}">101</td>
+            <td th:text="${stat.getPrepareDeliveryCount()}"></td>
+            <td th:text="${stat.getCancelRequestedCount()}">14</td>
+            <td th:text="${stat.getExchangeRequestedCount()}">7</td>
+            <td th:text="${stat.getRefundRequestedCount()}">24</td>
           </tr>
           </tbody>
         </table>
@@ -88,23 +88,14 @@
             <th colspan="2">문의 게시물</th>
           </tr>
           <tr class="table-data">
-            <td colspan="2" th:text="${todayValidOrders}">131</td>
-            <td colspan="2" th:text="${todayTotalPrice}">3,700,000</td>
-            <td colspan="2" th:text="${todayNewMembers}">232</td>
-            <td colspan="2">2,500</td>
-            <td colspan="2">25</td>
-          </tr>
-          <tr class="table-detail">
-            <th>어제</th>
-            <td th:text="${yesterdayValidOrders}">70</td>
-            <th>어제</th>
-            <td th:text="${yesterdayTotalPrice}">2,500,000</td>
-            <th>어제</th>
-            <td th:text="${yesterdayNewMembers}">130</td>
-            <th>어제</th>
-            <td>1,200</td>
-            <th>어제</th>
-            <td>12</td>
+            <td colspan="2" th:text="${stat.getOrderCount()}">131</td>
+            <td colspan="2" th:text="${#numbers.formatCurrency(stat.getTotalSales())}">3,700,000
+            </td>
+            <td colspan="2" th:text="${stat.getNewUserCount()}">232</td>
+            <td colspan="2" th:text="${stat.getHitCount()}">2,500</td>
+            <td colspan="2" th:if="${role.equals('ROLE_ADMIN')}" th:text="${stat.getQnaCount()}">
+              25
+            </td>
           </tr>
           </tbody>
         </table>
