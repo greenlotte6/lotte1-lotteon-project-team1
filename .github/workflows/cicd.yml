@@ -69,7 +69,7 @@ jobs:
             sudo docker volume ls | grep lotteon || sudo docker volume create lotteon 
             sudo docker stop lotteon-server || true && sudo docker rm lotteon-server || true
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/lotteon-server
-            sudo docker run -d --name lotteon-server -e TZ=Asia/Seoul --network lotteon -v lotteon:/data -p 8080:8080 ${{ secrets.DOCKER_USERNAME }}/lotteon-server
+            sudo docker run -d --name lotteon-server -e TZ=Asia/Seoul --network lotteon -v lotteon:/upload -p 8080:8080 ${{ secrets.DOCKER_USERNAME }}/lotteon-server
             sudo docker image prune -f
 
       - name: revoke runner ip address
