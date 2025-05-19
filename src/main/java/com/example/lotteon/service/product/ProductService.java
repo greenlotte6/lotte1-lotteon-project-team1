@@ -11,11 +11,13 @@ import com.example.lotteon.repository.jpa.product.ProductRepository;
 import com.example.lotteon.repository.jpa.seller.SellerRepository;
 import com.example.lotteon.service.es.ProductSyncService;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -69,6 +71,11 @@ public class ProductService {
     Product product = modelMapper.map(productDTO, Product.class);
     repo.updateById(id, product);
     syncService.sync(product);
+  }
+
+  public List<Product> getBestProducts() {
+    Pageable topFive = PageRequest.of(0, 5); // 상위 5개
+    return productRepository.findTop5ByOrderBySalesDesc(topFive);
   }
 
   public int getLatestIdAndIncrement() {
@@ -127,5 +134,30 @@ public class ProductService {
     }
 
     return dtoList;
+  }
+  public List<ProductDTO> getDiscountedProducts() {
+    return productRepository.findAll().stream()
+            .filter(p -> p.getDiscountRate() > 0)
+            .sorted(Comparator.comparingInt(Product::getDiscountRate).reversed())
+            .map(p -> modelMapper.map(p, ProductDTO.class))
+            .limit(8)
+            .toList();
+  }
+
+  public List<Product> getHitProducts() {
+    return productRepository.findProductsOrderBySalesDesc().stream()
+            .map(row -> (Product) row[0])
+            .limit(8)
+            .toList();
+  }
+
+  public List<ProductDTO> getRecommendedProducts() {
+    return productRepository.findAll().stream()
+            .sorted(Comparator.comparingInt(p ->
+                    (int) (p.getPrice() * (100 - p.getDiscountRate()) / 100.0)
+            ))
+            .limit(8)
+            .map(p -> modelMapper.map(p, ProductDTO.class))
+            .toList();
   }
 }

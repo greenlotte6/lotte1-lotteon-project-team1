@@ -58,9 +58,7 @@
           <div class="product" th:each="product : ${products}">
             <a th:href="@{/product/detail(id=${product.id})}">
               <div class="grid-img">
-                <img th:src="@{/proDetail-img/img5.png}" alt="이미지"/>
-                <!-- 실제 이미지 경로 사용 시 -->
-                <!-- <img th:src="@{${product.image.path}}" alt="이미지" /> -->
+                <img th:src="@{${product.image.listThumbnailLocation}}" alt="이미지" />
               </div>
 
               <div class="icon">

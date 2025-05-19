@@ -38,26 +38,27 @@ spring:
     username: elastic
     password: CP3wsN0u
 
-  jpa:
-    hibernate:
-      ddl-auto: none
-    show-sql: true
-    properties:
+
+    jpa:
       hibernate:
-        show_sql: true
-        format_sql: true
-        globally_quoted_identifiers: true
+        ddl-auto: none
+      show-sql: true
+      properties:
+        hibernate:
+          show_sql: true
+          format_sql: true
+          globally_quoted_identifiers: true
 
-  data:
-    mongodb:
-      uri: mongodb://lotteon:QqKa4j67Ljw4E05u8Fpl0c2O55xKvFdu@lotteon-mongo:27017/lotteon?authSource=lotteon
+    data:
+      mongodb:
+        uri: mongodb://lotteon:QqKa4j67Ljw4E05u8Fpl0c2O55xKvFdu@lotteon-mongo:27017/lotteon?authSource=lotteon
 
-    redis:
-      host: lotteon-redis
-      port: 6379
+      redis:
+        host: lotteon-redis
+        port: 6379
 
-  thymeleaf:
-    prefix: classpath:/templates
+    thymeleaf:
+      prefix: classpath:/templates
 
 logging:
   file:

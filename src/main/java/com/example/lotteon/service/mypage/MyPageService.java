@@ -74,6 +74,7 @@ public class MyPageService {
         .orElse(false);
   }
 
+
   @Transactional
   public void deleteUser(String id) {
     // 1. 사용자 조회
@@ -116,5 +117,9 @@ public class MyPageService {
     order.setStatus(OrderStatus.builder().id(6).build());
 
     orderRepository.save(order); // 변경 사항 저장
+  }
+
+
+  public void returnOrder(String orderNumber) {
   }
 }

@@ -280,6 +280,7 @@ public class MypageMain {
     return ResponseEntity.ok(json);
   }
 
+  //판매자 상세정보 > 문의하기
   @PostMapping("/mypage/wholeorder/qna")
   @ResponseBody
   public ResponseEntity<String> submitQna(@RequestBody QnaDTO qnaDTO) {
@@ -299,18 +300,38 @@ public class MypageMain {
     }
   }
 
-  @PostMapping("/mypage/wholeorder/confirm")
-  @ResponseBody
-  public ResponseEntity<String> confirmOrder(@RequestBody Map<String, String> payload) {
-    String orderNumber = payload.get("orderNumber");
-    try {
-      myPageService.confirmOrder(orderNumber); // 서비스 호출
-      return ResponseEntity.ok("구매확정 완료");
-    } catch (Exception e) {
-      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("구매확정 실패");
-    }
-  }
+    //구매 확정
+    @PostMapping("/mypage/wholeorder/confirm")
+    @ResponseBody
+    public ResponseEntity<String> confirmOrder(@RequestBody Map<String, String> payload) {
+        String orderNumber = payload.get("orderNumber");
+        try {
+            myPageService.confirmOrder(orderNumber); // 서비스 호출
+            return ResponseEntity.ok("구매확정 완료");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("구매확정 실패");
+        }
+     }
 
+    // 반품신청
+    @GetMapping("/mypage/wholeorder/return/{orderNumber}")
+    @ResponseBody
+    public ResponseEntity<String> returnOrder(@PathVariable String orderNumber) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails details = (UserDetails) auth.getPrincipal();
+
+        String currentUserId = details.getUsername();
+
+        // 현재 로그인한 사용자의 주문인지 확인하는 로직이 내부적으로 있어야 함
+        List<OrderItemDTO> items = myPageService.getOrderDetail(currentUserId, orderNumber);
+
+        if (items.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        String json = gson.toJson(items);
+        return ResponseEntity.ok(json);
+    }
 
 }
 

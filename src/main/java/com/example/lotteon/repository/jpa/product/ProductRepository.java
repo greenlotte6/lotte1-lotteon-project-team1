@@ -2,6 +2,7 @@ package com.example.lotteon.repository.jpa.product;
 
 import com.example.lotteon.entity.product.Product;
 import java.util.List;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -20,4 +21,12 @@ public interface ProductRepository extends JpaRepository<Product, Integer>,
       "GROUP BY oi.product " +
       "ORDER BY totalAmount DESC")
   List<Object[]> findProductsOrderBySalesDesc();
+
+  @Query("""
+      SELECT oi.product 
+      FROM OrderItem oi 
+      GROUP BY oi.product 
+      ORDER BY SUM(oi.amount) DESC
+      """)
+  List<Product> findTop5ByOrderBySalesDesc(Pageable pageable);
 }
