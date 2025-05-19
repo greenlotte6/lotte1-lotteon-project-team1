@@ -8,6 +8,6 @@ RUN mkdir -p /var/www/upload/banner
 RUN rm /etc/localtime
 RUN ln -s /usr/share/zoninfo/Asia/Seoul /etc/localtime
 
-VOLUME ["/data"]
+VOLUME ["/upload"]
 
 ENTRYPOINT ["java", "-jar", "-Dspring.profiles.active=prod", "/home/root/app.jar"]
