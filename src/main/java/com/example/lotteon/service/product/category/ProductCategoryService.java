@@ -5,7 +5,7 @@ import com.example.lotteon.dto.product.ProductCategoryDTO;
 import com.example.lotteon.dto.product.ProductSubCategoryDTO;
 import com.example.lotteon.entity.product.ProductCategory;
 import com.example.lotteon.entity.product.ProductSubCategory;
-import com.example.lotteon.repository.product.category.ProductCategoryRepository;
+import com.example.lotteon.repository.jpa.product.category.ProductCategoryRepository;
 import com.example.lotteon.service.admin.CacheService;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;

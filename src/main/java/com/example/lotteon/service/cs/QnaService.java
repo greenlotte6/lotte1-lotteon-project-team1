@@ -12,7 +12,7 @@ import com.example.lotteon.entity.cs.Qna;
 import com.example.lotteon.entity.user.Member;
 import com.example.lotteon.entity.user.MemberId;
 import com.example.lotteon.entity.user.User;
-import com.example.lotteon.repository.cs.QnaRepository;
+import com.example.lotteon.repository.jpa.cs.QnaRepository;
 import com.querydsl.core.Tuple;
 import java.time.LocalDate;
 import java.util.List;

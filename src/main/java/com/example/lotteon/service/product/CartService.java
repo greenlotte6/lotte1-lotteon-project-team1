@@ -5,7 +5,7 @@ import com.example.lotteon.dto.user.MemberDTO;
 import com.example.lotteon.dto.user.MemberIdDTO;
 import com.example.lotteon.dto.user.UserDTO;
 import com.example.lotteon.entity.product.Cart;
-import com.example.lotteon.repository.cart.CartRepository;
+import com.example.lotteon.repository.jpa.cart.CartRepository;
 import java.time.LocalDate;
 import java.util.List;
 import lombok.RequiredArgsConstructor;

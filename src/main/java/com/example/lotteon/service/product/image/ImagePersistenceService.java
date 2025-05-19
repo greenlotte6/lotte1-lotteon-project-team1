@@ -2,7 +2,7 @@ package com.example.lotteon.service.product.image;
 
 import com.example.lotteon.dto.product.ProductImageDTO;
 import com.example.lotteon.entity.product.ProductImage;
-import com.example.lotteon.repository.product.image.ProductImageRepository;
+import com.example.lotteon.repository.jpa.product.image.ProductImageRepository;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;

@@ -6,7 +6,7 @@ import com.example.lotteon.dto.product.ProductCategoryDTO;
 import com.example.lotteon.dto.product.ProductSubCategoryDTO;
 import com.example.lotteon.entity.admin.banner.BannerDocument;
 import com.example.lotteon.entity.admin.config.VersionConfig;
-import com.example.lotteon.repository.admin.config.BannerRepository;
+import com.example.lotteon.repository.jpa.admin.config.BannerRepository;
 import com.example.lotteon.service.admin.BasicConfigService;
 import com.example.lotteon.service.admin.CacheService;
 import com.example.lotteon.service.admin.PolicyService;

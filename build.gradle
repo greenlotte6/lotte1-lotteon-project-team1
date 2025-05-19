@@ -38,6 +38,7 @@ dependencies {
     implementation 'com.querydsl:querydsl-jpa:5.1.0:jakarta'
     implementation 'com.google.code.gson:gson:2.13.0'
     implementation 'org.springframework.boot:spring-boot-starter-cache'
+    implementation 'org.springframework.boot:spring-boot-starter-data-elasticsearch'
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'com.mysql:mysql-connector-j'

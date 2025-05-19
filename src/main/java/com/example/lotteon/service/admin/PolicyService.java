@@ -2,7 +2,7 @@ package com.example.lotteon.service.admin;
 
 import com.example.lotteon.dto.admin.PolicyDTO;
 import com.example.lotteon.entity.admin.config.Policy;
-import com.example.lotteon.repository.admin.config.PolicyRepository;
+import com.example.lotteon.repository.jpa.admin.config.PolicyRepository;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;

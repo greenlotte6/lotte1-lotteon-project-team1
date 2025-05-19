@@ -12,11 +12,12 @@ import com.example.lotteon.dto.user.UserDTO;
 import com.example.lotteon.entity.coupon.Coupon;
 import com.example.lotteon.entity.coupon.Coupon_History;
 import com.example.lotteon.entity.user.Member;
-import com.example.lotteon.entity.user.MemberId;
-import com.example.lotteon.entity.user.User;
-import com.example.lotteon.repository.coupon.CouponHistoryRepository;
-import com.example.lotteon.repository.coupon.CouponRepository;
+import com.example.lotteon.repository.jpa.coupon.CouponHistoryRepository;
+import com.example.lotteon.repository.jpa.coupon.CouponRepository;
 import com.querydsl.core.Tuple;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -25,291 +26,285 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
-
-import static com.example.lotteon.entity.coupon.QCoupon.coupon;
-
 @Slf4j
 @RequiredArgsConstructor
 @Service
 public class CouponHistoryService {
 
-    private final CouponHistoryRepository couponHistoryRepository;
-    private final CouponRepository couponRepository;
-    private final ModelMapper modelMapper;
+  private final CouponHistoryRepository couponHistoryRepository;
+  private final CouponRepository couponRepository;
+  private final ModelMapper modelMapper;
 
-    public int couponHistoryRegister(Member member, Coupon coupon) {
-        // 이미 쿠폰이 지급된 이력이 있는지 확인
-        boolean couponAlreadyGiven = couponHistoryRepository.existsByMemberAndCoupon(member, coupon);
-        if (couponAlreadyGiven) {
-            throw new IllegalStateException("이미 쿠폰을 받으셨습니다.");
-        }
-
-        // 쿠폰 발급 내역 생성
-        Coupon_History couponHistory = Coupon_History.builder()
-                .coupon(coupon)
-                .member(member)
-                .status("unused")
-                .build();
-
-        // 저장
-        Coupon_History savedCouponHistory = couponHistoryRepository.save(couponHistory);
-        return savedCouponHistory.getId();
+  public int couponHistoryRegister(Member member, Coupon coupon) {
+    // 이미 쿠폰이 지급된 이력이 있는지 확인
+    boolean couponAlreadyGiven = couponHistoryRepository.existsByMemberAndCoupon(member, coupon);
+    if (couponAlreadyGiven) {
+      throw new IllegalStateException("이미 쿠폰을 받으셨습니다.");
     }
 
-    public PageResponseDTO findAll(PageRequestDTO pageRequestDTO, int id) {
-        Pageable pageable = pageRequestDTO.getPageable("id");
+    // 쿠폰 발급 내역 생성
+    Coupon_History couponHistory = Coupon_History.builder()
+        .coupon(coupon)
+        .member(member)
+        .status("unused")
+        .build();
 
-        // couponHistoryRepository에서 조회
-        Page<Tuple> pageCouponHistory = couponHistoryRepository.selectAllForList(pageable, id);
+    // 저장
+    Coupon_History savedCouponHistory = couponHistoryRepository.save(couponHistory);
+    return savedCouponHistory.getId();
+  }
 
-        List<Coupon_HistoryDTO> couponHistoryDTOList = pageCouponHistory.getContent().stream().map(tuple -> {
-            Coupon_History couponHistory = tuple.get(0, Coupon_History.class);
+  public PageResponseDTO findAll(PageRequestDTO pageRequestDTO, int id) {
+    Pageable pageable = pageRequestDTO.getPageable("id");
 
+    // couponHistoryRepository에서 조회
+    Page<Tuple> pageCouponHistory = couponHistoryRepository.selectAllForList(pageable, id);
 
-            UserDTO userDTO = UserDTO.builder()
-                    .id(couponHistory.getMember().getMemberId().getUser().getId())
-                    .build();
+    List<Coupon_HistoryDTO> couponHistoryDTOList = pageCouponHistory.getContent().stream()
+        .map(tuple -> {
+          Coupon_History couponHistory = tuple.get(0, Coupon_History.class);
 
-            MemberIdDTO memberIdDTO = MemberIdDTO.builder()
-                    .user(userDTO)
-                    .build();
+          UserDTO userDTO = UserDTO.builder()
+              .id(couponHistory.getMember().getMemberId().getUser().getId())
+              .build();
 
-            MemberDTO memberDTO = MemberDTO.builder()
-                    .memberId(memberIdDTO)
-                    .build();
+          MemberIdDTO memberIdDTO = MemberIdDTO.builder()
+              .user(userDTO)
+              .build();
 
-            Coupon_BenefitDTO benefitDTO = Coupon_BenefitDTO.builder()
-                    .id(couponHistory.getCoupon().getCoupon_benefit().getId())
-                    .benefit(couponHistory.getCoupon().getCoupon_benefit().getBenefit())
-                    .build();
+          MemberDTO memberDTO = MemberDTO.builder()
+              .memberId(memberIdDTO)
+              .build();
 
-            Coupon_TypeDTO typeDTO = Coupon_TypeDTO.builder()
-                    .id(couponHistory.getCoupon().getCoupon_type().getId())
-                    .name(couponHistory.getCoupon().getCoupon_type().getName())
-                    .build();
+          Coupon_BenefitDTO benefitDTO = Coupon_BenefitDTO.builder()
+              .id(couponHistory.getCoupon().getCoupon_benefit().getId())
+              .benefit(couponHistory.getCoupon().getCoupon_benefit().getBenefit())
+              .build();
 
-            CouponDTO couponDTO = CouponDTO.builder()
-                    .id(couponHistory.getCoupon().getId())
-                    .type_id(couponHistory.getCoupon().getCoupon_type().getId())
-                    .name(couponHistory.getCoupon().getName())
-                    .coupon_benefit(benefitDTO)
-                    .coupon_type(typeDTO)
-                    .build();
+          Coupon_TypeDTO typeDTO = Coupon_TypeDTO.builder()
+              .id(couponHistory.getCoupon().getCoupon_type().getId())
+              .name(couponHistory.getCoupon().getCoupon_type().getName())
+              .build();
 
+          CouponDTO couponDTO = CouponDTO.builder()
+              .id(couponHistory.getCoupon().getId())
+              .type_id(couponHistory.getCoupon().getCoupon_type().getId())
+              .name(couponHistory.getCoupon().getName())
+              .coupon_benefit(benefitDTO)
+              .coupon_type(typeDTO)
+              .build();
 
-            Coupon_HistoryDTO couponHistoryDTO = Coupon_HistoryDTO.builder()
-                    .id(couponHistory.getId())
-                    .coupon_id(couponHistory.getCoupon().getId())
-                    .user_id(couponHistory.getMember().getMemberId().getUser().getId())
-                    .status(couponHistory.getStatus())
-                    .used_date(couponHistory.getUsed_date())
-                    .coupon(couponDTO)
-                    .member(memberDTO)
-                    .build();
+          Coupon_HistoryDTO couponHistoryDTO = Coupon_HistoryDTO.builder()
+              .id(couponHistory.getId())
+              .coupon_id(couponHistory.getCoupon().getId())
+              .user_id(couponHistory.getMember().getMemberId().getUser().getId())
+              .status(couponHistory.getStatus())
+              .used_date(couponHistory.getUsed_date())
+              .coupon(couponDTO)
+              .member(memberDTO)
+              .build();
 
-            return couponHistoryDTO;
+          return couponHistoryDTO;
         }).toList();
 
-        int total = (int) pageCouponHistory.getTotalElements();
+    int total = (int) pageCouponHistory.getTotalElements();
 
-        return PageResponseDTO.<Coupon_HistoryDTO>builder()
-                .pageRequestDTO(pageRequestDTO)
-                .dtoList(couponHistoryDTOList)
-                .total(total)
-                .build();
-    }
-
-
-    public PageResponseDTO searchAll(PageRequestDTO pageRequestDTO, int id) {
-
-        Pageable pageable = pageRequestDTO.getPageable("id");
-        String name = pageRequestDTO.getName();
-        int coupon_id = pageRequestDTO.getCoupon_id();
-        String user_id = pageRequestDTO.getUser_id();
-
-        // couponHistoryRepository에서 조회
-        Page<Tuple> pageCouponHistory = couponHistoryRepository.selectAllForSearch(pageRequestDTO, pageable, id, name, coupon_id, user_id);
-
-        List<Coupon_HistoryDTO> couponHistoryDTOList = pageCouponHistory.getContent().stream().map(tuple -> {
-            Coupon_History couponHistory = tuple.get(0, Coupon_History.class);
+    return PageResponseDTO.<Coupon_HistoryDTO>builder()
+        .pageRequestDTO(pageRequestDTO)
+        .dtoList(couponHistoryDTOList)
+        .total(total)
+        .build();
+  }
 
 
-            UserDTO userDTO = UserDTO.builder()
-                    .id(couponHistory.getMember().getMemberId().getUser().getId())
-                    .build();
+  public PageResponseDTO searchAll(PageRequestDTO pageRequestDTO, int id) {
 
-            MemberIdDTO memberIdDTO = MemberIdDTO.builder()
-                    .user(userDTO)
-                    .build();
+    Pageable pageable = pageRequestDTO.getPageable("id");
+    String name = pageRequestDTO.getName();
+    int coupon_id = pageRequestDTO.getCoupon_id();
+    String user_id = pageRequestDTO.getUser_id();
 
-            MemberDTO memberDTO = MemberDTO.builder()
-                    .memberId(memberIdDTO)
-                    .build();
+    // couponHistoryRepository에서 조회
+    Page<Tuple> pageCouponHistory = couponHistoryRepository.selectAllForSearch(pageRequestDTO,
+        pageable, id, name, coupon_id, user_id);
 
-            Coupon_BenefitDTO benefitDTO = Coupon_BenefitDTO.builder()
-                    .id(couponHistory.getCoupon().getCoupon_benefit().getId())
-                    .benefit(couponHistory.getCoupon().getCoupon_benefit().getBenefit())
-                    .build();
+    List<Coupon_HistoryDTO> couponHistoryDTOList = pageCouponHistory.getContent().stream()
+        .map(tuple -> {
+          Coupon_History couponHistory = tuple.get(0, Coupon_History.class);
 
-            Coupon_TypeDTO typeDTO = Coupon_TypeDTO.builder()
-                    .id(couponHistory.getCoupon().getCoupon_type().getId())
-                    .name(couponHistory.getCoupon().getCoupon_type().getName())
-                    .build();
+          UserDTO userDTO = UserDTO.builder()
+              .id(couponHistory.getMember().getMemberId().getUser().getId())
+              .build();
 
-            CouponDTO couponDTO = CouponDTO.builder()
-                    .id(couponHistory.getCoupon().getId())
-                    .type_id(couponHistory.getCoupon().getCoupon_type().getId())
-                    .name(couponHistory.getCoupon().getName())
-                    .coupon_benefit(benefitDTO)
-                    .coupon_type(typeDTO)
-                    .build();
+          MemberIdDTO memberIdDTO = MemberIdDTO.builder()
+              .user(userDTO)
+              .build();
 
+          MemberDTO memberDTO = MemberDTO.builder()
+              .memberId(memberIdDTO)
+              .build();
 
-            Coupon_HistoryDTO couponHistoryDTO = Coupon_HistoryDTO.builder()
-                    .id(couponHistory.getId())
-                    .coupon_id(couponHistory.getCoupon().getId())
-                    .user_id(couponHistory.getMember().getMemberId().getUser().getId())
-                    .status(couponHistory.getStatus())
-                    .used_date(couponHistory.getUsed_date())
-                    .coupon(couponDTO)
-                    .member(memberDTO)
-                    .build();
+          Coupon_BenefitDTO benefitDTO = Coupon_BenefitDTO.builder()
+              .id(couponHistory.getCoupon().getCoupon_benefit().getId())
+              .benefit(couponHistory.getCoupon().getCoupon_benefit().getBenefit())
+              .build();
 
-            return couponHistoryDTO;
+          Coupon_TypeDTO typeDTO = Coupon_TypeDTO.builder()
+              .id(couponHistory.getCoupon().getCoupon_type().getId())
+              .name(couponHistory.getCoupon().getCoupon_type().getName())
+              .build();
+
+          CouponDTO couponDTO = CouponDTO.builder()
+              .id(couponHistory.getCoupon().getId())
+              .type_id(couponHistory.getCoupon().getCoupon_type().getId())
+              .name(couponHistory.getCoupon().getName())
+              .coupon_benefit(benefitDTO)
+              .coupon_type(typeDTO)
+              .build();
+
+          Coupon_HistoryDTO couponHistoryDTO = Coupon_HistoryDTO.builder()
+              .id(couponHistory.getId())
+              .coupon_id(couponHistory.getCoupon().getId())
+              .user_id(couponHistory.getMember().getMemberId().getUser().getId())
+              .status(couponHistory.getStatus())
+              .used_date(couponHistory.getUsed_date())
+              .coupon(couponDTO)
+              .member(memberDTO)
+              .build();
+
+          return couponHistoryDTO;
         }).toList();
 
-        int total = (int) pageCouponHistory.getTotalElements();
+    int total = (int) pageCouponHistory.getTotalElements();
 
-        return PageResponseDTO.<Coupon_HistoryDTO>builder()
-                .pageRequestDTO(pageRequestDTO)
-                .dtoList(couponHistoryDTOList)
-                .total(total)
-                .build();
+    return PageResponseDTO.<Coupon_HistoryDTO>builder()
+        .pageRequestDTO(pageRequestDTO)
+        .dtoList(couponHistoryDTOList)
+        .total(total)
+        .build();
 
+  }
+
+  public Coupon_HistoryDTO findById(int id) {
+    return couponHistoryRepository.findById(id)
+        .map(couponHistory -> {
+          UserDTO userDTO = UserDTO.builder()
+              .id(couponHistory.getMember().getMemberId().getUser().getId())
+              .build();
+
+          MemberIdDTO memberIdDTO = MemberIdDTO.builder()
+              .user(userDTO)
+              .build();
+
+          MemberDTO memberDTO = MemberDTO.builder()
+              .memberId(memberIdDTO)
+              .build();
+
+          Coupon_BenefitDTO benefitDTO = Coupon_BenefitDTO.builder()
+              .id(couponHistory.getCoupon().getCoupon_benefit().getId())
+              .benefit(couponHistory.getCoupon().getCoupon_benefit().getBenefit())
+              .build();
+
+          Coupon_TypeDTO typeDTO = Coupon_TypeDTO.builder()
+              .id(couponHistory.getCoupon().getCoupon_type().getId())
+              .name(couponHistory.getCoupon().getCoupon_type().getName())
+              .build();
+
+          CouponDTO couponDTO = CouponDTO.builder()
+              .id(couponHistory.getCoupon().getId())
+              .type_id(couponHistory.getCoupon().getCoupon_type().getId())
+              .name(couponHistory.getCoupon().getName())
+              .coupon_benefit(benefitDTO)
+              .coupon_type(typeDTO)
+              .from(couponHistory.getCoupon().getFrom())
+              .to(couponHistory.getCoupon().getTo())
+              .seller_id(couponHistory.getCoupon().getSeller_id())
+              .description(couponHistory.getCoupon().getDescription())
+              .build();
+          return Coupon_HistoryDTO.builder()
+              .id(couponHistory.getId())
+              .coupon_id(couponHistory.getCoupon().getId())
+              .user_id(couponHistory.getMember().getMemberId().getUser().getId())
+              .status(couponHistory.getStatus())
+              .used_date(couponHistory.getUsed_date())
+              .coupon(couponDTO)
+              .member(memberDTO)
+              .build();
+        })
+        .orElseThrow(() -> new RuntimeException("쿠폰을 찾을 수 없습니다."));
+  }
+
+  @Transactional
+  public void markAsUsed(int couponHistoryId) {
+    Coupon_History history = couponHistoryRepository.findById(couponHistoryId)
+        .orElseThrow(() -> new IllegalArgumentException("해당 쿠폰 내역이 존재하지 않습니다."));
+
+    if (!"unused".equals(history.getStatus())) {
+      throw new IllegalStateException("이미 사용된 쿠폰입니다.");
     }
 
-    public Coupon_HistoryDTO findById(int id) {
-        return couponHistoryRepository.findById(id)
-                .map(couponHistory -> {
-                    UserDTO userDTO = UserDTO.builder()
-                            .id(couponHistory.getMember().getMemberId().getUser().getId())
-                            .build();
+    // 상태 변경
+    history.setStatus("used");
 
-                    MemberIdDTO memberIdDTO = MemberIdDTO.builder()
-                            .user(userDTO)
-                            .build();
+    // 현재 날짜 및 시간 문자열로 저장 (형식: yyyy-MM-dd HH:mm:ss)
+    String now = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+    history.setUsed_date(now);
 
-                    MemberDTO memberDTO = MemberDTO.builder()
-                            .memberId(memberIdDTO)
-                            .build();
+    // save 생략 가능하지만 명시적으로 작성 가능
+    couponHistoryRepository.save(history);
+  }
 
-                    Coupon_BenefitDTO benefitDTO = Coupon_BenefitDTO.builder()
-                            .id(couponHistory.getCoupon().getCoupon_benefit().getId())
-                            .benefit(couponHistory.getCoupon().getCoupon_benefit().getBenefit())
-                            .build();
+  //public List<Coupon_HistoryDTO> findByUserId(String userId) {
+  public Page<Coupon_HistoryDTO> findByUserId(String userId, Pageable pageable) {
 
-                    Coupon_TypeDTO typeDTO = Coupon_TypeDTO.builder()
-                            .id(couponHistory.getCoupon().getCoupon_type().getId())
-                            .name(couponHistory.getCoupon().getCoupon_type().getName())
-                            .build();
+    //List<Coupon_History> couponHistoryList = couponHistoryRepository.findByMember_MemberId_User_Id(userId);
 
-                    CouponDTO couponDTO = CouponDTO.builder()
-                            .id(couponHistory.getCoupon().getId())
-                            .type_id(couponHistory.getCoupon().getCoupon_type().getId())
-                            .name(couponHistory.getCoupon().getName())
-                            .coupon_benefit(benefitDTO)
-                            .coupon_type(typeDTO)
-                            .from(couponHistory.getCoupon().getFrom())
-                            .to(couponHistory.getCoupon().getTo())
-                            .seller_id(couponHistory.getCoupon().getSeller_id())
-                            .description(couponHistory.getCoupon().getDescription())
-                            .build();
-                    return Coupon_HistoryDTO.builder()
-                            .id(couponHistory.getId())
-                            .coupon_id(couponHistory.getCoupon().getId())
-                            .user_id(couponHistory.getMember().getMemberId().getUser().getId())
-                            .status(couponHistory.getStatus())
-                            .used_date(couponHistory.getUsed_date())
-                            .coupon(couponDTO)
-                            .member(memberDTO)
-                            .build();
-                })
-                .orElseThrow(() -> new RuntimeException("쿠폰을 찾을 수 없습니다."));
-    }
+    Page<Coupon_History> couponHistoryPage = couponHistoryRepository.findByMember_MemberId_User_Id(
+        userId, pageable);
 
-    @Transactional
-    public void markAsUsed(int couponHistoryId) {
-        Coupon_History history = couponHistoryRepository.findById(couponHistoryId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 쿠폰 내역이 존재하지 않습니다."));
+    //return couponHistoryList.stream().map(couponHistory -> {
+    return couponHistoryPage.map(couponHistory -> {
+      Coupon_BenefitDTO benefitDTO = Coupon_BenefitDTO.builder()
+          .id(couponHistory.getCoupon().getCoupon_benefit().getId())
+          .benefit(couponHistory.getCoupon().getCoupon_benefit().getBenefit())
+          .build();
 
-        if (!"unused".equals(history.getStatus())) {
-            throw new IllegalStateException("이미 사용된 쿠폰입니다.");
-        }
+      Coupon_TypeDTO typeDTO = Coupon_TypeDTO.builder()
+          .id(couponHistory.getCoupon().getCoupon_type().getId())
+          .name(couponHistory.getCoupon().getCoupon_type().getName())
+          .build();
 
-        // 상태 변경
-        history.setStatus("used");
+      CouponDTO couponDTO = CouponDTO.builder()
+          .id(couponHistory.getCoupon().getId())
+          .type_id(couponHistory.getCoupon().getCoupon_type().getId())
+          .name(couponHistory.getCoupon().getName())
+          .to(couponHistory.getCoupon().getTo())
+          .description(couponHistory.getCoupon().getDescription())
+          .coupon_benefit(benefitDTO)
+          .coupon_type(typeDTO)
+          .build();
 
-        // 현재 날짜 및 시간 문자열로 저장 (형식: yyyy-MM-dd HH:mm:ss)
-        String now = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-        history.setUsed_date(now);
+      UserDTO userDTO = UserDTO.builder()
+          .id(couponHistory.getMember().getMemberId().getUser().getId())
+          .build();
 
-        // save 생략 가능하지만 명시적으로 작성 가능
-        couponHistoryRepository.save(history);
-    }
+      MemberIdDTO memberIdDTO = MemberIdDTO.builder()
+          .user(userDTO)
+          .build();
 
-    //public List<Coupon_HistoryDTO> findByUserId(String userId) {
-    public Page<Coupon_HistoryDTO> findByUserId(String userId, Pageable pageable) {
+      MemberDTO memberDTO = MemberDTO.builder()
+          .memberId(memberIdDTO)
+          .build();
 
-        //List<Coupon_History> couponHistoryList = couponHistoryRepository.findByMember_MemberId_User_Id(userId);
-
-        Page<Coupon_History> couponHistoryPage = couponHistoryRepository.findByMember_MemberId_User_Id(userId, pageable);
-
-        //return couponHistoryList.stream().map(couponHistory -> {
-        return couponHistoryPage.map(couponHistory -> {
-            Coupon_BenefitDTO benefitDTO = Coupon_BenefitDTO.builder()
-                    .id(couponHistory.getCoupon().getCoupon_benefit().getId())
-                    .benefit(couponHistory.getCoupon().getCoupon_benefit().getBenefit())
-                    .build();
-
-            Coupon_TypeDTO typeDTO = Coupon_TypeDTO.builder()
-                    .id(couponHistory.getCoupon().getCoupon_type().getId())
-                    .name(couponHistory.getCoupon().getCoupon_type().getName())
-                    .build();
-
-            CouponDTO couponDTO = CouponDTO.builder()
-                    .id(couponHistory.getCoupon().getId())
-                    .type_id(couponHistory.getCoupon().getCoupon_type().getId())
-                    .name(couponHistory.getCoupon().getName())
-                    .to(couponHistory.getCoupon().getTo())
-                    .description(couponHistory.getCoupon().getDescription())
-                    .coupon_benefit(benefitDTO)
-                    .coupon_type(typeDTO)
-                    .build();
-
-            UserDTO userDTO = UserDTO.builder()
-                    .id(couponHistory.getMember().getMemberId().getUser().getId())
-                    .build();
-
-            MemberIdDTO memberIdDTO = MemberIdDTO.builder()
-                    .user(userDTO)
-                    .build();
-
-            MemberDTO memberDTO = MemberDTO.builder()
-                    .memberId(memberIdDTO)
-                    .build();
-
-            return Coupon_HistoryDTO.builder()
-                    .id(couponHistory.getId())
-                    .coupon_id(couponHistory.getCoupon().getId())
-                    .user_id(userDTO.getId())
-                    .status(couponHistory.getStatus())
-                    .used_date(couponHistory.getUsed_date())
-                    .coupon(couponDTO)
-                    .member(memberDTO)
-                    .build();
-        });
-    }
+      return Coupon_HistoryDTO.builder()
+          .id(couponHistory.getId())
+          .coupon_id(couponHistory.getCoupon().getId())
+          .user_id(userDTO.getId())
+          .status(couponHistory.getStatus())
+          .used_date(couponHistory.getUsed_date())
+          .coupon(couponDTO)
+          .member(memberDTO)
+          .build();
+    });
+  }
 }

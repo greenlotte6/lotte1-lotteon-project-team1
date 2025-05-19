@@ -2,9 +2,9 @@ package com.example.lotteon.service.admin.statistics;
 
 import com.example.lotteon.dto.admin.StatisticDTO;
 import com.example.lotteon.dto.order.OrderStatusDTO;
-import com.example.lotteon.repository.UserRepository;
-import com.example.lotteon.repository.cs.QnaRepository;
-import com.example.lotteon.repository.order.OrderRepository;
+import com.example.lotteon.repository.jpa.UserRepository;
+import com.example.lotteon.repository.jpa.cs.QnaRepository;
+import com.example.lotteon.repository.jpa.order.OrderRepository;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.querydsl.core.Tuple;

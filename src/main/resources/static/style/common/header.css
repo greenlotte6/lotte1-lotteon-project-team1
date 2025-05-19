@@ -58,6 +58,22 @@ header {
   position: relative;
 }
 
+#related-keywords {
+  position: absolute;
+  z-index: 1000;
+  background-color: #fff;
+  width: 430px;
+  height: auto;
+  border: 2px solid #ef2a23;
+  border-radius: 10px;
+  padding: 10px;
+  list-style: none;
+}
+
+#related-keywords .keyword-row {
+  margin-bottom: 5px;
+}
+
 #search-area > input {
   width: 450px;
   height: 48px;
@@ -67,6 +83,7 @@ header {
   box-sizing: border-box;
   outline: none;
   z-index: 0;
+  transition: all 0.5s ease;
 }
 
 #search-area > button {
@@ -197,4 +214,9 @@ header {
   line-height: 35px;
   color: #757575;
   width: 60px;
+}
+
+.hidden {
+  display: none;
+  border: none;
 }

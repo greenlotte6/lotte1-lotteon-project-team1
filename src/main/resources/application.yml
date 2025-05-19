@@ -33,6 +33,11 @@ spring:
       connection-timeout: 10000
       maximum-pool-size: 20
 
+  elasticsearch:
+    uris: http://es-container:9200
+    username: elastic
+    password: CP3wsN0u
+
   jpa:
     hibernate:
       ddl-auto: none
@@ -132,6 +137,11 @@ spring:
         format_sql: true
         globally_quoted_identifiers: true
 
+  elasticsearch:
+    uris: http://localhost:9200
+    username: elastic
+    password: CP3wsN0u
+  
   data:
     mongodb:
       uri: mongodb://lotteon-dev:1234@52.79.234.26:27018/lotteon?authSource=lotteon
