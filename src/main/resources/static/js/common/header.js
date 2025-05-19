@@ -1,25 +1,19 @@
-/**
- * jQuery UI 'menu' 위젯
- */
 $(function () {
-  $("#menu").menu();
-});
+  // jQuery UI menu 초기화 + 기본적으로 숨김
+  $("#menu").menu().hide();
 
-/**
- * jQuery UI 'Toggle' 이펙트
- */
-$(function () {
-  // run the currently selected effect
-  function runEffect() {
-    var options = {};
-
-    $("#menu").toggle("blind", options, 200);
-  }
+  let isMenuShown = false;
 
   $("#drop-btn").on("click", function () {
-    runEffect();
+    if (!isMenuShown) {
+      $("#menu").show("blind", {}, 200);
+    } else {
+      $("#menu").hide("blind", {}, 200);
+    }
+    isMenuShown = !isMenuShown;
   });
 
+  // shortcut hover 효과
   $(".shortcut").on("mouseover", function (event) {
     $(event.target).css("color", "#ef2a23");
   });

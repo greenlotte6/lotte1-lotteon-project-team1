@@ -39,7 +39,6 @@
     </div>
   </div>
   <th:block th:insert="~{/common/header}"></th:block>
-  <th:block th:insert="~{/_menu}"></th:block>
   <main>
     <!-- 슬라이드 배너 영역 -->
     <div class="slider-container">
@@ -57,8 +56,12 @@
         <div class="product-grid">
           <div th:each="product : ${bestProducts}" class="product-card">
             <!-- 실제 이미지 경로 사용 시 -->
-            <img th:src="@{${product.image.listThumbnailLocation}}" alt="이미지" />
-            <h3 th:text="${product.name}"></h3>
+            <a th:href="@{/product/detail(id=${product.id})}">
+              <img th:src="@{${product.image.listThumbnailLocation}}" alt="이미지" />
+            </a>
+            <a th:href="@{/product/detail(id=${product.id})}">
+              <h4 th:text="${product.name}"></h4>
+            </a>
             <p th:text="${product.description}"></p>
 
             <div class="price">
@@ -79,8 +82,12 @@
 
           <div class="product-list">
             <div th:each="product : ${discountProducts}" class="product-card">
-              <img th:src="@{${product.image.listThumbnailLocation}}" alt="이미지" />
-              <h4 th:text="${product.name}"></h4>
+              <a th:href="@{/product/detail(id=${product.id})}">
+                <img th:src="@{${product.image.listThumbnailLocation}}" alt="이미지" />
+              </a>
+              <a th:href="@{/product/detail(id=${product.id})}">
+                <h4 th:text="${product.name}"></h4>
+              </a>
               <p>
           <span style="text-decoration: line-through; color: gray;"
                 th:text="${#numbers.formatInteger(product.price, 3, 'COMMA') + '원'}">
@@ -98,31 +105,35 @@
       </section>
 
       <!-- 히트상품 -->
-      <section>
-        <div class="product-list-wrapper">
-          <h2>🔥 히트상품</h2>
-          <div class="product-list">
-            <div th:each="product : ${hitProducts}" class="product-card">
+    <section>
+      <div class="product-list-wrapper">
+        <h2>🔥 히트상품</h2>
+        <div class="product-list">
+          <div th:each="product : ${hitProducts}" class="product-card">
+            <a th:href="@{/product/detail(id=${product.id})}">
               <img th:src="@{${product.image.listThumbnailLocation}}" alt="이미지" />
+            </a>
+            <a th:href="@{/product/detail(id=${product.id})}">
               <h4 th:text="${product.name}"></h4>
-              <p>
+            </a>
+            <p>
           <span th:if="${product.discountRate > 0}" style="text-decoration: line-through; color: gray;"
                 th:text="${#numbers.formatInteger(product.price, 3, 'COMMA') + '원'}">
           </span>
-                <br th:if="${product.discountRate > 0}" />
-                <span style="color: red; font-weight: bold;"
-                      th:text="${#numbers.formatInteger(product.price * (100 - product.discountRate) / 100, 3, 'COMMA') + '원'}">
+              <br th:if="${product.discountRate > 0}" />
+              <span style="color: red; font-weight: bold;"
+                    th:text="${#numbers.formatInteger(product.price * (100 - product.discountRate) / 100, 3, 'COMMA') + '원'}">
           </span>
-                <br th:if="${product.discountRate > 0}" />
-                <span th:if="${product.discountRate > 0}"
-                      th:text="${product.discountRate + '% 할인'}"
-                      style="color: orange; font-size: 12px;">
+              <br th:if="${product.discountRate > 0}" />
+              <span th:if="${product.discountRate > 0}"
+                    th:text="${product.discountRate + '% 할인'}"
+                    style="color: orange; font-size: 12px;">
           </span>
-              </p>
-            </div>
+            </p>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
       <!-- 추가 추천상품 -->
       <section>
@@ -130,8 +141,12 @@
           <h2>🌟 추천상품</h2>
           <div class="product-list">
             <div th:each="product : ${recommendedProducts}" class="product-card">
-              <img th:src="@{${product.image.listThumbnailLocation}}" alt="이미지" />
-              <h4 th:text="${product.name}"></h4>
+              <a th:href="@{/product/detail(id=${product.id})}">
+                <img th:src="@{${product.image.listThumbnailLocation}}" alt="이미지" />
+              </a>
+              <a th:href="@{/product/detail(id=${product.id})}">
+                <h4 th:text="${product.name}"></h4>
+              </a>
               <p>
           <span th:if="${product.discountRate > 0}" style="text-decoration: line-through; color: gray;"
                 th:text="${#numbers.formatInteger(product.price, 3, 'COMMA') + '원'}">
