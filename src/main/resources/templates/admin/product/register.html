@@ -56,27 +56,20 @@
             <tr>
               <th>1차 분류</th>
               <td>
-                <select
-                    name="product.category.id"
-                    class="category-selector"
-                    id="first-category"
-                >
-                  <option th:each="category : ${categories}" th:text="${category.getName()}"
-                          th:value="${category.getId()}"></option>
+                <select name="product.category.id" class="category-selector" id="first-category">
+                  <option value="">-- 선택 --</option>
+                  <option th:each="category : ${categories}"
+                          th:value="${category.id}"
+                          th:text="${category.name}">
+                  </option>
                 </select>
               </td>
             </tr>
             <tr>
               <th>2차 분류</th>
               <td>
-                <select
-                    name="product.subCategory.id"
-                    class="category-selector"
-                    id="second-category"
-                >
-                  <option th:each="subCategory : ${subCategories}"
-                          th:text="${subCategory.getName()}"
-                          th:value="${subCategory.getId()}"></option>
+                <select name="product.subCategory.id" class="category-selector" id="second-category">
+                  <option value="">-- 선택 --</option>
                 </select>
               </td>
             </tr>
@@ -266,5 +259,29 @@
   </main>
   <th:block th:insert="~{/common/admin/footer}"></th:block>
 </div>
+
+<script th:inline="javascript">
+  let subCategories = /*[[${subCategories}]]*/ [];
+
+  document.addEventListener('DOMContentLoaded', function () {
+    const first = document.getElementById('first-category');
+    const second = document.getElementById('second-category');
+
+    first.addEventListener('change', function () {
+      const selectedId = this.value;
+
+      second.innerHTML = '<option value="">-- 선택 --</option>';
+
+      const filtered = subCategories.filter(sub => sub.category.id == selectedId);
+
+      filtered.forEach(sub => {
+        const opt = document.createElement('option');
+        opt.value = sub.id;
+        opt.textContent = sub.name;
+        second.appendChild(opt);
+      });
+    });
+  });
+</script>
 </body>
 </html>

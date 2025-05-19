@@ -39,6 +39,7 @@ public class ProductService {
       productDTOS.add(productDTO);
     }
     return productDTOS;
+
   }
 
   public Page<Product> getAll(Pageable pageable) {
@@ -156,4 +157,12 @@ public class ProductService {
             .map(p -> modelMapper.map(p, ProductDTO.class))
             .toList();
   }
+
+  public List<ProductDTO> proListBySubCategoryId(String subcategoryId) {
+    List<Product> products = productRepository.findBySubCategory_Id(subcategoryId);
+    return products.stream()
+            .map(product -> modelMapper.map(product, ProductDTO.class))
+            .toList();
+  }
+
 }

@@ -31,4 +31,8 @@ public interface ProductRepository extends JpaRepository<Product, Integer>,
     ORDER BY SUM(oi.amount) DESC
     """)
     List<Product> findTop5ByOrderBySalesDesc(Pageable pageable);
+
+    List<Product> findBySubCategory_Category_Id(int categoryId);
+
+    List<Product> findBySubCategory_Id(String subcategoryId);
 }

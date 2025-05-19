@@ -39,11 +39,14 @@ public class ProductController {
   public String productList(
           @RequestParam(required = false) String filter,
           @RequestParam(required = false) String sort,
+          @RequestParam(required = false) String subcategoryId,
           Model model) {
 
     List<ProductDTO> products;
 
-    if ("sales".equals(filter)) {
+    if (subcategoryId != null) {
+      products = productService.proListBySubCategoryId(subcategoryId);
+    } else if ("sales".equals(filter)) {
       products = productService.proListSortedBySales();
     } else if ("price".equals(filter)) {
       products = productService.proListSortedByPrice(sort);
@@ -98,6 +101,7 @@ public class ProductController {
 
     return "redirect:/product/detail?id=" + id;
   }
+
 
 
 }
