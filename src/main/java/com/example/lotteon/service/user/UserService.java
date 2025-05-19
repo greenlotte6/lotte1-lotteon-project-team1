@@ -5,15 +5,13 @@ import com.example.lotteon.entity.seller.Seller;
 import com.example.lotteon.entity.user.Member;
 import com.example.lotteon.entity.user.User;
 import com.example.lotteon.exception.EntityAlreadyExistsException;
-import com.example.lotteon.repository.UserRepository;
-import com.example.lotteon.repository.seller.SellerRepository;
-import com.example.lotteon.repository.user.MemberRepository;
+import com.example.lotteon.repository.jpa.UserRepository;
+import com.example.lotteon.repository.jpa.seller.SellerRepository;
+import com.example.lotteon.repository.jpa.user.MemberRepository;
 import jakarta.mail.Message;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
-
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
@@ -106,8 +104,8 @@ public class UserService {
 
   public UserDTO getUserInfo(String userId) {
     return userRepository.findById(userId)
-            .map(user -> mapper.map(user, UserDTO.class))
-            .orElseThrow(() -> new RuntimeException("사용자 정보를 찾을 수 없습니다."));
+        .map(user -> mapper.map(user, UserDTO.class))
+        .orElseThrow(() -> new RuntimeException("사용자 정보를 찾을 수 없습니다."));
   }
 
   public Optional<String> findUserId(String name, String email) {
@@ -130,7 +128,9 @@ public class UserService {
   public boolean existsByNameAndEmail(String name, String email) {
     // member 또는 seller 테이블에서 이름 + email.user.id 조합으로 조회
     Optional<Member> member = memberRepository.findByNameAndMemberIdUserEmail(name, email);
-    if (member.isPresent()) return true;
+    if (member.isPresent()) {
+      return true;
+    }
 
     Optional<Seller> seller = sellerRepository.findByCeoAndSellerIdUserEmail(name, email);
     return seller.isPresent();
@@ -152,7 +152,9 @@ public class UserService {
       MimeMessage message = mailSender.createMimeMessage();
       message.setSubject("lotteOn 임시 비밀번호 안내");
       message.setRecipient(Message.RecipientType.TO, new InternetAddress(user.getEmail()));
-      message.setContent("<h2>임시 비밀번호는 <b>" + tempPassword + "</b> 입니다.</h2><p>로그인 후 비밀번호를 변경해주세요.</p>", "text/html;charset=UTF-8");
+      message.setContent(
+          "<h2>임시 비밀번호는 <b>" + tempPassword + "</b> 입니다.</h2><p>로그인 후 비밀번호를 변경해주세요.</p>",
+          "text/html;charset=UTF-8");
       message.setFrom(new InternetAddress(sender, "lotteOn"));
       mailSender.send(message);
     } catch (Exception e) {

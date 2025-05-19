@@ -7,13 +7,12 @@ import com.example.lotteon.entity.coupon.Coupon;
 import com.example.lotteon.entity.user.Member;
 import com.example.lotteon.entity.user.MemberId;
 import com.example.lotteon.entity.user.User;
-import com.example.lotteon.repository.coupon.CouponRepository;
-import com.example.lotteon.repository.user.MemberRepository;
-import java.time.LocalDate;
-import java.util.List;
-
+import com.example.lotteon.repository.jpa.coupon.CouponRepository;
+import com.example.lotteon.repository.jpa.user.MemberRepository;
 import com.example.lotteon.service.coupon.CouponHistoryService;
 import jakarta.persistence.EntityNotFoundException;
+import java.time.LocalDate;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -60,7 +59,7 @@ public class MemberService {
     try {
       // 101번 쿠폰(회원가입 관련 쿠폰) 조회
       Coupon coupon = couponRepository.findById(101)
-              .orElseThrow(() -> new IllegalStateException("회원가입 쿠폰을 찾을 수 없습니다."));
+          .orElseThrow(() -> new IllegalStateException("회원가입 쿠폰을 찾을 수 없습니다."));
 
       // 쿠폰 발급
       couponHistoryService.couponHistoryRegister(member, coupon);

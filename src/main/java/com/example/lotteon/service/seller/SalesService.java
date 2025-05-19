@@ -1,7 +1,7 @@
 package com.example.lotteon.service.seller;
 
 import com.example.lotteon.dto.seller.SalesWrapper;
-import com.example.lotteon.repository.seller.SalesRepository;
+import com.example.lotteon.repository.jpa.seller.SalesRepository;
 import com.querydsl.core.Tuple;
 import java.util.ArrayList;
 import java.util.List;

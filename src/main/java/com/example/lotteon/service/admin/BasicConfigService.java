@@ -7,7 +7,7 @@ import com.example.lotteon.entity.admin.config.Logo;
 import com.example.lotteon.entity.admin.config.Site;
 import com.example.lotteon.entity.admin.config.VersionConfig;
 import com.example.lotteon.exception.NoDocumentFoundException;
-import com.example.lotteon.repository.admin.config.BasicConfigRepository;
+import com.example.lotteon.repository.jpa.admin.config.BasicConfigRepository;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import java.util.List;

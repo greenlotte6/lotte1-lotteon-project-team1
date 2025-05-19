@@ -1,7 +1,7 @@
 package com.example.lotteon.security;
 
 import com.example.lotteon.entity.user.User;
-import com.example.lotteon.repository.UserRepository;
+import com.example.lotteon.repository.jpa.UserRepository;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

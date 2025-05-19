@@ -7,8 +7,9 @@ import com.example.lotteon.dto.seller.SellerIdDTO;
 import com.example.lotteon.dto.user.UserDTO;
 import com.example.lotteon.entity.product.Product;
 import com.example.lotteon.entity.product.ProductOptions;
-import com.example.lotteon.repository.product.ProductRepository;
-import com.example.lotteon.repository.seller.SellerRepository;
+import com.example.lotteon.repository.jpa.product.ProductRepository;
+import com.example.lotteon.repository.jpa.seller.SellerRepository;
+import com.example.lotteon.service.es.ProductSyncService;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -30,6 +31,7 @@ public class ProductService {
   private final ProductRepository repo;
   private final ModelMapper modelMapper;
   private final ProductRepository productRepository;
+  private final ProductSyncService syncService;
 
   public List<ProductDTO> proList() {
     List<Product> products = repo.findAll();
@@ -68,6 +70,7 @@ public class ProductService {
   public void edit(int id, ProductDTO productDTO) {
     Product product = modelMapper.map(productDTO, Product.class);
     repo.updateById(id, product);
+    syncService.sync(product);
   }
 
   public List<Product> getBestProducts() {
@@ -94,6 +97,7 @@ public class ProductService {
     product.setSeller(sellerDTO);
     Product entity = modelMapper.map(product, Product.class);
     repo.save(entity);
+    syncService.sync(entity);
   }
 
   public List<ProductOptions> getOptions(int productId) {

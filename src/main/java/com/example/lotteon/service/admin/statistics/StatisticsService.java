@@ -2,12 +2,14 @@ package com.example.lotteon.service.admin.statistics;
 
 import com.example.lotteon.dto.admin.StatisticDTO;
 import com.example.lotteon.dto.order.OrderStatusDTO;
-import com.example.lotteon.repository.UserRepository;
-import com.example.lotteon.repository.cs.QnaRepository;
-import com.example.lotteon.repository.order.OrderRepository;
+import com.example.lotteon.repository.jpa.UserRepository;
+import com.example.lotteon.repository.jpa.cs.QnaRepository;
+import com.example.lotteon.repository.jpa.order.OrderRepository;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.querydsl.core.Tuple;
 import java.time.LocalDate;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -67,18 +69,9 @@ public class StatisticsService {
     return qnaRepo.countAll(today);
   }
 
-  public String getBarData(LocalDate from, LocalDate to) {
-    long confirmedCount = orderRepo.countByStatusBetween(
-        OrderStatusDTO.STATUS_PURCHASE_CONFIRMED_ID, from, to);
-    long canceledCount = orderRepo.countByStatusBetween(OrderStatusDTO.STATUS_CANCELLED_ID, from,
-        to);
-    long onDeliveryCount = orderRepo.countByStatusBetween(OrderStatusDTO.STATUS_ON_DELIVERY_ID,
-        from, to);
-    JsonObject json = new JsonObject();
-    json.addProperty("confirmed", confirmedCount);
-    json.addProperty("canceled", canceledCount);
-    json.addProperty("on_delivery", onDeliveryCount);
-    return gson.toJson(json);
+  public String getBarData(LocalDate from, LocalDate to, int... statuses) {
+    List<Tuple> tuples = orderRepo.countByStatusBetween(from, to, statuses);
+    return null;
   }
 
   public String getBarData(String sellerId, LocalDate from, LocalDate to) {

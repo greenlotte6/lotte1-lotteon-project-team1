@@ -4,8 +4,8 @@ import com.example.lotteon.dto.product.ProductDTO;
 import com.example.lotteon.entity.coupon.Coupon;
 import com.example.lotteon.entity.product.ProductOptions;
 import com.example.lotteon.entity.user.Member;
-import com.example.lotteon.repository.coupon.CouponHistoryRepository;
-import com.example.lotteon.repository.coupon.CouponRepository;
+import com.example.lotteon.repository.jpa.coupon.CouponHistoryRepository;
+import com.example.lotteon.repository.jpa.coupon.CouponRepository;
 import com.example.lotteon.service.coupon.CouponHistoryService;
 import com.example.lotteon.service.product.ProductDetailService;
 import com.example.lotteon.service.product.ProductService;
@@ -37,9 +37,9 @@ public class ProductController {
 
   @GetMapping("/product/list")
   public String productList(
-          @RequestParam(required = false) String filter,
-          @RequestParam(required = false) String sort,
-          Model model) {
+      @RequestParam(required = false) String filter,
+      @RequestParam(required = false) String sort,
+      Model model) {
 
     List<ProductDTO> products;
 

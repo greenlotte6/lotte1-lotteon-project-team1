@@ -1,7 +1,7 @@
 package com.example.lotteon.service.product.category;
 
 import com.example.lotteon.dto.product.ProductSubCategoryDTO;
-import com.example.lotteon.repository.product.category.ProductSubCategoryRepository;
+import com.example.lotteon.repository.jpa.product.category.ProductSubCategoryRepository;
 import com.example.lotteon.service.admin.CacheService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;

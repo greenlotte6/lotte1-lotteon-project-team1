@@ -2,7 +2,7 @@ package com.example.lotteon.service.product.options;
 
 import com.example.lotteon.dto.product.ProductOptionsDTO;
 import com.example.lotteon.entity.product.ProductOptions;
-import com.example.lotteon.repository.product.options.ProductOptionsRepository;
+import com.example.lotteon.repository.jpa.product.options.ProductOptionsRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;

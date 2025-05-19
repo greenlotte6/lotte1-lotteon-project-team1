@@ -1,5 +1,7 @@
 package com.example.lotteon.config;
 
+import com.example.lotteon.entity.product.Product;
+import com.example.lotteon.es.document.ProductDocument;
 import com.example.lotteon.interceptor.GlobalHitCounter;
 import com.example.lotteon.redis.repository.GlobalHitRepository;
 import com.google.gson.Gson;
@@ -18,6 +20,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.PropertyMap;
 import org.modelmapper.convention.MatchingStrategies;
 import org.modelmapper.spi.MappingContext;
 import org.springframework.context.annotation.Bean;
@@ -54,6 +57,30 @@ public class ApplicationConfig {
 
     // 전역 매핑 설정
     modelMapper.addConverter(dateToLocalDateTimeConverter, Date.class, LocalDateTime.class);
+
+    modelMapper.addMappings(new PropertyMap<Product, ProductDocument>() {
+      @Override
+      protected void configure() {
+        map(source.getId(), destination.getId());
+        map(source.getCategory().getId(), destination.getCategoryId());
+        map(source.getSubCategory().getId(), destination.getSubCategoryId());
+        map(source.getName(), destination.getName());
+        map(source.getDescription(), destination.getDescription());
+        map(source.getSeller().getSellerId().getUser().getId(), destination.getSellerId());
+        map(source.getPrice(), destination.getPrice());
+        map(source.getPoint(), destination.getPoint());
+        map(source.getDiscountRate(), destination.getDiscountRate());
+        map(source.getStock(), destination.getStock());
+        map(source.getDeliveryFee(), destination.getDeliveryFee());
+        map(source.getImage().getId(), destination.getImageId());
+        map(source.getStatus(), destination.getStatus());
+        map(source.isVatFree(), destination.isVatFree());
+        map(source.getBusinessClassification(), destination.getBusinessClassification());
+        map(source.isReceiptIssuable(), destination.isReceiptIssuable());
+        map(source.getOrigin(), destination.getOrigin());
+        map(source.getQuality(), destination.getQuality());
+      }
+    });
 
     return modelMapper;
   }

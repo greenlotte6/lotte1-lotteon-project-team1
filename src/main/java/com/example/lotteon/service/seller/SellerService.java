@@ -6,7 +6,7 @@ import com.example.lotteon.entity.seller.Seller;
 import com.example.lotteon.entity.seller.SellerId;
 import com.example.lotteon.entity.user.User;
 import com.example.lotteon.exception.EntityAlreadyExistsException;
-import com.example.lotteon.repository.seller.SellerRepository;
+import com.example.lotteon.repository.jpa.seller.SellerRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

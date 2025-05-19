@@ -9,7 +9,7 @@ import com.example.lotteon.dto.PageResponseDTO;
 import com.example.lotteon.dto.cs.NoticeDTO;
 import com.example.lotteon.entity.cs.Article_Type;
 import com.example.lotteon.entity.cs.Notice;
-import com.example.lotteon.repository.cs.NoticeRepository;
+import com.example.lotteon.repository.jpa.cs.NoticeRepository;
 import com.querydsl.core.Tuple;
 import java.time.LocalDate;
 import java.util.List;

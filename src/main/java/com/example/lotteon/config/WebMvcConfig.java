@@ -29,7 +29,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
         .excludePathPatterns("/style/**", "/js/**", "/images/**");
     registry.addInterceptor(new ConfigApplicationInterceptor(cacheService, basicConfigService))
         .excludePathPatterns("/upload/**", "/error", "/static/**", "/style/**", "/js/**",
-            "/images/**", "/proDetail-img/**");
+            "/images/**", "/proDetail-img/**", "/search/**");
   }
 
   @Override

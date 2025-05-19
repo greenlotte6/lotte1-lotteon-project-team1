@@ -2,7 +2,7 @@ package com.example.lotteon.service.product;
 
 import com.example.lotteon.dto.product.ProductDTO;
 import com.example.lotteon.entity.product.Product;
-import com.example.lotteon.repository.product.ProductDetailRepository;
+import com.example.lotteon.repository.jpa.product.ProductDetailRepository;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

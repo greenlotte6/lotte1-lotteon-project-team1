@@ -5,7 +5,7 @@ import com.example.lotteon.dto.user.MemberDTO;
 import com.example.lotteon.dto.user.MemberIdDTO;
 import com.example.lotteon.dto.user.UserDTO;
 import com.example.lotteon.entity.point.Point;
-import com.example.lotteon.repository.admin.point.PointRepository;
+import com.example.lotteon.repository.jpa.admin.point.PointRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -52,29 +52,29 @@ public class PointService {
     return pointPage.map(point -> {
       // UserDTO 생성
       UserDTO userDTO = UserDTO.builder()
-              .id(point.getMember().getMemberId().getUser().getId())
-              .build();
+          .id(point.getMember().getMemberId().getUser().getId())
+          .build();
 
       // MemberIdDTO 생성
       MemberIdDTO memberIdDTO = MemberIdDTO.builder()
-              .user(userDTO)
-              .build();
+          .user(userDTO)
+          .build();
 
       // MemberDTO 생성
       MemberDTO memberDTO = MemberDTO.builder()
-              .memberId(memberIdDTO)
-              .name(point.getMember().getName())
-              .build();
+          .memberId(memberIdDTO)
+          .name(point.getMember().getName())
+          .build();
 
       // 최종 PointDTO 생성
       return PointDTO.builder()
-              .id(point.getId())
-              .amount(point.getAmount())
-              .description(point.getDescription())
-              .issuedDate(point.getIssuedDate())
-              .total(point.getTotal())
-              .memberId(memberDTO)
-              .build();
+          .id(point.getId())
+          .amount(point.getAmount())
+          .description(point.getDescription())
+          .issuedDate(point.getIssuedDate())
+          .total(point.getTotal())
+          .memberId(memberDTO)
+          .build();
     });
   }
 }
