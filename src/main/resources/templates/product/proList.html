@@ -15,7 +15,6 @@
   <link rel="stylesheet" href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css"/>
   <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
   <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
-  <script src="/js/common/header.js"></script>
   <script src="/js/common/footer.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/all.min.js"
           crossorigin="anonymous"></script>
@@ -23,7 +22,6 @@
 <body>
 <div id="wrapper">
   <th:block th:insert="~{/common/header}"></th:block>
-  <th:block th:insert="~{/_menu}"></th:block>
 
   <main>
     <div class="main">
@@ -101,7 +99,9 @@
     <th:block th:insert="~{/common/pagination}"></th:block>
   </main>
 
+
   <th:block th:insert="~{/common/footer}"></th:block>
 </div>
+<script src="/js/common/header.js"></script>
 </body>
 </html>
