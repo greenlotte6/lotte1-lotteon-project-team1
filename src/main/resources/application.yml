@@ -62,7 +62,7 @@ spring:
 
 logging:
   file:
-    path: /data
+    path: /var/www/upload/data
   level:
     root: info
 
