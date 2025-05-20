@@ -38,8 +38,26 @@
   <main>
     <div class="main">
       <article class="article-body">
+
         <div class="detail-wrapper">
-          <form th:action="@{/cart}" method="post" class="detail">
+
+        <form th:action="@{/cart}" method="post" class="detail">
+          <div class="image-area">
+            <img th:src="${prodtos.getImage().getMainThumbnailLocation()}" alt="이미지"
+                 class="main-proimg"/>
+          </div>
+
+          <div class="info-list">
+            <div class="pro-top">
+              <input type="hidden" name="product.id" th:value="${prodtos.id}"/>
+              <input type="hidden" name="orderItems[0].product.id"
+                     th:value="${prodtos.id}"/>
+            </div>
+
+            <div class="pro-name">
+              <span>[[${prodtos.name}]]</span>
+            </div>
+
             <div>
               <img th:src="${prodtos.getImage().getMainThumbnailLocation()}" alt="이미지"
                    class="main-proimg">
@@ -65,28 +83,20 @@
                 <h3 th:text="${#numbers.formatCurrency(prodtos.price - (prodtos.price / 100.0) * prodtos.discountRate) + '원'}"></h3>
               </div>
 
+
               <div class="delivery">
                 <p th:text="${prodtos.getDescription()}"></p>
               </div>
 
-              <!-- 옵션 선택 -->
-              <div class="size-option" th:each="entry, iterStat : ${options}">
-                <select th:name="|options[${iterStat.index}].id|" id="option">
-                  <option value="" th:text="${entry.getKey()}" selected>선택하기</option>
-                  <option th:each="option : ${entry.getValue()}" th:value="${option.getId()}"
-                          th:text="${option.getValue()}"></option>
-                </select>
-              </div>
-
+            <!-- 옵션 선택 -->
+            <div class="size-option" th:each="entry, iterStat : ${options}">
+              <select th:name="|options[${iterStat.index}].id|" id="option">
+                <option value="" th:text="${entry.getKey()}" selected>선택하기</option>
+                <option th:each="option : ${entry.getValue()}" th:value="${option.getId()}"
+                        th:text="${option.getValue()}">S
+                </option>
+              </select>
               <div class="size-coupon-wrap">
-                <div class="size-option" th:each="entry, iterStat : ${options}">
-                  <h3 th:text="${entry.getKey()}"></h3>
-                  <select th:name="|options[${iterStat.index}].id|">
-                    <option value="default" selected>선택하기</option>
-                    <option th:each="option : ${entry.getValue()}" th:value="${option.getId()}"
-                            th:text="${option.getValue()}"></option>
-                  </select>
-                </div>
                 <button type="button" class="coupon-btn" onclick="submitCoupon()">쿠폰받기</button>
               </div>
 
@@ -98,7 +108,9 @@
                     <input type="hidden" name="amount" value="1" min="1"
                            class="count-input-hidden quantity"/>
                     <input type="number" name="orderItems[0].amount" value="1" min="1"
-                           class="count-input quantity">
+
+                           class="count-input quantity"> <!-- 수량을 input 태그로 입력 -->
+
                     <button type="button" class="plus">+</button>
                   </div>
                   <div class="sum-price">
@@ -106,8 +118,9 @@
                     <input type="hidden" id="total-price"/>
                   </div>
                   <div>
-            <span id="sum_price"
-                  th:text="${prodtos.price - (prodtos.price / 100.0) * prodtos.discountRate}"></span>
+
+                  <span id="sum_price"
+                        th:text="${prodtos.price - (prodtos.price / 100.0) * prodtos.discountRate}"></span>
                   </div>
                 </div>
               </div>
@@ -116,19 +129,23 @@
                 <p th:text="'원산지:' + ${prodtos.getOrigin()}+ '(상세설명 참고)'">원산지 - 상세설명 참고</p>
               </div>
 
+
               <!-- 장바구니와 구매하기 버튼 -->
               <div class="cart-and-purchase">
                 <input type="submit" value="장바구니"/>
                 <button type="submit" th:formaction="@{/order}" formmethod="POST">구매하기</button>
               </div>
             </div>
-          </form>
-
-          <div class="details-body" id="details-body" style="display: none;">
-            <div class="title">
-              <img th:src="${prodtos.getImage().getDetailImageLocation()}" alt="title1">
-            </div>
           </div>
+        </form>
+
+        <!--쿠폰 실제 발급-->
+        <form id="couponForm" th:action="@{/product/detail/give-coupon(id=${prodtos.id})}"
+              method="POST" style="display: none;"></form>
+
+        <a href="#" class="advertisement">
+          <img src="/proDetail-img/advertisement.jpg" alt="광고">
+        </a>
 
           <!-- ✅ 상세정보 버튼: 이미지 + 정보 아래 정중앙 -->
           <div class="detail-btnBox">
@@ -136,79 +153,8 @@
           </div>
         </div>
 
-
-
-        <div class="reviews-box">
-            <p>리뷰</p>
-            <div class="items">
-              <div>
-                <div class="pro-review">
-                  <div class="review-info">
-                    <img src="/proDetail-img/review_icon.png" alt="프로필 아이콘">
-                    <span>기모찌맨</span>
-                  </div>
-                  <span>★★★★☆</span>
-                </div>
-
-                <div class="review-title">
-                  <p>상품평</p>
-                  <img src="/proDetail-img/img5.png" alt="이미지" class="items-img">
-                </div>
-
-              </div>
-              <div class="productDescription">
-                <span>개좋음 닥치고 사셈!!</span>
-              </div>
-            </div>
-
-            <div class="items">
-              <div>
-                <div class="pro-review">
-                  <div class="review-info">
-                    <img src="/proDetail-img/review_icon.png" alt="프로필 아이콘">
-                    <span>개꼬임</span>
-                  </div>
-                  <span>★★★★☆</span>
-                </div>
-
-                <div class="review-title">
-                  <p>상품평</p>
-                  <img src="/proDetail-img/img5.png" alt="이미지" class="items-img">
-                </div>
-
-              </div>
-              <div class="productDescription">
-                <span>별로 안좋은데 위에 댓글 알바임? ㅋㅋ 돈아깝다 왜 사냐</span>
-              </div>
-            </div>
-
-            <div class="items">
-              <div>
-                <div class="pro-review">
-                  <div class="review-info">
-                    <img src="/proDetail-img/review_icon.png" alt="프로필 아이콘">
-                    <span>asd23님</span>
-                  </div>
-                  <span>★★★★☆</span>
-                </div>
-
-                <div class="review-title">
-                  <p>상품평</p>
-                  <img src="/proDetail-img/img5.png" alt="이미지" class="items-img">
-                </div>
-
-              </div>
-              <div class="productDescription">
-                <span>댓글 달기 귀찮누;;</span>
-              </div>
-            </div>
-
-          </div>
-
       </article>
-
     </div>
-
   </main>
 
   <th:block th:insert="~{/common/footer}"></th:block>

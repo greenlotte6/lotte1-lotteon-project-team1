@@ -7,14 +7,12 @@ $(() => {
   $.ajax("/api/stat/chart", {
     type: "GET",
     dataType: "json",
+    contentType: "application/json;utf-8",
     success: (res) => {
-      console.log(res)
-      const data = res["barData"]
       const labels = [];
-      for (let d of data) {
-        labels.push(d["date"])
-      }
-      console.log(labels)
+      $.each(res, function (index, item) {
+        console.log(item)
+      })
     },
     error: (error) => {
       console.log(error)
