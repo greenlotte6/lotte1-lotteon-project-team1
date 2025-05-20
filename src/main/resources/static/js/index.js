@@ -11,7 +11,7 @@ $(() => {
     relatedKeywords.append(node)
   }
 
-  searchInput.keyup((e) => {
+  searchInput.off("keyup").on("keyup", (e) => {
     relatedKeywords.empty();
     if (relatedKeywords.hasClass("hidden")) {
       relatedKeywords.removeClass("hidden")
