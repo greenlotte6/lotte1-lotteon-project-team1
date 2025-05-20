@@ -9,7 +9,7 @@ img {
 }
 
 .main-proimg {
-  width: 600px;
+  width: 500px;
   height: 500px;
 }
 
@@ -17,10 +17,15 @@ img {
   color: red;
 }
 
+.image-area {
+  margin-top: 50px;
+}
+
 .detail {
+  width: 100%;
+  height: auto;
   display: flex;
   justify-content: center;
-  align-items: center;
   margin-left: 10px;
   margin-bottom: 20px;
 }
