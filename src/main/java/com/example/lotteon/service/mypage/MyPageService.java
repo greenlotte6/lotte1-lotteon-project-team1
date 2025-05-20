@@ -1,15 +1,20 @@
 package com.example.lotteon.service.mypage;
 
 import com.example.lotteon.dto.order.OrderItemDTO;
+import com.example.lotteon.dto.order.ReturnDTO;
 import com.example.lotteon.dto.seller.SellerDTO;
 import com.example.lotteon.dto.user.UserDTO;
 import com.example.lotteon.entity.order.Order;
 import com.example.lotteon.entity.order.OrderItem;
 import com.example.lotteon.entity.order.OrderStatus;
+import com.example.lotteon.entity.order.Return;
+import com.example.lotteon.entity.order.ReturnReason;
+import com.example.lotteon.entity.user.Member;
 import com.example.lotteon.entity.user.User;
 import com.example.lotteon.repository.jpa.UserRepository;
 import com.example.lotteon.repository.jpa.order.OrderItemRepository;
 import com.example.lotteon.repository.jpa.order.OrderRepository;
+import com.example.lotteon.repository.jpa.order.ReturnRepository;
 import com.example.lotteon.repository.jpa.seller.SellerRepository;
 import com.example.lotteon.repository.jpa.user.MemberRepository;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,7 +25,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,6 +47,7 @@ public class MyPageService {
   private final OrderItemRepository orderItemRepository;
   private final OrderRepository orderRepository;
   private final SellerRepository sellerRepository;
+  private final ReturnRepository returnRepository;
 
 
   @Transactional
@@ -73,7 +81,6 @@ public class MyPageService {
         .map(user -> passwordEncoder.matches(userDTO.getPassword(), user.getPassword()))
         .orElse(false);
   }
-
 
   @Transactional
   public void deleteUser(String id) {
@@ -120,6 +127,42 @@ public class MyPageService {
   }
 
 
-  public void returnOrder(String orderNumber) {
+  //반품 신청 서비스
+  @Transactional
+  public int save(ReturnDTO returnDTO) {
+    Order order = orderRepository.findByOrderNumber(returnDTO.getOrder_number());
+
+    if (order == null) {
+      throw new IllegalArgumentException("해당 주문을 찾을 수 없습니다.");
+    }
+
+    // 로그인한 사용자 정보 가져오기
+    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    String userId = ((UserDetails) auth.getPrincipal()).getUsername();
+    Member member = memberRepository.findOptionalByUserId(userId)
+        .orElseThrow(() -> new IllegalArgumentException("해당 사용자를 찾을 수 없습니다."));
+
+    // 📌 반품 사유 ID에 따라 주문 상태 분기 처리
+    int reasonId = returnDTO.getReason_id();
+    if (reasonId >= 1 && reasonId <= 4) {
+      order.setStatus(OrderStatus.builder().id(9).build()); // 환불요청
+    } else if (reasonId >= 5 && reasonId <= 8) {
+      order.setStatus(OrderStatus.builder().id(11).build()); // 교환요청
+    } else {
+      throw new IllegalArgumentException("유효하지 않은 반품 사유 ID입니다.");
+    }
+
+    orderRepository.save(order); // 변경 사항 저장
+
+    // 반품 엔티티 저장
+    Return returnEntity = Return.builder()
+        .order(order)
+        .member(member)
+        .returnReason(ReturnReason.builder().id(reasonId).build())
+        .description(returnDTO.getDescription())
+        .build();
+
+    returnRepository.save(returnEntity);
+    return returnEntity.getId();
   }
 }

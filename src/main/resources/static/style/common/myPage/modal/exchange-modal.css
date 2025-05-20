@@ -1,5 +1,5 @@
 
-.list-head > p {
+#exchange-info-modal .list-head > p {
    font-weight: bold;
 }
 
@@ -7,7 +7,7 @@
     text-align: center;
 }
 
-table {
+#exchange-info-modal table {
     width: 100%;
     height: 250px;
     margin-top: 15px;
@@ -15,147 +15,147 @@ table {
     border-bottom: 1px solid #eee;
 }
 
-.table-hd {
+#exchange-info-modal .table-hd {
     height: 60px;
     background: #eee;
 }
 
-.table-hd > th {
+#exchange-info-modal .table-hd > th {
     vertical-align: middle; 
 }
 
-.end {
+#exchange-info-modal .end {
     padding-right: 30px
 }
 
-.price-t {
+#exchange-info-modal .price-t {
     padding-right: 30px;
 }
 
-td {
+#exchange-info-modal td {
     vertical-align: middle; 
 }
 
-.pro-info {
+#exchange-info-modal .pro-info {
     display: flex;
     margin-left: 40px;
 }
 
-.table-proimg {
+#exchange-info-modal .table-proimg {
     width: 150px;
     height: 100px
 }
 
-.table-proimg > img {
+#exchange-info-modal .table-proimg > img {
     width: 100px;
     height: 120px;
 }
 
-.table-bd > td:last-child {
+#exchange-info-modal .table-bd > td:last-child {
     margin-right: 30px;
 }
 
-.order-info > p {
+#exchange-info-modal .order-info > p {
     display: flex;
     margin-top: 15px;
 }
 
-.order-info > p :nth-child(1) {
+#exchange-info-modal .order-info > p :nth-child(1) {
     margin-left: 30px;
 }
 
-.order-info > p > span {
+#exchange-info-modal .order-info > p > span {
     margin-left: 10px;
 }
 
 /* --------------------------  */
-.pro-info2 {
+#exchange-info-modal .pro-info2 {
     display: flex;
     margin-left: 40px;
     margin-right: 20px;
 }
 
-.order-info2 > p {
+#exchange-info-modal .order-info2 > p {
     display: flex;
     justify-content: space-between;
     margin-top: 10px;
 }
 
-.order-info2 > p :nth-child(1) {
+#exchange-info-modal .order-info2 > p :nth-child(1) {
     margin-left: 20px;
 }
 
-.order-info2 > p:nth-child(3) {
+#exchange-info-modal .order-info2 > p:nth-child(3) {
     margin-top: 70px;
 }
 
-.order-info2 > p > span {
+#exchange-info-modal .order-info2 > p > span {
     margin-left: 10px;
 }
 
 
 /* --------------------------  */
-.price {
+#exchange-info-modal .price {
     font-weight: bold;
 }
 
-.btn-option {
+#exchange-info-modal .btn-option {
     display: flex;
     flex-direction: column;
     margin-top: 5px;
     margin-right: 10px;
 }
 
-.btn-option > button {
+#exchange-info-modal .btn-option > button {
     height: 35px;
     margin-bottom: 5px;
     cursor: pointer;
 }
 
-.btn-option > button:nth-child(-n+2) {
+#exchange-info-modal .btn-option > button:nth-child(-n+2) {
     border: none;
     background: #7BAAEC;
     color: white;
 }
 
-.btn-option > button:nth-child(n+3) {
+#exchange-info-modal .btn-option > button:nth-child(n+3) {
     border: 2px solid gray;
 }
 
-.sa {
+#exchange-info-modal .sa {
     width: 300px;
 }
 
 /*table2*/
-.all-deliveryList {
+#exchange-info-modal .all-deliveryList {
     width: 90%;
     margin: 0 auto;
     margin-top: 20px;
 }
 
-.delivery-table td {
+#exchange-info-modal .delivery-table td {
     border-bottom: 1px solid #ccc;
 }
 
-.td-l {
+#exchange-info-modal .td-l {
    text-align: center;
    background: #eee;
    width: 150px;
 }
 
-.td-r {
+#exchange-info-modal .td-r {
     padding-left: 20px;
 }
 
 
-.td-r > textarea {
+#exchange-info-modal .td-r > textarea {
     width: 95%;
     height: 80%;
     resize: none;
 }
 
 
-.inquiry {
+#exchange-info-modal .inquiry {
     display: flex;
     justify-content: center;
     width: 90%;
@@ -164,7 +164,7 @@ td {
     gap: 20px;
 }
 
-.inquiry > button{
+#exchange-info-modal .inquiry > button{
     width: 170px;
     height: 50px;
     background: #7BAAEC;
