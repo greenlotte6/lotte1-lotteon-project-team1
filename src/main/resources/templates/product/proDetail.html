@@ -80,15 +80,6 @@
                 </option>
               </select>
               <div class="size-coupon-wrap">
-                <div class="size-option" th:each="entry, iterStat : ${options}">
-                  <h3 th:text="${entry.getKey()}"></h3>
-                  <select th:name="|options[${iterStat.index}].id|">
-                    <option value="default" selected>선택하기</option>
-                    <option th:each="option : ${entry.getValue()}" th:value="${option.getId()}"
-                            th:text="${option.getValue()}"></option>
-                  </select>
-                </div>
-
                 <button type="button" class="coupon-btn" onclick="submitCoupon()">쿠폰받기</button>
               </div>
 
