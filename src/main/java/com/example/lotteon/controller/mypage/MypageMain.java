@@ -4,6 +4,7 @@ import com.example.lotteon.dto.coupon.Coupon_HistoryDTO;
 import com.example.lotteon.dto.cs.QnaDTO;
 import com.example.lotteon.dto.order.MypageOrderWrapper;
 import com.example.lotteon.dto.order.OrderItemDTO;
+import com.example.lotteon.dto.order.ReturnDTO;
 import com.example.lotteon.dto.point.PointDTO;
 import com.example.lotteon.dto.seller.SellerDTO;
 import com.example.lotteon.dto.user.MemberDTO;
@@ -39,12 +40,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Slf4j
@@ -70,7 +66,27 @@ public class MypageMain {
 
 
   @GetMapping("/mypage")
-  public String mypageMain() {
+  public String mypageMain(Model model, Principal principal) {
+    if (principal == null) {
+      // 로그인 안 된 경우 로그인 페이지로 리다이렉트
+      return "redirect:/login";
+    }
+    String userId = principal.getName();
+
+    Pageable topFive = PageRequest.of(0, 5); // 상위 5개만 가져오기
+
+    // 각 데이터 5개씩 조회
+    Page<MypageOrderWrapper> recentOrders = orderService.findOrderWrappersByUserId(userId, topFive);
+    Page<PointDTO> recentPoints = pointService.findByUserId(userId, topFive);
+    Page<Coupon_HistoryDTO> recentCoupons = couponHistoryService.findByUserId(userId, topFive);
+    Page<QnaDTO> recentQnas = qnaService.findByUserId(userId, topFive);
+
+    // 모델에 담기
+    model.addAttribute("recentOrders", recentOrders.getContent());
+    model.addAttribute("recentPoints", recentPoints.getContent());
+    model.addAttribute("recentCoupons", recentCoupons.getContent());
+    model.addAttribute("recentQnas", recentQnas.getContent());
+
     return "/myPage/mypageMain";
   }
 
@@ -80,6 +96,11 @@ public class MypageMain {
   public String wholeorder(@RequestParam(defaultValue = "0") int page,
       Model model, Principal principal) {
 
+    if (principal == null) {
+      // 로그인 안 된 경우 로그인 페이지로 리다이렉트
+      return "redirect:/login";
+    }
+
     String userId = principal.getName();
 
     Pageable pageable = PageRequest.of(page, 10); // 1페이지에 10개
@@ -87,7 +108,8 @@ public class MypageMain {
     Page<MypageOrderWrapper> pages = orderService.findOrderWrappersByUserId(userId, pageable);
 
     model.addAttribute("pages", pages);
-    model.addAttribute("currentPage", page + 1); // 페이지 번호는 1부터 시작 표시
+    model.addAttribute("currentPage", page); // 0부터 시작
+    model.addAttribute("totalPages", pages.getTotalPages());
 
     return "/myPage/wholeorder";
   }
@@ -97,6 +119,10 @@ public class MypageMain {
   public String point(@RequestParam(defaultValue = "0") int page,
       Model model, Principal principal) {
 
+    if (principal == null) {
+      // 로그인 안 된 경우 로그인 페이지로 리다이렉트
+      return "redirect:/login";
+    }
     String userId = principal.getName();
 
     Pageable pageable = PageRequest.of(page, 10); // 1페이지에 10개
@@ -115,6 +141,10 @@ public class MypageMain {
   public String coupon(@RequestParam(defaultValue = "0") int page,
       Model model, Principal principal) {
 
+    if (principal == null) {
+      // 로그인 안 된 경우 로그인 페이지로 리다이렉트
+      return "redirect:/login";
+    }
     //현재 로그인한 사용자의 ID 가져오기
     String userId = principal.getName();
 
@@ -142,8 +172,13 @@ public class MypageMain {
   public String qna(@RequestParam(defaultValue = "0") int page,
       Model model, Principal principal) {
 
+    if (principal == null) {
+      // 로그인 안 된 경우 로그인 페이지로 리다이렉트
+      return "redirect:/login";
+    }
     //현재 로그인한 사용자의 ID 가져오기
     String userId = principal.getName();
+
 
     Pageable pageable = PageRequest.of(page, 10); // 한 페이지당 10개
     Page<QnaDTO> qnaPage = qnaService.findByUserId(userId, pageable);
@@ -160,6 +195,10 @@ public class MypageMain {
   // 나의 설정
   @GetMapping("/mypage/setting")
   public String setting(Model model, Principal principal) {
+    if (principal == null) {
+      // 로그인 안 된 경우 로그인 페이지로 리다이렉트
+      return "redirect:/login";
+    }
     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
     UserDetails userDetails = (UserDetails) auth.getPrincipal();
 
@@ -172,8 +211,7 @@ public class MypageMain {
 
     // 비밀번호 수정 상태 추가
     boolean passwordModified =
-        model.containsAttribute("passwordModified") && (boolean) model.getAttribute(
-            "passwordModified");
+        model.containsAttribute("passwordModified") && (boolean) model.getAttribute("passwordModified");
 
     model.addAttribute("userDTO", userDTO);
     model.addAttribute("memberDTO", memberDTO);
@@ -332,6 +370,56 @@ public class MypageMain {
         String json = gson.toJson(items);
         return ResponseEntity.ok(json);
     }
+
+  //반품 신청
+  @PostMapping("/mypage/wholeorder/return")
+  public String returnOrder(@ModelAttribute ReturnDTO returnDTO, RedirectAttributes redirectAttributes) {
+    try {
+      int id = myPageService.save(returnDTO);
+      redirectAttributes.addFlashAttribute("message", "반품신청 완료");
+      return "redirect:/mypage/wholeorder";  // 돌아갈 페이지 URL로 변경
+    } catch (Exception e) {
+      redirectAttributes.addFlashAttribute("error", "반품신청 실패");
+      return "redirect:/mypage/wholeorder";  // 실패해도 돌아갈 페이지
+    }
+  }
+
+
+
+  // 교환신청
+  @GetMapping("/mypage/wholeorder/exchange/{orderNumber}")
+  @ResponseBody
+  public ResponseEntity<String> exchangenOrder(@PathVariable String orderNumber) {
+    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    UserDetails details = (UserDetails) auth.getPrincipal();
+
+    String currentUserId = details.getUsername();
+
+    // 현재 로그인한 사용자의 주문인지 확인하는 로직이 내부적으로 있어야 함
+    List<OrderItemDTO> items = myPageService.getOrderDetail(currentUserId, orderNumber);
+
+    if (items.isEmpty()) {
+      return ResponseEntity.notFound().build();
+    }
+
+    String json = gson.toJson(items);
+    return ResponseEntity.ok(json);
+  }
+
+  // 교환 신청
+  @PostMapping("/mypage/wholeorder/exchange")
+  public String exchangenOrder(@ModelAttribute ReturnDTO returnDTO, RedirectAttributes redirectAttributes) {
+    try {
+      int id = myPageService.save(returnDTO);
+      redirectAttributes.addFlashAttribute("message", "반품신청 완료");
+      return "redirect:/mypage/wholeorder";  // 돌아갈 페이지 URL로 변경
+    } catch (Exception e) {
+      redirectAttributes.addFlashAttribute("error", "반품신청 실패");
+      return "redirect:/mypage/wholeorder";  // 실패해도 돌아갈 페이지
+    }
+  }
+
+
 
 }
 
