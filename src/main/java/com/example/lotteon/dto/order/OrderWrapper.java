@@ -19,12 +19,12 @@ public class OrderWrapper {
   private final Order order;
 
   @SerializedName("itemCount")
-  private final int itemCount;
+  private final long itemCount;
 
   @SerializedName("total_price")
-  private final long totalPrice;
+  private final int totalPrice;
 
-  private OrderWrapper(Order order, int itemCount, long totalPrice) {
+  private OrderWrapper(Order order, long itemCount, int totalPrice) {
     this.order = order;
     this.itemCount = itemCount;
     this.totalPrice = totalPrice;
@@ -50,20 +50,20 @@ public class OrderWrapper {
       String payment = tuple.get(3, String.class);
       int statusId = tuple.get(4, int.class);
       LocalDate orderDate = tuple.get(5, LocalDate.class);
-      int itemCount = tuple.get(6, int.class);
-      long totalPrice = tuple.get(7, Long.class);
+      int totalPrice = tuple.get(6, int.class);
+      long itemCount = tuple.get(7, Long.class);
 
       User user = User.builder().id(userId).build();
       MemberId memberId = MemberId.builder().user(user).build();
       Member member = Member.builder().memberId(memberId).name(memberName).build();
       OrderStatus status = OrderStatus.builder().id(statusId).build();
       Order order = Order.builder()
-              .orderNumber(orderNumber)
-              .member(member)
-              .payment(payment)
-              .status(status)
-              .orderDate(orderDate)
-              .build();
+          .orderNumber(orderNumber)
+          .member(member)
+          .payment(payment)
+          .status(status)
+          .orderDate(orderDate)
+          .build();
 
       return new OrderWrapper(order, itemCount, totalPrice);
     }
