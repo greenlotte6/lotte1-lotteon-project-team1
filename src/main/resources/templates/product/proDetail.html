@@ -51,34 +51,40 @@
                      th:value="${prodtos.id}"/>
             </div>
 
-            <div class="pro-name">
-              <span>[[${prodtos.name}]]</span>
-            </div>
-            <div>
-              <span>★★★★☆</span>
-              <a href="#">상품평보기</a>
-            </div>
+            <div class="info-list">
+              <div class="pro-top">
+                <input type="hidden" name="product.id" th:value="${prodtos.id}"/>
+                <input type="hidden" name="orderItems[0].product.id" th:value="${prodtos.id}"/>
+              </div>
 
-            <div class="pro-price">
-              <del>
-                <h3 th:text="${#numbers.formatCurrency(prodtos.price) + '원'}"></h3>
-              </del>
-              <span class="sale" th:text="${prodtos.discountRate + '%↓'}"></span>
-              <h3 th:text="${#numbers.formatCurrency(prodtos.price - (prodtos.price / 100.0) * prodtos.discountRate) + '원'}"></h3>
-            </div>
+              <div class="pro-name">
+                <span>[[${prodtos.name}]]</span>
+              </div>
+              <div>
+                <span>★★★★☆</span>
+                <a href="#">상품평보기</a>
+              </div>
 
-            <div class="delivery">
-              <p th:text="${prodtos.getDescription()}"></p>
-            </div>
+              <div class="pro-price">
+                <del><h3 th:text="${#numbers.formatCurrency(prodtos.price) + '원'}"></h3></del>
+                <span class="sale" th:text="${prodtos.discountRate + '%↓'}"></span>
+                <h3 th:text="${#numbers.formatCurrency(prodtos.price - (prodtos.price / 100.0) * prodtos.discountRate) + '원'}"></h3>
+              </div>
 
-            <!-- 옵션 선택 -->
-            <div class="size-option" th:each="entry, iterStat : ${options}">
-              <select th:name="|options[${iterStat.index}].id|" id="option">
-                <option value="" th:text="${entry.getKey()}" selected>선택하기</option>
-                <option th:each="option : ${entry.getValue()}" th:value="${option.getId()}"
-                        th:text="${option.getValue()}">S
-                </option>
-              </select>
+              <div class="delivery">
+                <p th:text="${prodtos.getDescription()}"></p>
+              </div>
+
+              <!-- 옵션 선택 -->
+              <div class="size-option" th:each="entry, iterStat : ${options}">
+                <select th:name="|options[${iterStat.index}].id|" id="option">
+                  <option value="" th:text="${entry.getKey()}" selected>선택하기</option>
+                  <option th:each="option : ${entry.getValue()}" th:value="${option.getId()}"
+                          th:text="${option.getValue()}">S
+                  </option>
+                </select>
+              </div>
+
               <div class="size-coupon-wrap">
                 <button type="button" class="coupon-btn" onclick="submitCoupon()">쿠폰받기</button>
               </div>
@@ -115,26 +121,25 @@
                 <button type="submit" th:formaction="@{/order}" formmethod="POST">구매하기</button>
               </div>
             </div>
+            <!--쿠폰 실제 발급-->
+            <form id="couponForm" th:action="@{/product/detail/give-coupon(id=${prodtos.id})}"
+                  method="POST" style="display: none;"></form>
+
+            <a href="#" class="advertisement">
+              <img src="/proDetail-img/advertisement.jpg" alt="광고">
+            </a>
+
+            <div class="details-body" id="details-body" style="display: none;">
+              <div class="title">
+                <img th:src="${prodtos.getImage().getDetailImageLocation()}" alt="title1">
+              </div>
+            </div>
+
+            <div class="detail-btnBox">
+              <button id="detail-btn">상세정보 더보기</button>
+            </div>
           </div>
         </form>
-
-        <!--쿠폰 실제 발급-->
-        <form id="couponForm" th:action="@{/product/detail/give-coupon(id=${prodtos.id})}"
-              method="POST" style="display: none;"></form>
-
-        <a href="#" class="advertisement">
-          <img src="/proDetail-img/advertisement.jpg" alt="광고">
-        </a>
-
-        <div class="details-body" id="details-body" style="display: none;">
-          <div class="title">
-            <img th:src="${prodtos.getImage().getDetailImageLocation()}" alt="title1">
-          </div>
-        </div>
-
-        <div class="detail-btnBox">
-          <button id="detail-btn">상세정보 더보기</button>
-        </div>
       </article>
     </div>
   </main>
