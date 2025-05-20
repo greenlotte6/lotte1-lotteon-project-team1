@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.lotteon.mapper.ProductCategoryMapper">
+
+  <!-- 1단계: 임시 sequence (음수 등) -->
+  <update id="updateToTempSequence">
+    UPDATE product_category
+    SET sequence = CASE
+    <foreach collection="list" item="item">
+      WHEN id = #{item.id} THEN -#{item.sequence}
+    </foreach>
+    ELSE sequence
+    END
+    WHERE id IN
+    <foreach collection="list" item="item" open="(" separator="," close=")">
+      #{item.id}
+    </foreach>
+  </update>
+
+
+  <!-- 2단계: 실제 sequence 재설정 -->
+  <update id="updateToFinalSequence">
+    UPDATE product_category
+    SET sequence = CASE
+    <foreach collection="list" item="item">
+      WHEN id = #{item.id} THEN #{item.sequence}
+    </foreach>
+    ELSE sequence
+    END
+    WHERE id IN
+    <foreach collection="list" item="item" open="(" separator="," close=")">
+      #{item.id}
+    </foreach>
+  </update>
+
+</mapper>

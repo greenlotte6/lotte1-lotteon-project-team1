@@ -1,12 +1,14 @@
 package com.example.lotteon.service.product.category;
 
-import com.example.lotteon.dto.product.CategoryFormDTO;
 import com.example.lotteon.dto.product.ProductCategoryDTO;
 import com.example.lotteon.dto.product.ProductSubCategoryDTO;
 import com.example.lotteon.entity.product.ProductCategory;
 import com.example.lotteon.entity.product.ProductSubCategory;
+import com.example.lotteon.mapper.ProductCategoryMapper;
 import com.example.lotteon.repository.jpa.product.category.ProductCategoryRepository;
 import com.example.lotteon.service.admin.CacheService;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -23,7 +25,11 @@ public class ProductCategoryService {
 
   private final CacheService cacheService;
   private final ProductCategoryRepository repo;
+  private final ProductCategoryMapper categoryMapper;
   private final ModelMapper mapper;
+
+  @PersistenceContext
+  private final EntityManager em;
 
   public List<ProductCategoryDTO> getAll() {
     List<ProductCategoryDTO> cachedCategories = cacheService.getCachedCategory();
@@ -55,35 +61,33 @@ public class ProductCategoryService {
   }
 
   @Transactional
-  public void update(CategoryFormDTO form) {
-    List<ProductCategoryDTO> categories = form.getCategories();
-    for (ProductCategoryDTO category : categories) {
-      //현재 category의 sequence를 가지고 있는 row 조회
-      int originalSrcSeq = repo.findById(category.getId()).get().getSequence();
-      int srcSequence = category.getSequence();
-      ProductCategory dest = repo.findBySequence(srcSequence);
-
-      //조회된 row의 sequence를 해당 row의 category name의 해시로 변경(임시적으로)
-      ProductCategoryDTO destDTO = mapper.map(dest, ProductCategoryDTO.class);
-      destDTO.setSequence(destDTO.getName().hashCode()); //임시 순번(hash of category name)으로 업데이트
-      ProductCategory destWithTempSequence = mapper.map(destDTO, ProductCategory.class);
-      repo.save(destWithTempSequence);
-
-      //현재 category의 id와 일치하는 row 조회
-      ProductCategory src = repo.findById(category.getId()).orElse(null);
-
-      //조회된 row의 sequence를 클라이언트가 새롭게 설정한 순번으로 업데이트
-      if (src != null) {
-        ProductCategoryDTO srcDTO = mapper.map(src, ProductCategoryDTO.class);
-        srcDTO.setSequence(category.getSequence());
-        ProductCategory srcWithNewSequence = mapper.map(srcDTO, ProductCategory.class);
-        repo.save(srcWithNewSequence);
-      }
-
-      // 임시 sequence를 가지고 있는 row의 sequence를 현재 category의 원래 sequence로 변경(swap)
-      destDTO.setSequence(originalSrcSeq);
-      ProductCategory destWithOriginalSrcSeq = mapper.map(destDTO, ProductCategory.class);
-      repo.save(destWithOriginalSrcSeq);
-    }
+  public void update(List<ProductCategoryDTO> categories) {
+    categoryMapper.updateToTempSequence(categories);
+    categoryMapper.updateToFinalSequence(categories);
   }
+  //  // 모든 항목을 임시 값으로 변경 (해시 또는 음수값으로)
+  //  for (ProductCategoryDTO category : categories) {
+  //    ProductCategory existing = repo.findById(category.getId()).orElseThrow();
+
+  //    // 임시로 sequence를 고유하게 설정 (-id 활용)
+  //    ProductCategory temp = new ProductCategory(
+  //        existing.getId(),
+  //        existing.getName(),
+  //        -existing.getSequence()
+  //    );
+  //    repo.save(temp);
+  //  }
+  //  repo.flush(); // 임시 값 반영
+
+  //  // 원하는 순서로 sequence 재설정
+  //  for (ProductCategoryDTO category : categories) {
+  //    ProductCategory updated = new ProductCategory(
+  //        category.getId(),
+  //        category.getName(),
+  //        category.getSequence()
+  //    );
+  //    repo.save(updated);
+  //  }
+  //  repo.flush(); // 실제 값 반영
+  //}
 }
