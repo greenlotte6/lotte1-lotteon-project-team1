@@ -109,7 +109,6 @@
                 <p th:text="'원산지:' + ${prodtos.getOrigin()}+ '(상세설명 참고)'">원산지 - 상세설명 참고</p>
               </div>
 
-              <!-- 장바구니와 구매하기 버튼 -->
               <div class="cart-and-purchase">
                 <input type="submit" value="장바구니"/>
                 <button type="submit" th:formaction="@{/order}" formmethod="POST">구매하기</button>
