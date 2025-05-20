@@ -1,16 +1,17 @@
-<!--
-  작성자: 이현민(id3ntity99)
--->
+<!-- 작성자: 이현민(id3ntity99) -->
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
-<link rel="stylesheet" href="/style/init.css"/>
-<link rel="stylesheet" href="/style/common/header.css"/>
-<link
 
-    rel="stylesheet"
-    href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css"
-/>
+
+<head>
+  <link rel="stylesheet" href="/style/init.css" />
+  <link rel="stylesheet" href="/style/common/header.css" />
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css" />
+</head>
+
+<body>
+
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
 <script src="/js/common/header.js"></script>
@@ -23,44 +24,38 @@
   <div id="header-wrapper">
     <div id="account-area">
       <ul>
+        <li><a th:href="@{/cs/csmain}">고객센터</a></li>
+        <li><a href="#">주문배송</a></li>
         <li>
-          <a th:href="@{/cs/csmain}"> 고객센터 </a>
-        </li>
-        <li>
-          <a href="#"> 주문배송 </a>
-        </li>
-        <li>
-          <span sec:authorize="isAnonymous()"><a th:href="@{/login}"> 로그인/회원가입 </a></span>
+          <span sec:authorize="isAnonymous()">
+            <a th:href="@{/login}">로그인/회원가입</a>
+          </span>
           <span sec:authorize="isAuthenticated()" class="logout">
             <form th:action="@{/logout}" method="post">
-                <button type="submit">로그아웃</button>
+              <button type="submit">로그아웃</button>
             </form>
           </span>
         </li>
       </ul>
     </div>
+
     <div id="header-area">
       <div id="logo-area">
         <a href="/">
-          <img
-              th:src="${config.getLogo().getHeaderLogoLocation()}"
-              alt="logo"
-          />
+          <img th:src="${config.getLogo().getHeaderLogoLocation()}" alt="logo" />
         </a>
       </div>
 
       <div id="search-area">
-        <input id="search-input" type="text" placeholder="검색어를 입력하세요"/>
-        <button>
-          <i class="fa-solid fa-magnifying-glass"></i>
-        </button>
+        <input id="search-input" type="text" placeholder="검색어를 입력하세요" />
+        <button><i class="fa-solid fa-magnifying-glass"></i></button>
         <div id="related-keywords" class="hidden">
-          <ul class="keywords hidden">
-          </ul>
+          <ul class="keywords hidden"></ul>
         </div>
       </div>
 
       <div id="button-area">
+
         <a href="#">
           <i class="fa-regular fa-heart"></i>
           <span> 나의 찜 </span>
@@ -76,51 +71,37 @@
       </div>
     </div>
   </div>
+
   <nav id="quick-menu">
     <ul>
-      <li id="drop-btn" class="category-drop">
-        <i class="fa-solid fa-bars"></i>
+      <li class="category-container">
+        <div id="drop-btn" class="category-drop">
+          <i class="fa-solid fa-bars"></i>
+        </div>
+
+        <ul id="menu" th:if="${categoryMap != null}">
+          <li th:each="entry : ${categoryMap}">
+            <a th:text="${entry.key.name}" href="#"></a>
+            <ul th:if="${#lists.size(entry.value) > 0}">
+              <li th:each="sub : ${entry.value}">
+                <a th:href="@{/product/list(subcategoryId=${sub.id})}" th:text="${sub.name}"></a>
+              </li>
+            </ul>
+          </li>
+        </ul>
       </li>
-      <li>
-        <a href="#">홈</a>
-      </li>
-      <li>
-        <a href="#">특가</a>
-      </li>
-      <li>
-        <a href="#">패션</a>
-      </li>
-      <li>
-        <a href="#">뷰티</a>
-      </li>
-      <li>
-        <a href="#">라이프</a>
-      </li>
-      <li>
-        <a href="#">베스트</a>
-      </li>
-      <li>
-        <a href="#">여행</a>
-      </li>
-      <li>
-        <a href="#">백화점</a>
-      </li>
-      <li>
-        <a href="#">내일ON다</a>
-      </li>
-      <li>
-        <a href="#">이벤트</a>
-      </li>
+      <li><a href="#">홈</a></li>
+      <li><a href="#">특가</a></li>
+      <li><a href="#">패션</a></li>
+      <li><a href="#">뷰티</a></li>
+      <li><a href="#">라이프</a></li>
+      <li><a href="#">베스트</a></li>
+      <li><a href="#">여행</a></li>
+      <li><a href="#">백화점</a></li>
+      <li><a href="#">내일ON다</a></li>
+      <li><a href="#">이벤트</a></li>
     </ul>
   </nav>
 </header>
-<ul id="menu" style="display: none" th:if="${categoryMap != null}">
-  <li th:each="entry : ${categoryMap}">
-    <a th:text="${entry.key.name}" href="#"></a>
-    <ul th:if="${#lists.size(entry.value) > 0}">
-      <li th:each="sub : ${entry.value}">
-        <a th:href="@{/product/list(subcategoryId=${sub.id})}" th:text="${sub.name}"></a>
-      </li>
-    </ul>
-  </li>
-</ul>
+</body>
+</html>
