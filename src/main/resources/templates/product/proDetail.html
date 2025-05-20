@@ -47,22 +47,6 @@
                  class="main-proimg"/>
           </div>
 
-          <div class="info-list">
-            <div class="pro-top">
-              <input type="hidden" name="product.id" th:value="${prodtos.id}"/>
-              <input type="hidden" name="orderItems[0].product.id"
-                     th:value="${prodtos.id}"/>
-            </div>
-
-            <div class="pro-name">
-              <span>[[${prodtos.name}]]</span>
-            </div>
-
-            <div>
-              <img th:src="${prodtos.getImage().getMainThumbnailLocation()}" alt="이미지"
-                   class="main-proimg">
-            </div>
-
             <div class="info-list">
               <div class="pro-top">
                 <input type="hidden" name="product.id" th:value="${prodtos.id}"/>
@@ -128,7 +112,6 @@
               <div class="from">
                 <p th:text="'원산지:' + ${prodtos.getOrigin()}+ '(상세설명 참고)'">원산지 - 상세설명 참고</p>
               </div>
-
 
               <!-- 장바구니와 구매하기 버튼 -->
               <div class="cart-and-purchase">
