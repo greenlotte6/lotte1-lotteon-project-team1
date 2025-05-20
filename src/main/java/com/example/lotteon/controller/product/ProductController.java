@@ -37,24 +37,33 @@ public class ProductController {
 
   @GetMapping("/product/list")
   public String productList(
-      @RequestParam(required = false) String filter,
-      @RequestParam(required = false) String sort,
-      @RequestParam(required = false) String subcategoryId,
-      Model model) {
+          @RequestParam(required = false) String filter,
+          @RequestParam(required = false) String sort,
+          @RequestParam(required = false) String subcategoryId,
+          Model model) {
 
     List<ProductDTO> products;
 
     if (subcategoryId != null) {
-      products = productService.proListBySubCategoryId(subcategoryId);
-    } else if ("sales".equals(filter)) {
-      products = productService.proListSortedBySales();
-    } else if ("price".equals(filter)) {
-      products = productService.proListSortedByPrice(sort);
+      if ("sales".equalsIgnoreCase(filter)) {
+        products = productService.proListBySubCategoryIdSortedBySales(subcategoryId);
+      } else if ("price".equalsIgnoreCase(filter)) {
+        products = productService.proListBySubCategoryIdSortedByPrice(subcategoryId, sort);
+      } else {
+        products = productService.proListBySubCategoryId(subcategoryId);
+      }
     } else {
-      products = productService.proList();
+      if ("sales".equalsIgnoreCase(filter)) {
+        products = productService.proListSortedBySales();
+      } else if ("price".equalsIgnoreCase(filter)) {
+        products = productService.proListSortedByPrice(sort);
+      } else {
+        products = productService.proList();
+      }
     }
 
     model.addAttribute("products", products);
+    model.addAttribute("subcategoryId", subcategoryId); // 뷰에서 유지되도록 전달
     return "/product/proList";
   }
 
