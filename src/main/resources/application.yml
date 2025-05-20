@@ -114,7 +114,7 @@ spring:
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://52.79.234.26:3307/lotteon
+    url: jdbc:mysql://15.164.97.245:3307/lotteon
     username: lotteon-dev
     password: 1234
 
@@ -134,10 +134,10 @@ spring:
 
   data:
     mongodb:
-      uri: mongodb://lotteon-dev:1234@52.79.234.26:27018/lotteon?authSource=lotteon
+      uri: mongodb://lotteon-dev:1234@15.164.97.245:27018/lotteon?authSource=lotteon
 
     redis:
-      host: 52.79.234.26
+      host: 15.164.97.245
       port: 6380
 
   thymeleaf:
