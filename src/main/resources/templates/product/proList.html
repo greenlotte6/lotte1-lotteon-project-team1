@@ -36,21 +36,16 @@
           <div class="main-heder2">
             <ul>
               <li>
-                <a href="/product/list?filter=sales&sort=asc">판매많은순&nbsp;</a>
+                <a th:href="@{'/product/list'(subcategoryId=${subcategoryId}, filter='sales', sort='asc')}">판매많은순</a>
               </li>
               <li>
-                <a href="/product/list?filter=price&sort=asc">
-                  낮은가격순&nbsp;
-                </a>
+                <a th:href="@{'/product/list'(subcategoryId=${subcategoryId}, filter='price', sort='asc')}">낮은가격순</a>
               </li>
               <li>
-                <a href="/product/list?filter=price&sort=desc">
-                  높은가격순&nbsp;
-                </a>
+                <a th:href="@{'/product/list'(subcategoryId=${subcategoryId}, filter='price', sort='desc')}">높은가격순</a>
               </li>
             </ul>
           </div>
-        </div>
 
         <div class="grid">
           <div class="product" th:each="product : ${products}">
