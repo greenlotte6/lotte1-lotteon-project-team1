@@ -4,13 +4,9 @@ import org.apache.http.HttpHost;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.elasticsearch.client.RestClient;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
-@Configuration
 public class ElasticSearchConfig {
 
-  @Bean
   public RestClient restClient() {
     // 기본 인증 정보 제공 (username, password)
     BasicCredentialsProvider credentialsProvider = new BasicCredentialsProvider();
