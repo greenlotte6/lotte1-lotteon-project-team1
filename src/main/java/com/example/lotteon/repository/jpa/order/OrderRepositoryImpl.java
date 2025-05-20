@@ -15,7 +15,6 @@ import com.example.lotteon.entity.user.QMember;
 import com.example.lotteon.entity.user.QUser;
 import com.querydsl.core.Tuple;
 import com.querydsl.core.types.dsl.CaseBuilder;
-import com.querydsl.core.types.dsl.DatePath;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.NumberExpression;
 import com.querydsl.jpa.impl.JPAQuery;
@@ -388,33 +387,32 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
 
   //TODO: Currently working position
   @Override
-  public List<Tuple> countByStatusBetween(LocalDate from, LocalDate to, int... statuses) {
-    DatePath<LocalDate> datePath = order.orderDate;
-    List<NumberExpression<Long>> expressions = new ArrayList<>();
-
-    for (int status : statuses) {
-      expressions.add(selectCountByStatus(status));
-    }
-
-    return query.select()
+  public List<Tuple> countByStatusBetween(LocalDate from, LocalDate to) {
+    return query.select(order.orderDate,
+            order.status.id.when(2).then(1).otherwise(0).sum(),
+            order.status.id.when(3).then(1).otherwise(0).sum(),
+            order.status.id.when(4).then(1).otherwise(0).sum()
+        )
         .from(order)
-        .join(order.status, status)
+        .where(order.orderDate.between(from, to))
+        .groupBy(order.orderDate)
         .fetch();
   }
 
   @Override
-  public long countByStatusBetween(int status, String sellerId, LocalDate from,
+  public List<Tuple> countByStatusBetween(String sellerId, LocalDate from,
       LocalDate to) {
-    Long count = query.select(order.orderNumber.count())
+    return query.select(order.orderDate,
+            order.status.id.when(2).then(1).otherwise(0).sum(),
+            order.status.id.when(3).then(1).otherwise(0).sum(),
+            order.status.id.when(4).then(1).otherwise(0).sum())
         .from(order)
-        .join(order.status, this.status)
         .join(orderItem.order, order)
         .join(orderItem.product, product)
         .join(product.seller, seller)
         .join(seller.sellerId.user, user)
-        .where(this.status.id.eq(status).and(user.id.eq(sellerId))
-            .and(order.orderDate.between(from, to)))
-        .fetchOne();
-    return count == null ? 0 : count;
+        .where(user.id.eq(sellerId).and(order.orderDate.between(from, to)))
+        .groupBy(order.orderDate)
+        .fetch();
   }
 }

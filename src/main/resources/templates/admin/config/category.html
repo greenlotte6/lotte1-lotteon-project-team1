@@ -66,20 +66,31 @@
                 <button class="delete-btn">삭제</button>
               </div>
               <ul class="sub-category" th:if="${entry.getValue().size() > 0}">
-                <li th:each="subCategory, subStat : ${entry.getValue()}">
+                <li th:each="subCategory, stat : ${flatSubCategories}"
+                    th:if="${subCategory.category.id == entry.key.id}"
+                >
                   <input
                       class="category-input"
                       type="text"
-                      th:name="|subCategories[${subStat.index}].name|"
+                      th:name="|subCategories[${stat.index}].name|"
                       th:value="${subCategory.getName()}"
                   />
-                  <input type="hidden" th:name="|subCategories[${subStat.index}].id|"
-                         class="subcategory-id"
-                         th:value="${subCategory.getId()}"/>
                   <input type="hidden"
-                         th:name="|subCategories[${subStat.index}].sequence|"
+                         th:name="|subCategories[${stat.index}].id|"
+                         class="subcategory-id"
+                         th:value="${subCategory.getId()}"
+                  />
+                  <input type="hidden"
+                         th:name="|subCategories[${stat.index}].category.id|"
+                         class="subcategory-id"
+                         th:value="${subCategory.getCategory().getId()}"
+                  />
+                  <input type="hidden"
+                         th:name="|subCategories[${stat.index}].sequence|"
                          class="subcategory-sequence"
-                         th:value="${subCategory.getSequence()}"/>
+                         th:value="${subCategory.getSequence()}"
+
+                  />
                   <button class="delete-btn">삭제</button>
                 </li>
               </ul>

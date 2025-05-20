@@ -60,7 +60,7 @@ public interface OrderRepositoryCustom {
 
   long findTotalSales(String sellerId, LocalDate today);
 
-  List<Tuple> countByStatusBetween(LocalDate from, LocalDate to, int... status);
+  List<Tuple> countByStatusBetween(LocalDate from, LocalDate to);
 
-  long countByStatusBetween(int status, String sellerId, LocalDate from, LocalDate to);
+  List<Tuple> countByStatusBetween(String sellerId, LocalDate from, LocalDate to);
 }

@@ -11,6 +11,7 @@ import com.example.lotteon.service.admin.BasicConfigService;
 import com.example.lotteon.service.admin.CacheService;
 import com.example.lotteon.service.admin.PolicyService;
 import com.example.lotteon.service.product.category.ProductCategoryService;
+import com.example.lotteon.service.product.category.ProductSubCategoryService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.File;
@@ -20,6 +21,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -44,6 +46,7 @@ public class BasicConfigController {
   private String uploadPrefix;
 
   private final ProductCategoryService categoryService;
+  private final ProductSubCategoryService subCategoryService;
   private final BannerRepository bannerRepository;
   private final CacheService cacheService;
   private final BasicConfigService service;
@@ -147,13 +150,19 @@ public class BasicConfigController {
   @GetMapping("/category")
   public String category(Model model) {
     Map<ProductCategoryDTO, List<ProductSubCategoryDTO>> map = categoryService.listWithSubCategories();
+    List<ProductSubCategoryDTO> flatSubCategories = map.values().stream().flatMap(List::stream)
+        .collect(
+            Collectors.toList());
+
+    model.addAttribute("flatSubCategories", flatSubCategories);
     model.addAttribute("map", map);
     return "/admin/config/category";
   }
 
   @PostMapping("/category")
   public String edit(CategoryFormDTO form) {
-    categoryService.update(form);
+    categoryService.update(form.getCategories());
+    subCategoryService.update(form.getSubCategories());
     cacheService.invalidateCategoryCache();
     cacheService.invalidateSubCategoryCache();
     return "redirect:/admin/config/category";

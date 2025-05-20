@@ -6,9 +6,11 @@ import com.example.lotteon.repository.jpa.UserRepository;
 import com.example.lotteon.repository.jpa.cs.QnaRepository;
 import com.example.lotteon.repository.jpa.order.OrderRepository;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.querydsl.core.Tuple;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -69,24 +71,26 @@ public class StatisticsService {
     return qnaRepo.countAll(today);
   }
 
-  public String getBarData(LocalDate from, LocalDate to, int... statuses) {
-    List<Tuple> tuples = orderRepo.countByStatusBetween(from, to, statuses);
-    return null;
+  public String getBarData(LocalDate from, LocalDate to) {
+    List<Tuple> tuples = orderRepo.countByStatusBetween(from, to);
+    JsonArray jsonArray = new JsonArray();
+    for (Tuple tuple : tuples) {
+      JsonObject json = new JsonObject();
+      String date = tuple.get(0, LocalDate.class).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+      Integer paidCount = tuple.get(1, Integer.class);
+      Integer deliPrepCount = tuple.get(2, Integer.class);
+      Integer onDeliCount = tuple.get(3, Integer.class);
+      json.addProperty("date", date);
+      json.addProperty("paid_count", paidCount);
+      json.addProperty("delivery_prep_count", deliPrepCount);
+      json.addProperty("on_deli_count", onDeliCount);
+      jsonArray.add(json);
+    }
+    return gson.toJson(jsonArray);
   }
 
   public String getBarData(String sellerId, LocalDate from, LocalDate to) {
-    long confirmedCount = orderRepo.countByStatusBetween(
-        OrderStatusDTO.STATUS_PURCHASE_CONFIRMED_ID, sellerId, from, to);
-    long canceledCount = orderRepo.countByStatusBetween(OrderStatusDTO.STATUS_CANCELLED_ID,
-        sellerId, from,
-        to);
-    long onDeliveryCount = orderRepo.countByStatusBetween(OrderStatusDTO.STATUS_ON_DELIVERY_ID,
-        sellerId, from, to);
-    JsonObject json = new JsonObject();
-    json.addProperty("confirmed", confirmedCount);
-    json.addProperty("canceled", canceledCount);
-    json.addProperty("on_delivery", onDeliveryCount);
-    return gson.toJson(json);
+    return null;
   }
 
   public String getPieData(LocalDate from, LocalDate to) {

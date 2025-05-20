@@ -3,18 +3,18 @@ function getLabels(res) {
 }
 
 $(() => {
-  console.log("Hello")
+  const chartArea = $("#chart")
   $.ajax("/api/stat/chart", {
     type: "GET",
     dataType: "json",
     success: (res) => {
-      const chartArea = $("#chart")
-      new Chart(chartArea, {
-        type: 'bar',
-        data: {
-          label: [""]
-        }
-      })
+      console.log(res)
+      const data = res["barData"]
+      const labels = [];
+      for (let d of data) {
+        labels.push(d["date"])
+      }
+      console.log(labels)
     },
     error: (error) => {
       console.log(error)
