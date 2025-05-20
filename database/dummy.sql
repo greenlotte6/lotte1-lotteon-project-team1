@@ -417,3 +417,13 @@ left JOIN
   product_subcategory sc ON c.id = sc.category_id
 GROUP BY 
   c.id;
+  
+  
+SELECT
+`order`.order_date AS `order_date`,
+COUNT(case when `order`.status_id = 2 then 1 ELSE NULL END) AS "paid_count",
+COUNT(case when `order`.status_id = 3 then 1 ELSE NULL END) AS "delivery_prepare_count",
+COUNT(case when `order`.status_id = 4 then 1 ELSE NULL END) AS "on_delivery_count"
+FROM `order`
+WHERE `order`.order_date BETWEEN "2025-05-13" AND "2025-05-20"
+GROUP BY `order`.order_date;

@@ -138,9 +138,9 @@ spring:
         globally_quoted_identifiers: true
 
   elasticsearch:
-    uris: http://localhost:9200
+    uris: 15.164.97.245:9201
     username: elastic
-    password: CP3wsN0u
+    password: abc123
   
   data:
     mongodb:

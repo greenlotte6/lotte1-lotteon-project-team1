@@ -40,6 +40,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-cache'
     implementation 'org.springframework.boot:spring-boot-starter-data-elasticsearch'
     implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.4'
+    implementation("org.elasticsearch.client:elasticsearch-rest-client:9.0.1")
+    implementation("org.apache.httpcomponents:httpclient:4.5.14")
     testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.4'
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'

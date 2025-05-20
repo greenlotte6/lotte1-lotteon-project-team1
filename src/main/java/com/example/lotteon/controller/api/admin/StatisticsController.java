@@ -22,12 +22,12 @@ public class StatisticsController {
   public ResponseEntity<String> getBarStat() {
     LocalDate weekAgo = LocalDate.now().minusDays(14);
     LocalDate today = LocalDate.now();
-    String barData = statService.getBarData(weekAgo, today, 2, 3, 4);
-    String pieData = statService.getPieData(weekAgo, today);
+    String barData = statService.getBarData(weekAgo, today);
+    //String pieData = statService.getPieData(weekAgo, today);
 
     JsonObject json = new JsonObject();
     json.addProperty("barData", barData);
-    json.addProperty("pieData", pieData);
+    //json.addProperty("pieData", pieData);
 
     String jsonBody = gson.toJson(json);
 
