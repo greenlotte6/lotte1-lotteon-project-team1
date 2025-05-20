@@ -44,6 +44,23 @@ public class ProductService {
 
   }
 
+  public List<ProductDTO> proListBySubCategoryIdSortedBySales(String subcategoryId) {
+    List<Product> products = productRepository.findBySubCategoryIdOrderBySalesDesc(subcategoryId);
+    return products.stream()
+            .map(product -> modelMapper.map(product, ProductDTO.class))
+            .toList();
+  }
+
+  public List<ProductDTO> proListBySubCategoryIdSortedByPrice(String subcategoryId, String sort) {
+    Sort.Direction direction = "desc".equalsIgnoreCase(sort) ? Sort.Direction.DESC : Sort.Direction.ASC;
+    Sort priceSort = Sort.by(direction, "price");
+
+    List<Product> products = productRepository.findBySubCategoryId(subcategoryId, priceSort);
+    return products.stream()
+            .map(product -> modelMapper.map(product, ProductDTO.class))
+            .toList();
+  }
+
   public Page<Product> getAll(Pageable pageable) {
     return repo.findAll(pageable);
   }

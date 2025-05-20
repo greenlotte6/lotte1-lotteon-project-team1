@@ -38,38 +38,39 @@
   <main>
     <div class="main">
       <article class="article-body">
+
+        <div class="detail-wrapper">
+
         <form th:action="@{/cart}" method="post" class="detail">
           <div class="image-area">
             <img th:src="${prodtos.getImage().getMainThumbnailLocation()}" alt="이미지"
                  class="main-proimg"/>
           </div>
 
-          <div class="info-list">
-            <div class="pro-top">
-              <input type="hidden" name="product.id" th:value="${prodtos.id}"/>
-              <input type="hidden" name="orderItems[0].product.id"
-                     th:value="${prodtos.id}"/>
-            </div>
+            <div class="info-list">
+              <div class="pro-top">
+                <input type="hidden" name="product.id" th:value="${prodtos.id}"/>
+                <input type="hidden" name="orderItems[0].product.id" th:value="${prodtos.id}"/>
+              </div>
 
-            <div class="pro-name">
-              <span>[[${prodtos.name}]]</span>
-            </div>
-            <div>
-              <span>★★★★☆</span>
-              <a href="#">상품평보기</a>
-            </div>
+              <div class="pro-name">
+                <span>[[${prodtos.name}]]</span>
+              </div>
+              <div>
+                <span>★★★★☆</span>
+                <a href="#">상품평보기</a>
+              </div>
 
-            <div class="pro-price">
-              <del>
-                <h3 th:text="${#numbers.formatCurrency(prodtos.price) + '원'}"></h3>
-              </del>
-              <span class="sale" th:text="${prodtos.discountRate + '%↓'}"></span>
-              <h3 th:text="${#numbers.formatCurrency(prodtos.price - (prodtos.price / 100.0) * prodtos.discountRate) + '원'}"></h3>
-            </div>
+              <div class="pro-price">
+                <del><h3 th:text="${#numbers.formatCurrency(prodtos.price) + '원'}"></h3></del>
+                <span class="sale" th:text="${prodtos.discountRate + '%↓'}"></span>
+                <h3 th:text="${#numbers.formatCurrency(prodtos.price - (prodtos.price / 100.0) * prodtos.discountRate) + '원'}"></h3>
+              </div>
 
-            <div class="delivery">
-              <p th:text="${prodtos.getDescription()}"></p>
-            </div>
+
+              <div class="delivery">
+                <p th:text="${prodtos.getDescription()}"></p>
+              </div>
 
             <!-- 옵션 선택 -->
             <div class="size-option" th:each="entry, iterStat : ${options}">
@@ -91,7 +92,9 @@
                     <input type="hidden" name="amount" value="1" min="1"
                            class="count-input-hidden quantity"/>
                     <input type="number" name="orderItems[0].amount" value="1" min="1"
+
                            class="count-input quantity"> <!-- 수량을 input 태그로 입력 -->
+
                     <button type="button" class="plus">+</button>
                   </div>
                   <div class="sum-price">
@@ -99,6 +102,7 @@
                     <input type="hidden" id="total-price"/>
                   </div>
                   <div>
+
                   <span id="sum_price"
                         th:text="${prodtos.price - (prodtos.price / 100.0) * prodtos.discountRate}"></span>
                   </div>
@@ -109,6 +113,7 @@
                 <p th:text="'원산지:' + ${prodtos.getOrigin()}+ '(상세설명 참고)'">원산지 - 상세설명 참고</p>
               </div>
 
+              <!-- 장바구니와 구매하기 버튼 -->
               <div class="cart-and-purchase">
                 <input type="submit" value="장바구니"/>
                 <button type="submit" th:formaction="@{/order}" formmethod="POST">구매하기</button>
@@ -125,15 +130,12 @@
           <img src="/proDetail-img/advertisement.jpg" alt="광고">
         </a>
 
-        <div class="details-body" id="details-body" style="display: none;">
-          <div class="title">
-            <img th:src="${prodtos.getImage().getDetailImageLocation()}" alt="title1">
+          <!-- ✅ 상세정보 버튼: 이미지 + 정보 아래 정중앙 -->
+          <div class="detail-btnBox">
+            <button id="detail-btn" type="button">상세정보 더보기</button>
           </div>
         </div>
 
-        <div class="detail-btnBox">
-          <button id="detail-btn">상세정보 더보기</button>
-        </div>
       </article>
     </div>
   </main>

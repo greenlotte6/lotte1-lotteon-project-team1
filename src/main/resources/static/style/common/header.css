@@ -142,6 +142,10 @@ header {
   margin: 0 auto;
 }
 
+.category-container {
+  position: relative;
+}
+
 #quick-menu .category-drop {
   display: flex;
   justify-content: center;
@@ -159,18 +163,48 @@ header {
   color: white;
 }
 
+.detail-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.detail-btnBox {
+  position: absolute;
+  bottom: -40px; /* 상세영역과 약간 간격 */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+}
+
+.detail-btnBox > button {
+  border: 1px solid red;
+  box-sizing: border-box;
+  border-radius: 20px;
+  background: none;
+  color: red;
+  width: 200px;
+  height: 30px;
+  cursor: pointer;
+}
+
 #menu {
   position: absolute;
-  z-index: 5;
-  left: 5%;
-  min-width: 300px;
+  top: 100%;
+  left: 0;
+  z-index: 1000;
+  display: none;
+  background: white;
   padding: 10px;
+  min-width: 250px;
   border: 2px solid #ef2a23;
   border-top: none;
-  box-sizing: border-box;
-  border-bottom-left-radius: 3%;
-  border-bottom-right-radius: 3%;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
+
 
 #menu ul {
   height: 150px;
