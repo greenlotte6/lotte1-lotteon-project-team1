@@ -118,26 +118,20 @@ public class ProductManagementController {
   @PostMapping("/register")
   public String register(@ModelAttribute ProductWrapperDTO wrapper,
       @RequestParam Map<String, MultipartFile> imageMap,
-      HttpServletResponse response) {
+      HttpServletResponse response) throws IOException {
     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
     UserDetails details = (UserDetails) auth.getPrincipal();
     ProductDTO incomingProduct = wrapper.getProduct();
     List<ProductOptionsDTO> incomingOptions = wrapper.getOptions();
     //int createdId = createNewId(incomingProduct.getCategory().getId());//최신 product id 생성
     int createdId = service.getLatestIdAndIncrement() + 1;
-    try {
-      ProductImageDTO insertedImage = uploader.uploadAndInsert(imageMap);
-      incomingProduct.setImage(insertedImage);
-      incomingProduct.setId(createdId); // POST 요청의 product에 생성된 id 초기화
-      incomingProduct.setStatus("on_sale"); // 상품 상태 == 판매중
-      service.register(details.getUsername(), incomingProduct); // POST 요청된 product INSERT
-      optionsService.save(wrapper.getProduct().getId(),
-          incomingOptions); // POSt 요청된 product options INSERT
-    } catch (IOException e) {
-      log.error(e.getMessage());
-      response.setStatus(500);
-      return "";
-    }
+    ProductImageDTO insertedImage = uploader.uploadAndInsert(imageMap);
+    incomingProduct.setImage(insertedImage);
+    incomingProduct.setId(createdId); // POST 요청의 product에 생성된 id 초기화
+    incomingProduct.setStatus("on_sale"); // 상품 상태 == 판매중
+    service.register(details.getUsername(), incomingProduct); // POST 요청된 product INSERT
+    optionsService.save(wrapper.getProduct().getId(),
+        incomingOptions); // POSt 요청된 product options INSERT
     return "redirect:/admin/product/list";
   }
 
