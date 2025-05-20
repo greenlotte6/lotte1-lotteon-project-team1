@@ -66,10 +66,12 @@ jobs:
           script: |
             sudo docker ps
             sudo docker network ls | grep lotteon || sudo docker network create lotteon 
-            sudo docker volume ls | grep lotteon || sudo docker volume create lotteon 
+            sudo docker volume ls | grep lotteon-banner || sudo docker volume create lotteon-banner
+            sudo docker volume ls | grep lotteon-data || sudo docker volume create lotteon-data
+            sudo docker volume ls | grep lotteon-product || sudo docker volume create lotteon-product
             sudo docker stop lotteon-server || true && sudo docker rm lotteon-server || true
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/lotteon-server
-            sudo docker run -d --name lotteon-server -e TZ=Asia/Seoul --network lotteon -v lotteon:/var/www/upload -p 8080:8080 ${{ secrets.DOCKER_USERNAME }}/lotteon-server
+            sudo docker run -d --name lotteon-server -e TZ=Asia/Seoul --network lotteon -v lotteon-data:/var/www/upload/data -v lotteon-banner:/var/www/upload/banner -v lotteon-product:/var/www/upload/product -p 8080:8080 ${{ secrets.DOCKER_USERNAME }}/lotteon-server
             sudo docker image prune -f
 
       - name: revoke runner ip address
